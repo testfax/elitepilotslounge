@@ -22,6 +22,7 @@
     "zlib": "^1.0.5"
   },
   "devDependencies": {
+    "electron": "^27.0.2",
     "electron-builder": "^24.6.4",
     "json-colorizer": "^2.2.2"
   }
