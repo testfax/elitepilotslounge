@@ -1,0 +1,1050 @@
+{
+    "header": {
+      "source": "https://elite-journal.readthedocs.io/en/latest/",
+      "version": "36",
+      "changeDate": "update14 November-2022"
+    },
+    "events": [
+      
+      {
+        "category": "other events",
+        "event": "SupercruiseDestinationDrop"
+      },
+      {
+        "category": "Combat",
+        "event": "ShipTargeted"
+      },
+      {
+        "category": "Trade",
+        "event": "EjectCargo"
+      },
+      {
+        "category": "Startup",
+        "event": "Fileheader"
+      },
+      { 
+        "category": "json",
+        "event": "Status" 
+      },
+      { 
+        "category": "json",
+        "event": "ModulesInfo" 
+      },
+      { 
+        "category": "json",
+        "event": "ShipLocker" 
+      },
+      { 
+        "category": "json",
+        "event": "Shipyard" 
+      },
+      { 
+        "category": "json",
+        "event": "Cargo" 
+      },
+      { 
+        "category": "json",
+        "event": "Outfitting" 
+      },
+      { 
+        "category": "json",
+        "event": "NavRoute" 
+      },
+      { 
+        "category": "json",
+        "event": "Market" 
+      },
+      {
+        "category": "json",
+        "event": "Backpack" 
+      },
+      { 
+        "category": "json",
+        "event": "FCMaterials" 
+      },
+      {
+        "category": "Combat",
+        "event": "Bounty"
+      },
+      {
+        "category": "Combat",
+        "event": "CapShipBond"
+      },
+      {
+        "category": "Combat",
+        "event": "Died"
+      },
+      {
+        "category": "Combat",
+        "event": "EscapeInterdiction"
+      },
+      {
+        "category": "Combat",
+        "event": "FactionKillBond"
+      },
+      {
+        "category": "Combat",
+        "event": "FighterDestroyed"
+      },
+      {
+        "category": "Combat",
+        "event": "HeatDamage"
+      },
+      {
+        "category": "Combat",
+        "event": "HeatWarning"
+      },
+      {
+        "category": "Combat",
+        "event": "HullDamage"
+      },
+      {
+        "category": "Combat",
+        "event": "Interdicted"
+      },
+      {
+        "category": "Combat",
+        "event": "Interdiction"
+      },
+      {
+        "category": "Combat",
+        "event": "PVPKill"
+      },
+      {
+        "category": "Combat",
+        "event": "ShieldState"
+      },
+      {
+        "category": "Combat",
+        "event": "ShipTargetted"
+      },
+      {
+        "category": "Combat",
+        "event": "SRVDestroyed"
+      },
+      {
+        "category": "Combat",
+        "event": "UnderAttack"
+      },
+      {
+        "category": "Exploration",
+        "event": "BuyExplorationData"
+      },
+      {
+        "category": "Exploration",
+        "event": "CodexEntry"
+      },
+      {
+        "category": "Exploration",
+        "event": "DiscoveryScan"
+      },
+      {
+        "category": "Exploration",
+        "event": "FSSAllBodiesFound"
+      },
+      {
+        "category": "Exploration",
+        "event": "FSSBodySignals"
+      },
+      {
+        "category": "Exploration",
+        "event": "FSSDiscoveryScan"
+      },
+      {
+        "category": "Exploration",
+        "event": "FSSSignalDiscovered"
+      },
+      {
+        "category": "Exploration",
+        "event": "MaterialCollected"
+      },
+      {
+        "category": "Exploration",
+        "event": "MaterialDiscarded"
+      },
+      {
+        "category": "Exploration",
+        "event": "MaterialDiscovered"
+      },
+      {
+        "category": "Exploration",
+        "event": "MultiSellExplorationData"
+      },
+      {
+        "category": "Exploration",
+        "event": "NavBeaconScan"
+      },
+      {
+        "category": "Exploration",
+        "event": "SAAScanComplete"
+      },
+      {
+        "category": "Exploration",
+        "event": "SAASignalsFound"
+      },
+      {
+        "category": "Exploration",
+        "event": "ScanBaryCentre"
+      },
+      {
+        "category": "Exploration",
+        "event": "Screenshot"
+      },
+      {
+        "event": "Scan",
+        "category": "Exploration"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierBankTransfer"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierBuy"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierCancelDecommission"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierCrewServices"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierDecomission"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierDepositeFuel"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierDockingPermission"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierFinance"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierJump"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierJumpCancelled"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierJumpRequest"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierModulePack"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierNameChanged"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierShipPack"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierStats"
+      },
+      {
+        "category": "Fleet Carriers",
+        "event": "CarrierTradeOrder"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BackPack"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BackpackChange"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BookDropShip"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BookTaxi"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BuyMicroResources"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BuySuit"
+      },
+      {
+        "category": "Odyssey",
+        "event": "BuyWeapon"
+      },
+      {
+        "category": "Odyssey",
+        "event": "CancelDropship"
+      },
+      {
+        "category": "Odyssey",
+        "event": "CancelTaxi"
+      },
+      {
+        "category": "Odyssey",
+        "event": "CollectItems"
+      },
+      {
+        "category": "Odyssey",
+        "event": "CreateSuitLoadouts"
+      },
+      {
+        "category": "Odyssey",
+        "event": "DeleteSuitLoadouts"
+      },
+      {
+        "category": "Odyssey",
+        "event": "Disembark"
+      },
+      {
+        "category": "Odyssey",
+        "event": "DropItems"
+      },
+      {
+        "category": "Odyssey",
+        "event": "DropShipDeploy"
+      },
+      {
+        "category": "Odyssey",
+        "event": "Embark"
+      },
+      {
+        "category": "Odyssey",
+        "event": "FCMaterials"
+      },
+      {
+        "category": "Odyssey",
+        "event": "LoadoutEquipModule"
+      },
+      {
+        "category": "Odyssey",
+        "event": "LoadoutRemoveModule"
+      },
+      {
+        "category": "Odyssey",
+        "event": "RenameSuitLoadout"
+      },
+      {
+        "category": "Odyssey",
+        "event": "ScanOrganic"
+      },
+      {
+        "category": "Odyssey",
+        "event": "SellMicroResources"
+      },
+      {
+        "category": "Odyssey",
+        "event": "SellOrganicData"
+      },
+      {
+        "category": "Odyssey",
+        "event": "SellSuit"
+      },
+      {
+        "category": "Odyssey",
+        "event": "SellWeapon"
+      },
+      {
+        "category": "Odyssey",
+        "event": "ShipLocker"
+      },
+      {
+        "category": "Odyssey",
+        "event": "SwitchSuitLoadout"
+      },
+      {
+        "category": "Odyssey",
+        "event": "TradeMicroResources"
+      },
+      {
+        "category": "Odyssey",
+        "event": "TransferMicroResources"
+      },
+      {
+        "category": "Odyssey",
+        "event": "UpgradeSuit"
+      },
+      {
+        "category": "Odyssey",
+        "event": "UpgradeWeapon"
+      },
+      {
+        "category": "Odyssey",
+        "event": "UseConsumable"
+      },
+      {
+        "category": "other events",
+        "event": "AfmuRepairs"
+      },
+      {
+        "category": "other events",
+        "event": "ApproachSettlement"
+      },
+      {
+        "category": "other events",
+        "event": "CargoTransfer"
+      },
+      {
+        "category": "other events",
+        "event": "ChangeCrewRole"
+      },
+      {
+        "category": "other events",
+        "event": "CockpitBreached"
+      },
+      {
+        "category": "other events",
+        "event": "CommitCrime"
+      },
+      {
+        "category": "other events",
+        "event": "Continued"
+      },
+      {
+        "category": "other events",
+        "event": "CrewLaunchFighter"
+      },
+      {
+        "category": "other events",
+        "event": "CrewMemberJoin"
+      },
+      {
+        "category": "other events",
+        "event": "CrewMemberRoleChange"
+      },
+      {
+        "category": "other events",
+        "event": "CrimeVictim"
+      },
+      {
+        "category": "other events",
+        "event": "DatalinkScan"
+      },
+      {
+        "category": "other events",
+        "event": "DatalinkVoucher"
+      },
+      {
+        "category": "other events",
+        "event": "DataScanned"
+      },
+      {
+        "category": "other events",
+        "event": "DockedFighter"
+      },
+      {
+        "category": "other events",
+        "event": "DockedSRV"
+      },
+      {
+        "category": "other events",
+        "event": "EndCrewSession"
+      },
+      {
+        "category": "other events",
+        "event": "FighterRebuilt"
+      },
+      {
+        "category": "other events",
+        "event": "Friends"
+      },
+      {
+        "category": "other events",
+        "event": "FuelScoop"
+      },
+      {
+        "category": "other events",
+        "event": "JetConeBoost"
+      },
+      {
+        "category": "other events",
+        "event": "JetConeDamage"
+      },
+      {
+        "category": "other events",
+        "event": "JoinACrew"
+      },
+      {
+        "category": "other events",
+        "event": "KickCrewMember"
+      },
+      {
+        "category": "other events",
+        "event": "LaunchDrone"
+      },
+      {
+        "category": "other events",
+        "event": "LaunchFighter"
+      },
+      {
+        "category": "other events",
+        "event": "LaunchSRV"
+      },
+      {
+        "category": "other events",
+        "event": "ModuleInfoSCRAPPEDFORJSON"
+      },
+      {
+        "category": "other events",
+        "event": "Music"
+      },
+      {
+        "category": "other events",
+        "event": "NpcCrewPaidWage"
+      },
+      {
+        "category": "other events",
+        "event": "NpcCrewRank"
+      },
+      {
+        "category": "other events",
+        "event": "Promotion"
+      },
+      {
+        "category": "other events",
+        "event": "ProspectedAsteroid"
+      },
+      {
+        "category": "other events",
+        "event": "QuitACrew"
+      },
+      {
+        "category": "other events",
+        "event": "RebootRepair"
+      },
+      {
+        "category": "other events",
+        "event": "ReceiveText"
+      },
+      {
+        "category": "other events",
+        "event": "RepairDrone"
+      },
+      {
+        "category": "other events",
+        "event": "ReservoirReplenished"
+      },
+      {
+        "category": "other events",
+        "event": "Resurrect"
+      },
+      {
+        "category": "other events",
+        "event": "Scanned"
+      },
+      {
+        "category": "other events",
+        "event": "SelfDestruct"
+      },
+      {
+        "category": "other events",
+        "event": "SendText"
+      },
+      {
+        "category": "other events",
+        "event": "Shutdown"
+      },
+      {
+        "category": "other events",
+        "event": "Synthesis"
+      },
+      {
+        "category": "other events",
+        "event": "SystemsShutdown"
+      },
+      {
+        "category": "other events",
+        "event": "USSDrop"
+      },
+      {
+        "category": "other events",
+        "event": "VehicleSwitch"
+      },
+      {
+        "category": "other events",
+        "event": "WingAdd"
+      },
+      {
+        "category": "other events",
+        "event": "WingInvite"
+      },
+      {
+        "category": "other events",
+        "event": "WingJoin"
+      },
+      {
+        "category": "other events",
+        "event": "WingLeave"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayCollect"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayDefect"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayDeliver"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayFastTrack"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayJoin"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayLeave"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplaySalary"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayVote"
+      },
+      {
+        "category": "Powerplay",
+        "event": "PowerplayVoucher"
+      },
+      {
+        "category": "Powerplay",
+        "event": "AppliedToSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "DisbandedSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "InvitedToSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "JoinedSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "KickedFromSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "LeftSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "SharedBookmarkToSquadron"
+      },
+      {
+        "category": "Squadrons",
+        "event": "SquadronCreated"
+      },
+      {
+        "category": "Squadrons",
+        "event": "SquadronDemotion"
+      },
+      {
+        "category": "Squadrons",
+        "event": "SquadronPromotion"
+      },
+      {
+        "category": "Squadrons",
+        "event": "SquadronStartup"
+      },
+      {
+        "category": "Squadrons",
+        "event": "WonATrophyForSquadron"
+      },
+      {
+        "category": "Station Services",
+        "event": "BuyAmmo"
+      },
+      {
+        "category": "Station Services",
+        "event": "BuyDrones"
+      },
+      {
+        "category": "Station Services",
+        "event": "CargoDepot"
+      },
+      {
+        "category": "Station Services",
+        "event": "CommunityGoal"
+      },
+      {
+        "category": "Station Services",
+        "event": "CommunityGoalDiscard"
+      },
+      {
+        "category": "Station Services",
+        "event": "CommunityGoalJoin"
+      },
+      {
+        "category": "Station Services",
+        "event": "CommunityGoalReward"
+      },
+      {
+        "category": "Station Services",
+        "event": "CrewAssign"
+      },
+      {
+        "category": "Station Services",
+        "event": "CrewFire"
+      },
+      {
+        "category": "Station Services",
+        "event": "CrewHire"
+      },
+      {
+        "category": "Station Services",
+        "event": "EngineerApply"
+      },
+      {
+        "category": "Station Services",
+        "event": "EngineerContribution"
+      },
+      {
+        "category": "Station Services",
+        "event": "EngineerCraft"
+      },
+      {
+        "category": "Station Services",
+        "event": "EngineerLegacyConvert"
+      },
+      {
+        "category": "Station Services",
+        "event": "EngineerProgress"
+      },
+      {
+        "category": "Station Services",
+        "event": "FetchRemoteModule"
+      },
+      {
+        "category": "Station Services",
+        "event": "Market"
+      },
+      {
+        "category": "Station Services",
+        "event": "MassModuleStore"
+      },
+      {
+        "category": "Station Services",
+        "event": "MaterialTrade"
+      },
+      {
+        "category": "Station Services",
+        "event": "MissionAbandonded"
+      },
+      {
+        "category": "Station Services",
+        "event": "MissionAccepted"
+      },
+      {
+        "category": "Station Services",
+        "event": "MissionCompleted"
+      },
+      {
+        "category": "Station Services",
+        "event": "MissionFailed"
+      },
+      {
+        "category": "Station Services",
+        "event": "MissionRedirected"
+      },
+      {
+        "category": "Station Services",
+        "event": "ModuleBuy"
+      },
+      {
+        "category": "Station Services",
+        "event": "ModuleRetrieve"
+      },
+      {
+        "category": "Station Services",
+        "event": "ModuleSell"
+      },
+      {
+        "category": "Station Services",
+        "event": "ModuelSellRemote"
+      },
+      {
+        "category": "Station Services",
+        "event": "ModuleStore"
+      },
+      {
+        "category": "Station Services",
+        "event": "ModuleSwap"
+      },
+      {
+        "category": "Station Services",
+        "event": "Outfitting"
+      },
+      {
+        "category": "Station Services",
+        "event": "PayBounties"
+      },
+      {
+        "category": "Station Services",
+        "event": "PayFines"
+      },
+      {
+        "category": "Station Services",
+        "event": "PayLegacyFines"
+      },
+      {
+        "category": "Station Services",
+        "event": "RedeemVoucher"
+      },
+      {
+        "category": "Station Services",
+        "event": "RefuelAll"
+      },
+      {
+        "category": "Station Services",
+        "event": "RefuelPartial"
+      },
+      {
+        "category": "Station Services",
+        "event": "Repair"
+      },
+      {
+        "category": "Station Services",
+        "event": "RepairAll"
+      },
+      {
+        "category": "Station Services",
+        "event": "RestockVehicle"
+      },
+      {
+        "category": "Station Services",
+        "event": "ScientificResearch"
+      },
+      {
+        "category": "Station Services",
+        "event": "SearchAndRescue"
+      },
+      {
+        "category": "Station Services",
+        "event": "SellDrones"
+      },
+      {
+        "category": "Station Services",
+        "event": "SellShipOnrebuy"
+      },
+      {
+        "category": "Station Services",
+        "event": "SetUserShipName"
+      },
+      {
+        "category": "Station Services",
+        "event": "Shipyard"
+      },
+      {
+        "category": "Station Services",
+        "event": "ShipyardBuy"
+      },
+      {
+        "category": "Station Services",
+        "event": "ShipyardNew"
+      },
+      {
+        "category": "Station Services",
+        "event": "ShipyardSell"
+      },
+      {
+        "category": "Station Services",
+        "event": "ShipyardSwap"
+      },
+      {
+        "category": "Station Services",
+        "event": "ShipyardTransfer"
+      },
+      {
+        "category": "Station Services",
+        "event": "StoredModules"
+      },
+      {
+        "category": "Station Services",
+        "event": "StoredShips"
+      },
+      {
+        "category": "Station Services",
+        "event": "TechnologyBroker"
+      },
+      {
+        "category": "Trade",
+        "event": "AsteroidCracked"
+      },
+      {
+        "category": "Trade",
+        "event": "BuyTradeData"
+      },
+      {
+        "category": "Trade",
+        "event": "CollectCargo"
+      },
+      {
+        "category": "Trade",
+        "event": "MarketBuy"
+      },
+      {
+        "category": "Trade",
+        "event": "MarketSell"
+      },
+      {
+        "category": "Trade",
+        "event": "MarketRefined"
+      },
+      {
+        "category": "Travel",
+        "event": "ApproachBody"
+      },
+      {
+        "category": "Travel",
+        "event": "Docked"
+      },
+      {
+        "category": "Travel",
+        "event": "DockingCancelled"
+      },
+      {
+        "category": "Travel",
+        "event": "DockingDenied"
+      },
+      {
+        "category": "Travel",
+        "event": "DockingGranted"
+      },
+      {
+        "category": "Travel",
+        "event": "DockingRequested"
+      },
+      {
+        "category": "Travel",
+        "event": "DockingTimeout"
+      },
+      {
+        "category": "Travel",
+        "event": "FSDJump"
+      },
+      {
+        "category": "Travel",
+        "event": "FSDTarget"
+      },
+      {
+        "category": "Travel",
+        "event": "LeaveBody"
+      },
+      {
+        "category": "Travel",
+        "event": "Liftoff"
+      },
+      {
+        "category": "Travel",
+        "event": "Location"
+      },
+      {
+        "category": "Travel",
+        "event": "Navroute"
+      },
+      {
+        "category": "Travel",
+        "event": "NavRouteClear"
+      },
+      {
+        "category": "Travel",
+        "event": "StartJump"
+      },
+      {
+        "category": "Travel",
+        "event": "SupercruiseEntry"
+      },
+      {
+        "category": "Travel",
+        "event": "SupercruiseExit"
+      },
+      {
+        "category": "Travel",
+        "event": "Touchdown"
+      },
+      {
+        "category": "Travel",
+        "event": "Undocked"
+      },
+      {
+        "category": "Startup",
+        "event": "Cargo"
+      },
+      {
+        "category": "Startup",
+        "event": "ClearSavedGame"
+      },
+      {
+        "category": "Startup",
+        "event": "Commander"
+      },
+      {
+        "category": "Startup",
+        "event": "LoadGame"
+      },
+      {
+        "category": "Startup",
+        "event": "Loadout"
+      },
+      {
+        "category": "Startup",
+        "event": "Materials"
+      },
+      {
+        "category": "Startup",
+        "event": "Missions"
+      },
+      {
+        "category": "Startup",
+        "event": "NewCommander"
+      },
+      {
+        "category": "Startup",
+        "event": "Passengers"
+      },
+      {
+        "category": "Startup",
+        "event": "Powerplay"
+      },
+      {
+        "category": "Startup",
+        "event": "Progress"
+      },
+      {
+        "category": "Startup",
+        "event": "Rank"
+      },
+      {
+        "category": "Startup",
+        "event": "Reputation"
+      },
+      {
+        "category": "Startup",
+        "event": "Statistics"
+      }
+    ]
+  }

@@ -1,0 +1,95 @@
+{
+  "data": [
+    {
+      "Name": "shielddensityreports",
+      "Name_Localised": "Untypical Shield Scans",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-10-25T01:36:42Z",
+      "Total": 153
+    },
+    {
+      "Name": "iron",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-24T03:40:38Z",
+      "Total": 226
+    },
+    {
+      "Name": "nickel",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-24T03:40:38Z",
+      "Total": 226
+    },
+    {
+      "Name": "iron",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:37:56Z",
+      "Total": 238
+    },
+    {
+      "Name": "nickel",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:37:56Z",
+      "Total": 237
+    },
+    {
+      "Name": "iron",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:28:45Z",
+      "Total": 248
+    },
+    {
+      "Name": "nickel",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:28:45Z",
+      "Total": 247
+    },
+    {
+      "Name": "iron",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:23:16Z",
+      "Total": 258
+    },
+    {
+      "Name": "nickel",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:23:16Z",
+      "Total": 257
+    },
+    {
+      "Name": "iron",
+      "Count": 10,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2023-10-21T02:18:16Z",
+      "Total": 268
+    }
+  ]
+}

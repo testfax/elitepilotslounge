@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/stylesheets/index.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-vidid.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-food.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Trade+Winds&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Castoro+Titling&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Elite Pilots Lounge</title>
+     
+    
+</head>
+<body>
+    <div class="w3-container">
+        <div class="w3-row w3-center">
+            <div class="w3-border w3-round w3-text-orange">
+                <span class="font-BLOCKY w3-xlarge">STATISTICS</span>
+            </div>
+        </div>
+        <br>
+        <!-- BANK ACCOUNT -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="bankaccount" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' bankaccount>
+                <i id='bankaccount_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                BANK ACCOUNT
+            </div>
+            <div id="bankaccount_container" class="w3-row w3-center w3-hide">
+                <div class="w3-col s4 m4 l4" >
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Current_Wealth" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Ships" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST2</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Outfitting" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TeST3</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Repairs" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Fuel" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Ammo_Consumables" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Insurance_Claims" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Insurance" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Owned_Ship_Count" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Suits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Weapons" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Suit_Consumables" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Suits_Owned" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Weapons_Owned" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Spent_On_Premium_Stock" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Premium_Stock_Bought" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST4</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- COMBAT -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' > 
+            <div id="combat" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' combat>
+                <i id='combat_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                COMBAT
+            </div>
+            <div id="combat_container" class="w3-row w3-center w3-hide">
+                <div class="w3-col s4 m4 l4" >
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Bounties_Claimed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Bounty_Hunting_Profit" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Combat_Bonds" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Combat_Bond_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Assassinations" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Assassination_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Highest_Single_Reward" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Skimmers_Killed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="OnFoot_Combat_Bonds" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="OnFoot_Combat_Bonds_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="OnFoot_Vehicles_Destroyed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="OnFoot_Ships_Destroyed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Dropships_Taken" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Dropships_Booked" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Dropships_Cancelled" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_High" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_Medium" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_Low" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_High_Wins" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_Medium_Wins" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_Low_Wins" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ConflictZone_Total_Wins" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Settlement_Defended" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Settlement_Conquered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="OnFoot_Skimmers_Killed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="OnFoot_Scavs_Killed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- CRIME -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="crime" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' crime>
+                <i id='crime_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                CRIME
+            </div>
+            <div id="crime_container" class="w3-row w3-center w3-hide">
+                <div class="w3-col s4 m4 l4" >
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Notoriety" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Fines" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Total_Fines" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Bounties_Received" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Total_Bounties" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Highest_Bounty" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Malware_Uploaded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Settlements_State_Shutdown" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Production_Sabotage" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Production_Theft" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Total_Murders" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Citizens_Murdered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Omnipol_Murdered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Guards_Murdered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Data_Stolen" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Goods_Stolen" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Sample_Stolen" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Total_Stolen" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Turrets_Destroyed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Turrets_Overloaded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Turrets_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Value_Stolen_StateChange" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="Profiles_Cloned" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- SMUGGLING -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="smuggling" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' smuggling>
+                <i id='smuggling_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                SMUGGLING
+            </div>
+                <div id="smuggling_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Black_Markets_Traded_With" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Black_Markets_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Resources_Smuggled" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Average_Profit1" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Highest_Single_Transaction1" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- Trading -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="trading" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' trading>
+                <i id='trading_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                TRADING
+            </div>
+                <div id="trading_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Markets_Traded_With" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Market_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Resources_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Average_Profit" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Highest_Single_Transaction" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Data_Sold" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Goods_Sold" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Assets_Sold" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- mining -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="mining" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' mining>
+                <i id='mining_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                MINING
+            </div>
+                <div id="mining_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Mining_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Quantity_Mined" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Materials_Collected" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- exploration -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="exploration" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' exploration>
+                <i id='exploration_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                EXPLORATION
+            </div>
+                <div id="exploration_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Systems_Visited" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Exploration_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Planets_Scanned_To_Level_2" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Planets_Scanned_To_Level_3" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Efficient_Scans" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Highest_Payout" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Total_Hyperspace_Distance" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Total_Hyperspace_Jumps" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Greatest_Distance_From_Start" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Time_Played" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="OnFoot_Distance_Travelled" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Shuttle_Journeys" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Shuttle_Distance_Travelled" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Spent_On_Shuttles" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="First_Footfalls" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Planet_Footfalls" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Settlements_Visited" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- passengers -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="passengers" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' passengers>
+                <i id='passengers_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                PASSENGERS
+            </div>
+                <div id="passengers_container" class="w3-row w3-center w3-hide">
+                    
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Passengers_Missions_Accepted" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Passengers_Missions_Disgruntled" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Passengers_Missions_Bulk" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Passengers_Missions_VIP" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Passengers_Missions_Delivered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Passengers_Missions_Ejected" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- search and rescue -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="search and rescue" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' search and rescue>
+                <i id='search and rescue_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                SEARCH AND RESCUE
+            </div>
+                <div id="search and rescue_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="SearchRescue_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="SearchRescue_Profit" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="SearchRescue_Count" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Salvage_Legal_POI" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Salvage_Legal_Settlements" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Salvage_Illegal_POI" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Salvage_Illegal_Settlements" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Maglocks_Opened" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Panels_Opened" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Settlements_State_FireOut" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Settlements_State_Reboot" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- encounters -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="encounters" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' encounters>
+                <i id='encounters_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                ENCOUNTERS
+            </div>
+                <div id="encounters_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="TG_ENCOUNTER_KILLED" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="TG_ENCOUNTER_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="TG_ENCOUNTER_TOTAL_LAST_SYSTEM" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="TG_ENCOUNTER_TOTAL_LAST_TIMESTAMP" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="TG_ENCOUNTER_TOTAL_LAST_SHIP" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="TG_ENCOUNTER_WAKES" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+
+                </div> 
+        </div>
+        <br>
+        <!-- END -->
+        <!-- crafting -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="crafting" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' crafting>
+                <i id='crafting_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                CRAFTING
+            </div>
+                <div id="crafting_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Count_Of_Used_Engineers" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Recipes_Generated" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Recipes_Generated_Rank_1" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Recipes_Generated_Rank_2" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Recipes_Generated_Rank_3" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Recipes_Generated_Rank_4" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Recipes_Generated_Rank_5" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Suit_Mods_Applied" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Weapon_Mods_Applied" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Weapons_Upgraded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Suits_Upgraded_Full" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Weapons_Upgraded_Full" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Suits_Upgraded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Suit_Mods_Applied_Full" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Weapon_Mods_Applied_Full" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div> 
+        </div>
+        <br>
+        <!-- END -->
+        <!-- crew -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="crew" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' crew>
+                <i id='crew_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                CREW
+            </div>
+                <div id="crew_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="NpcCrew_TotalWages" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="NpcCrew_Hired" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="NpcCrew_Fired" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="NpcCrew_Died" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- multicrew -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="multicrew" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' multicrew>
+                <i id='multicrew_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                MULTICREW
+            </div>
+                <div id="multicrew_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Time_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Gunner_Time_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Fighter_Time_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Credits_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Fines_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- Material_Trader_Stats -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="Material_Trader_Stats" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' Material_Trader_Stats>
+                <i id='Material_Trader_Stats_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                MATERIAL TRADER STATS
+            </div>
+                <div id="Material_Trader_Stats_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Trades_Completed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Encoded_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Raw_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Grade_1_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Grade_2_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Grade_3_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Grade_4_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Grade_5_Materials_Traded" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Assets_Traded_In" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Assets_Traded_Out" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- CQC -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="CQC" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' CQC>
+                <i id='CQC_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                CQC
+            </div>
+                <div id="CQC_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="CQC_Credits_Earned" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="CQC_Time_Played" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="CQC_KD" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="CQC_Kills" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="CQC_WL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- TEMPLAFLEETCARRIERTE2 -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="FLEETCARRIER" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' FLEETCARRIER>
+                <i id='FLEETCARRIER_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                FLEET CARRIER
+            </div>
+                <div id="FLEETCARRIER_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_EXPORT_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_IMPORT_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_TRADEPROFIT_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_TRADESPEND_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_STOLENPROFIT_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_STOLENSPEND_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_DISTANCE_TRAVELLED" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_TOTAL_JUMPS" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_SHIPYARD_SOLD" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_SHIPYARD_PROFIT" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_OUTFITTING_SOLD" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_OUTFITTING_PROFIT" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_REARM_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_REFUEL_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_REFUEL_PROFIT" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_REPAIRS_TOTAL" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_VOUCHERS_REDEEMED" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="FLEETCARRIER_VOUCHERS_PROFIT" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- Exobiology -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="Exobiology" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' Exobiology>
+                <i id='Exobiology_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                EXOBIOLOGY
+            </div>
+                <div id="Exobiology_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Genus_Encountered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Species_Encountered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Variant_Encountered" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Data_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Data" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="First_Logged_Profits" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="First_Logged" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Systems" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Planets" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Genus" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Organic_Species" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" ></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- TEMPLATE2 -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="TEMPLATE2" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' TEMPLATE2>
+                <i id='TEMPLATE2_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                TEMPLATE2
+            </div>
+                <div id="TEMPLATE2_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Time_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Gunner_Time_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Fighter_Time_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Credits_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Multicrew_Fines_Total" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <br>
+        <!-- END -->
+        <!-- TEMPLATE -->
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="template" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' template>
+                <i id='template_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                TEMPLATE
+            </div>
+                <div id="template_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4" >
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Active" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY">TEST</h5>
+                        </div>
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="activeList" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Complete" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="completeList" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Failed" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="failedList" class="w3-vivid-yellowfg2 statisticsData font-BLOCKY" >TEST</h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- END -->
+        <br>
+    </div>
+    <script src="../utilities/classSave.js" defer></script>
+    <script src="../utilities/functions.js" defer></script>
+    <script src="statistics.js" defer></script>
+
+
+</body>
+</html>

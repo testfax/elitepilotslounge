@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/stylesheets/index.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-vidid.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-food.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Trade+Winds&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Castoro+Titling&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Elite Pilots Lounge</title>
+     
+    
+</head>
+<body>
+    <div class="w3-container">
+        <div class="w3-row w3-center">
+            <div class="w3-border w3-round w3-col pointer w3-text-orange">
+                <span class="font-BLOCKY w3-xlarge">FRIENDS</span>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="sysHistory" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' sysHistory>
+                <i id='sysHistory_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                System History
+            </div>
+            <div id="sysHistory_container" class="">
+                <div class="w3-border w3-round-large w3-black">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <tbody id="histbar_container" >
+                        <tr>
+                            <th class="w3-text-yellow font-BLOCKY">TARANIS</th>
+                            <th class="w3-text-yellow font-BLOCKY" colspan="3">100% Hyades Sector FB-N b7-3</th>
+                            <th class="w3-text-yellow font-BLOCKY">15.4 Ly</th>
+                            <th class="w3-text-yellow font-BLOCKY" colspan="2">182383848 Souls</th>
+                            <th class="w3-text-yellow font-BLOCKY" colspan="3">67% «» 750/2910 Required</th>
+                        </tr>
+                        <tr>
+                            <th class="w3-text-pink font-BLOCKY">DATE</th>
+                            <th class="w3-text-pink font-BLOCKY">Commander</th>
+                            <th class="w3-text-pink font-BLOCKY">Ship</th>
+                            <th class="w3-text-pink font-BLOCKY">Caustic Protection</th>
+                            <th class="w3-text-pink font-BLOCKY">Cargo Capacity</th>
+                            <th class="w3-text-pink font-BLOCKY">To Carrier</th>
+                            <th class="w3-text-pink font-BLOCKY">Samples Collected</th>
+                            <th class="w3-text-cyan font-BLOCKY">Limpets Launched<br>
+                            
+                            </th>
+                            <th class="w3-text-cyan font-BLOCKY">Sample Rating</th>
+                            <th class="w3-text-brightgreen font-BLOCKY">Samples In Cargo</th>
+                            <th class="w3-text-yellow font-BLOCKY">Limpets Cargo</th>
+                        </tr>
+                        <tr>
+                            <th class="w3-text-orange font-BLOCKY">25SEPT23</th>
+                            <th class="w3-text-orange font-BLOCKY">Medi0cr3</th>
+                            <th class="w3-text-orange font-BLOCKY">Type-10 Defender</th>
+                            <th class="w3-text-orange font-BLOCKY">112t</th>
+                            <th class="w3-text-orange font-BLOCKY">176t</th>
+                            <th class="w3-text-orange font-BLOCKY">0</th>
+                            <th class="w3-text-orange font-BLOCKY">5555</th>
+                            <th class="w3-text-white font-BLOCKY fitwidth">
+                                <span id='launchResearchLimpet' class='tooltip-element pointer-help w3-text-brightgreen'>5555</span> |
+                                <span id='launchCollectorLimpet' class=' tooltip-element pointer-help w3-text-yellow'>5555</span> |
+                                <span id='launchRepairLimpet' class='tooltip-element pointer-help w3-text-cyan'>5555</span>
+                            </th>
+                            <th id='successRate' class="w3-text-brightgreen font-BLOCKY">90%</th>
+                            <th class="w3-text-brightgreen font-BLOCKY">
+                                <div class='w3-text-brightgreen'>223</div>
+                                <div class='w3-text-red'>199% OL</div>
+                            </th>
+                            <th class="w3-text-yellow font-BLOCKY">528</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="carrierSupport" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY ' carrierSupport>
+                <i id='carrierSupport_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                Carrier Support
+            </div>
+            <div id="carrierSupport_container" class="w3-section">
+                <div class="w3-border w3-round-large w3-black">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <table class="w3-table w3-bordered w3-medium">
+                            <tbody id="carrierSupportTable_container" >
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY">Titan Name</th>
+                                <th class="w3-text-yellow font-BLOCKY">Carrier Name</th>
+                                <th class="w3-text-yellow font-BLOCKY">System Parked</th>
+                                <th class="w3-text-yellow font-BLOCKY">System Supporting</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Onboard</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Requested</th>
+                            </tr>
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY">Taranis</th>
+                                <th class="w3-text-yellow font-BLOCKY">[AXI] Killer's Sabre</th>
+                                <th class="w3-text-yellow font-BLOCKY">Hyades Sector EG-N b7-0 A</th>
+                                <th class="w3-text-yellow font-BLOCKY">Hyades Sector FB-N b7-3</th>
+                                <th class="w3-text-yellow font-BLOCKY">2910</th>
+                                <th class="w3-text-yellow font-BLOCKY">2910</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="carrierSupport" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY ' carrierSupport>
+                <i id='carrierSupport_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                Carrier to Rescue Megaship Offload Stats
+            </div>
+            <div id="carrierSupport_container" class="w3-section">
+                <div class="w3-border w3-round-large w3-black">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <table class="w3-table w3-bordered w3-medium">
+                            <tbody id="carrierSupportTable_container" >
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="3">[AXI] Killer's Sabre</th>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="2">7000 Samples</th>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="2">Telin</th>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="4">Rescue Megaship Hutner</th>
+                            </tr>
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY">Commander</th>
+                                <th class="w3-text-yellow font-BLOCKY">Carrier Market Buy to Undock Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Bought</th>
+                                <th class="w3-text-yellow font-BLOCKY">Undock to Supercruise Entry Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Supercruise Exit to Megaship Docked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Docked to Undocked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Docked to Marketsell</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Marketsell to Undocked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Sold</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Undocked to Supercruise Entry</th>
+                                <th class="w3-text-yellow font-BLOCKY">Supercruise Exit to Carrier Docked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Round Trip Time</th>
+                            </tr>
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="../utilities/classSave.js" defer></script>
+<script src="../utilities/functions.js" defer></script>
+<script src="friends.js" defer></script>
+
+
+
+</body>
+</html>

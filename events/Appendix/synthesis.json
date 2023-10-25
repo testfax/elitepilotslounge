@@ -1,0 +1,750 @@
+{
+  "header": {
+      "logic": "list of basic, standard, premium synthesis",
+      "version": "36",
+      "changeDate": "update14 Nov-2022"
+  },
+  "synthesis": [
+      { 
+          "name": "FDS Injection", 
+          "description": "Materials can be injected into the frame shift drive to provide a single use, enhanced, jump, exceeding normal range limits.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "25% Distance",
+              "carbon": "1",
+              "vanadium": "1",
+              "germanium": "1"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "50% Distance",
+              "carbon": "1",
+              "vanadium": "1",
+              "germanium": "1",
+              "cadmium": "1",
+              "niobium": "1"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "100% Distance",
+              "carbon": "1",
+              "germanium": "1",
+              "arsenic": "1",
+              "niobium": "1",
+              "yttrium": "1",
+              "polonium": "1"
+          }
+      },
+      { 
+          "name": "AX Small Calibre Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Anti-Xeno Small Calibre Munitions are used by Anti-Xeno Multi-Cannons.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "nickel": "1",
+              "sulphur": "2",
+              "tg_weaponparts": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "5% Damage",
+              "iron": "2",
+              "phosphorus": "2",
+              "zirconium": "2",
+              "unknownenergysource": "3",
+              "tg_weaponparts": "4"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "10% Damage",
+              "iron": "3",
+              "phosphorus": "2",
+              "zirconium": "2",
+              "unknownenergysource": "4",
+              "unknowncarapace": "2",
+              "tg_weaponparts": "6"
+          }
+      },
+      { 
+          "name": "Guardian Plasma Charger Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Guardian Plasma Charger Munitions are used by Guardian Plasma Chargers.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "chromium": "3",
+              "heatdispersionplate": "2",
+              "guardian_powerconduit": "3",
+              "guardian_sentinel_wreckagecomponents": "4"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "chromium": "4",
+              "heatexchangers": "2",
+              "phasealloys": "2",
+              "guardian_powercell": "2",
+              "guardian_techcomponent": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "chromium": "6",
+              "zirconium": "2",
+              "heatexchangers": "4",
+              "phasealloys": "6",
+              "guardian_powercell": "4",
+              "guardian_sentinel_weaponparts": "3"
+          }
+      },
+      { 
+          "name": "Configurable Explosive Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard synthesis offres a full restock and reconfigures the explosives to impart anti-exno damage. Configurable explosives are used by Advanced Missiles.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "3",
+              "nickel": "3",
+              "carbon": "4",
+              "sulphur": "4"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "0",
+              "phosphorus": "6",
+              "arsenic": "4",
+              "mercury": "2",
+              "guardian_powercell": "1",
+              "guardian_powerconduit": "1",
+              "guardian_techcomponent": "1"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "Guardian Guass Cannon Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Guardian Guass Cannon Munitions are used by Guardian Guass Cannon.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "manganese": "3",
+              "focuscrystals": "2",
+              "guardian_powerconduit": "2",
+              "guardian_sentinel_wreckagecomponents": "4"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "manganese": "5",
+              "heatresistantceramics": "3",
+              "focuscrystals": "5",
+              "guardian_powerconduit": "4",
+              "guardian_sentinel_weaponparts": "3"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "manganese": "8",
+              "filamentcomposites": "6",
+              "focuscrystals": "10",
+              "guardian_techcomponent": "6"
+          }
+      },
+      { 
+          "name": "Enzyme Missile Launcher Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Enzyme Missiles are used by Enzyme Missile Launchers.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "3",
+              "sulphur": "3",
+              "tg_biomechanicalconduits": "4",
+              "tg_propulsionelement": "3",
+              "tg_weaponparts": "3",
+              "lead": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "sulphur": "6",
+              "tungsten": "4",
+              "tg_biomechanicalconduits": "5",
+              "tg_propulsionelement": "6",
+              "tg_weaponparts": "4",
+              "lead": "4"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "phosphorus": "5",
+              "tungsten": "4",
+              "tg_biomechanicalconduits": "6",
+              "tg_propulsionelement": "6",
+              "tg_weaponparts": "5",
+              "lead": "6"
+          }
+      },
+      { 
+          "name": "Configurable Small Calibre Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and reconfigures the munitions to impart anti-xeno damage. Configurable small calibre munitions are used by Advanced Multi-Cannons.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "nickel": "1",
+              "sulphur": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "0",
+              "tin": "2",
+              "zinc": "3",
+              "phosphorus": "3",
+              "guardian_powercell": "1",
+              "guardian_powerconduit": "1",
+              "guardian_techcomponent": "1"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "Plasma Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Plasma munitions is used by Plasma Accelerators.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "sulphur": "5555555555555555",
+              "phosphorus": "5555555555555555",
+              "manganese": "5555555555555555"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "phosphorus": "5",
+              "manganese": "3",
+              "selenium": "1",
+              "molybdenum": "4"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "selenium": "5",
+              "cadmium": "4",
+              "molybdenum": "4",
+              "technetium": "2"
+          }
+      },
+      { 
+          "name": "Seismic Charge Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Seismic Charge Munitions are used by Seismic Charge Launchers.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "nickel": "2",
+              "sulphur": "2",
+              "phosphorus": "3",
+              "mercury": "1"
+          },
+          "standard": {
+              "visible": "0"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "Explosive Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Explosives are used by Missiles and Mines.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "3",
+              "nickel": "3",
+              "carbon": "4",
+              "sulphur": "4"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "sulphur": "6",
+              "phosphorus": "6",
+              "arsenic": "4",
+              "mercury": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "phosphorus": "5",
+              "arsenic": "4",
+              "niobium": "5",
+              "mercury": "5",
+              "polonium": "5"
+          }
+      },
+      { 
+          "name": "AX Remote Flak Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Anti-Xeno Remote Flak Munitions are used by Anti-Xeno Remote Flak Launchers.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "nickel": "4",
+              "carbon": "3",
+              "sulphur": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "5% Damage",
+              "tin": "2",
+              "zinc": "3",
+              "arsenic": "1",
+              "unknowntechnologycomponents": "3",
+              "tg_wreckagecomponents": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "10% Damage",
+              "zinc": "8",
+              "tungsten": "2",
+              "arsenic": "1",
+              "unknownenergysource": "3",
+              "unknowntechnologycomponents": "4",
+              "tg_weaponparts": "1"
+          }
+      },
+      { 
+          "name": "Flechette Launcher Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Flechette Launcher Munitions are used by Flechette Launchers.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "tungsten": "1",
+              "electrochemicalarrays": "3",
+              "mechanicalcomponents": "2",
+              "boron": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "5% Damage",
+              "tungsten": "4",
+              "electrochemicalarrays": "6",
+              "mechanicalcomponents": "4",
+              "boron": "4"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "10% Damage",
+              "tungsten": "6",
+              "electrochemicalarrays": "9",
+              "mechanicalcomponents": "5",
+              "boron": "6"
+          }
+      },
+      { 
+          "name": "Small Calibre Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Small Calibre Munitions are used by Multi-Cannons.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "nickel": "1",
+              "sulphur": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "iron": "2",
+              "zinc": "2",
+              "phosphorus": "2",
+              "selenium": "2",
+              "zirconium": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "sulphur": "2",
+              "phosphorus": "2",
+              "tungsten": "2",
+              "zirconium": "2",
+              "mercury": "2",
+              "antimony": "1"
+          }
+      },
+      { 
+          "name": "High Velocity Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. High Velocity Munitions are used by Railguns.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "vanadium": "1"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "iron": "4",
+              "vanadium": "3",
+              "tungsten": "2",
+              "zirconium": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "vanadium": "4",
+              "tungsten": "4",
+              "zirconium": "2",
+              "yttrium": "2"
+          }
+      },
+      { 
+          "name": "Guardian Shard Cannon Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Guardian Shard Cannon Munitions are used by Guardian Shard Cannons.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "carbon": "3",
+              "vanadium": "2",
+              "crystalshards": "3",
+              "guardian_powercell": "3",
+              "guardian_sentinel_wreckagecomponents": "5"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "crystalshards": "4",
+              "guardian_powercell": "2",
+              "guardian_sentinel_weaponparts": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "carbon": "8",
+              "vanadium": "4",
+              "crystalshards": "8",
+              "guardian_powercell": "6"
+          }
+      },
+      { 
+          "name": "Sub-Surface Displacement Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Sub-Surface Displacement Munitions are used by Sub-Surface Displacement Missiles.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "nickel": "3",
+              "carbon": "3",
+              "sulphur": "3",
+              "tungsten": "2"
+          },
+          "standard": {
+              "visible": "0"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "Limpets", 
+          "description": "Materials can be used by your ship to synthesise supplies. Basic synthesis will create up to four limpets in your ship's cargo hold, space permitting.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "10",
+              "nickel": "10"
+          },
+          "standard": {
+              "visible": "0"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "Large Calibre Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Large Calibre Munitions are used by Cannons and Fragmentation Cannons.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "nickel": "4",
+              "carbon": "3",
+              "sulphur": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "tin": "2",
+              "zinc": "3",
+              "phosphorus": "3",
+              "arsenic": "1",
+              "zirconium": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "zinc": "8",
+              "tungsten": "2",
+              "arsenic": "1",
+              "mercury": "1",
+              "antimony": "2"
+          }
+      },
+      { 
+          "name": "Shock Cannon Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Shock Cannon Munitions are used by Shock Cannons.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "gridresistors": "3",
+              "heatdispersionplate": "2",
+              "focuscrystals": "2",
+              "phasealloys": "2",
+              "lead": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "5% Damage",
+              "gridresistors": "5",
+              "heatdispersionplate": "3",
+              "focuscrystals": "4",
+              "phasealloys": "5",
+              "lead": "3"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "10% Damage",
+              "gridresistors": "7",
+              "heatdispersionplate": "4",
+              "focuscrystals": "6",
+              "phasealloys": "8",
+              "lead": "5"
+          }
+      },
+      { 
+          "name": "AX Explosive Munitions", 
+          "description": "Materials can be used by your ship to synthesise ammunition. Basic synthesis provides half of a weapon's ammo capacity. Standard and premium offers a full restock and increased damage until the weapon is reloaded. Anti-Xeno Explosive Munitions are used by Anti-Xeno Dumbfire Missiles.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "3",
+              "nickel": "3",
+              "carbon": "4",
+              "tg_propulsionelement": "3"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "5% Damage",
+              "sulphur": "6",
+              "phosphorus": "6",
+              "mercury": "2",
+              "unknowncarapace": "4",
+              "tg_propulsionelement": "4"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "10% Damage",
+              "tungsten": "5",
+              "mercury": "4",
+              "polonium": "2",
+              "tg_biomechanicalconduits": "5",
+              "tg_propulsionelement": "5",
+              "tg_shipflightdata": "6"
+          }
+      },
+      { 
+          "name": "AFM Refill", 
+          "description": "The auto-field maintenance module can be restocked by processing materials. AFM repairs using higher quality materials will repair at an increased rate.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "nickel": "2",
+              "zinc": "2",
+              "chromium": "2",
+              "vanadium": "3"
+
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "50% Repair Speed",
+              "tin": "1",
+              "manganese": "2",
+              "vanadium": "6",
+              "molybdenum": "1",
+              "zirconium": "1"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "100% Repair Speed",
+              "zinc": "2",
+              "chromium": "4",
+              "vanadium": "6",
+              "zirconium": "2",
+              "tellurium": "1",
+              "ruthenium": "1"
+          }
+      },
+      { 
+          "name": "Chaff", 
+          "description": "Materials can be used by your ship to synthesise supplies. Basic synthesis provides half of the chaff launcher's supplies. Standard full resupply and premium synthesis provides a full resupply and increases chaff duration until the utility is next resupplied.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "compactcomposites": "1",
+              "filamentcomposites": "1"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "0",
+              "compactcomposites": "1",
+              "filamentcomposites": "2",
+              "thermicalloys": "1"
+          },
+          "premium": {
+              "visible": "+2 Second Duration",
+              "bonus": "5555555555555",
+              "compactcomposites": "1",
+              "filamentcomposites": "2",
+              "thermicalloys": "1",
+              "protoradiolicalloys": "1"
+          }
+      },
+      { 
+          "name": "Heatsinks", 
+          "description": "Materials can be used by your ship to synthesise supplies. Basic synthesis provides a full restock of the launcher's supplies. Standard and premium synthesis provides a full resupply and increased heat dissipation rate until the utility is next resupplied.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "heatconductionwiring": "2",
+              "basicconductors": "2"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Heat Dissipation",
+              "basicconductors": "2",
+              "heatconductionwiring": "2",
+              "heatexchangers": "2"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Heat Dissipation",
+              "basicconductors": "2",
+              "heatconductionwiring": "2",
+              "heatexchangers": "2",
+              "protoheatradiators": "1"
+          }
+      },
+      { 
+          "name": "Life Support", 
+          "description": "Materials can be used by your ship to synthesise supplies, Basic synthesis fully restocks the life support's emergency oxygen supply.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "nickel": "1"
+          },
+          "standard": {
+              "visible": "0"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "Caustic Sinks", 
+          "description": "Materials can be used by your ship to synthesise supplies. Basic synthesis provides full restock of the launcher's supplies.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "chemicalstorageunits": "1",
+              "galvanisingalloys": "1",
+              "tg_causticshard": "4",
+              "tg_causticgeneratorparts": "2"
+          },
+          "standard": {
+              "visible": "0"
+          },
+          "premium": {
+              "visible": "0"
+          }
+      },
+      { 
+          "name": "SRV Ammo Restock", 
+          "description": "The SRV's weapon system can use materials to resupply its ammunition store. Using higher quality materials to resupply the SRV Weapon confers a damage bonus.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "sulphur": "2",
+              "phosphorus": "1"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "15% Damage",
+              "phosphorus": "1",
+              "manganese": "1",
+              "selenium": "1",
+              "molybdenum": "1"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "30% Damage",
+              "phosphorus": "2",
+              "selenium": "2",
+              "molybdenum": "1",
+              "technetium": "1"
+          }
+      },
+      { 
+          "name": "SRV Repair", 
+          "description": "The SRV's maintenance system can utilize materials to effect immediate structural repairs to the vehicle whilst deployed to a planet surface. Higher quality materials will additionally confer an amount of damage resistance until further repairs are initiated.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "iron": "2",
+              "nickel": "1"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "50% Hull Strength",
+              "nickel": "3",
+              "manganese": "1",
+              "vanadium": "2",
+              "molybdenum": "1"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "100% Hull Strength",
+              "zinc": "1",
+              "chromium": "2",
+              "vanadium": "2",
+              "tungsten": "1",
+              "tellurium": "1"
+          }
+      },
+      { 
+          "name": "SRV Refuel", 
+          "description": "Materials can be injected into the SRV's power system to replenish its fuel supply. Injecting higher quality materials will improve the efficiency of the fuel, resulting in lower rates of fuel usage.",
+          "basic": { 
+              "visible": "1",
+              "bonus": "0",
+              "sulphur": "1",
+              "phosphorus": "1"
+          },
+          "standard": {
+              "visible": "1",
+              "bonus": "100% Fuel Efficiency",
+              "sulphur": "1",
+              "phosphorus": "1",
+              "arsenic": "1",
+              "mercury": "1"
+          },
+          "premium": {
+              "visible": "1",
+              "bonus": "200% Fuel Efficiency",
+              "sulphur": "1",
+              "arsenic": "1",
+              "mercury": "1",
+              "technetium": "1"
+          }
+      }
+  ]
+}

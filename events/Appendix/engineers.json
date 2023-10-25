@@ -1,0 +1,659 @@
+{
+    "header": {
+      "source": "https://elite-journal.readthedocs.io/en/latest/",
+      "version": "36",
+      "changeDate": "update14 November-2022"
+    },
+    "Engineers": [
+      {
+        "Engineer_type": "space",
+        "Engineer": "Hera Tani",
+        "EngineerID": 300090,
+        "Location_Name": "The Jet's Hole",
+        "Location_System": "KUWEMAKI",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Power Plant",
+            "G5: Detailed Surface Scanner",
+            "G3: Sensors",
+            "G3: Power Distributor"
+        ],
+        "howDiscover": "From Liz Ryder (grade 3-4).",
+        "meetingRequirement": "Gain rank Outsider or higher with the Empire.",
+        "unlockRequirement": "Provide 50 units of Kamitra Cigars.",
+        "repGain": "Craft modules for a major increase. Sell commodities to The Jet's Hole."
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "The Sarge",
+        "EngineerID": 300040,
+        "Location_Name": "The Beach",
+        "Location_System": "BETA-3 TUCANI",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Collector Limpit Controller",
+            "G5: Fuel Limpit Controller",
+            "G5: Hatch Breaker Limpit Controller",
+            "G5: Prospector Limpet Controller",
+            "G5: Cannon",
+            "G3: Rail Gun"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Professor Palin",
+        "EngineerID": 300220,
+        "Location_Name": "Abel Laboratory",
+        "Location_System": "ARQUE",
+        "Location_Distance": "",
+        "blueprints": [
+           "G5: Thrusters",
+           "G3: Frame Shift Drive"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Felicity Farseer",
+        "EngineerID": 300100,
+        "Location_Name": "Farseer Inc",
+        "Location_System": "DECIAT",
+        "Location_Distance": "",
+        "blueprints": [
+           "G5: Frame Shift Drive",
+           "G3: Thrusters",
+           "G3: Sensors",
+           "G3: Detailed Surface Scanner",
+           "G1: Shield Booster",
+           "G1: Frame Shift Drive Interdictor",
+           "G1: Power Plant"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": "" 
+      },
+      {
+        "Engineer_type": "groud",
+        "Engineer": "Eleanor Bresa",
+        "EngineerID": 400011,
+        "Location_Name": "Bresa Modifications",
+        "Location_System": "DESY",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Hero Ferrari",
+        "EngineerID": 400003,
+        "Location_Name": "Nevermore Terrace",
+        "Location_System": "SIRIS",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Tiana Fortune",
+        "EngineerID": 300270,
+        "Location_Name": "Fortune's Loss",
+        "Location_System": "ACHENAR",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Frame Shift Wake Scanner",
+            "G5: Kill Warrant Scanner",
+            "G5: Manifest Scanner",
+            "G5: Collector Limpet Controller",
+            "G5: Fuel Transfer Limpet Controller",
+            "G5: Hatch Breaker Limpet Controller",
+            "G5: Prospector Limpet Controller",
+            "G5: Sensors",
+            "G3: Frame Shift Drive Interdictor",
+            "G3: Detailed Surface Scanner"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Jude Navarro",
+        "EngineerID": 400001,
+        "Location_Name": "Marshall's Drift",
+        "Location_System": "AURAI",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Broo Tarquin",
+        "EngineerID": 300030,
+        "Location_Name": "Broo's Legacy",
+        "Location_System": "MUANG",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Brust Laser",
+            "G5: Pulse Laser",
+            "G5: Beam Laser"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Etienne Dorn",
+        "EngineerID": 300290,
+        "Location_Name": "Kraken's Retreat",
+        "Location_System": "LOS",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Plasma Accelerator",
+            "G5: Sensors",
+            "G5: Detailed Surface Scanner",
+            "G5: Life Support",
+            "G5: Power Plant",
+            "G5: Power Distributor",
+            "G5: Frame Shift Wake Scanner",
+            "G5: Kill Warrant Scanner",
+            "G5: Manifest Scanner",
+            "G5: Rail Gun"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Lori Jameson",
+        "EngineerID": 300230,
+        "Location_Name": "Jameson Base",
+        "Location_System": "SHINRARTA DEZRA",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Sensors",
+            "G5: Detailed Surface Scanner",
+            "G4: Refinery",
+            "G4: Fuel Scoop",
+            "G4: Auto Field-Maintenance Unit",
+            "G4: Life Support",
+            "G3: Frame Shift Wake Scanner",
+            "G3: Kill Warrant Scanner",
+            "G3: Manifest Scanner",
+            "G3: Shield Cell Bank"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Bill Turner",
+        "EngineerID": 300010,
+        "Location_Name": "Turner Metallics Inc",
+        "Location_System": "ALIOTH",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Plasma Accelerator",
+            "G5: Sensors",
+            "G5: Detailed Surface Scanner",
+            "G3: Life Support",
+            "G3: Refinery",
+            "G3: Auto Field-Maintenance Unit",
+            "G3: Fuel Scoop",
+            "G3: Frame Shift Wake Scanner",
+            "G3: Kill Warrant Scanner",
+            "G3: Manifest Scanner"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Liz Ryder",
+        "EngineerID": 300080,
+        "Location_Name": "Demolition Unlimited",
+        "Location_System": "EURYBIA",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Seeker Missile Rack",
+            "G5: Torpedo Pylon",
+            "G5: Missile Rack",
+            "G3: Mine Launcher",
+            "G1: Hull Reinforcement Package",
+            "G1: Armour"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Rosa Dayette",
+        "EngineerID": 400012,
+        "Location_Name": "Rosa's Shop",
+        "Location_System": "KOJEARA",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Juri Ishmaak",
+        "EngineerID": 300250,
+        "Location_Name": "Pater's Memorial",
+        "Location_System": "GIRYAK",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Mine Launcher",
+            "G5: Sensors",
+            "G5: Detailed Surface Scanner",
+            "G3: Torpedo Pylon",
+            "G3: Seeker Missile Rack",
+            "G3: Frame Shift Wake Scanner",
+            "G3: Kill Warrant Scanner",
+            "G3: Manifest Scanner",
+            "G3: Missile Rack"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Zacariah Nemo",
+        "EngineerID": 300050,
+        "Location_Name": "Nemo Cyber Party Base",
+        "Location_System": "YORU",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Fragment Cannon",
+            "G3: Multi-cannon",
+            "G2: Plasma Accelerator"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Mel Brandon",
+        "EngineerID": 300280,
+        "Location_Name": "The Brig",
+        "Location_System": "LUCHTAINE",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Frame Shift Drive",
+            "G5: Thrusters",
+            "G5: Shield Generator",
+            "G5: Burst Laser",
+            "G5: Pulse Laser",
+            "G5: Beam Laser",
+            "G5: Frame Shift Drive Interdictor",
+            "G5: Shield Booster",
+            "G4: Shield Cell Bank"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Selene Jean",
+        "EngineerID": 300210,
+        "Location_Name": "Prospector's Rest",
+        "Location_System": "KUK",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Hull Reinforcement Package",
+            "G5: Armour"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Marco Qwent",
+        "EngineerID": 300200,
+        "Location_Name": "Qwent Research Base",
+        "Location_System": "SIRIUS",
+        "Location_Distance": "",
+        "blueprints": [
+            "G4: Power Plant",
+            "G3: Power Distributor"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Chloe Sedesi",
+        "EngineerID": 300300,
+        "Location_Name": "Cinder Dock",
+        "Location_System": "SHENVE",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Thrusters",
+            "G3: Frame Shift Drive"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Baltanos",
+        "EngineerID": 400010,
+        "Location_Name": "The Divine Apparatus",
+        "Location_System": "DERISO",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Petra Olmanova",
+        "EngineerID": 300130,
+        "Location_Name": "Sanctuary",
+        "Location_System": "ASURA",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Ram Tah",
+        "EngineerID": 300110,
+        "Location_Name": "Phoenix Base",
+        "Location_System": "MEENE",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Electronic Countermeasure",
+            "G5: Point Defence",
+            "G5: Heat Sink Launcher",
+            "G5: Chaff Launcher",
+            "G4: Collector Limpet Controller",
+            "G4: Fuel Transfer Limpet Controller",
+            "G4: Prospector Limpet Controller",
+            "G3: Hatch Breaker Limpet Controller"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "The Dweller",
+        "EngineerID": 300180,
+        "Location_Name": "Black Hide",
+        "Location_System": "WYRD",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Power Distributor",
+            "G4: Pulse Laser",
+            "G3: Burst Laser",
+            "G3: Beam Laser"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Elvira Martuuk",
+        "EngineerID": 300160,
+        "Location_Name": "Long Sight Base",
+        "Location_System": "KHUN",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Frame Shift Drive",
+            "G3: Shield Generator",
+            "G2: Thrusters",
+            "G1: Shield Cell Bank"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Lei Cheung",
+        "EngineerID": 300120,
+        "Location_Name": "Trader's Rest",
+        "Location_System": "LAKSAK",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Shield Generator",
+            "G5: Shield Generator",
+            "G5: Detailed Surface Scanner",
+            "G3: Shield Booster"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Colonel Bris Dekker",
+        "EngineerID": 300140,
+        "Location_Name": "Dekker's Yard",
+        "Location_System": "SOL",
+        "Location_Distance": "",
+        "blueprints": [
+            "G4: Frame Shift Drive Interdictor",
+            "G3: Frame Shift Drive"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Didi Vatermann",
+        "EngineerID": 300000,
+        "Location_Name": "Vatermann LLC",
+        "Location_System": "LEESTI ",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Shield Booster",
+            "G3: Shield Generator"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Tod 'The Blaster' McQuinn",
+        "EngineerID": 300260,
+        "Location_Name": "Trophy Camp",
+        "Location_System": "WOLF 397",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Multi-cannon",
+            "G5: Rail Gun",
+            "G3: Fragment Cannon",
+            "G2: Cannon"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Domino Green",
+        "EngineerID": 400002,
+        "Location_Name": "The Jackrabbit",
+        "Location_System": "ORISHIS",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "space",
+        "Engineer": "Marsha Hicks",
+        "EngineerID": 300150,
+        "Location_Name": "The Watchtower",
+        "Location_System": "TIR",
+        "Location_Distance": "",
+        "blueprints": [
+            "G5: Collector Limpet Controller",
+            "G5: Fuel Transfer Limpet Controller",
+            "G5: Hatch Breaker Limpet Controller",
+            "G5: Prospector Limpet Controller",
+            "G5: Refinery",
+            "G5: Fuel Scoop",
+            "G5: Cannon",
+            "G5: Multi-cannon",
+            "G5: Fragment Cannon"
+        ],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Terra Velasquez",
+        "EngineerID": 400006,
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Kit Fowler",
+        "EngineerID": 400004,
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Uma Laszlo",
+        "EngineerID": 400007,
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Wellington Beck",
+        "EngineerID": 400005,
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Oden Geiger",
+        "EngineerID": "00002",
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Yarden Bond",
+        "EngineerID": "00001",
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      },
+      {
+        "Engineer_type": "ground",
+        "Engineer": "Yi Shen",
+        "EngineerID": "00003",
+        "Location_Name": "",
+        "Location_System": "",
+        "Location_Distance": "",
+        "blueprints": [],
+        "howDiscover": "",
+        "meetingRequirement": "",
+        "unlockRequirement": "",
+        "repGain": ""
+      }
+    ]
+  }

@@ -1,0 +1,191 @@
+{
+    "header": {
+      "source": "https://elite-journal.readthedocs.io/en/latest/",
+      "version": "36",
+      "changeDate": "update14 November-2022"
+    },
+    "Human": {
+        "Livery": [
+            {
+                "Thargoid Interceptor Bobblehead": {
+                    "size": "B2",
+                    "materials": {
+                        "meta-alloys": "10",
+                        "thargoid heart": "1"
+                    }
+                }
+            }
+        ],
+        "Hardpoint": [
+            {
+                "Azimuth Enhanced AX Multi-Cannon Class 3": {
+                    "size": "C3",
+                    "materials": {
+                        "iron": "11",
+                        "zirconium": "16",
+                        "bio-mechanical conduits": "9",
+                        "wreckage components": "12",
+                        "ship systems data": "6",
+                        "weapon parts": "17"
+                    }
+                },
+                "Azimuth Enhanced AX Multi-Cannon Class 2": {
+                    "size": "C2",
+                    "materials": {
+                        "iron": "9",
+                        "zirconium": "11",
+                        "bio-mechanical conduits": "6",
+                        "wreckage components": "7",
+                        "weapon parts": "14"
+                    }
+                }
+            }
+        
+        ],
+        "CoreModules": [
+            {
+                "Engineered FSD V1": {
+                    "size": "A5",
+                    "materials": {
+                        "data mined wake exceptions": "18",
+                        "tellerium": "26",
+                        "electrochemical arrays": "26",
+                        "chemical processors": "28"
+                    }
+                }
+            }
+        ],
+        "OptionalInternal": [
+            {
+                "Anti-Corrosion Cargo Rack": {
+                    "size": "E4",
+                    "materials": {
+                       "iron": "26",
+                       "chemical manipulators": "18",
+                       "meta-alloys": "16",
+                       "radiation baffle": "22",
+                       "neofabric insulation": "12"
+                    }
+                },
+                "Meta Alloy Hull Reinforcement": {
+                    "size": "E4",
+                    "materials": {
+                       "focus crystals": "25",
+                       "abberant shield pattern analysis": "22",
+                       "configurable components": "20",
+                       "meta-alloys": "16",
+                       "reinforced mounting plate": "12"
+                    }
+                },
+                "Engineered Detailed Surface Scanner V1": {
+                    "size": "l1",
+                    "materials": {
+                       "mechanical scrap": "26",
+                       "germanium": "22",
+                       "mechanical components": "28",
+                       "niobium": "24"
+                    }
+                }
+            }
+        ],
+        "UtilityMounts": [
+            {
+                "SIRIUS Heat Sink Launcher": {
+                    "size": "U",
+                    "materials:": {
+                        "Mechanical Scrap":"8",
+                        "Niobium":"6",
+                        "Vanadium":"6",
+                        "Mechanical Components":"5"
+                    }
+                }
+            },
+            {
+                "Caustic Sink Launcher": {
+                    "size": "U",
+                    "materials:": {
+                        "a":"B"
+                    }
+                }
+            },
+            {
+                "TG Pulse Neutralizer": {
+                    "size": "U",
+                    "materials:": {
+                        "Sensor Fragments": "5",
+                        "Unclassified Relic": "1",
+                        "Massive Energy Surge Analystics": "5",
+                        "Propulsion Elements": "5"
+                    }
+                }
+            }
+        ]
+    },
+    "Guardian": {
+        "Hardpoint": [
+            {
+            "Modified Plasma Charger Fixed Class 1": {
+                "size": "Class 1",
+                "materials": {
+                    "guardian power cell": "3",
+                    "guardian sentinel weapon parts": "3",
+                    "guardian technology component": "4",
+                    "arsenic": "2",
+                    "guardian weapon blueprint fragment": "1"
+                }
+            },
+            "Modified Plasma Charger Fixed Class 2": {
+                "size": "Class 2",
+                "materials": {
+                    "guardian power conduit": "5",
+                    "guardian sentinel weapon parts": "5",
+                    "guardian weapon blueprint fragment": "1",
+                    "arsenic": "4",
+                    "power transfer bus": "2"
+                }
+            },
+            "Modified Guass Cannon Fixed Class 1": {
+                "size": "Class 1",
+                "materials": {
+                    "guardian power conduit": "3",
+                    "guardian wreckage components": "3",
+                    "guardian sentinel weapon parts": "4",
+                    "niobium": "2",
+                    "guardian weapon blueprint fragment": "1"
+                }
+            },
+            "Modified Guass Cannon Fixed Class 2": {
+                "size": "Class 2",
+                "materials": {
+                    "guardian power cell": "5",
+                    "guardian sentinel weapon parts": "5",
+                    "guardian technology component": "4",
+                    "niobium": "4",
+                    "guardian weapon blueprint fragment": "1",
+                    "thermal cooling units": "2"
+                }
+            },
+            "Modified Shard Cannon Fixed Class 1": {
+                "size": "Class 1",
+                "materials": {
+                    "guardian power conduit": "3",
+                    "guardian wreckage components": "3",
+                    "guardian sentinel weapon parts": "4",
+                    "germanium": "2",
+                    "guardian weapon blueprint fragment": "1"
+                }
+            },
+            "Modified Shard Cannon Fixed Class 2": {
+                "size": "Class 2",
+                "materials": {
+                    "guardian wreckage components": "5",
+                    "guardian technology component": "5",
+                    "germanium": "4",
+                    "guardian weapon blueprint fragment": "1",
+                    "power converter": "2"
+                }
+            }
+        }
+    ]
+    }
+}

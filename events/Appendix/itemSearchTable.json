@@ -1,0 +1,159 @@
+{
+    "header": {
+      "source": "https://elite-journal.readthedocs.io/en/latest/",
+      "version": "37",
+      "changeDate": "update14 November-2022"
+    },
+    "titanLocation": [
+      {
+        "titan": "Taranis",
+        "x": "88.44",
+        "y": "-74.91",
+        "z": "-122.00"
+      },
+      {
+        "titan": "Indra",
+        "x": "-2.81",
+        "y": "-63.81",
+        "z": "-162.44"
+      },
+      {
+        "titan": "Leigong",
+        "x": "-66.44",
+        "y": "-144.41",
+        "z": "-106.28"
+      },
+      {
+        "titan": "Cocijo",
+        "x": "157.28",
+        "y": "14.97",
+        "z": "-103.88"
+      },
+      {
+        "titan": "Oya",
+        "x": "-97.81",
+        "y": "44.31",
+        "z": "-83.84"
+      },
+      {
+        "titan": "Thor",
+        "x": "125.50",
+        "y": "-169.75",
+        "z": "-97.13"
+      },
+      {
+        "titan": "Raijin",
+        "x": "-147.56",
+        "y": "-61.78",
+        "z": "-27.50"
+      },
+      {
+        "titan": "Hadad",
+        "x": "178.78",
+        "y": "-81.72",
+        "z": "-47.94"
+      }
+    ],
+    "RescueMegaShip": [
+      {
+        "MarketID": 128824468,
+        "Name": "$thargoidscouttissuesample_name;"
+      }
+    ],
+    "SpecialItems": [
+      {
+        "id": "",
+        "Type_Localised": "Thargoid Bio-storage Capsule",
+        "Type": "thargoidpod"
+      }
+    ],
+    "marketData": [
+      {
+        "id": 128824468,
+        "Name": "$thargoidscouttissuesample_name;",
+        "Name_Cargo": "thargoidscouttissuesample",
+        "Name_Localised": "Thargoid Scout Tissue Sample"
+      }
+    ],
+    "cargoracks": [
+        {
+          "name": "int_cargorack_size8_class1",
+          "capacity": 256,
+          "causticProtect": 0
+        },
+        { 
+          "name": "int_cargorack_size7_class1",
+          "capacity": 128,
+          "causticProtect": 0
+        },
+        { 
+          "name": "int_cargorack_size6_class1",
+          "capacity": 64,
+          "causticProtect": 0 
+        },
+        { 
+          "name": "int_cargorack_size5_class1",
+          "capacity": 32,
+          "causticProtect": 0 
+        },
+        { 
+          "name": "int_cargorack_size4_class1",
+          "capacity": 16,
+          "causticProtect": 0 
+        },
+        { 
+          "name": "int_cargorack_size3_class1",
+          "capacity": 8,
+          "causticProtect": 0 
+        },
+        { 
+          "name": "int_cargorack_size2_class1",
+          "capacity": 4,
+          "causticProtect": 0 
+        },
+        { 
+          "name": "int_cargorack_size1_class1",
+          "capacity": 2,
+          "causticProtect": 0 
+        },
+        { 
+          "name": "int_corrosionproofcargorack_size4_class1",
+          "capacity": 16,
+          "causticProtect": 1
+        },
+        { 
+          "name": "int_corrosionproofcargorack_size5_class1",
+          "capacity": 32,
+          "causticProtect": 1 
+        },
+        { 
+          "name": "int_corrosionproofcargorack_size6_class1",
+          "capacity": 64,
+          "causticProtect": 1 
+        }
+    ],
+    "researchControllers": [
+      {
+        "name": "int_multidronecontrol_universal_size7_class5",
+        "maximumLimpet": 8
+      },
+      {
+        "name": "int_dronecontrol_unkvesselresearch",
+        "maximumLimpet": 1
+      },
+      {
+        "name": "int_multidronecontrol_xeno_size3_class4",
+        "maximumLimpet": 4
+      }
+    ],
+    "collectorControllers": [
+      {
+        "name": "int_multidronecontrol_universal_size7_class5",
+        "maximumLimpet": 8
+      },
+      {
+        "name": "int_dronecontrol_unkvesselresearch",
+        "maximumLimpet": 1
+      }
+    ]
+}

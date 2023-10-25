@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/stylesheets/index.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-vidid.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-food.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Trade+Winds&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Castoro+Titling&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Elite Pilots Lounge</title>
+     
+    
+</head>
+<body>
+    <div class="w3-container">
+        <div class="w3-row w3-center">
+            <div class="w3-border w3-round w3-col pointer w3-text-orange">
+                <span class="font-BLOCKY w3-xlarge">THARGOID SAMPLING</span>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="activeSystem" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' activeSystem>
+                <i id='activeSystem_arrow' class="w3-text-brightgreen material-icons">arrow_drop_down</i>
+                Active Systems
+            </div>
+            <div id="activeSystem_container" class="w3-row-padding">
+                <div class="w3-section w3-border w3-round-large w3-black">
+                    <div id="activeTitanSelector" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' activeTitanSelector>
+                        <i id='activeTitanSelector_arrow' class="w3-text-brightgreen material-icons">arrow_drop_down</i>
+                        Active Titans
+                    </div>
+                    <div id="activeTitanSelector_container" class="">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <tbody id="titanSelectors_container" >
+                            <!-- <tr>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">TARANIS</th>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">HADAD</th>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">COCIJO</th>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">OYA</th>
+                            </tr>
+                            <tr>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">TARANIS</th>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">HADAD</th>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">COCIJO</th>
+                                <th class="w3-large w3-text-orange font-BLOCKY2">OYA</th>
+                            </tr>
+                            <tr>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                                <td class="w3-text-orange font-DAFONT">
+                                    <span class="w3-small w3-text-orange"><i id="control" class="w3-small pointerRadio w3-vivid-green1 material-icons" expandall>radio_button_unchecked</i>&nbsp;CONTROLL</span>
+                                    <span class="w3-small w3-text-orange"><i id="alert" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;ALERT</span>
+                                    <span class="w3-small w3-text-orange"><i id="invasion" class="w3-small pointerRadio w3-vivid-green1 material-icons" collapseall>radio_button_unchecked</i>&nbsp;INVASION</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="w3-row w3-border w3-round-large w3-black">
+                <table class="w3-table w3-bordered w3-medium" id="activeSystembar_containerHost">
+                    <tbody id="activeSystembar_container_titan_wait" class="SysTit-Dom-Created">
+                        <!-- <img style="vertical-align: top;" class='circle-background gradePics' src="../../public/images/ships_cartoon/type-10-defender.png"> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray ' >
+            <div id="sysHistory" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' sysHistory>
+                <i id='sysHistory_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                System History
+            </div>
+            <div id="sysHistory_container" class="w3-hide">
+                <div class="w3-border w3-round-large w3-black">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <tbody id="test_container" >
+                        <tr>
+                            <th class="w3-vivid-yellowfg font-BLOCKY">TARANIS</th>
+                            <th class="font-BLOCKY" colspan="3">
+                                <span id='WarProgress' class="w3-vivid-yellow">100%</span> 
+                                <span id='StarSystem' class="w3-vivid-yellowfg">Hyades Sector FB-N b7-3</span> 
+                            </th>
+                            <th class="w3-vivid-yellowfg font-BLOCKY">15.4 Ly</th>
+                            <th class="w3-vivid-yellowfg font-BLOCKY" colspan="2">182383848 Souls</th>
+                            <th class="w3-vivid-yellowfg font-BLOCKY" colspan="3">
+                                <span id="sampleProgress" class="w3-vivid-yellow">67%</span>
+                                «»
+                                <span id="sampleProgress" class="">750</span>
+                                /
+                                <span id="sampleProgress" class="">2910</span>
+                                   Required
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="w3-vivid-gray font-BLOCKY">DATE</th>
+                            <th class="w3-vivid-gray font-BLOCKY">Commander</th>
+                            <th class="w3-vivid-gray font-BLOCKY">Ship</th>
+                            <th class="w3-text-yellow font-BLOCKY">Sample Rating</th>
+                            <th class="w3-text-yellow font-BLOCKY">Samples In Cargo</th>
+                            <th class="w3-text-yellow font-BLOCKY">Limpets Cargo</th>
+                            <th class="w3-vivid-gray font-BLOCKY">Caustic Protection</th>
+                            <th class="w3-text-pink font-BLOCKY">Cargo Capacity</th>
+                            <th class="w3-text-pink font-BLOCKY">To Carrier</th>
+                            <th class="w3-text-pink font-BLOCKY">Samples Collected</th>
+                            <th class="w3-text-pink font-BLOCKY fitwidth">Limpets Launched</th>
+                        </tr>
+                        <tr>
+                            <th class="w3-text-orange font-BLOCKY">25SEPT23</th>
+                            <th class="w3-text-orange font-BLOCKY">Medi0cr3</th>
+                            <th class="w3-text-orange font-BLOCKY">Type-10 Defender</th>
+                            <th id='successRate' class="w3-text-brightgreen font-BLOCKY">90%</th>
+                            <th class="w3-text-brightgreen font-BLOCKY">
+                                <span class='w3-text-brightgreen'>223</span>
+                                <span class='w3-text-red'>199% OL</span>
+                            </th>
+                            <th class="w3-text-yellow font-BLOCKY">528</th>
+                            <th class="w3-text-orange font-BLOCKY">112t</th>
+                            <th class="w3-text-orange font-BLOCKY">176t</th>
+                            <th class="w3-text-orange font-BLOCKY">0</th>
+                            <th class="w3-text-orange font-BLOCKY">5555</th>
+                            <th class="w3-text-white font-BLOCKY fitwidth w3-center">
+                                <span id='launchResearchLimpet' class='tooltip-element pointer-help w3-text-brightgreen'>0</span> |
+                                <span id='launchCollectorLimpet' class=' tooltip-element pointer-help w3-text-yellow'>0</span> |
+                                <span id='launchRepairLimpet' class='tooltip-element pointer-help w3-text-cyan'>0</span>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-round w3-xlarge w3-dark-gray'>
+            <div id="carrierSupport" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY ' carrierSupport>
+                <i id='carrierSupport_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                Carrier Support
+            </div>
+            <div id="carrierSupport_container" class="w3-row-padding">
+                <div class="w3-border w3-round-large w3-black">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <table class="w3-table w3-bordered w3-medium">
+                            <tbody id="carrierSupportTable_container">
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY">Titan Name</th>
+                                <th class="w3-text-yellow font-BLOCKY">Carrier Name</th>
+                                <th class="w3-text-yellow font-BLOCKY">System Parked</th>
+                                <th class="w3-text-yellow font-BLOCKY">System Supporting</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Onboard</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Requested</th>
+                            </tr>
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY">Taranis</th>
+                                <th class="w3-text-yellow font-BLOCKY">[AXI] Killer's Sabre</th>
+                                <th class="w3-text-yellow font-BLOCKY">Hyades Sector EG-N b7-0 A</th>
+                                <th class="w3-text-yellow font-BLOCKY">Hyades Sector FB-N b7-3</th>
+                                <th class="w3-text-yellow font-BLOCKY">2910</th>
+                                <th class="w3-text-yellow font-BLOCKY">2910</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="turnInStats" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY ' turnInStats>
+                <i id='turnInStats_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                Carrier to Rescue Megaship Offload Stats
+            </div>
+            <div id="turnInStats_container" class="w3-row-padding">
+                <div class="w3-border w3-round-large w3-black">
+                    <table class="w3-table w3-bordered w3-medium">
+                        <table class="w3-table w3-bordered w3-medium">
+                            <tbody id="turnInStatsTable_container" >
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="3">[AXI] Killer's Sabre</th>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="2">7000 Samples</th>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="2">Telin</th>
+                                <th class="w3-text-yellow font-BLOCKY" colspan="4">Rescue Megaship Hutner</th>
+                            </tr>
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY">Commander</th>
+                                <th class="w3-text-yellow font-BLOCKY">Carrier Market Buy to Undock Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Bought</th>
+                                <th class="w3-text-yellow font-BLOCKY">Undock to Supercruise Entry Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Supercruise Exit to Megaship Docked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Docked to Undocked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Docked to Marketsell</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Marketsell to Undocked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Samples Sold</th>
+                                <th class="w3-text-yellow font-BLOCKY">Megaship Undocked to Supercruise Entry</th>
+                                <th class="w3-text-yellow font-BLOCKY">Supercruise Exit to Carrier Docked Time</th>
+                                <th class="w3-text-yellow font-BLOCKY">Round Trip Time</th>
+                            </tr>
+                            <tr>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                                <th class="w3-text-yellow font-BLOCKY"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> -->
+    </div>
+<script src="../utilities/classSave.js" defer></script>
+<script src="../utilities/functions.js" defer></script>
+<script src="sample.js" defer></script>
+
+
+
+</body>
+</html>

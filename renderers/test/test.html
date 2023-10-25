@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/stylesheets/index.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-vidid.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3-colors-food.css">
+    <link rel="stylesheet" href="../../public/stylesheets/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Trade+Winds&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Castoro+Titling&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Elite Pilots Lounge</title>
+     
+    
+</head>
+<body>
+    <div class="w3-container">
+        <div class="w3-row w3-center">
+            <div class="w3-border w3-round w3-col pointer w3-text-orange">
+                <span class="font-BLOCKY w3-xlarge">TEST</span>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray' >
+            <div id="shipinformation" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' shipinformation>
+                <i id='shipinformation_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                TEST INFORMATION
+            </div>
+            <div id="shipinformation_container" class="w3-row w3-center">
+                <div class="w3-col s4 m4 l4" >
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="commanderName" class="w3-vivid-yellowfg2 eventData font-BLOCKY" >TEST</h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ShipIdent" class="w3-vivid-yellowfg2 eventData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+                <div class="w3-col s4 m4 l4">
+                    <div class="w3-border w3-round-large w3-black">
+                        <h5 id="ShipName" class="w3-vivid-yellowfg2 eventData font-BLOCKY" ></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class='w3-row w3-border w3-round w3-xlarge w3-dark-gray'>
+            <div id="dashboardmissioninformation" class='w3-text-orange pointer w3-black w3-border w3-round font-BLOCKY' dashboardmissioninformation>
+                <i id='dashboardmissioninformation_arrow' class="w3-text-brightgreen material-icons">arrow_drop_up</i>
+                MISSION INFORMATION
+            </div>
+                <div id="dashboardmissioninformation_container" class="w3-row w3-center w3-hide">
+                    <div class="w3-col s4 m4 l4" >
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Active" class="w3-vivid-yellowfg2 eventData font-BLOCKY"></h5>
+                        </div>
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="activeList" class="w3-vivid-yellowfg2 eventData font-BLOCKY" contenteditable></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Complete" class="w3-vivid-yellowfg2 eventData font-BLOCKY" contenteditable></h5>
+                        </div>
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="completeList" class="w3-vivid-yellowfg2 eventData font-BLOCKY" contenteditable></h5>
+                        </div>
+                    </div>
+                    <div class="w3-col s4 m4 l4">
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="Failed" class="w3-vivid-yellowfg2 eventData font-BLOCKY" contenteditable></h5>
+                        </div>
+                        <div class="w3-border w3-round-large w3-black">
+                            <h5 id="failedList" class="w3-vivid-yellowfg2 eventData font-BLOCKY" contenteditable></h5>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+<script src="../utilities/classSave.js" defer></script>
+<script src="../utilities/functions.js" defer></script>
+<script src="test.js" defer></script>
+
+
+
+</body>
+</html>

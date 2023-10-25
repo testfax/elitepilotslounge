@@ -1,0 +1,1800 @@
+{
+    "Header": {
+      "source": "https://elite-journal.readthedocs.io/en/latest/",
+      "version": "36",
+      "changeDate": "update14 November-2022"
+    },
+    "Upgrades": {
+        "suits": [
+            {
+                "type":"Maverick",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "22", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "22", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "-34", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "7", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "58", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "16", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"1" },
+                                { "material":"Health Monitor", "qty":"1" },
+                                { "material":"Power Regulator", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Carbon Fibre Plating", "qty":"5" },
+                                { "material":"Graphene", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "50", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "50", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "-13", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "22", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "64", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "29", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"5" },
+                                { "material":"Health Monitor", "qty":"5" },
+                                { "material":"Power Regulator", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Carbon Fibre Plating", "qty":"15" },
+                                { "material":"Graphene", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "85", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "85", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "6", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "35", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "70", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "41", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"10" },
+                                { "material":"Health Monitor", "qty":"10" },
+                                { "material":"Power Regulator", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Carbon Fibre Plating", "qty":"25" },
+                                { "material":"Graphene", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "125", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "125", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "19", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "45", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "75", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "50", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"15" },
+                                { "material":"Health Monitor", "qty":"15" },
+                                { "material":"Power Regulator", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Carbon Fibre Plating", "qty":"35" },
+                                { "material":"Graphene", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"Artemis",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "22", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "22", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "-42", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "0", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "50", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "16", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"1" },
+                                { "material":"Health Monitor", "qty":"1" },
+                                { "material":"Power Regulator", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Aerogel", "qty":"5" },
+                                { "material":"Graphene", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "50", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "50", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "-21", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "14", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "57", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "29", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"5" },
+                                { "material":"Health Monitor", "qty":"5" },
+                                { "material":"Power Regulator", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Aerogel", "qty":"15" },
+                                { "material":"Graphene", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "85", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "85", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "0", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "29", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "65", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "41", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"10" },
+                                { "material":"Health Monitor", "qty":"10" },
+                                { "material":"Power Regulator", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Aerogel", "qty":"25" },
+                                { "material":"Graphene", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "125", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "125", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "14", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "39", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "70", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "50", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"15" },
+                                { "material":"Health Monitor", "qty":"15" },
+                                { "material":"Power Regulator", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Aerogel", "qty":"35" },
+                                { "material":"Graphene", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"Dominator",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "22", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "22", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "-26", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "16", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "26", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "26", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"1" },
+                                { "material":"Health Monitor", "qty":"1" },
+                                { "material":"Power Regulator", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Titanium Plating", "qty":"5" },
+                                { "material":"Graphene", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "50", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "50", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "-7", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "29", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "72", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "29", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"5" },
+                                { "material":"Health Monitor", "qty":"5" },
+                                { "material":"Power Regulator", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Titanium Plating", "qty":"15" },
+                                { "material":"Graphene", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "85", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "85", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "19", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "46", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "78", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "46", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"10" },
+                                { "material":"Health Monitor", "qty":"10" },
+                                { "material":"Power Regulator", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Titanium Plating", "qty":"25" },
+                                { "material":"Graphene", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" },
+                                    { "description": "SHIELD REGENERATION RATE", "mod_amount": "125", "type":"%" },
+                                    { "description": "SHIELD HEALTH", "mod_amount": "125", "type":"%" },
+                                    { "description": "KINETIC DAMAGE RESISTANCE", "mod_amount": "25", "type":"%" },
+                                    { "description": "PLASMA DAMAGE RESISTANCE", "mod_amount": "50", "type":"%" },
+                                    { "description": "THERMIC DAMAGE RESISTANCE", "mod_amount": "80", "type":"%" },
+                                    { "description": "EXPLOSIVE DAMAGE RESISTANCE", "mod_amount": "50", "type":"%" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Suit Schematic", "qty":"15" },
+                                { "material":"Health Monitor", "qty":"15" },
+                                { "material":"Power Regulator", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Titanium Plating", "qty":"35" },
+                                { "material":"Graphene", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "weapons": [
+            {
+                "type":"KARMA P-15",
+                "group":"secondary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Compression-Liquefied Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Tungsten Carbide", "qty":"5" },
+                                { "material":"Weapon Component", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Compression-Liquefied Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Tungsten Carbide", "qty":"15" },
+                                { "material":"Weapon Component", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Compression-Liquefied Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Tungsten Carbide", "qty":"25" },
+                                { "material":"Weapon Component", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Compression-Liquefied Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Tungsten Carbide", "qty":"35" },
+                                { "material":"Weapon Component", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"MANTICORE TORMENTOR",
+                "group":"secondary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Chemical Superbase", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Chemical Superbase", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Chemical Superbase", "qty":"25" },
+                                { "material":"Microelectrode", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Chemical Superbase", "qty":"35" },
+                                { "material":"Microelectrode", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"TK ZENITH",
+                "group":"secondary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Microelectrode", "qty":"5" },
+                                { "material":"Optical Fibre", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"15" },
+                                { "material":"Optical Fibre", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Microelectrode", "qty":"25" },
+                                { "material":"Optical Fibre", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"35" },
+                                { "material":"Optical Fibre", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"KARMA AR-50",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Compression-Liquefied Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Tungsten Carbide", "qty":"5" },
+                                { "material":"Weapon Component", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Compression-Liquefied Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Tungsten Carbide", "qty":"10" },
+                                { "material":"Weapon Component", "qty":"10" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Compression-Liquefied Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Tungsten Carbide", "qty":"25" },
+                                { "material":"Weapon Component", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Compression-Liquefied Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Tungsten Carbide", "qty":"35" },
+                                { "material":"Weapon Component", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"KARMA C-44",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Compression-Liquefied Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Tungsten Carbide", "qty":"5" },
+                                { "material":"Weapon Component", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Compression-Liquefied Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Tungsten Carbide", "qty":"10" },
+                                { "material":"Weapon Component", "qty":"10" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Compression-Liquefied Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Tungsten Carbide", "qty":"25" },
+                                { "material":"Weapon Component", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Compression-Liquefied Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Tungsten Carbide", "qty":"35" },
+                                { "material":"Weapon Component", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"KARMA L-6",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Compression-Liquefied Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Tungsten Carbide", "qty":"5" },
+                                { "material":"Weapon Component", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Compression-Liquefied Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Tungsten Carbide", "qty":"15" },
+                                { "material":"Weapon Component", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Compression-Liquefied Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Tungsten Carbide", "qty":"25" },
+                                { "material":"Weapon Component", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Compression-Liquefied Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Tungsten Carbide", "qty":"35" },
+                                { "material":"Weapon Component", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"MANTICORE EXECUTIONER",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Chemical Superbase", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Chemical Superbase", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Chemical Superbase", "qty":"25" },
+                                { "material":"Microelectrode", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Chemical Superbase", "qty":"35" },
+                                { "material":"Microelectrode", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"MANTICORE INTIMIDATOR",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Chemical Superbase", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Chemical Superbase", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Chemical Superbase", "qty":"25" },
+                                { "material":"Microelectrode", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Chemical Superbase", "qty":"35" },
+                                { "material":"Microelectrode", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"MANTICORE OPPRESSOR",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Chemical Superbase", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Chemical Superbase", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Chemical Superbase", "qty":"25" },
+                                { "material":"Microelectrode", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Chemical Superbase", "qty":"35" },
+                                { "material":"Microelectrode", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"TK APHELION",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Microelectrode", "qty":"5" },
+                                { "material":"Optical Fibre", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"15" },
+                                { "material":"Optical Fibre", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Microelectrode", "qty":"25" },
+                                { "material":"Optical Fibre", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"35" },
+                                { "material":"Optical Fibre", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type":"TK ECLIPSE",
+                "group":"primary",
+                "grades": [
+                    {
+                        "grade_name": 2,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "1", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"1" },
+                                { "material":"Ionised Gas", "qty":"1" },
+                                { "material":"Manufacturing Instructions", "qty":"1" },
+                                { "material":"Microelectrode", "qty":"5" },
+                                { "material":"Optical Fibre", "qty":"5" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 3,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "2", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"5" },
+                                { "material":"Ionised Gas", "qty":"5" },
+                                { "material":"Manufacturing Instructions", "qty":"5" },
+                                { "material":"Microelectrode", "qty":"15" },
+                                { "material":"Optical Fibre", "qty":"15" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 4,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "3", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"10" },
+                                { "material":"Ionised Gas", "qty":"10" },
+                                { "material":"Manufacturing Instructions", "qty":"10" },
+                                { "material":"Microelectrode", "qty":"25" },
+                                { "material":"Optical Fibre", "qty":"25" }
+                            ]
+                        }
+                    },
+                    {
+                        "grade_name": 5,
+                        "grade_data": {
+                            "modifiers": [
+                                    { "description": "ENGINEER MODIFICATION SLOTS", "mod_amount": "4", "type":"+" }
+                            ],
+                            "upgrade_cost": [
+                                { "material":"Weapon Schematic", "qty":"15" },
+                                { "material":"Ionised Gas", "qty":"15" },
+                                { "material":"Manufacturing Instructions", "qty":"15" },
+                                { "material":"Microelectrode", "qty":"35" },
+                                { "material":"Optical Fibre", "qty":"35" }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Modifications": [
+        {
+            "name":"Audio Masking",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Audio Logs", "qty":"5" },
+                        { "material":"Patrol Routes", "qty":"10" },
+                        { "material":"Scrambler", "qty":"10" },
+                        { "material":"Transmitter", "qty":"15" },
+                        { "material":"Circuit Board", "qty":"5" },
+                        { "credits":"1000000" }
+                ],
+                "modification_description": "Reduces the weapon's simulated sound when fired in unpressurised environments."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Yi Shen",
+                    "EngineerID": ""
+                }
+            ]
+        },
+        {
+            "name":"Faster Handling",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Operational Manual", "qty":"10" },
+                        { "material":"Combatant Performance", "qty":"10" },
+                        { "material":"Combat Training Material", "qty":"10" },
+                        { "material":"Viscoelastic Polymer", "qty":"5" },
+                        { "credits":"500000" }
+                ],
+                "description": "Reduces the weapon's draw/stow speed and improves ADS functionality."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Hero Ferrari",
+                    "EngineerID": "400003"
+                },
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"Greater Range",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "Effective Range", "mod_amount": "50", "type":"+" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Ballistics Data", "qty":"10" },
+                        { "material":"Topographical Surveys", "qty":"10" },
+                        { "material":"Metal Coil", "qty":"10" },
+                        { "material":"RDX", "qty":"10" },
+                        { "material":"Weapon Component", "qty":"5" },
+                        { "credits":"750000" }
+                ],
+                "modification_description": "Improves the weapon's effective range."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Domino Green",
+                    "EngineerID": "400002"
+                },
+                {
+                    "Engineer": "Wellington Beck",
+                    "EngineerID": "400005"
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                }
+            ]
+        },
+        {
+            "name":"Headshot Damage",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Weapon Test Data", "qty":"10" },
+                        { "material":"Medical Records", "qty":"5" },
+                        { "material":"Chemical Catalyst", "material_localised": "chemicalcatalyst", "qty":"10" },
+                        { "material":"RDX", "qty":"15" },
+                        { "material":"Weapon Component", "qty":"5" },
+                        { "credits":"500000" }
+                ],
+                "modification_description": "Increases damage inflicted by headshots."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Uma Laszlo",
+                    "EngineerID": "400007"
+                },
+                {
+                    "Engineer": "Yi Shen",
+                    "EngineerID": ""
+                }
+            ]
+        },
+        {
+            "name":"Higher Accuracy",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "Hip Fire Accuracy", "mod_amount": "45", "type":"+" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Extraction Yield Data", "qty":"10" },
+                        { "material":"Biometric Data", "qty":"5" },
+                        { "material":"Combatant Performance", "qty":"10" },
+                        { "material":"Viscoelastic Polymer", "qty":"10" },
+                        { "material":"RDX", "qty":"10" },
+                        { "credits":"500000" }
+                ],
+                "modification_description": "Reduces weapon sway, improving accuracy."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Terra Velasquez",
+                    "EngineerID": "400006"
+                },
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"Magazine Size",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Atmospheric Data", "qty":"10" },
+                        { "material":"Security Expenses", "qty":"10" },
+                        { "material":"Weapon Component", "qty":"5" },
+                        { "material":"Tungsten Carbide", "qty":"5" },
+                        { "material":"Metal Coil", "qty":"10" },
+                        { "credits":"1000000" }
+                ],
+                "modification_description": "Extends the weapon's magazine size."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Jude Navarro",
+                    "EngineerID": "400001"
+                },
+                {
+                    "Engineer": "Kit Fowler",
+                    "EngineerID": "400004"
+                },
+                {
+                    "Engineer": "Eleanor Bresa",
+                    "EngineerID": "400011"
+                }
+            ]
+        },
+        {
+            "name":"Noise Suppressor",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Atmospheric Data", "qty":"10" },
+                        { "material":"Mining Analytics", "qty":"10" },
+                        { "material":"Viscoelastic Polymer", "qty":"15" },
+                        { "material":"Weapon Component", "qty":"5" },
+                        { "credits":"1000000" }
+                ],
+                "modification_description": "Reduces the sound of the weapon when fired in pressurised environments."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Hero Ferrari",
+                    "EngineerID": "400003"
+                },
+                {
+                    "Engineer": "Terra Velasquez",
+                    "EngineerID": "400006"
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"Reload Speed",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Operational Manual", "qty":"10" },
+                        { "material":"Production Reports", "qty":"10" },
+                        { "material":"Combat Training Material", "qty":"10" },
+                        { "material":"Micro Hydraulics", "qty":"10" },
+                        { "material":"Electromagnet", "qty":"10" },
+                        { "credits":"500000" }
+                ],
+                "modification_description": "Shortens the weapon's reload time."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Jude Navarro",
+                    "EngineerID": "400001"
+                },
+                {
+                    "Engineer": "Uma Laszlo",
+                    "EngineerID": "400007"
+                },
+                {
+                    "Engineer": "Eleanor Bresa",
+                    "EngineerID": "400011"
+                }
+            ]
+        },
+        {
+            "name":"Scope",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Spectral Analysis Data", "qty":"10" },
+                        { "material":"Biometric Data", "qty":"5" },
+                        { "material":"Optical Lens", "qty":"10" },
+                        { "material":"Optical Fibre", "qty":"5" },
+                        { "credits":"500000" }
+                ],
+                "modification_description": "Adds a scope to the weapon (or improves an existing one)."
+                },
+            "Engineers": [
+                {
+                    "Engineer": "Domino Green",
+                    "EngineerID": "400002"
+                },
+                {
+                    "Engineer": "Oden Geiger",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                }
+            ]
+        },
+        {
+            "name":"Stability",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "Stability", "mod_amount": "30", "type":"+" }
+                ],
+                "upgrade_cost": [
+                        { "material":"Mining Analytics", "qty":"10" },
+                        { "material":"Risk Assessments", "qty":"15" },
+                        { "material":"Viscoelastic Polymer", "qty":"10" },
+                        { "material":"Micro Hydraulics", "qty":"10" },
+                        { "credits":"500000" }
+                    ],
+                    "modification_description": "Reduces the weapon's recoil."
+                },
+            "Engineers": [
+                {
+                    "Engineer": "Domino Green",
+                    "EngineerID": "400002"
+                },
+                {
+                    "Engineer": "Oden Geiger",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                }
+            ]
+        },
+        {
+            "name":"Stowed Reloading",
+            "type":"Weapon",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Digital Designs", "qty":"10" },
+                    { "material":"Operational Manual", "qty":"10" },
+                    { "material":"Production Schedule", "qty":"10" },
+                    { "material":"Circuit Board", "qty":"5" },
+                    { "material":"Encrypted Memory Chip", "qty":"15" },
+                    { "credits":"1000000" }
+                ],
+                "modification_description": "Reduces the weapon's recoil."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Kit Fowler",
+                    "EngineerID": "400004"
+                },                
+                {
+                    "Engineer": "Uma Laszlo",
+                    "EngineerID": "400007"
+                },
+                {
+                    "Engineer": "Eleanor Bresa",
+                    "EngineerID": "400011"
+                }
+            ]
+        },
+        {
+            "name":"ADDED MELEE DAMAGE",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "WEAPON MELEE DAMAGE MULTIPLIER", "mod_amount": "150", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Combat Training Material", "qty":"10" },
+                    { "material":"Combatant Performance", "qty":"10" },
+                    { "material":"Epinephrine", "qty":"10" },
+                    { "material":"Micro Thrusters", "qty":"15" },
+                    { "credits":"500000" }
+                ],
+                "modification_description": "Improves the damage dealt by fists and weapon strikes."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Jude Navarro",
+                    "EngineerID": "400001"
+                },
+                {
+                    "Engineer": "Kit Fowler",
+                    "EngineerID": "400004"
+                },
+                {
+                    "Engineer": "Eleanor Bresa",
+                    "EngineerID": "400011"
+                }
+            ]
+        },
+        {
+            "name":"COMBAT MOVEMENT SPEED",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Evacuation Protocols", "qty":"10" },
+                    { "material":"Genetic Research", "qty":"5" },
+                    { "material":"Epinephrine", "qty":"10" },
+                    { "material":"pH Neutraliser", "qty":"10" },
+                    { "credits":"750000" }
+                ],
+                "modification_description": "Removes the movement penalty while aiming down sights."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Terra Velasquez",
+                    "EngineerID": "400006"
+                },
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"DAMAGE RESISTANCE",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "EXPLOSIVE DAMAGE REDUCTION", "mod_amount": "10", "type":"%" },
+                    { "description": "PLASMA DAMAGE REDUCTION", "mod_amount": "10", "type":"%" },
+                    { "description": "THERMIC DAMAGE REDUCTION", "mod_amount": "10", "type":"%" },
+                    { "description": "KINETIC DAMAGE REDUCTION", "mod_amount": "10", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Weapon Inventory", "qty":"10" },
+                    { "material":"Ballistics Data", "qty":"10" },
+                    { "material":"Titanium Plating", "qty":"5" },
+                    { "material":"Carbon Fibre Plating", "qty":"5" },
+                    { "material":"Epoxy Adhesive", "qty":"15" },
+                    { "credits":"750000" }
+                ],
+                "modification_description": "Increases protection against certain damage types."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Terra Velasquez",
+                    "EngineerID": "400006"
+                },
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"ENHANCED TRACKING",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "LOS ANALYSIS TIME", "mod_amount": "10", "type":"%" },
+                    { "description": "LOS ANALYSIS RANGE", "mod_amount": "100", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Topographical Surveys", "qty":"10" },
+                    { "material":"Stellar Activity Logs", "qty":"10" },
+                    { "material":"Spectral Analysis Data", "qty":"10" },
+                    { "material":"Transmitter", "qty":"5" },
+                    { "material":"Circuit Board", "qty":"5" },
+                    { "credits":"750000" }
+                ],
+                "modification_description": "Increases range and speed of the suit's basic scan function."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Domino Green",
+                    "EngineerID": "400002"
+                },
+                {
+                    "Engineer": "Oden Geiger",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                }
+            ]
+        },
+        {
+            "name":"EXTRA AMMO CAPACITY",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "AMMO CAPACITY MULTIPLIER", "mod_amount": "50", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Recycling Logs", "qty":"15" },
+                    { "material":"Weapon Test Data", "qty":"10" },
+                    { "material":"Production Reports", "qty":"10" },
+                    { "material":"Weapon Component", "qty":"5" },
+                    { "credits":"750000" }
+                ],
+                "modification_description": "TEMPLATETEMPLATETEMPLATETEMPLATE"
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Jude Navarro",
+                    "EngineerID": "400001"
+                },
+                {
+                    "Engineer": "Kit Fowler",
+                    "EngineerID": "400004"
+                },
+                {
+                    "Engineer": "Eleanor Bresa",
+                    "EngineerID": "400011"
+                }
+            ]
+        },
+        {
+            "name":"EXTRA BACKPACK CAPACITY",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "BACKPACK DATA CAPACITY", "mod_amount": "100", "type":"%" },
+                    { "description": "BACKPACK COMPONENT CAPACITY", "mod_amount": "100", "type":"%" },
+                    { "description": "BACKPACK ITEM CAPACITY", "mod_amount": "100", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Weapon Inventory", "qty":"10" },
+                    { "material":"Chemical Inventory", "qty":"10" },
+                    { "material":"Digital Designs", "qty":"10" },
+                    { "material":"Epoxy Adhesive", "qty":"10" },
+                    { "material":"Memory Chip", "qty":"5" },
+                    { "credits":"750000" }
+                ],
+                "modification_description": "Increases the inventory capacity of the suit backpack."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Domino Green",
+                    "EngineerID": "400002"
+                },
+                {
+                    "Engineer": "Wellington Beck",
+                    "EngineerID": "400005"
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                }
+            ]
+        },
+        {
+            "name":"FASTER SHIELD REGEN",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "SHIELD HEALTH", "mod_amount": " 25", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Reactor Output Review", "qty":"10" },
+                    { "material":"Ion Battery", "qty":"5" },
+                    { "material":"Micro Transformer", "qty":"15" },
+                    { "material":"Electrical Wiring", "qty":"15" },
+                    { "credits":"7500000" }
+                ],
+                "modification_description": "Speeds up personal shield regeneration rate."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Kit Fowler",
+                    "EngineerID": "400004"
+                },
+                {
+                    "Engineer": "Uma Laszlo",
+                    "EngineerID": "400007"
+                },
+                {
+                    "Engineer": "Eleanor Bresa",
+                    "EngineerID": "400011"
+                }
+            ]
+        },
+        {
+            "name":"IMPROVED BATTERY CAPACITY",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "BATTERY ENERGY CAPACITY", "mod_amount": "50", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Reactor Output Review", "qty":"10" },
+                    { "material":"Maintenance Logs", "qty":"15" },
+                    { "material":"Ion Battery", "qty":"5" },
+                    { "material":"Micro Supercapacitor", "qty":"10" },
+                    { "material":"Electrical Wiring", "qty":"10" },
+                    { "credits":"7500000" }
+                ],
+                "modification_description": "Increases energy capacity of the suit battery."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Wellington Beck",
+                    "EngineerID": "400005"
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                },
+                {
+                    "Engineer": "Oden Geiger",
+                    "EngineerID": ""
+                }
+            ]
+        },
+        {
+            "name":"IMPROVED JUMP ASSIST",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "JUMP ASSIST BOOST RECHARGE RATE", "mod_amount": "0", "type":"%" },
+                    { "description": "JUMP ASSIST BOOST DRAIN", "mod_amount": "0", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"G-Meds", "qty":"10" },
+                    { "material":"Topographical Surveys", "qty":"10" },
+                    { "material":"Micro Thrusters", "qty":"5" },
+                    { "material":"Motor", "qty":"10" },
+                    { "credits":"7500000" }
+                ],
+                "modification_description": "Extends thrust duration of the Jump Assist module."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Hero Ferrari",
+                    "EngineerID": "400003"
+                },
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"INCREASED AIR RESERVES",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "AIR CAPACITY", "mod_amount": "100", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Pharmaceutical Patents", "qty":"5" },
+                    { "material":"Air Quality Reports", "qty":"15" },
+                    { "material":"Oxygenic Bacteria", "qty":"10" },
+                    { "material":"pH Neutraliser", "qty":"10" },
+                    { "credits":"1000000" }
+                ],
+                "modification_description": "Extends life support operation time once suit energy is depleted."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Hero Ferrari",
+                    "EngineerID": "400003"
+                },
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"INCREASED SPRINT DURATION",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Troop Deployment Records", "qty":"5" },
+                    { "material":"Gene Sequencing Data", "qty":"5" },
+                    { "material":"Clinical Trial Records", "qty":"5" },
+                    { "material":"Oxygenic Bacteria", "qty":"10" },
+                    { "material":"Chemical Catalyst", "qty":"15" },
+                    { "credits":"750000" }
+                ],
+                "modification_description": "Optimises suit articulation, resulting in less taxing sprints."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Hero Ferrari",
+                    "EngineerID": "400003"
+                },
+                {
+                    "Engineer": "Terra Velasquez",
+                    "EngineerID": "400006"
+                },
+                {
+                    "Engineer": "Baltanos",
+                    "EngineerID": "400010"
+                }
+            ]
+        },
+        {
+            "name":"NIGHT VISION",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "", "mod_amount": "", "type":"" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Surveillance Equipment", "qty":"10" },
+                    { "material":"Surveillance Logs", "qty":"5" },
+                    { "material":"Radioactivity Data", "qty":"5" },
+                    { "material":"NOC Data", "qty":"5" },
+                    { "material":"Circuit Switch", "qty":"10" },
+                    { "credits":"10000000" }
+                ],
+                "modification_description": "Adds Night Vision capabilities to the suit."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Oden Geiger",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Yi Shen",
+                    "EngineerID": ""
+                }
+            ]
+        },
+        {
+            "name":"QUIETER FOOTSTEPS",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "FOOTSTEP AUDIBLE RANGE MULTIPLIER", "mod_amount": "-50", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Settlement Assault Plans", "qty":"5" },
+                    { "material":"Tactical Plans", "qty":"10" },
+                    { "material":"Patrol Routes", "qty":"10" },
+                    { "material":"Micro Hydraulics", "qty":"5" },
+                    { "material":"Viscoelastic Polymer", "qty":"15" },
+                    { "credits":"1000000" }
+                ],
+                "modification_description": "Dampens the sound generated by suit steps."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Yarden Bond",
+                    "EngineerID": ""
+                },
+                {
+                    "Engineer": "Yi Shen",
+                    "EngineerID": ""
+                }
+            ]
+        },
+        {
+            "name":"REDUCED TOOL BATTERY CONSUMPTION",
+            "type":"suit",
+            "data": {
+                "modifiers": [
+                    { "description": "TOOL ENERGY DRAIN MULTIPLIER", "mod_amount": "100", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"Reactor Output Review", "qty":"10" },
+                    { "material":"Electrical Fuse", "qty":"5" },
+                    { "material":"Micro Transformer", "qty":"10" },
+                    { "material":"Electrical Wiring", "qty":"15" },
+                    { "credits":"500000" }
+                ],
+                "modification_description": "Reduces the energy consumption of certain suit tool functions."
+            },
+            "Engineers": [
+                {
+                    "Engineer": "Domino Green",
+                    "EngineerID": "400002"
+                },
+                {
+                    "Engineer": "Wellington Beck",
+                    "EngineerID": "400005"
+                },
+                {
+                    "Engineer": "Rosa Dayette",
+                    "EngineerID": "400012"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,1918 @@
+{
+  "event": "Materials",
+  "header": {
+    "logic": "engineering material list",
+    "version": "36",
+    "changeDate": "update14 Nov-2022"
+  },
+  "Raw": [
+    {
+      "Name": "carbon",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 1",
+      "known_uses": [
+        "FSD Injection",
+        "Configurable Explosive Munitions",
+        "Explosive Munitions",
+        "AX Remote Flak Munitions",
+        "Guardian Shard Cannon Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Carbon, C, atomic number 6. Sublimination point 3915K. Carbon is an element with great many uses. mainly due to its propensity for forming strong molecular bonds. It is mallebale element and in different forms can be amoungst the hardest of materials as well as the softest.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "niobium",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 1",
+      "known_uses": [
+        "FSD Injection",
+        "Explosive Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Niobium, Nb, atomic number 41. Melting point 2750K. This elements is often used in alloys, but its properties also make it useful for super-alloys needed for high temperature and extreme pressure applications. It's also used in electroceramic applications and superconductors.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "vanadium",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 1",
+      "known_uses": [
+        "FSD Injection",
+        "High Velocity Munitions",
+        "Guardian Shard Cannon Munitions",
+        "AFM Refill",
+        "SRV Repair"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Vanadium, V, atomic number 23. Melting point 2183K. Vanadium is primarily used for making alloys, but also as a catalyst in various chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "yttrium",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 1",
+      "known_uses": [
+        "FSD Injection",
+        "High Velocity Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Yttrium, Y, atomic number 39. Melting point 1799K. Yttrium is often used as a strengthening component for various alloys. It also has uses in medicines and superconductors.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "chromium",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 2",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "AFM Refill",
+        "SRV Repair"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Chromium, Cr, atomic number 24. Melting point 2180K. Chromium is well regarded for its strengthening and tarnish resistant properties for metals. It is also highly temperature resistant.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "molybdenum",
+      "State": 0,
+      "Grade": "3",
+      "Group": "category 2",
+      "known_uses": [
+        "Plasma Munitions",
+        "AFM Refill",
+        "SRV Repair",
+        "SRV Ammo Restock"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Molybdenum, Mo, atomic number 42. Melting point 2896K. This element is commonly used in alloys, but also has uses in certain chemical detectors and chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "phosphorus",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 2",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "Configurable Explosive Munitions",
+        "Enzyme Missile Launcher Munitions",
+        "Configurable Small Calibre Munitions",
+        "Plasma Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Phosphorus, P, atomic number 15. Phosphorus is a highly reactive element used for some metallurgical production and for fertilisers.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "technetium",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 2",
+      "known_uses": [
+        "Plasma Munitions",
+        "SRV Ammo Restock",
+        "SRV Refuel"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces.  Technetium, Tc, atomic number 43. Melting point 2430K. Technetium in various isotope forms is used in medical imaging technology as well as a catalyst. Its stable beta decay makes it suitable for calibration and radioactive testing.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "cadmium",
+      "State": 0,
+      "Grade": "3",
+      "Group": "category 3",
+      "known_uses": [
+        "FSD Injection",
+        "Plasma Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Cadmium, Cd, atomic number 48. Melting point 594K. Its noted for its corrosion resistant properties and is used in medical imaging equipment and specialist laser systems.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "manganese",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 3",
+      "known_uses": [
+        "Guardian Guass Cannon Munitions",
+        "Plasma Munitions",
+        "AFM Refill",
+        "SRV Ammo Restock",
+        "SRV Repair"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Manganese, Mn, atomic number 25. Melting point 1519K. This element has many uses in metal alloys.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "ruthenium",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 3",
+      "known_uses": [
+        "AFM Refill"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Ruthenium, Ru, atomic number 44. Melting point 2607K. Ruthenium is used for making platinum and palladium alloys. It's also used as a catalist for some chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "sulphur",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 3",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "Configurable Explosive Munitions",
+        "Enzyme Missile Launcher Munitions",
+        "Configurable Small Calibre Munitions",
+        "Plasma Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Sulphur, S, atomic number 16. Melting point 388K. Sulphur is mainly used as a precursor to other chemical like sulphuric acid. It's also a key component in many biological and chemical applications, including fertilisers.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "iron",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 4",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "Configurable Explosive Munitions",
+        "Enzyme Missile Launcher Munitions",
+        "Configurable Small Calibre Munitions",
+        "Seismic Charge Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Iron, Fe, atomic number 26. Melting point 1811K. Iron is one of the most abundant heavier elements in the galaxy, primarily due to the formation through fusion in massive stars of nickel-56, which decays into an iron isotope. Although it isn't used as much in modern metals it still has many uses in chemical production. It's also an important element in medical molecular engineering applications",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "selenium",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 4",
+      "known_uses": [
+        "Plasma Munitions",
+        "Small Calibre Munitions",
+        "SRV Ammo Restock"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Selenium, Se, atomic number 34. Melting point 494K. Its primary use is in alloys and in glass production. It is also used as a catalyst in some chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tin",
+      "State": 0,
+      "Grade": "3",
+      "Group": "category 4",
+      "known_uses": [
+        "Configurable Small Calibre Munitions",
+        "AX Remote Flak Munitions",
+        "Large Calibre Munitions",
+        "AFM Refill"
+      ],
+      "location": "",
+      "description": "Tin, Sn, atomic number 50. Melting point 505k. Tin is one of the first ever metal used in an alloy - notably with copper in prehistory. It's modern day usage is primarily for certain specialised alloys.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "zinc",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 4",
+      "known_uses": [
+        "Configurable Small Calibre Munitions",
+        "AX Remote Flak Munitions",
+        "Small Calibre Munitions",
+        "Large Calibre Munitions",
+        "AFM Refill"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Zinc, Zn, atomic number 30. Melting point 692K. Zinc is used in various alloys where its low melting point allows the casting of fine shapes. It's also used in some industrial processes and in infrared lasers.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "germanium",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 5",
+      "known_uses": [
+        "FSD Injection"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Germanium, Ge, atomic number 32. Melting point 1211K. Germanium is used in optics and for semiconductors in electronics. Semiconductor detectors allow accurate radiological identification and it is also commonly used in alloys.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "nickel",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 5",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "Configurable Explosive Munitions",
+        "Configurable Small Calibre Munitions",
+        "Seismic Charge Munitions",
+        "Explosive Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Nickel, Ni, atomic number 28. Melting point 1728K. It is commonly used in various alloys and also for some bio-chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tellurium",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 5",
+      "known_uses": [
+        "AFM Refill",
+        "SRV Repair"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Tellurium, Te, atomic number 52. Melting point 722K. Tellurium is used in alloys as well semiconductor and other electronic applications.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tungsten",
+      "State": 0,
+      "Grade": "3",
+      "Group": "category 5",
+      "known_uses": [
+        "Enzyme Missile Launcher Munitions",
+        "AX Remote Flak Munitions",
+        "Flechette Launcher Munitions",
+        "Small Calibre Munitions",
+        "High Velocity Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Tungsten, W, atomic number 74. Melting point 3695K. Tungsten is a material used in a wide range of applications, including heavy metal alloys, hard materials and various chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "arsenic",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 6",
+      "known_uses": [
+        "FSD Injection",
+        "configurable explosive munitions",
+        "Explosive Munitions",
+        "AX Remote Flak Munitions",
+        "Large Calibre Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Arsenic, As, atomic number 33. Sublimation point 887K. Used in medicines,  pesticides, herbicides, optoelectronic compounds and for strengthening alloys.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "rhenium",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 6",
+      "known_uses": [],
+      "location": "",
+      "description": "Rhenium is a silvery-white heavy transition metal. Its atomic number is 75 and was considered one of the rarest metals on Earth. However through the ages of galactic expansion more plentiful sources of the element have been discovered and it is regularly found when extracting other ores from asteroids. Rhenium is used in combustion chambers, turbine blades and exhaust systems.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "mercury",
+      "State": 0,
+      "Grade": "3",
+      "Group": "category 6",
+      "known_uses": [
+        "Configurable Explosive Munitions",
+        "Seismic Charge Munitions",
+        "Explosive Munitions",
+        "Small Calibre Munitions",
+        "Large Calibre Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Mercury, Hg, atomic number 80. Melting point 234K. This toxic metal is famed for being a liquid at room temperature and has rare uses in some chemical processes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "polonium",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 6",
+      "known_uses": [
+        "FSD Injection",
+        "Explosive Munitions",
+        "AX Explosives Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces. Polonium, Po, atomic number 84. Melting point 527K. Polonium is an intense source of alpha particles and in sufficient quantities will generate enough heat for radioisotope thermoelectric generators. This technology is ancient by modern standards, but the properties are still useful for certain applications.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "antimony",
+      "State": 0,
+      "Grade": "4",
+      "Group": "category 7",
+      "known_uses": [
+        "Small Calibre Munitions",
+        "Large Calibre Munitions"
+      ],
+      "description": "Collected on planet surfaces. Antimony, Sb, atomic number 51. Melting point 903K. A semi metallic chemical element used in flame proofing low friction alloys and semiconductors.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "boron",
+      "State": 0,
+      "Grade": "3",
+      "Group": "category 7",
+      "known_uses": [
+        "Flechette Launcher Munitions"
+      ],
+      "location": "",
+      "description": "Collected from mining asteroids. Boron is used in ship interior structures, insulation, and in the creation of polymers and ceramics used in station and ship construction. Boron is also used in the manufacture of glass for ships and stations. offering greater strength and thermal shock resistance than other manufacturing techniques. Other uses include agricultural medicine, insecticides, and some advanced medicines.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "lead",
+      "State": 0,
+      "Grade": "1",
+      "Group": "category 7",
+      "known_uses": [
+        "Enzyme Missile Launcher Munitions",
+        "Shock Cannon Munitions"
+      ],
+      "location": "",
+      "description": "Collected from mining asteroids. Lead is a heavy metal with a higher density than most other common materials. Although lead's toxicity has been recognised for several centuries it is still used in a large range of processes due to its low cost. Lead is used in munitions, solders, fusible alloys and radiation shielding.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "zirconium",
+      "State": 0,
+      "Grade": "2",
+      "Group": "category 7",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "Gguardian Plasma Charger Munitions",
+        "Small Calibre Munitions",
+        "High Velocity Munitions",
+        "Large Calibre Munitions"
+      ],
+      "location": "",
+      "description": "Collected on planet surfaces and from asteroids. Zirconium, Zr, atomic number 40. Melting point 2128K. As a metal Zirconium fulfils some niche purposes, but it's extensively used in compounds for high temperature applications.",
+      "extra": "",
+      "StateQRM": 0
+    }
+  ],
+  "Encoded": [
+    {
+      "Name": "bulkscandata",
+      "Name_Localised": "Anomalous Bulk Scan Data",
+      "State": 0,
+      "Grade": "1",
+      "Group": "data archives",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from haulage vessels. Data files follow predictable formats, although in larger data sets individual cmoponents can be indentified which vary from the expected pattern analysis and these can prove very useful to the right people.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "scandatabanks",
+      "Name_Localised": "Classified Scan Databanks",
+      "State": 0,
+      "Grade": "3",
+      "Group": "data archives",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from haulage vessels. A popular method for hiding sensitive data is to embed it within innocuous information. Such methods are usually quite sophisticated, but occasionally will be found by chance adn can be processed by those with the right skills and equipment.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "classifiedscandata",
+      "Name_Localised": "Classified Scan Fragment",
+      "State": 0,
+      "Grade": "5",
+      "Group": "data archives",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Some sensor systems will automatically squirt data batches when they encounter certain contact profiles. The nature of these profiles is usually kept a secret, but there is a demand in certain quarters for any captures of this data.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "encodedscandata",
+      "Name_Localised": "Divergent Scan Data",
+      "State": 0,
+      "Grade": "4",
+      "Group": "data archives",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Scan data usually forms a large data set, within only a small quantity of pertinent information. For the most part these are easily analysed, but some sensor data has unusual properties and while this is often caused by a malfunction can yield some interesting results.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "scanarchives",
+      "Name_Localised": "Unidentified Scan Archives",
+      "State": 0,
+      "Grade": "2",
+      "Group": "data archives",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from haulage vessels. Most scanners keep a log of their readings and that typically fits within the performance profile for the instrumentation and is tagged by identification heuristics. Sometimes scan data isn't tagged and so becomes of interest to those investigating various anomalies.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "compactemissionsdata",
+      "Name_Localised": "Abnormal Compact Emissions Data",
+      "State": 0,
+      "Grade": "5",
+      "Group": "emission data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Discovered in private data beacons salvaged from deep space. Known to be salvaged from signal sources. Many systems compress their emissions data as it can quickly fill even massive amounts of storage. Preselected exceptions within the data set are usually kept in a lossless format and these are often of interest to other people and organisations.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "decodedemissiondata",
+      "Name_Localised": "Decoded Emission Data",
+      "State": 0,
+      "Grade": "4",
+      "Group": "emission data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from combat oriented vessels. Known to be salvaged from signal sources. Emission data takes a variety of forms and is often merged into wider datasets to search for anomalies and other stand out data. This tends to be compressed in decoded packages to maintain a separate copy of anmalous results.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "scrambledemissiondata",
+      "Name_Localised": "Exceptional Scrambled Emission Data",
+      "State": 0,
+      "Grade": "1",
+      "Group": "emission data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Used by factions as a reward for mission contracts. Known to be salvaged from signal sources. Even with scrambled data it is possible to generate a high level analysis through pattern recognition and data sequencing. In some cases unexpected clusters can be identified and are of interest to some people with the right expertise to use the data.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "archivedemissiondata",
+      "Name_Localised": "Irregular Emission Data",
+      "State": 0,
+      "Grade": "2",
+      "Group": "emission data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Used by factions as a reward for Mission contracts. Known to be salvaged from signal sources. Emission data mostly contains identifiable readings, but anomalies often crop up. While these are often caused by system faults they can reveal interesting data or even weaknesses in sensor and stealth technology.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "emissiondata",
+      "Name_Localised": "Unexpected Emission Data",
+      "State": 0,
+      "Grade": "3",
+      "Group": "emission data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from combat oriented vessels. Known to be salvaged from signal sources. Most users prefer their accumulated emission data to conform to the expected parameters. SOmetimes strange distortions or readings are encountered adn tehse can provide most illuminating.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "industrialfirmware",
+      "Name_Localised": "Cracked Industrial Firmware",
+      "State": 0,
+      "Grade": "3",
+      "Group": "encoded firmware",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Known to be salvaged from signal sources. Control software for industrial hardware interfaces normally follows strict operational and installation guidelines. Cracked versions of these can be found, but are often kept secret as such industrial espionage is punished severely, making these cracks quite valuable.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "consumerfirmware",
+      "Name_Localised": "Modified Consumer Firmware",
+      "State": 0,
+      "Grade": "2",
+      "Group": "encoded firmware",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Used by factions as a reward for Mission contracts. Known to be salvaged from signal sources. Known to be found in small settlement data point networks. Control software for consumer level devices typically follows the manufacturer's specifications, unless it has been modified and these changes can be used by other interested parties.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "embeddedfirmware",
+      "Name_Localised": "Modified Embedded Firmware",
+      "State": 0,
+      "Grade": "5",
+      "Group": "encoded firmware",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Embedded systems typically require specific firmware for their operations. There is a black market for modifications to the base firmware, often for performance tuning or other reasons.",
+      "extra": "",
+      "StateQRM": 1
+    },
+    {
+      "Name": "securityfirmware",
+      "Name_Localised": "Security Firmware Patch",
+      "State": 0,
+      "Grade": "4",
+      "Group": "encoded firmware",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. High grade firmware for secure hardware interfaces have to use their manufacturer's authorised updates. These can e expensive adn sometimes custom built patches are used instead. These provide the components necessary to manipulate the firmware in unauthorised ways.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "legacyfirmware",
+      "Name_Localised": "Specialised Legacy Firmware",
+      "State": 0,
+      "Grade": "1",
+      "Group": "encoded firmware",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Used by factions as a reward for Mission contracts. Known to be salvaged from signal sources. Known to be found in small settlement data point networks. Specialised legacy firmware is the control software from earlier versions of the technology. These can be rare finds and have some uses in developing new versions with backwards compatibility.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "adaptiveencryptors",
+      "Name_Localised": "Adaptive Encryptors Capture",
+      "State": 0,
+      "Grade": "5",
+      "Group": "encryption files",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Discovered in private data beacons salvaged from deep space. Known to be salvaged from signal sources. Polymorphic encryption systems form a state of the art system for data encryption which are considered untraceable. There are rumours that the system has a weakness in state transition with re-encoding, and capture of these changes are eagerly sought after by some people.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "encryptionarchives",
+      "Name_Localised": "Atypical Encryption Archives",
+      "State": 0,
+      "Grade": "4",
+      "Group": "encryption files",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Discovered in private data beacons salvaged from deep space. The nature of encrypted data makes it difficult to predict its contents, however certain forms of data have recognisable structures even when encrypted. This can then be used to break into the data and as such is highly prized in some quarters.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "symmetrickeys",
+      "Name_Localised": "Open Symmetric Keys",
+      "State": 0,
+      "Grade": "3",
+      "Group": "encryption files",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Known to be salvaged from signal sources. Symmetric keys provide access controls for encrypted data, often on a ship, or even station wide basis. Capturing these provides the owner (with the right skills and equipment) a valuable access tool.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "encryptioncodes",
+      "Name_Localised": "Tagged Encryption Codes",
+      "State": 0,
+      "Grade": "2",
+      "Group": "encryption files",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Known to be salvaged from signal sources. Encryption codes are typically very sensitive data because of their use in decrypting confidential information. In the right circumstances these can be captured remotely and as such are highly sought after by certain people.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "encryptedfiles",
+      "Name_Localised": "Unusual Encrypted Files",
+      "State": 0,
+      "Grade": "1",
+      "Group": "encryption files",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from settlement data point networks. Known to be salvaged from signal sources. Data files are often encrypted, on occasion a novel method of encryption can be encountered which is useful elsewhere.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "ancientbiologicaldata",
+      "Name_Localised": "Pattern Alpha Obelisk Data",
+      "State": 0,
+      "Grade": "3",
+      "Group": "guardian ruins encoded",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data taken from obelisks found at Guardian ruins.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "ancientculturaldata",
+      "Name_Localised": "Pattern Beta Obelisk Data",
+      "State": 0,
+      "Grade": "2",
+      "Group": "guardian ruins encoded",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data taken from obelisks found at Guardian ruins.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "ancientlanguagedata",
+      "Name_Localised": "Pattern Delta Obelisk Data",
+      "State": 0,
+      "Grade": "4",
+      "Group": "guardian ruins encoded",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data taken from obelisks found at Guardian ruins.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "ancienttechnologicaldata",
+      "Name_Localised": "Pattern Epsilon Obelisk Data",
+      "State": 0,
+      "Grade": "5",
+      "Group": "guardian ruins encoded",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data taken from obelisks found at Guardian ruins.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "ancienthistoricaldata",
+      "Name_Localised": "Pattern Gamma Obelisk Data",
+      "State": 0,
+      "Grade": "1",
+      "Group": "guardian ruins encoded",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data taken from obelisks found at Guardian ruins.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_moduleblueprint",
+      "Name_Localised": "Guardian Module Blueprint Fragment",
+      "State": 0,
+      "Grade": "5",
+      "Group": "guardian ruins blueprints",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "A fragmentary schematic relating to Guardian module technology.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_weaponblueprint",
+      "Name_Localised": "Guardian Weapon Blueprint Fragment",
+      "State": 0,
+      "Grade": "5",
+      "Group": "guardian ruins blueprints",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "A fragmentary schematic relating to Guardian military technology.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_vesselblueprint",
+      "Name_Localised": "Guardian Vessel Blueprint Fragment",
+      "State": 0,
+      "Grade": "5",
+      "Group": "guardian ruins blueprints",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "A fragmentary schematic relating to Guardian starship technology.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "shieldpatternanalysis",
+      "Name_Localised": "Aberrant Shield Pattern Analysis",
+      "State": 0,
+      "Grade": "4",
+      "Group": "shield data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from combat oriented vessels. Energy shields are formed from complex interlocking fields, the mathematical basis for which is well understood. Howerver, analysis will sometimes indidcate a behavior that doesn't sit properly with this accepted module.  This often proves to be spurious data, but underground researchers are looking into other possible causes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "shieldcyclerecordings",
+      "Name_Localised": "Distorted Shield Cycle Recordings",
+      "State": 0,
+      "Grade": "1",
+      "Group": "shield data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from haulage vessels. Data from a scan of a shield system over a given time period is normally reliable data set, as long as the input variables are correctly compensated for. In rare cases this data doesn't fit the probable pattern and is of keen interest to certain individuals.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "shieldsoakanalysis",
+      "Name_Localised": "Inconsistent Shield Soak Analysis",
+      "State": 0,
+      "Grade": "2",
+      "Group": "shield data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from combat oriented vessels. Accumulated data of shield responses to impacts rarely reveals anything unsuual in anythign except experimental models. This isn't always the case and analysing irregularities often reveals useful data about the shields.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "shieldfrequencydata",
+      "Name_Localised": "Peculiar Shield Frequency Data",
+      "State": 0,
+      "Grade": "5",
+      "Group": "shield data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from combat oriented vessels. Scanned data from shield frequency changes and patterns rarely generate anything out of the ordinary, but when they do they can be keen interest to various people.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "shielddensityreports",
+      "Name_Localised": "Untypical Shield Scans",
+      "State": 0,
+      "Grade": "3",
+      "Group": "shield data",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Collected during basic scan: frequently pulled from combat oriented vessels. Shield technology has been established for centuries, so finding shield behaviour that doesn't match the expected results can be of great interest to various individuals and organisations.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_shutdowndata",
+      "Name_Localised": "Massive Energy Surge Analytics",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid data",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Information regarding a massive Thargoid energy surge, collected during the period between detection and impact.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_shipflightdata",
+      "Name_Localised": "Ship Flight Data",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid data",
+      "known_uses": [
+        "AX Explosives Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data collected via detailed scan of a Thargoid ship. It includes information about the mechanics and flight systems of a Thargoid vessel.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_shipsystemsdata",
+      "Name_Localised": "Ship Systems Data",
+      "State": 0,
+      "Grade": "4",
+      "Group": "thargoid data",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data collected via detailed scan of a Thargoid ship. It includes information about the internal systems of a Thargoid vessel.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_interdictiondata",
+      "Name_Localised": "Thargoid Interdiction Telemetry",
+      "State": 0,
+      "Grade": "5",
+      "Group": "thargoid data",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Data recorded during a failed attempt to avoid interdiction by a Thargoid present in supercruise.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknownshipsignature",
+      "Name_Localised": "Thargoid Ship Signature",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid data",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "The ship signature of a Thargoid interceptor.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknownwakedata",
+      "Name_Localised": "Thargoid Wake Data",
+      "State": 0,
+      "Grade": "4",
+      "Group": "thargoid data",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Wake data from a Thargoid interceptor.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_matComp",
+      "Name_Localised": "Thargoid Material Composition ",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid data",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_residData",
+      "Name_Localised": "Thargoid Residue Data",
+      "State": 0,
+      "Grade": "4",
+      "Group": "thargoid data",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_strutData",
+      "Name_Localised": "Thargoid Structural Data",
+      "State": 0,
+      "Grade": "2",
+      "Group": "thargoid data",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "fsdtelemetry",
+      "Name_Localised": "Anomalous FSD Telemetry",
+      "State": 0,
+      "Grade": "2",
+      "Group": "wake scans",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from scanning high energy wakes with a wake scanner. FSD drives are a relatively new technology and interesting quirks can be discovered from the telemetry of their control software.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "disruptedwakeechoes",
+      "Name_Localised": "Atypical Disrupted Wake Echoes",
+      "State": 0,
+      "Grade": "1",
+      "Group": "wake scans",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from scanning high energy wakes with a wake scanner. Data recorded from a disrupted frame shfit wake usuallys follows a familiar pattern. Sometimes these abnormalities which often makes the data more valuable.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "dataminedwake",
+      "Name_Localised": "Datamined Wake Exceptions",
+      "State": 0,
+      "Grade": "5",
+      "Group": "wake scans",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from scanning high energy wakes with a wake scanner. Many automated wake scanner systems will generate an exceptions log when they encounter data that doesn't match the pre-programmed profiles. Most of these turn out to be junk, but there are rumours that something more insidious has been discovered.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "hyperspacetrajectories",
+      "Name_Localised": "Eccentric Hyperspace Trajectories",
+      "State": 0,
+      "Grade": "4",
+      "Group": "wake scans",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "description": "Captured from scanning high energy wakes with a wake scanner. Hyperspace trajectories follow predictable paths through higher dimnesional space, although there are sometimes strange results in teh data not accounted for in current theory.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "wakesolutions",
+      "Name_Localised": "Strange Wake Solutions",
+      "State": 0,
+      "Grade": "3",
+      "Group": "wake scans",
+      "known_uses": [],
+      "location": "Found by scanning ships or mission rewards. Can be traded at Encoded Material Traders in high security, populated systems with high tech or military economies.",
+      "extra": "",
+      "StateQRM": 0
+    }
+  ],
+  "Manufactured": [
+    {
+      "Name": "galvanisingalloys",
+      "Name_Localised": "Galvanising Alloys",
+      "State": 1,
+      "Grade": "2",
+      "Group": "alloys",
+      "known_uses": [
+        "Caustic Sinks"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. Galvanising Alloys are alloys with additional protection from corrosion.",
+      "extra": "",
+      "StateQRM": 0,
+      "Count": "209"
+    },
+    {
+      "Name": "phasealloys",
+      "Name_Localised": "Phase Alloys",
+      "State": 1,
+      "Grade": "3",
+      "Group": "alloys",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Shock Cannon Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in low security systems. Phase Alloys blend metals and minerals into a meta-material which exploits properties from different phase states of the individual elements.",
+      "extra": "",
+      "StateQRM": 0,
+      "Count": "56"
+    },
+    {
+      "Name": "protolightalloys",
+      "Name_Localised": "Proto Light Alloys",
+      "State": 1,
+      "Grade": "4",
+      "Group": "alloys",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Specialist component developed during economic boom. Known to be salvaged from signal sources. Proto Light Alloys are experimental alloy techniques used to reduce the required mass for the alloy.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "protoradiolicalloys",
+      "Name_Localised": "Proto Radiolic Alloys",
+      "State": 1,
+      "Grade": "5",
+      "Group": "alloys",
+      "known_uses": [
+        "Chaff"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Specialist component developed during economic boom. Known to be salvaged from signal sources. These advanced alloys use radiation to form complex materials.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "salvagedalloys",
+      "Name_Localised": "Salvaged Alloys",
+      "State": 1,
+      "Grade": "1",
+      "Group": "alloys",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. Alloys salvaged from vehicle debris.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "electrochemicalarrays",
+      "Name_Localised": "Electrochemical Arrays",
+      "State": 1,
+      "Grade": "3",
+      "Group": "capacitors",
+      "known_uses": [
+        "Flechette Launcher Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources in anarchy systems. Electrochemical arrays are used for very small scale detection in microfluids.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "gridresistors",
+      "Name_Localised": "Grid Resistors",
+      "State": 1,
+      "Grade": "1",
+      "Group": "capacitors",
+      "known_uses": [
+        "Shock Cannon Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources. Grid Resistors are a form of serial resistor (often in a 2 or 3 dimensional array) that are used for a variety of purposes including: radio interference reduction, parasitic osscillation prevention, and grid current limitation.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "hybridcapacitors",
+      "Name_Localised": "Hybrid Capacitors",
+      "State": 1,
+      "Grade": "2",
+      "Group": "capacitors",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources. Hybrid Capacitors are a form of supercapacitor capable of storing and releasing vast amounts of energy.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "militarysupercapacitors",
+      "Name_Localised": "Military Supercapacitors",
+      "State": 1,
+      "Grade": "5",
+      "Group": "capacitors",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Advanced components used by factions in times of war. Known to be salvaged from signal sources. Military Supercapacitors provide extremely high energy storage and release.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "polymercapacitors",
+      "Name_Localised": "Polymer Capacitors",
+      "State": 1,
+      "Grade": "4",
+      "Group": "capacitors",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources in anarchy systems. Polymer Capacitors are stable and reliable forms of capacitor for small scale electronics. They are known for handling overload situations withotu cascade failure.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "chemicaldistillery",
+      "Name_Localised": "Chemical Distillery",
+      "State": 0,
+      "Grade": "3",
+      "Group": "chemical",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in high security systems. Chemical Distillery allows the isolation of a chemical from another chemical.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "chemicalmanipulators",
+      "Name_Localised": "Chemical Manipulators",
+      "State": 0,
+      "Grade": "4",
+      "Group": "chemical",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in high security systems. Chemical manipulators provide a means to control a chemical process.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "chemicalprocessors",
+      "Name_Localised": "Chemical Processors",
+      "State": 0,
+      "Grade": "2",
+      "Group": "chemical",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in high security systems. Chemical Processors are used to facilitate specific chemical processes. They can be reconfigured for different purposes.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "chemicalstorageunits",
+      "Name_Localised": "Chemical Storage Units",
+      "State": 0,
+      "Grade": "1",
+      "Group": "chemical",
+      "known_uses": [
+        "Caustic Sinks"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in high security systems. Chemical Storage units are used to contain chemicals in different states.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "pharmaceuticalisolators",
+      "Name_Localised": "Pharmaceutical Isolators",
+      "State": 0,
+      "Grade": "5",
+      "Group": "chemical",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Specialist component developed during times of outbreak. Known to be salvaged from signal sources. Pharmaceutical Isolators are used to extract and confine organic compounds from within a larger sample.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "compactcomposites",
+      "Name_Localised": "Compact Composites",
+      "State": 0,
+      "Grade": "1",
+      "Group": "composite",
+      "known_uses": [
+        "Chaff"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in high security systems. Compact Composites are combined materials engineered for their space saving while still retaining their core strength adn flexibility.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "fedcorecomposites",
+      "Name_Localised": "Core Dynamics Composites",
+      "State": 0,
+      "Grade": "5",
+      "Group": "composite",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Advanced component found in Federal Systems. Known to be salvaged from signal sources. Core Dynamics composites are a development by Core Dynamics providing increased protection over standard composites.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "filamentcomposites",
+      "Name_Localised": "Filament Composites",
+      "State": 0,
+      "Grade": "2",
+      "Group": "composite",
+      "known_uses": [
+        "Guardian Guass Cannon Munitions",
+        "Chaff"
+      ],
+      "location": "",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources. Filament Composites use embedded filaments to improve the strength of the material.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "highdensitycomposites",
+      "Name_Localised": "High Density Composites",
+      "State": 0,
+      "Grade": "3",
+      "Group": "composite",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources in low security systems. High Density Composites pack the materials into extremely dense layers for added protection.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "fedproprietarycomposites",
+      "Name_Localised": "Proprietary Composites",
+      "State": 0,
+      "Grade": "4",
+      "Group": "composite",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Advanced component found in Federal systems. KNown to be salvaged from signal sources. Proprietary Composites are a development for the Federal Navy providing increased resiliance over standard composites.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "basicconductors",
+      "Name_Localised": "Basic Conductors",
+      "State": 0,
+      "Grade": "1",
+      "Group": "conductive",
+      "extra": "",
+      "StateQRM": 0,
+      "known_uses": [
+        "Heatsinks"
+      ],
+      "locations": "Found at settlements, ship wrecks or mission rewards. Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels. Destroyed haulage vessels can be scavenged from teh aftermath of combat in shipping lanes. Known to be salvaged from signal sources. "
+    },
+    {
+      "Name": "biotechconductors",
+      "Name_Localised": "Biotech Conductors",
+      "State": 0,
+      "Grade": "5",
+      "Group": "conductive",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Used by factions as a reward for Mission contracts. Biotech conductors allow the flow of biotech materials (usually a fluid) to pass through the material.",
+      "extra": "",
+      "StateQRM": 1
+    },
+    {
+      "Name": "conductiveceramics",
+      "Name_Localised": "Conductive Ceramics",
+      "State": 0,
+      "Grade": "3",
+      "Group": "conductive",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in anarchy systems.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "conductivecomponents",
+      "Name_Localised": "Conductive Components",
+      "State": 0,
+      "Grade": "2",
+      "Group": "conductive",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in anarchy systems. Conductive components are the basic elements for energy transfer within circuits.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "conductivepolymers",
+      "Name_Localised": "Conductive Polymers",
+      "State": 0,
+      "Grade": "4",
+      "Group": "conductive",
+      "known_uses": [],
+      "location": "",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in anarchy systems. Conductive polymers are organic polymers that can be used to conduct electricity.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "crystalshards",
+      "Name_Localised": "Crystal Shards",
+      "State": 0,
+      "Grade": "1",
+      "Group": "crystals",
+      "known_uses": [
+        "Guardian Shard Cannon Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. Crystal Shards are fragments from whole crystals.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "exquisitefocuscrystals",
+      "Name_Localised": "Exquisite Focus Crystals",
+      "State": 0,
+      "Grade": "5",
+      "Group": "crystals",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Used by factions as a reward for Mission contracts. Exquisite Focus Crystals are finely crafted to ensure optimum performance within laser systems.",
+      "extra": "",
+      "StateQRM": 1
+    },
+    {
+      "Name": "uncutfocuscrystals",
+      "Name_Localised": "Flawed Focus Crystals",
+      "State": 0,
+      "Grade": "2",
+      "Group": "crystals",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. These crystals contain minor flaws but can be repaired or re-cut for use as focus crystals for directed energy systems like lasers, but have not been processed into usable form.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "focuscrystals",
+      "Name_Localised": "Focus Crystals",
+      "State": 0,
+      "Grade": "3",
+      "Group": "crystals",
+      "known_uses": [
+        "Guardian Guass Cannon Munitions",
+        "Shock Cannon Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in high security systems. Focus Crystals are used to direct and concentrate directed energy systems - typically lasers.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "refinedfocuscrystals",
+      "Name_Localised": "Refined Focus Crystals",
+      "State": 0,
+      "Grade": "4",
+      "Group": "crystals",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Used by factions as a reward for Mission contracts. Known to be salvaged from signal sources in high security systems. Refined Focus Crystals are a higher quality of focus crystal with an enhanced performance profile.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_powercell",
+      "Name_Localised": "Guardian Power Cell",
+      "State": 0,
+      "Grade": "1",
+      "Group": "guardian ruins",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Configurable Explosive Munitions",
+        "Configurable Small Calibre Munitions",
+        "Guardian Shard Cannon Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "An ancient device designed to generate power.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_powerconduit",
+      "Name_Localised": "Guardian Power Conduit",
+      "State": 0,
+      "Grade": "2",
+      "Group": "guardian ruins",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Configurable Explosive Munitions",
+        "Guardian Guass Cannon Munitions",
+        "Configurable Small Calibre Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "An ancient device designed to transfer power within Guardian technology.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_sentinel_weaponparts",
+      "Name_Localised": "Guardian Sentinel Weapon Parts",
+      "State": 0,
+      "Grade": "3",
+      "Group": "guardian ruins",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Guardian Guass Cannon Munitions",
+        "Guardian Shard Cannon Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Weapon parts recovered from a Guardian sentinel, a drone-like machine created serveral million years ago by the Guardians.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_techcomponent",
+      "Name_Localised": "Guardian Technology Component",
+      "State": 0,
+      "Grade": "3",
+      "Group": "guardian ruins",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Configurable Explosive Munitions",
+        "Guardian Guass Cannon Munitions",
+        "Configurable Small Calibre Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Pieces of ancient technology created several million years ago by the Guardians, an extinct nonhuman civlisation.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "guardian_sentinel_wreckagecomponents",
+      "Name_Localised": "Guardian Wreckage Components",
+      "State": 0,
+      "Grade": "1",
+      "Group": "guardian ruins",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Guardian Guass Cannon Munitions",
+        "Guardian Shard Cannon Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "The remains of Guardian sentinel, a drone-like machien created several million years ago by the Guardians.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "heatconductionwiring",
+      "Name_Localised": "Heat Conduction Wiring",
+      "State": 0,
+      "Grade": "1",
+      "Group": "heat",
+      "known_uses": [
+        "Heatsinks"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels. Destroyed haulage vessels can be scavenged from teh aftermath of combat in shipping lanes. Known to be salvaged from signal sources. Heat Conduction Wiring is used to transfer heat through a material.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "heatdispersionplate",
+      "Name_Localised": "Heat Dispersion Plate",
+      "State": 0,
+      "Grade": "2",
+      "Group": "heat",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Shock Cannon Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources. Heat Dispersion Plates use their surface area to disperse heat into the environment.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "heatexchangers",
+      "Name_Localised": "Heat Exchangers",
+      "State": 0,
+      "Grade": "3",
+      "Group": "heat",
+      "known_uses": [
+        "Gguardian Plasma Charger Munitions",
+        "Heatsinks"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels. Destroyed haulage vessels can be scavenged from teh aftermath of combat in shipping lanes. Known to be salvaged from signal sources in anarchy systems. Heat Exchangers transfer heat between separate systems.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "heatvanes",
+      "Name_Localised": "Heat Vanes",
+      "State": 0,
+      "Grade": "4",
+      "Group": "heat",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in anarchy systems. Heat Vanes use a series of fins for a greater surface to disperse heat.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "protoheatradiators",
+      "Name_Localised": "Proto Heat Radiators",
+      "State": 0,
+      "Grade": "5",
+      "Group": "heat",
+      "known_uses": [
+        "Heatsinks"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Specialist component developed during economic boom. Known to be salvaged from signal sources. Proto Heat Radiators use fluid transfer to move heat from a system.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "configurablecomponents",
+      "Name_Localised": "Configurable Components",
+      "State": 0,
+      "Grade": "4",
+      "Group": "mechanical components",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in low security systems. These are common components whose purpose can be defined after manufacture.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "improvisedcomponents",
+      "Name_Localised": "Improvised Components",
+      "State": 0,
+      "Grade": "5",
+      "Group": "mechanical components",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Specialist component used by factions in times of civil unrest. Known to be salvaged from signal sources. These jury rigged components can fill in for crafted or manufactured components in a pinch.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "mechanicalcomponents",
+      "Name_Localised": "Mechanical Components",
+      "State": 0,
+      "Grade": "3",
+      "Group": "mechanical components",
+      "known_uses": [
+        "Flechette Launcher Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources in low security systems. General Core Mechanical Components such as gearing.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "mechanicalequipment",
+      "Name_Localised": "Mechanical Equipment",
+      "State": 0,
+      "Grade": "2",
+      "Group": "mechanical components",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources. A range of mechanical equipment.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "mechanicalscrap",
+      "Name_Localised": "Mechanical Scrap",
+      "State": 0,
+      "Grade": "1",
+      "Group": "mechanical components",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by haulage vessels can be scavenged from the aftermath of combat in shipping lanes. Known to be salvaged from signal sources. Assorted scrap from mechanical sources.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "compoundshielding",
+      "Name_Localised": "Compound Shielding",
+      "State": 0,
+      "Grade": "4",
+      "Group": "shielding",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in high security systems. Compound shielding is a complex management of layered shields to provide a more effective barrier.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "imperialshielding",
+      "Name_Localised": "Imperial Shielding",
+      "State": 0,
+      "Grade": "5",
+      "Group": "shielding",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Advanced component found in Imperial systems. Known to be salvaged from signal sources. Imperial shielding is an advanced form of shield management using proprietary technology.",
+      "extra": "",
+      "StateQRM": 1
+    },
+    {
+      "Name": "shieldemitters",
+      "Name_Localised": "Shield Emitters",
+      "State": 0,
+      "Grade": "2",
+      "Group": "shielding",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. Shield Emitters project the shield's energy away from the source to provide a barrier.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "shieldingsensors",
+      "Name_Localised": "Shielding Sensors",
+      "State": 0,
+      "Grade": "3",
+      "Group": "shielding",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources in high security systems. Shield Sensors are used to monitor an active shield.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "wornshieldemitters",
+      "Name_Localised": "Worn Shield Emitters",
+      "State": 0,
+      "Grade": "1",
+      "Group": "shielding",
+      "known_uses": [],
+      "location": "F",
+      "description": "Component found in ships: frequently used by combat oriented vessels. Known to be salvaged from signal sources. These are used shield emitters, although the core components can be cannibalised.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_biomechanicalconduits",
+      "Name_Localised": "Bio-Mechanical Conduits",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid ship",
+      "known_uses": [
+        "Enzyme Missile Launcher Munitions",
+        "AX Explosives Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Bio-Mechanical power conduits found in Thargoid ships and technology.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_propulsionelement",
+      "Name_Localised": "Propulsion Elements",
+      "State": 0,
+      "Grade": "5",
+      "Group": "thargoid ship",
+      "known_uses": [
+        "Enzyme Missile Launcher Munitions",
+        "AX Explosives Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Pices of technology recovered from the propulsion system of a Thargoid Ship.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_weaponparts",
+      "Name_Localised": "Weapon Parts",
+      "State": 0,
+      "Grade": "4",
+      "Group": "thargoid ship",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "Enzyme Missile Launcher Munitions",
+        "AX Remote Flak Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Pieces of technology recovered from the weapon systems of a Thargoid ship.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_wreckagecomponents",
+      "Name_Localised": "Wreckage Components",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid ship",
+      "known_uses": [
+        "AX Remote Flak Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Fragments of a Thargoid ship.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_abrasion03",
+      "Name_Localised": "Hardened Surface Fragments",
+      "State": 0,
+      "Grade": "1",
+      "Group": "thargoid titan",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "An abrasion sample taken from the upper surface of a Thargoid Titan. This material is extremely strong and resistant to multiple types of damage.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_abrasion01",
+      "Name_Localised": "Heat Exposure Specimen",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid titan",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "An abrasion sample taken from near a Thargoid Titan heat vent. The material appears to have been affected by common fluctuations in temperature, and shows evidence of microbiological life.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_abrasion02",
+      "Name_Localised": "Phasing Membrane Residue",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid titan",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "An abrasion sample taken from near a visible membrane of Thargoid Titan. The material is viscous and oddly inert once separated from its place of origin.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_causticgeneratorparts",
+      "Name_Localised": "Corrosive Mechanisms",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid maelstrom",
+      "known_uses": [
+        "Caustic Sinks"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Components recovered from the debris of a destroyed caustic generator. They are reactive to heat sources in close proximity.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_causticshard",
+      "Name_Localised": "Caustic Shard",
+      "State": 0,
+      "Grade": "2",
+      "Group": "thargoid maelstrom",
+      "known_uses": [
+        "Caustic Sinks"
+      ],
+      "location": "A single shard of crystalised caustic gas (low rarity).",
+      "description": "This material can not be traded at any Material Trader.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknownenergysource",
+      "Name_Localised": "Sensor Fragment",
+      "State": 0,
+      "Grade": "5",
+      "Group": "thargoid ground site",
+      "known_uses": [
+        "AX Small Calibre Munitions",
+        "AX Remote Flak Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Fragments of a Thargoid Sensor, a device of Thargoid origin designed to scan nearby vessels and celestial bodies.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknowncarapace",
+      "Name_Localised": "Thargoid Carapace",
+      "State": 0,
+      "Grade": "2",
+      "Group": "thargoid ground site",
+      "known_uses": [
+        "AX Small Calibre Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Fragments of the exterior of a Thargoid scavenger, a biomechanical construct.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknownenergycell",
+      "Name_Localised": "Thargoid Energy Cell",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thargoid ground site",
+      "known_uses": [],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "An energy cell recovered from a Thargoid scavenger, a biomechanical construct.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknownorganiccircuitry",
+      "Name_Localised": "Thargoid Organic Circuitry",
+      "State": 0,
+      "Grade": "5",
+      "Group": "thargoid ground site",
+      "known_uses": [
+        "AX Explosives Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Circuitry recovered from a Thargoid scavenger, a biomechanical construct.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "unknowntechnologycomponents",
+      "Name_Localised": "Thargoid Technological Components",
+      "State": 0,
+      "Grade": "4",
+      "Group": "thargoid ground site",
+      "known_uses": [
+        "AX Remote Flak Munitions"
+      ],
+      "location": "This material can not be traded at any Material Trader.",
+      "description": "Technological components recovered from a Thargoid scavenger, a biomechanical construct.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "heatresistantceramics",
+      "Name_Localised": "Heat Resistant Ceramics",
+      "State": 0,
+      "Grade": "2",
+      "Group": "thermic",
+      "known_uses": [
+        "Guardian Guass Cannon Munitions"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources in anarchy systems. Heat resistant ceramics provide enhanced protection against thermal sources.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "militarygradealloys",
+      "Name_Localised": "Military Grade Alloys",
+      "State": 0,
+      "Grade": "5",
+      "Group": "thermic",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Advanced component used by factions in times of war. Known to be salvaged from signal sources in systems in a state of civil war or war. Military grade alloys provide an overall improved protection over standard alloys.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "precipitatedalloys",
+      "Name_Localised": "Precipitated Alloys",
+      "State": 0,
+      "Grade": "3",
+      "Group": "thermic",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Precipitated Alloys provide extra hardening over standard alloys.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "temperedalloys",
+      "Name_Localised": "Tempered Alloys",
+      "State": 0,
+      "Grade": "1",
+      "Group": "thermic",
+      "known_uses": [],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Known to be salvaged from signal sources. Tempered Alloys are refined alloys used for their enhanced strength and impact resistance.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "thermicalloys",
+      "Name_Localised": "Thermic Alloys",
+      "State": 0,
+      "Grade": "4",
+      "Group": "thermic",
+      "known_uses": [
+        "Chaff"
+      ],
+      "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
+      "description": "Component found in ships: frequently used by military and authority vessel. Thermic Alloys are designed with a better thermal adaption profile than standard alloys.",
+      "extra": "",
+      "StateQRM": 0
+    }
+  ]
+}

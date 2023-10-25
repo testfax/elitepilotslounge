@@ -1,0 +1,55 @@
+{
+    "Header": {
+      "source": "https://elite-journal.readthedocs.io/en/latest/",
+      "version": "36",
+      "changeDate": "update14 November-2022"
+    },
+    "Blueprints": [
+        {
+            "type":"Blast Resistant",
+            "grades": [
+                {
+                    "grade_name": TEMPLATETEMPLATETEMPLATETEMPLATETEMPLATETEMPLATE,
+                    "grade_data": {
+                        "modifiers": [
+                                { "description": "TEMPLATETEMPLATE", "mod_amount": "555555", "type":"%" },
+                                { "description": "TEMPLATETEMPLATE", "mod_amount": "555555", "type":"%" },
+                                { "description": "TEMPLATETEMPLATE", "mod_amount": "555555", "type":"%" }
+                        ],
+                        "upgrade_cost": [
+                            { "material":"TEMPLATETEMPLATE", "qty":"555555" },
+                            { "material":"TEMPLATETEMPLATE", "qty":"555555" },
+                            { "material":"TEMPLATETEMPLATE", "qty":"555555" }
+                        ]
+                    }
+                }
+            ],
+            "Engineers": 
+            {
+                "Engineer": "TEMPLATETEMPLATE",
+                "EngineerID": "400003"
+            }
+        }
+    ],
+    "Experimental": [
+        {
+            "name":"TEMPLATETEMPLATETEMPLATETEMPLATETEMPLATE",
+            "data": {
+                "modifiers": [
+                    { "description": "TEMPLATE", "mod_amount": "TEMPLATE", "type":"%" },
+                    { "description": "TEMPLATE", "mod_amount": "TEMPLATE", "type":"%" },
+                    { "description": "TEMPLATE", "mod_amount": "TEMPLATE", "type":"%" },
+                    { "description": "TEMPLATE", "mod_amount": "TEMPLATE", "type":"%" }
+                ],
+                "upgrade_cost": [
+                    { "material":"TEMPLATETEMPLATE", "qty":"5555555555", "mat_grade":"55555" },
+                    { "material":"TEMPLATETEMPLATE", "qty":"5555555555", "mat_grade":"55555" },
+                    { "material":"TEMPLATETEMPLATE", "qty":"5555555555", "mat_grade":"55555" },
+                    { "material":"TEMPLATETEMPLATE", "qty":"5555555555", "mat_grade":"55555" },
+                    { "material":"TEMPLATETEMPLATE", "qty":"5555555555", "mat_grade":"55555" }
+                ],
+                "modification_description": "TEMPLATETEMPLATETEMPLATETEMPLATE"
+            }
+        }
+    ]
+}

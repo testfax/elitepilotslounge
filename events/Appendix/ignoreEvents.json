@@ -1,0 +1,39 @@
+{
+    "header": {
+      "logic": "List of Events to Ignore due to coding conflictions",
+      "version": "36",
+      "changeDate": "update14 Nov-2022"
+    },
+    "events": [
+      { 
+        "category": "other events",
+        "event": "ModuleInfo",
+        "reason": "Event is coded for ModulesInfo.json: *.log event has NO DATA."
+      },
+      { 
+        "category": "startup",
+        "event": "Cargo",
+        "reason": "Cargo event fires at startup to detect if any cargo came from abandonded delivery mission, howerver it fires only from Cargo.json when cargo does cargo things"
+      },
+      { 
+        "category": "Station Services",
+        "event": "Shipyard",
+        "reason": "Limited data is fired into the Journal, all the pricelist comes out in the JSON File."
+      },
+      { 
+        "category": "Station Services",
+        "event": "Outfitting",
+        "reason": "Limited data is fired into the Journal, all the data comes out in the JSON File."
+      }
+      ,{ 
+        "category": "Travel",
+        "event": "NavRoute",
+        "reason": "Limited data is fired into the Journal, all the data comes out in the JSON File."
+      }
+      ,{ 
+        "category": "Station Services",
+        "event": "Market",
+        "reason": "Limited data is fired into the Journal, all the data comes out in the JSON File."
+      }
+    ]
+}
