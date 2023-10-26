@@ -1,4 +1,4 @@
-# elitepilotslounge
+# Elite Pilots Lounge
 
 # Current State of Development: 
 - ALPHA
