@@ -3,15 +3,14 @@
 try {
     const {watcherConsoleDisplay,errorHandler,pageData,getCommander} = require('../utils/errorHandlers')
     const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
+    const {logs} = require('../utils/logConfig')
     const Store = require('electron-store');
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
-    const lastTitan = windowItemsStore.get('brain-ThargoidSample') //socket related
+    let lastTitan = windowItemsStore.get('brain_ThargoidSample') //socket related
     const thisWindow = windowItemsStore.get('electronWindowIds')
     const client = BrowserWindow.fromId(thisWindow.win);
     const lcs = require('../utils/loungeClientStore')
     const taskManager = require('../sockets/taskManager')
-    const colorize = require('json-colorizer');
-    const colors = require('colors');
     const path = require('path')
     const fs = require('fs')
     const {fetcher} = require('./brain_functions')
@@ -72,7 +71,7 @@ try {
       }
         let gPath = path.join(__dirname,FET.filePath[0])
         gPath = path.normalize(gPath)
-        const fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return console.log(err); });
+        const fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return logs(err); });
         response = JSON.parse(fetched)
         return response
       }
@@ -139,14 +138,14 @@ try {
           if (errorChecking) {
             let missingEvents = null
             if (!matching) {
-              Object.keys(thargoidSampling).forEach(i=>{console.log(`[${i}]`.red)})
+              Object.keys(thargoidSampling).forEach(i=>{logs(`[${i}]`.red)})
               missingEvents = launchToRedis.filter((event) => {
                 return !Object.values(thargoidSampling).some((item) => item.event === event);
               });
               const matching = missingEvents.length === 0;
-              console.log("Missing Events:".bgRed,missingEvents,"Matching:".yellow,`${matching}`.red)
+              logs("Missing Events:".bgRed,missingEvents,"Matching:".yellow,`${matching}`.red)
             }
-            else { console.log("Missing Events:".bgRed,missingEvents,"Matching:".yellow,`${matching}`.green) }
+            else { logs("Missing Events:".bgRed,missingEvents,"Matching:".yellow,`${matching}`.green) }
           }
           //! ERROR CHECKING
           if (matching 
@@ -156,14 +155,14 @@ try {
             ) { 
               store.set('redisFirstUpdateflag',matching)
               taskManager.brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey())
-              if (errorChecking) { console.log("[BE TS]".bgCyan,`${event} Sent to Redis`.green); }
+              if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green); }
           }
           else { store.set('redisFirstUpdateflag',false) 
-            if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${event} Allow more events until updater stop`) }
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${event} Allow more events until updater stop`) }
           }
         }
       }
-      catch(e) { console.log("redisUpdaterSetu".bgMagenta) }
+      catch(e) { logs("redisUpdaterSetu".bgMagenta) }
     }
     function fetchFromDCOH(data){ 
       const systemData = fetch(`https://dcoh.watch/api/v1/Overwatch/System/${data}`)
@@ -174,20 +173,20 @@ try {
             return response.json();
         })
         .then(item => {
-          console.log(item.populationOriginal);
+          logs(item.populationOriginal);
            
         })
         .catch(e => {
-            console.log(`[DCOH] specific system failed`.bgYellow,e)
+            logs(`[DCOH] specific system failed`.bgYellow,e)
         })
     }
     function checkSetupFlag(event) {
       if (store.get('redisFirstUpdateflag')) { 
-        if (event) { console.log(`${event}`.bgCyan,"{",`{redisFirstUpdateflag:`.green,store.get('redisFirstUpdateflag'),"}") }
+        if (event) { logs(`${event}`.bgCyan,"{",`{redisFirstUpdateflag:`.green,store.get('redisFirstUpdateflag'),"}") }
         return true
       }
       if (!store.get('redisFirstUpdateflag')) {
-        if (event) { console.log(`${event}`.bgCyan,"{",`redisFirstUpdateflag:`.red,store.get('redisFirstUpdateflag'),"}") }
+        if (event) { logs(`${event}`.bgCyan,"{",`redisFirstUpdateflag:`.red,store.get('redisFirstUpdateflag'),"}") }
         return false
       }
     }
@@ -196,7 +195,7 @@ try {
       if (windowItemsStore.get('currentPage') == thisBrain) {
         const client = BrowserWindow.fromId(thisWindow.win);
         client.webContents.send("from_brain-ThargoidSample", data);
-        if (review) { console.log("Review:".yellow,data,store.get('redisFirstUpdateflag')) }
+        if (review) { logs("Review:".yellow,data,store.get('redisFirstUpdateflag')) }
       }
     }
     function findActiveSocketKey() {
@@ -275,8 +274,8 @@ try {
     app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
     ipcMain.on(thisBrain, async (receivedData) => {
       if (receivedData.event == 'template') {
-        console.log(colorize(receivedData, { pretty: true }))
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        logs(colorize(receivedData, { pretty: true }))
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -286,7 +285,7 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Status') {
         function inWingStuff(timestamp,action) {
@@ -306,8 +305,8 @@ try {
         }
         if (receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,1) }
         if (!receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,0) }
-        // console.log(receivedData)
-        // console.log("====================================")
+        // logs(receivedData)
+        // logs("====================================")
         //Viewing GalaxyMap
         if (receivedData.GuiFocus == 6 && eventNames.includes('GalaxyMap') && guifocus != 6) { guifocus = 6
           try {
@@ -390,13 +389,13 @@ try {
                 taskManager.brain_ThargoidSample_socket(compiledArray,'StartJump_Charging',findActiveSocketKey())
               }
               FSDChargeCount++
-              console.log("FSDChargeCount",FSDChargeCount)
+              logs("FSDChargeCount",FSDChargeCount)
             }
           catch(e) { errorHandler(e,e.name)}
         }
         if (!receivedData.Flags1.includes('Fsd Charging') && !receivedData.Flags1.includes('Supercruise') && FSDChargeCount >= 1) { 
           FSDChargeCount = 0
-          console.log("FSDChargeCount",FSDChargeCount)
+          logs("FSDChargeCount",FSDChargeCount)
           let compiledArray = { "event": 'StartJump_Charging', "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
 
@@ -416,7 +415,7 @@ try {
         // -------------------------- TEST CODE BELOW
         if (receivedData.Flags1.includes('Lights On') && (windowItemsStore.get('currentPage') == thisBrain) ) {
           
-          // console.log("LIGHTS ON")
+          // logs("LIGHTS ON")
           store.set('redisFirstUpdateflag',false);
           checkSetupFlag("LIGHTS ON!!!!");
           const indexToRemove = launchToRedis.indexOf('FSDJump');
@@ -431,12 +430,12 @@ try {
           }
           
           const response = await taskManager.brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
-          console.log("RESET:".bgCyan,response)
+          logs("RESET:".bgCyan,response)
         }
         // -------------------------- TEST CODE ABOVE
       }
       if (receivedData.event == 'CollectCargo') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           if (currentSystemState != "") {
             let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": receivedData, "FID": FID }
@@ -450,10 +449,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Cargo') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try{
           let combinedData = { "sampleCargo":[],"SampleCargoCount":0,"notSampleCargoCount":0,"notSampleCargo": [],"limpets": 0 }
           let compiledArray = {
@@ -470,22 +469,22 @@ try {
             specificItem = findMatObject(itemSearchTable.marketData, "Name_Cargo",item.Name_Cargo)
             if (item.Name == "drones") { combinedData.limpets = item.Count }
             if (specificItem != null && specificItem.Name_Cargo == item.Name_Cargo) {
-              // console.log(item.Name,"FOUND".green)
-              // console.log(colorize(specificItem, { pretty: true }))
+              // logs(item.Name,"FOUND".green)
+              // logs(colorize(specificItem, { pretty: true }))
               combinedData.sampleCargo.push(item)
               combinedData.SampleCargoCount = item.Count
             }
             else {
-              // console.log(item.Name,"NOT FOUND".red)
-              // console.log(colorize(item, { pretty: true }))
+              // logs(item.Name,"NOT FOUND".red)
+              // logs(colorize(item, { pretty: true }))
               combinedData.notSampleCargo.push(item)
               combinedData.notSampleCargoCount = item.Count
             }
           })
           compiledArray.combinedData.timestamp = receivedData.timestamp
-          // console.log("NOT FOUND ARRAY".yellow)
-          // console.log(colorize(compiledArray.combinedData.notSampleCargo, { pretty: true }))
-          // console.log(colorize(compiledArray, { pretty: true }))
+          // logs("NOT FOUND ARRAY".yellow)
+          // logs(colorize(compiledArray.combinedData.notSampleCargo, { pretty: true }))
+          // logs(colorize(compiledArray, { pretty: true }))
           // if (redisFirstUpdateflag) { ipcMain.emit(`event-callback-${receivedData.event}`,compiledArray) }
           thargoidSampling[receivedData.event] = compiledArray
           currentCargo = compiledArray
@@ -496,11 +495,11 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Commander') {
-        // console.log("2".red)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        // logs("2".red)
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try{
           // used to clear the variable on a soft exit to the menu.
           //JSON Files log files will always have first priority.
@@ -525,11 +524,11 @@ try {
           // }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Loadout') {
-        // console.log("4".red)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        // logs("4".red)
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try{
           const itemSearchTable = dataHistory("itemSearchTable")
           let specificItem = null;
@@ -565,11 +564,11 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Location') {
-        // console.log("3".red)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        // logs("3".red)
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try{
           const propCheck = [
             'DistFromStarLS',
@@ -601,7 +600,7 @@ try {
               else { combinedData[ele] = receivedData[ele] }
             }
           })
-          // console.log(colorize(compiledArray, { pretty: true }))
+          // logs(colorize(compiledArray, { pretty: true }))
           let nearestTitanToCmdr = distances(combinedData.StarPos,'titanLocation')
           const [titan,ly] = Object.entries(nearestTitanToCmdr)[0]
           nearestTitanToCmdr = {[titan]:ly}
@@ -658,7 +657,7 @@ try {
                 if (item.systemAddress == receivedData.SystemAddress) {
                   stuff["Original Population"] = item.populationOriginal
                   stuff[`LY to ${titan}`] = Object.values(combinedData.nearestTitan)[0] ? Object.values(combinedData.nearestTitan)[0] : ""
-                  console.log(colorize(stuff, { pretty: true }))
+                  logs(colorize(stuff, { pretty: true }))
                 }
               })
             })
@@ -666,11 +665,11 @@ try {
         
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'FSDJump' || receivedData.event == 'CarrierJump') {
         try {
-          // if (store.get('redisFirstUpdateflag')) { console.log(`Redis setup is not running and redis is ready to receive ${store.get('redisFirstUpdateflag')}`) }
+          // if (store.get('redisFirstUpdateflag')) { logs(`Redis setup is not running and redis is ready to receive ${store.get('redisFirstUpdateflag')}`) }
           if (store.get('thisSampleSystem') == receivedData.SystemAddress) {
             store.set('redisFirstUpdateflag',true)
           }
@@ -762,16 +761,16 @@ try {
                 if (item.systemAddress == receivedData.SystemAddress) {
                   stuff["Original Population"] = item.populationOriginal
                   stuff[`LY to ${titan}`] = Object.values(combinedData.nearestTitan)[0] ? Object.values(combinedData.nearestTitan)[0] : ""
-                  console.log(colorize(stuff, { pretty: true }))
+                  logs(colorize(stuff, { pretty: true }))
                 }
               })
             })
           }
         }
-        catch(e) { console.log(e) }
+        catch(e) { logs(e) }
       }
       if (receivedData.event == 'ShipyardSwap') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try{
           let combinedData = {
             "ShipType": receivedData.shipType,
@@ -787,12 +786,12 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Market') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
-          // console.log(receivedData)
+          // logs(receivedData)
           // const searchFor = [
           //   {
           //     id: 128824468,
@@ -822,7 +821,7 @@ try {
               })
             }
             else {
-              // console.log("no",item.id)
+              // logs("no",item.id)
             }
           })
           thargoidSampling[receivedData.event] = compiledArray
@@ -832,10 +831,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'MarketSell') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -845,10 +844,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'LaunchDrone') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           if (currentSystemState != "") {
             let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": receivedData, "FID": FID }
@@ -873,7 +872,7 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'Shutdown') {
         thargoidSampling = {}
@@ -891,7 +890,7 @@ try {
         }
       }
       if (receivedData.event == 'SupercruiseDestinationDrop') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -905,10 +904,10 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'StartJump') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -923,10 +922,10 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'NavRouteClear') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -938,12 +937,12 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       else {
         eventNames.forEach(eventName =>{
           if (receivedData.event === eventName) {
-            if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
             try {
               let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
               compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -953,7 +952,7 @@ try {
               }
             }
             catch(e) { errorHandler(e,e.name)}
-            if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
           }
         })
       }
@@ -965,8 +964,8 @@ try {
   })
 }
 catch (error) {
-    // console.error(error);
-    errorHandler(error,error.name)
+    console.error(error);
+    // errorHandler(error,error.name)
 }
 
 

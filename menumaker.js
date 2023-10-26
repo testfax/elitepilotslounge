@@ -1,7 +1,15 @@
 const {pageData} = require('./utils/errorHandlers')
 const {app, Menu, BrowserWindow} = require('electron')
+const {logs} = require('./utils/logConfig')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
+if (!store.get('electronWindowIds')) { 
+    const setupArray = {
+		"win": 1,
+		"appStatus": "clean"
+	}
+store.set("electronWindowIds",setupArray)
+}
 const thisWindow = store.get('electronWindowIds')
 const {socket_joinRoom, socket_leaveRoom} = require('./sockets/taskManager')
 const path = require('path')

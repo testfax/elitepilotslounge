@@ -1,14 +1,12 @@
 //! Watcher Console Display is located in loungeClientStore.js
-
-const colors = require('colors');
-const colorize = require('json-colorizer');
+const {app} = require('electron')
+const {logs} = require('./logConfig')
 const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
 const path = require('path')
 const fs = require('fs')
-// const colorize = require('json-colorizer');
 const lcs = require('./loungeClientStore')
 try  {
-    let eventsJSON = fs.readFileSync('./events/Appendix/events.json', (err) => { if (err) return console.log(err); });
+    let eventsJSON = fs.readFileSync('./events/Appendix/events.json', (err) => { if (err) return logs(err); });
     eventsJSON = JSON.parse(eventsJSON)   
     //###### This eventsHandler.js is basically middleware for the specific events "*.js" files. ######
     let failEvents = new Array()
@@ -17,29 +15,28 @@ try  {
         if (category == "json") { fileType = '.json' } else { fileType = '.js' }
         modulePath = path.join(__dirname,'..','events', category, eventName + ".js");
         if (fs.existsSync(modulePath)) {
-            if (watcherConsoleDisplay(eventName)) { console.log(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) }
+            if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) }
             const handler = require(modulePath);
            
             if (returnable) { //! RETURNS DATA FROM EVENT CALLED
-                if (watcherConsoleDisplay(eventName)) { console.log("2.3 RETURNABLE -> ".bgMagenta,returnable) }
+                if (watcherConsoleDisplay(eventName)) { logs("2.3 RETURNABLE -> ".bgMagenta,returnable) }
                 return handler(eventData); 
             }
             else { //! DOESN"T RETURN ANYTHING FROM THE EVENT CALLED.
                 try {
-                    if (watcherConsoleDisplay(eventName)) { console.log("2.4: Event Handling -> ".bgCyan,`${eventName}`.yellow); }
+                    if (watcherConsoleDisplay(eventName)) { logs("2.4: Event Handling -> ".bgCyan,`${eventName}`.yellow); }
                     handler(eventData);
                 }   
                 catch(error) {
-                    // console.log("YOLO")
-                    // console.log("2.5 Error:",modulePath)
+                    // logs("2.5 Error:",modulePath)
                     //todo FUTURE GUI NOTIFICATIN FOR COMMANDER SPECIFIC ?ADMINS?
-                    // if (watcherConsoleDisplay("showNoEventHandler")) { console.log("2.5: NO HANDLER -> ".bgRed, `${eventName + ".js"}`.yellow); }
+                    // if (watcherConsoleDisplay("showNoEventHandler")) { logs("2.5: NO HANDLER -> ".bgRed, `${eventName + ".js"}`.yellow); }
                     incrimentNoHandler(category,eventName);
                 }
             }
         }
         else {
-            if (watcherConsoleDisplay(eventName)) { console.log(`2: ${path.join(category, eventName + ".js")}`.bgCyan,"FILE DOES NOT EXIST".red) } 
+            if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")}`.bgCyan,"FILE DOES NOT EXIST".red) } 
         }
     }
     function getCategoryFromEvent(eventName) {
@@ -66,9 +63,9 @@ try  {
       
         // Sort the array by category
         failEvents.sort((a, b) => a.category.localeCompare(b.category));
-        if (watcherConsoleDisplay("showNoEventHandler")) { console.log("2.7 ADDED NON-EXISTANT HANDLER TO ARRAY -> ".bgRed,`\n{`,`${category}`.red,`:`,`${eventName}`.yellow,`}`) }
-        if (watcherConsoleDisplay("showNoEventHandlerShowArray")) { console.log(colorize(failEvents, { pretty: true }))  }
-        // console.log(colorize(failEvents, {STRING_KEY: 'magenta', STRING_VALUE: 'yellow'})); //Array only stays alive for the lifetime of the App.
+        if (watcherConsoleDisplay("showNoEventHandler")) { logs("2.7 ADDED NON-EXISTANT HANDLER TO ARRAY -> ".bgRed,`\n{`,`${category}`.red,`:`,`${eventName}`.yellow,`}`) }
+        if (watcherConsoleDisplay("showNoEventHandlerShowArray")) { logs(colorize(failEvents, { pretty: true }))  }
+        // logs(colorize(failEvents, {STRING_KEY: 'magenta', STRING_VALUE: 'yellow'})); //Array only stays alive for the lifetime of the App.
     }
     const initializeEvent = { //! ONLY FOR "*.log" FILES.        
         startEventSearch: (JSONevent,returnable,eventMod) => {
@@ -78,13 +75,13 @@ try  {
             const category = getCategoryFromEvent(SpecifyEvent)
             //todo Need to make big alert if "EVENT" does not exist... Probably should bring it to the front side and make a form that posts to discord informing us.
             if (category == null) { 
-                console.log("2.6 NO EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow);
+                logs("2.6 NO EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow);
                 return
             }
             //category should give the Folder Path (Folder Path)
             const result = handleEvent(SpecifyEvent, category, JSONevent, returnable);
             if (returnable && result) { 
-                if (watcherConsoleDisplay(SpecifyEvent)) { console.log("3: Event Returning to Watcher -> ".bgCyan,result); }
+                if (watcherConsoleDisplay(SpecifyEvent)) { logs("3: Event Returning to Watcher -> ".bgCyan,result); }
                 return result 
             }
         }
@@ -97,5 +94,5 @@ try  {
 }
 catch (error) {
     errorHandler(error,error.name)
-   // console.log(error)
+   // logs(error)
 }

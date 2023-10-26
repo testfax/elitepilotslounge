@@ -1,3 +1,5 @@
+const {app} = require('electron')
+const {logs} = require('../utils/logConfig')
 const {watcherConsoleDisplay,errorHandler} = require('../utils/errorHandlers')
 const { Manager } = require('socket.io-client')
 const {requestCmdr,wingData} = require('../utils/loungeClientStore')
@@ -7,7 +9,7 @@ let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',da
 
 try {
     let commander = JSON.stringify(requestCmdr().commander)
-    if (watcherConsoleDisplay("globalLogs")) {  console.log("[SOCKET CLIENT]".blue," OPERATIONAL ".green) }
+    if (watcherConsoleDisplay("globalLogs")) {  logs("[SOCKET CLIENT]".blue," OPERATIONAL ".green) }
     const manager = new Manager('https://elitepilotslounge.com/socket.io/', {
         query: { 'clientpilot': commander, 'type': 'client'},
         path: '/socket.io/',
@@ -18,14 +20,14 @@ try {
     const socket = manager.socket("/")
     manager.open((err) => {
         if (err) {
-            console.log('connect error. error code generated from socketMain.js')
+            logs('connect error. error code generated from socketMain.js')
         } else {
-            console.log("connection succ")
+            logs("connection succ")
         }
     });
     const sockF = {
         test: function(data) {
-            console.log("test".yellow,`${data}`.yellow)
+            logs("test".yellow,`${data}`.yellow)
             return data
         },
     }
@@ -80,11 +82,11 @@ try {
                 catch(error) { errorHandler(error,error.name); reject(error) }
             })
         }
-        if (watcherConsoleDisplay("globalLogs")) { console.log("[SOCKET CLIENT]".blue,"Socket ID: ",`${socket.id}`.green) }
+        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Socket ID: ",`${socket.id}`.green) }
         if (store.get('currentPage') == 'brain-ThargoidSample') { socketReconnect(store.get('brain-ThargoidSample.currentTitanState')) }
     })
     socket.on("disconnect", (reason) => {
-        if (watcherConsoleDisplay("globalLogs")) { console.log("[SOCKET CLIENT]".blue,"Disconnect Reason:".bgRed,reason) }
+        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason:".bgRed,reason) }
         const roomCache = {
             Inviter: 0,
             Others: [],
@@ -97,7 +99,7 @@ try {
         // else the socket will automatically try to reconnect
     });
     socket.on("error", (e) => {
-        if (watcherConsoleDisplay("globalLogs")) { console.log("[SOCKET CLIENT]".blue,"ERROR:".red,e) }
+        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"ERROR:".red,e) }
         const roomCache = {
             Inviter: 0,
             Others: [],
@@ -109,7 +111,7 @@ try {
     })
 
     socket.io.on("reconnect_attempt", (e) => {
-        if (watcherConsoleDisplay("globalLogs")) { console.log("[SOCKET CLIENT]".blue,"Reconnect Attempt#:".red,e) }
+        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Reconnect Attempt#:".red,e) }
     })
     //todo Code listeners from server.
 }

@@ -1,19 +1,18 @@
-const { app,BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron')
+const {logs} = require('./logConfig')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 const thisWindow = store.get('electronWindowIds')
-const colors = require('colors');
 const path = require('path')
 const fs = require('fs')
 const getPath = require('platform-folders')
 // const {savedGameLocation} = require('./loungeClientStore')
-
 const errorFunc = {
     pageData: { currentPage: "" },
     getCommander: function(data) {
         let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.txt`
         loungeClientFile = path.normalize(loungeClientFile)
-        let result = fs.readFileSync(loungeClientFile,'utf8', (err) => { if (err) return console.log(err); });
+        let result = fs.readFileSync(loungeClientFile,'utf8', (err) => { if (err) return logs(err); });
         result = JSON.parse(result)
         return result[0].commander
     },
@@ -94,12 +93,12 @@ const errorFunc = {
         const currentDateTime = new Date()
         errorGenReport.timestamp = currentDateTime.toISOString()
 
-        console.log("[ERROR TYPE]".red,`${origin}`.yellow)
+        logs("[ERROR TYPE]".red,`${origin}`.yellow)
         if (extra) {
-            console.log("[ERROR Extra]".red, `${extra}`.cyan)
+            logs("[ERROR Extra]".red, `${extra}`.cyan)
         }
         let errArray = new Array() 
-        // console.log("TEST".yellow,error);
+        // logs("TEST".yellow,error);
         if (typeof error == 'string') { errArray = error.split("/n") }
         if (typeof error == 'object') { 
             let newError = { 
@@ -117,8 +116,9 @@ const errorFunc = {
         })
         errorGenReport.stack =  error.stack
         
-        console.log(`APP ${app.getName().bgBrightRed} exited by ${origin} handler... `.red)
+        logs(`APP ${app.getName().bgBrightRed} exited by ${origin} handler... `.red)
         errorFunc.logGenerator(errorGenReport);
+        
     },
     logGenerator: function(errorGenReport) {
         errorGenReport.user = errorFunc.getCommander()
@@ -127,7 +127,7 @@ const errorFunc = {
             if (typeof value == 'number') { closureWindow = BrowserWindow.fromId(value) }
             store.set('electronWindowIds.appStatus',"error")
             if (closureWindow && typeof value == 'number') {
-                console.log("[ERROR]".red,`${key} Closed..`.yellow)
+                logs("[ERROR]".red,`${key} Closed..`.yellow)
                 const addKeys = { [key] : value }
                 const oldKeys = errorGenReport.appWindows;
                 errorGenReport.appWindows = {...oldKeys,...addKeys}
@@ -136,9 +136,9 @@ const errorFunc = {
         })
         delete require.cache[require.resolve('./processDetection.js')];
         // eliteDangerousWatcher.stopWatching()
-        console.log("[LOG GEN]".red,`PRACTICE FOR LOG GENERATOR:`.bgMagenta)
+        logs("[LOG GEN]".red,`PRACTICE FOR LOG GENERATOR:`.bgMagenta)
         errorGenReport = Object.keys(errorGenReport).sort((a,b)=> b - a )
-        // console.log(errorGenReport)
+        // logs(errorGenReport)
         // app.quit();
         
     }

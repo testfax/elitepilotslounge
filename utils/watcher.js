@@ -2,14 +2,12 @@
 
 const {watcherConsoleDisplay,errorHandler,pageData} = require('../utils/errorHandlers')
 try {
-    const { ipcMain, BrowserWindow,webContents  } = require('electron');
+    const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
+    const {logs} = require('./logConfig')
     const Store = require('electron-store');
     const store = new Store({ name: 'electronWindowIds'})
-    
     const thisWindow = store.get('electronWindowIds')
     Tail = require('tail').Tail;
-    const colors = require('colors');
-    const colorize = require('json-colorizer');
     const path = require('path')
     require('./processDetection')
     const fs = require('fs')
@@ -32,17 +30,17 @@ try {
             //         console.error(`Error checking if ${processName} is running: ${err}`);
             //         return callback(err, null);
             //         }
-            //         //console.log(`The ${processName} process is ${result ? "" : "not "}running`);
+            //         //logs(`The ${processName} process is ${result ? "" : "not "}running`);
                     
             //         callback(null, result);
             //     });
             // },
             ignoreEvent: function(ignoreEventName) {
-                let ignoreEventsJSON = fs.readFileSync('./events/Appendix/ignoreEvents.json', (err) => { if (err) return console.log(err); });
+                let ignoreEventsJSON = fs.readFileSync('./events/Appendix/ignoreEvents.json', (err) => { if (err) return logs(err); });
                 ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
                 for (const event of ignoreEventsJSON.events) {
                     if (event.event === ignoreEventName) {
-                        // console.log("IGNORE TEST".red,ignoreEventName)
+                        // logs("IGNORE TEST".red,ignoreEventName)
                         return event.category;
                     }
                 }
@@ -65,12 +63,12 @@ try {
                 continueWatcherBuild(currentJournalLog)
                 function continueWatcherBuild(currentJournalLog) {
                     if (watcherConsoleDisplay('globalLogs')) { 
-                        console.log("[TAIL]".green,"Monitoring:".green ,path.parse(currentJournalLog).base)
+                        logs("[TAIL]".green,"Monitoring:".green ,path.parse(currentJournalLog).base)
                     }
                     const tailLogOptions = { separator: /\n/ }
                     const tailLog = new Tail(currentJournalLog,tailLogOptions);
                     tailLog.on("line", function(data) { 
-                        if (watcherConsoleDisplay('showBuffer')) {  console.log("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
+                        if (watcherConsoleDisplay('showBuffer')) {  logs("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
                         let inspectedEvent = null
                         try {
                             inspectedEvent = JSON.parse(data) //turn string into a JSON array
@@ -80,44 +78,44 @@ try {
                             const askIgnoreFile = wat.ignoreEvent(inspectedEvent.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
                             if (!askIgnoreFile && inspectedEvent != null) {
-                                if (watcherConsoleDisplay(inspectedEvent.event)) { console.log("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow) }
+                                if (watcherConsoleDisplay(inspectedEvent.event)) { logs("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow) }
                                 const result = initializeEvent.startEventSearch(inspectedEvent,0)
                                
-                                // 1 returnable result, 0 no returnable result. // console.log("result of commander",commander); }
+                                // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }
                             }
                         }
                         catch(e) {
-                            console.log("[TAIL]".red, "The current Journal Log is corrupted, can not continue with unknown event:",`${data}`.red)
+                            logs("[TAIL]".red, "The current Journal Log is corrupted, can not continue with unknown event:",`${data}`.red)
                             errorHandler(e,e.name)
                         }
                     });
-                    tailLog.on("error", function(error) { console.log('ERROR: ', error); });
+                    tailLog.on("error", function(error) { logs('ERROR: ', error); });
                 }
             },
             tailJsonFile: function(data,eventMod) { //For JSON files only
                 if (data) { 
                     try {
-                        if (watcherConsoleDisplay('showBuffer')) {  console.log("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
+                        if (watcherConsoleDisplay('showBuffer')) {  logs("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
                         let dataObj = JSON.parse(data)
                         const event = dataObj.event
                         if (eventMod != undefined) {   
-                            if (watcherConsoleDisplay(event)) { console.log("1: Watcher.... ".bgCyan,`${eventMod}`.yellow); } 
+                            if (watcherConsoleDisplay(event)) { logs("1: Watcher.... ".bgCyan,`${eventMod}`.yellow); } 
                         }
                         else {
-                            if (watcherConsoleDisplay(event)) { console.log("1: Watcher.... ".bgCyan,`${event}`.yellow); }
+                            if (watcherConsoleDisplay(event)) { logs("1: Watcher.... ".bgCyan,`${event}`.yellow); }
                         }
-                        // console.log(colorize(data, {pretty: true}))
+                        // logs(colorize(data, {pretty: true}))
                         const result = sendJSONevent = initializeEvent.startEventSearch(dataObj,0,eventMod);
-                        // 1 returnable result, 0 no returnable result. // console.log("result of commander",commander); }
+                        // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }
                     }
                     catch(e) {
-                        console.log(data,eventMod)
-                        console.log(eventMod,e)
-                        console.log("JSON PARSE FAIL".yellow,"Could not parse:".red,data)
+                        logs(data,eventMod)
+                        logs(eventMod,e)
+                        logs("JSON PARSE FAIL".yellow,"Could not parse:".red,data)
                     }
                 }
                 if (!data) { 
-                    console.log("No Data in JSON, watcher tailJsonFile.".red)
+                    logs("No Data in JSON, watcher tailJsonFile.".red)
                 }
             }
         }
@@ -132,26 +130,26 @@ try {
             ],
         })
         watcherPath.on('ready', function() { //! Required to know what file to look at once the game loads.
-            watcherPath.on('error',error => { console.log(error);})
+            watcherPath.on('error',error => { logs(error);})
             //APP IS LAUNCHED AND THEN CHECKS TO SEE IF IT IS RUNNING.
             //todo CALL lcs.readLogFile(savedGamePath) to input data into lcs.readLogFileData object Ex: lcs.readLogFileData.commander
             watcherPath.on("add", savedGamePath => {
                 if (wat.eliteIO.status) {
                     //! Look for hte journal ('.log') file that was added. 
                     //! This file is created as soon as you see the Odyssey logo.
-                    // console.log(savedGamePath)
+                    // logs(savedGamePath)
                     if (path.parse(savedGamePath).ext == '.log') {
                         const thargoidBrain = new Store({ name: `brain-ThargoidSample` })
                         thargoidBrain.set('data',{})
                         if (watcherConsoleDisplay('globalLogs')) { 
-                            console.log("[TAIL] New Journal Log Created... ".green, path.parse(savedGamePath).base)
+                            logs("[TAIL] New Journal Log Created... ".green, path.parse(savedGamePath).base)
                         }
                         //todo keep all the events for tailLog in 1 spot. (located in the wat functions variable)
                         const newPath = path.parse(savedGamePath).dir
                         wat.tailFile(newPath)
                         
                         // wat.eliteProcess("EliteDangerous", () => (err,result) => {
-                        //     if (err) { console.log("error with detecting if elite is running".bgMagenta); return; } 
+                        //     if (err) { logs("error with detecting if elite is running".bgMagenta); return; } 
                         //     wat.eliteIO['status'] = result
                         //     if (result) { wat.tailFile(savedGamePath) }
                         // })
@@ -293,7 +291,7 @@ try {
     }
     else { 
         if (watcherConsoleDisplay('globalLogs')) { 
-            console.log("[WATCHER]".yellow," No commander!".red)
+            logs("[WATCHER]".yellow," No commander!".red)
         }
         lcs.requestCmdr()
         const commanderPresent = false

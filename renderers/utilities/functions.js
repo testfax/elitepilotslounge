@@ -35,10 +35,16 @@ class Tooltip {
     this.tooltip.style.top = y + "px";
   }
 }
-function getEventFromStore(event) {
+async function getEventFromStore(event) {
   try {
     // console.log("Tagged Event:",event)
-    const data = window.eliteEvent.multiStores.find(item => item.multiStore.get('data.event') === event)
+    let data = null
+    // console.log(window.eliteEvent.multiStores)
+    data = await window.eliteEvent.multiStores.find(item => {
+      // console.log(item)
+    if (item.multiStore.get('data.event') === event)
+      return item.multiStore.get('data.event')
+    })
     // if (event == "Materials") {
     //   console.log(data);
     // }

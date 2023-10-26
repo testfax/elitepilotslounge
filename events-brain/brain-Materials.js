@@ -1,6 +1,7 @@
 try {
     const {watcherConsoleDisplay,errorHandler,pageData} = require('../utils/errorHandlers')
-    const { ipcMain, BrowserWindow,webContents  } = require('electron');
+    const {logs} = require('../utils/logConfig')
+    const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
     const Store = require('electron-store');
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
     const thisWindow = windowItemsStore.get('electronWindowIds')
@@ -9,8 +10,6 @@ try {
     const lcs = require('../utils/loungeClientStore')
     const socketEventManager = require('../sockets/taskManager')
     const {Materials} = require('../sockets/tasks/startup')
-    const colorize = require('json-colorizer');
-    const colors = require('colors');
     const path = require('path')
     const fs = require('fs')
     const {fetcher} = require('./brain_functions')
@@ -81,22 +80,22 @@ try {
               if (diff < closestDiff) {
                 findColor = color.color;
                 closestDiff = diff;
-                // console.log(closestDiff)
+                // logs(closestDiff)
               }
             });
-            // console.log(findColor,findGrade)
+            // logs(findColor,findGrade)
             
-            // console.log(findGrade.count,findColor,calc)
+            // logs(findGrade.count,findColor,calc)
           }
         
           return [ findGrade.count, findColor, calc ];
         }
         catch(e) { 
           if (!x) { 
-            console.log("Missing variable data: Material Grade")
+            logs("Missing variable data: Material Grade")
           }
           if (!y) {
-            console.log("Missing variable data: Material Count")
+            logs("Missing variable data: Material Count")
           }
         }
     }
@@ -105,7 +104,7 @@ try {
     }
     async function materialHistory(method_type,method_data) {
       let history = null
-      // console.log("MATERIAL HISTORY".yellow,"\n[TYPE:",method_type,"] \n [DATA".cyan,method_data,"]")
+      // logs("MATERIAL HISTORY".yellow,"\n[TYPE:",method_type,"] \n [DATA".cyan,method_data,"]")
       if (method_type && method_type == "ADD") {
           const FET = {
             type: "materialHistory",
@@ -113,7 +112,7 @@ try {
             filePath: ["./events/Appendix/materialHistory.json"],
             material: method_data 
           };
-          // console.log(colorize(FET, { pretty: true }))
+          // logs(colorize(FET, { pretty: true }))
           history = await fetcher(FET);
         }
         else {
@@ -134,7 +133,7 @@ try {
               try {
                 let gPath = path.join(__dirname,FET.filePath[0])
                 gPath = path.normalize(gPath)
-                const fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return console.log(err); });
+                const fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return logs(err); });
                 const response = JSON.parse(fetched)
                 // const data = await arrayCombiner(fetcher(FET), journalData)
                 const data = arrayCombiner(response, journalData)
@@ -195,14 +194,14 @@ try {
                   catch(e) { errorHandler(e,e.name)}
               }
           } 
-          else { console.log("Materials, No Journal 'Materials' Data"); }
+          else { logs("Materials, No Journal 'Materials' Data"); }
           }
       catch(error) { errorHandler(error,origin) }
     }
     function updateMaterialsJson(data) {
       let gPath = path.join(__dirname,"../events/Appendix/materials.json")
       gPath = path.normalize(gPath)
-      let fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return console.log(err); });
+      let fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return logs(err); });
       response = JSON.parse(fetched)
       response[data.Category].push(data.subData)
       response = JSON.stringify(response, null, 2);
@@ -216,14 +215,14 @@ try {
       let method_type = null;
       let method_data = null;
       if (receivedData.event == 'Materials') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         //Compbines all materials.json information and Materiels event journal data together and sorts.
         let materials = receivedData
         const ran = getMats(materials)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'MaterialCollected') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           //Add the new mats to the Materials.
           let MaterialCollectedData = receivedData;
@@ -233,7 +232,7 @@ try {
           let matObject
           matObject = findMatObject(materialData, "Name", MaterialCollectedData.Name)
           if (!matObject) { //!New Material Detector
-            console.log("[BE Mat]".bgRed,`${receivedData.event} Error`.yellow,receivedData,"does not exist in materials.json".red,receivedData.timestamp);
+            logs("[BE Mat]".bgRed,`${receivedData.event} Error`.yellow,receivedData,"does not exist in materials.json".red,receivedData.timestamp);
 
             const newObj = {
               "Name": `${MaterialCollectedData.Name}`,
@@ -286,19 +285,19 @@ try {
             // const client = BrowserWindow.fromId(thisWindow.win);
             // client.webContents.send('FromBrain-Materials-Synthesis', receivedData);
           }
-          if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+          if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
         }
         catch(e) { errorHandler(e,e.name)}
       }
       if (receivedData.event == 'MissionCompleted') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           runMissionMats();
           function runMissionMats() {
             if (receivedData.MaterialsReward) {
               const store = new Store({ name: 'Materials' })
               let materialData = store.get('data')
-              // console.log(receivedData.MaterialsReward)
+              // logs(receivedData.MaterialsReward)
               receivedData.MaterialsReward.forEach(list=> {
                 if (list.Category_Localised) { 
                   let matObject = findMatObject(materialData, "Name", list.Name.toLowerCase())
@@ -328,7 +327,7 @@ try {
                     historyArray[0].Operator = "+"
                     historyArray[0].Operator_Sign = "»"
                   })
-                  // console.log(historyArray);
+                  // logs(historyArray);
                   store.set('data',materialData)
                   materialHistory("ADD",historyArray);
                 }
@@ -336,13 +335,13 @@ try {
             }
             // const client = BrowserWindow.fromId(thisWindow.win);
             // client.webContents.send('m', historyArray);
-            if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
           }
         }
         catch(e) { errorHandler(e,e.name) }
       }
       if (receivedData.event == 'Synthesis') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         
         runSynthMats();
         function runSynthMats() {
@@ -358,7 +357,7 @@ try {
             else { materialName = mat.Name_Localised }
             let materialObject = findMatObject(materialData, "Name",mat.Name)
             let materialGradeInfos = gradeInfos(materialObject.Grade,materialObject.Count)
-            // console.log(materialObject)
+            // logs(materialObject)
             const calcValues = {
               ...mat,
               ...materialObject,
@@ -401,16 +400,16 @@ try {
             historyArray[0].Operator_Sign = "«"
             // This updates the total materials in the Materials.json store.
             store.set('data',materialDataUpdated)
-            // console.log(historyArray[0].Name,historyArray[0].Total);
+            // logs(historyArray[0].Name,historyArray[0].Total);
             materialHistory("ADD",historyArray);  
           })
           const client = BrowserWindow.fromId(thisWindow.win);
           client.webContents.send('FromBrain-Materials-Synthesis', receivedData);
-          if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+          if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
         }
       }
       if (receivedData.event == 'MaterialTrade') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           const tradeQuoteTypes = ['Paid','Received']
           let PaidreceivedName = null;
@@ -463,15 +462,15 @@ try {
             historyArray[0].Grade = calcValues.Grade;
             // This updates the total materials in the Materials.json store.
             store.set('data',materialDataUpdated)
-            if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
-            // console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp, PaidreceivedName.Material, PaidreceivedName.Quantity);
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+            // logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp, PaidreceivedName.Material, PaidreceivedName.Quantity);
             materialHistory("ADD",historyArray);
           }
         }
-        catch(e) {console.log(errorHandler(e,e.name))}
+        catch(e) {logs(errorHandler(e,e.name))}
       }
       if (receivedData.event == 'EngineerCraft') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           receivedData.Ingredients.forEach(listItem => {
             const store = new Store({ name: 'Materials' })
@@ -508,13 +507,13 @@ try {
             store.set('data',materialDataUpdated)
             materialHistory("ADD",historyArray);
           })
-          if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+          if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
           
         }
         catch (e) {errorHandler(e,e.name)}
       }
       // if (receivedData.event == 'MaterialDiscovered') { //todo Is this even needed?
-      //   if (watcherConsoleDisplay('BrainEvent' && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+      //   if (watcherConsoleDisplay('BrainEvent' && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
       //   try {
       //       const store = new Store({ name: 'Materials' })
       //       let materialData = store.get('data')
@@ -555,12 +554,12 @@ try {
       //       store.set('data',materialDataUpdated)
       //       materialHistory("ADD",historyArray);
           
-      //     console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp);
+      //     logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp);
       //   }
       //   catch(e) {errorHandler(e,e.name)}
       // }
       if (receivedData.event == 'MaterialDiscarded') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { console.log("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
             const store = new Store({ name: 'Materials' })
             let materialData = store.get('data')
@@ -601,7 +600,7 @@ try {
             store.set('data',materialDataUpdated)
             materialHistory("ADD",historyArray);
           
-          console.log("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp);
+          logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp);
         }
         catch(e) {errorHandler(e,e.name)}
       }

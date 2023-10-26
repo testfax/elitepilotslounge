@@ -1,9 +1,9 @@
 try {
+    const {logs} = require('../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../utils/errorHandlers')
     const { io, Manager } = require('socket.io-client')
-    const { BrowserWindow } = require('electron');
+    const { app, BrowserWindow } = require('electron');
     const { socket } = require('./socketMain')
-    const colorize = require('json-colorizer');
     const lcs = require('../utils/loungeClientStore')
     const uuid = require('uuid');
     const fs = require('fs')
@@ -20,7 +20,7 @@ try {
     //!############ SOCKET SERVER DIRECT EMITS ################
 
     socket.on('fromSocketServer', async (data) => { 
-        console.log(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green,`${myTime.format(new Date())}`) 
+        logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green,`${myTime.format(new Date())}`) 
         //Need to send the dcohSystem's data to the frontside so that it can update all the titan systems info. 
         if (data.type == 'dcohSystems') {
             const client = BrowserWindow.fromId(thisWindow.win); 
@@ -32,7 +32,7 @@ try {
             }
             if (data.message == "2") { 
                 taskList.datas = "2" 
-                console.log("hit",taskList.datas)
+                logs("hit",taskList.datas)
             }
         }
         if (data.type == 'brain-ThargoidSample_socket') {
@@ -55,7 +55,7 @@ try {
                     resolve(response);
                     if (data.brain == 'brain-ThargoidSample') { 
                         windowItemsStore.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
-                        windowItemsStore.set('brain-ThargoidSample.currentTitanState',`${data.brain}_${data.name}_${data.state}`);
+                        windowItemsStore.set('brain_ThargoidSample.currentTitanState',`${data.brain}_${data.name}_${data.state}`);
                     }
                  }); }
                 catch(error) { errorHandler(error,error.name); reject(error) }
@@ -68,7 +68,7 @@ try {
                     resolve(response);
                     if (data.brain == 'brain-ThargoidSample') { 
                         windowItemsStore.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
-                        windowItemsStore.set('brain-ThargoidSample.currentTitanState',"");
+                        windowItemsStore.set('brain_ThargoidSample.currentTitanState',"");
                     }
                  }); }
                 catch(error) { errorHandler(error,error.name); reject(error) }
@@ -115,10 +115,10 @@ try {
                         callback({response})
                     }
                     if (watcherConsoleDisplay(data.event) && data.event != "Status") { 
-                        console.log(`[SOCKET SERVER - TASK MANAGER - '${data.event}']`.yellow)
-                        console.log("[TM]".green);
+                        logs(`[SOCKET SERVER - TASK MANAGER - '${data.event}']`.yellow)
+                        logs("[TM]".green);
                         console.timeEnd(timerID)
-                        console.log(colorize(response, {pretty:true}))
+                        logs(colorize(response, {pretty:true}))
                     }
                 return discuss;
                 });
@@ -126,7 +126,7 @@ try {
             catch(error) { errorHandler(error,error.name) }
         },
         // Reads current log file and pushes events through event handler. 3 Second Delay.
-        allEventsInCurrentLogFile: function() {
+        allEventsInCurrentLogFile: async function() {
             const searchEventList = ["All"]
             // This is all occurances as they happened in the past. That way things can be iterated on. Example being if you launch the client after you've been playing elite for an hour.
             // const firstLoadList = lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList).firstLoad
@@ -135,32 +135,31 @@ try {
                 
             //     let currentDateTime = new Date();
             //     currentDateTime = currentDateTime.toISOString();
-            //     if (new Date(lastEventInFirstLoadList) - new Date(currentDateTime) < new Date()) { console.log(
+            //     if (new Date(lastEventInFirstLoadList) - new Date(currentDateTime) < new Date()) { logs(
             //         "Old.................................",
             //         new Date()
             //     )}
             // }
             // This is the latest occurance that happend of any particular event.
-            let readEventsList = null
+            let readEventsList = await lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation().savedGamePath,"log"),searchEventList)
             
-            readEventsList = lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList)
-           
           
             if (watcherConsoleDisplay("latestLogsRead")) {
-                console.log(
+                logs(
                     "[TM]".green,
                     "Running latestLogRead by timestamp".yellow,
                     readEventsList.found.length,
                     "events",
-                    colorize(readEventsList.listItemByTimestampNames,{pretty: true}))
+                    // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
+                    )
                 }
             if (readEventsList.found.length >= 1) {
                 readEventsList.firstLoad.forEach(eventItem => {
                     if(searchEventList == "All" && eventItem.event != "WingInvite"  && eventItem.event != "WingAdd" && eventItem.event != "WingJoin" && eventItem.event != "WingLeave") {    
-                        if (watcherConsoleDisplay('startup-read')) { console.log("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
+                        if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
                         
                             // callback... Must be 1
-                            // console.log(eventItem)
+                            // logs(eventItem)
                             const askIgnoreFile = ignoreEvent(eventItem.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
                             if (!askIgnoreFile && eventItem != null) {
@@ -174,7 +173,7 @@ try {
                 //     const eventData2 = {...readEventsList.found[a]}
                 //     //Wing stuff should only be read from if Status flag indicates wing. Review taskmanager.gameStatus for functionality
                 //    if(searchEventList == "All" && eventData2.event != "WingInvite"  && eventData2.event != "WingAdd" && eventData2.event != "WingJoin" && eventData2.event != "WingLeave") {    
-                //     if (watcherConsoleDisplay(eventData2.event)) { console.log("1: Client Startup Init.... ".bgCyan,`${eventData2.event}`.yellow) }
+                //     if (watcherConsoleDisplay(eventData2.event)) { logs("1: Client Startup Init.... ".bgCyan,`${eventData2.event}`.yellow) }
                 //         // callback... Must be 1
                 //         initializeEvent.startEventSearch(eventData2,0)
                 //     }
@@ -187,7 +186,7 @@ try {
                 const timerID = uuid.v4().slice(-5); 
                 data = {...data,...lcs.requestCmdr().commander}
                 let data2 = {...data}
-                if (watcherConsoleDisplay(data.event)) { console.time(timerID); console.log("[PD]".yellow,"GameStatus??".green,data.status) }
+                if (watcherConsoleDisplay(data.event)) { console.time(timerID); logs("[PD]".yellow,"GameStatus??".green,data.status) }
                 //! No response necessarily needed, unless there's some kind of visual need to show on the client.
                 socket.emit('gameStatus',data);
                 
@@ -196,7 +195,7 @@ try {
                 //   an "In Wing" hex code and find the last WingInvite and WingJoin events and automatically put you back in the correct socket.
                 if (data2.status) {
                     let jsonStatusFilePath = path.normalize(lcs.savedGameLocation("gameStatus taskManager.js").savedGamePath + "/Status.json")
-                    let jsonStatus = fs.readFileSync(jsonStatusFilePath,'utf8', (err) => { if (err) return console.log(err); })
+                    let jsonStatus = fs.readFileSync(jsonStatusFilePath,'utf8', (err) => { if (err) return logs(err); })
                     try {
                         if (jsonStatus) { jsonStatus = JSON.parse(jsonStatus) }
                         //todo CODE WING STATUS?
@@ -225,17 +224,17 @@ try {
                             for (let a in readEvents.found) { 
                                 const eventData = {...readEvents.found[a]}
                                 if(readEvents.found[a].event == "WingInvite") {
-                                    if (watcherConsoleDisplay(eventData.event)) { console.log("1: Wing Startup Init Event.... ".bgCyan,`${eventData.event}`.yellow) }
+                                    if (watcherConsoleDisplay(eventData.event)) { logs("1: Wing Startup Init Event.... ".bgCyan,`${eventData.event}`.yellow) }
                                     // callback... Must be 1
                                     initializeEvent.startEventSearch(eventData,0)
                                 }
                                 if(readEvents.found[a].event == "WingJoin") {
-                                    if (watcherConsoleDisplay(eventData.event)) { console.log("1: Wing Startup Init Event.... ".bgCyan,`${eventData.event}`.yellow) }
+                                    if (watcherConsoleDisplay(eventData.event)) { logs("1: Wing Startup Init Event.... ".bgCyan,`${eventData.event}`.yellow) }
                                     //callback... Must be 1
                                     setTimeout(initializeEvent.startEventSearch,1000,eventData,0); 
                                 }
                                 if(readEvents.found[a].event == "WingAdd") {
-                                    if (watcherConsoleDisplay(eventData.event)) { console.log("1: Wing Startup Init Event.... ".bgCyan,`${eventData.event}`.yellow) }
+                                    if (watcherConsoleDisplay(eventData.event)) { logs("1: Wing Startup Init Event.... ".bgCyan,`${eventData.event}`.yellow) }
                                     //callback... Must be 1
                                     setTimeout(initializeEvent.startEventSearch,1300,eventData,0); 
                                 }
@@ -263,5 +262,5 @@ try {
 }
 catch (error) {
     console.error("Fix Stack Error".yellow,error);
-    // console.log(errorHandler(error,error))
+    // logs(errorHandler(error,error))
 }

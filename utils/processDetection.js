@@ -1,8 +1,9 @@
 try {
+  const {app} = require('electron')
+  const {logs} = require('./logConfig')
   const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
   const Store = require('electron-store');
   const store = new Store({ name: `brain-ThargoidSample` })
-  const colors = require('colors')
   const { exec } = require('child_process');
   const { EventEmitter } = require('events');
 
@@ -30,10 +31,10 @@ try {
     }
     
     startWatching() {
-      if (watcherConsoleDisplay("globalLogs")) { console.log(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }
+      if (watcherConsoleDisplay("globalLogs")) { logs(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }
       this.checkIsRunning();
       this.pollingTimer = setInterval(() => {
-        // if (watcherConsoleDisplay("globalLogs")) { console.log(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }
+        // if (watcherConsoleDisplay("globalLogs")) { logs(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }
         this.checkIsRunning();
       }, this.pollingInterval);
       
@@ -71,7 +72,7 @@ try {
   eliteDangerousWatcher.on('start', () => {
     store.set('data',{})
     if (watcherConsoleDisplay('globalLogs')) { 
-      console.log("[PD]".yellow,'Elite Dangerous is running'.bgYellow);
+      logs("[PD]".yellow,'Elite Dangerous is running'.bgYellow);
     }
     //initate start process
     const watcher = require('./watcher')
@@ -79,11 +80,11 @@ try {
       const timer = setInterval(() => {
         delete require.cache[require.resolve('./watcher')];
         const watcher = require('./watcher');
-        if (!watcher) { if (watcherConsoleDisplay('globalLogs')) { console.log("[PD]".yellow,"PROCESS DETECTOR -t- -> Commander??: ".red,false) } }
+        if (!watcher) { if (watcherConsoleDisplay('globalLogs')) { logs("[PD]".yellow,"PROCESS DETECTOR -t- -> Commander??: ".red,false) } }
         if (watcher != false) {
           clearInterval(timer);
           if (watcherConsoleDisplay('globalLogs')) { 
-            console.log("[PD]".yellow," -t- -> Commander??".green,true)
+            logs("[PD]".yellow," -t- -> Commander??".green,true)
           }
           watcher.eliteIO['status'] = true
           watcher.tailFile(watcher.savedGameP)
@@ -93,7 +94,7 @@ try {
       }, 15000);
     }
     else {
-      if (watcherConsoleDisplay('globalLogs')) { console.log("[PD]".yellow, "Commander??".green,true) }
+      if (watcherConsoleDisplay('globalLogs')) { logs("[PD]".yellow, "Commander??".green,true) }
       watcher.eliteIO['status'] = true
       watcher.tailFile(watcher.savedGameP)
       const {gameStatus} = require('../sockets/taskManager')
@@ -101,7 +102,7 @@ try {
     }
   });
   eliteDangerousWatcher.on('stop', () => {
-    if (watcherConsoleDisplay('globalLogs')) { console.log("[PD]".yellow,'Elite Dangerous has stopped'.bgRed); }
+    if (watcherConsoleDisplay('globalLogs')) { logs("[PD]".yellow,'Elite Dangerous has stopped'.bgRed); }
     let watcher = require('./watcher')
     watcher.eliteIO['status'] = false
     const {gameStatus} = require('../sockets/taskManager')
@@ -113,5 +114,5 @@ try {
   module.exports = { isProcessRunning };
 }
 catch(e) {
-  console.log("PROCESS DETECTION ERROR".yellow,e)
+  logs("PROCESS DETECTION ERROR".yellow,e)
 }
