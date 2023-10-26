@@ -1,6 +1,7 @@
 # elitepilotslounge
 
-# Current State of Development: ALPHA
+# Current State of Development: 
+- ALPHA
 
 # About:
 - This 3rd Party application for Elite: Dangeorus is intended to bridge the gap between individual players and the people that they play with.
