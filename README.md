@@ -5,7 +5,7 @@
 
 # About:
 - This 3rd Party application for Elite: Dangeorus is intended to bridge the gap between individual players and the people that they play with.
-- The vision is to create a way for to people see what one another are doing so that they may be part of that gameplay.
+- The vision is to create a way for to people see what one another are doing real-time so that they may be part of that gameplay.
 
 # Setup:
 - Download the latest release. The application will notify you of future updates.
