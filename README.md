@@ -18,11 +18,11 @@
  
 # Files
 - Programs
- - Primary Install Location. No ability to choose at this time. Moving this file may break the application.
- - C:\Users\yourUserName\AppData\Local\Programs\elitepilotslounge
+- - Primary Install Location. No ability to choose at this time. Moving this file may break the application.
+- - C:\Users\yourUserName\AppData\Local\Programs\elitepilotslounge
 - Roaming
- - Primary storage for file information regarding journal events. Helps retain real time data in one spot broken down into each Event.
- - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge
+- - Primary storage for file information regarding journal events. Helps retain real time data in one spot broken down into each Event.
+- - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge
 - Error Logs
- - Error logging is only local at this time and does not get transported to the website. Should you find an error, it could be staged in "main.log" in the logs folder.
- - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
+- - Error logging is only local at this time and does not get transported to the website. Should you find an error, it could be staged in "main.log" in the logs folder.
+- - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
