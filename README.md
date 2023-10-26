@@ -16,6 +16,7 @@
 - - Allows you to see what materials you use or collect real time. This data is not shared.
 - Thargoid Sample
 - - Allows you to see what the war progress is and see what other Commanders that utilize this application are doing with their sampling.
+- - At this time of development, connecting to the socket server requires manual entry. Contact Medi0cr3 on discord. 
  
 # Files
 - Programs
