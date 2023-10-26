@@ -9,6 +9,7 @@
 
 # Setup:
 - Download the latest release. The application will notify you of future updates.
+- - Approximately 100mb depending upon release
 
 # Features
 - Materials
