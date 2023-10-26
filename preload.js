@@ -1,14 +1,25 @@
-const { error } = require('console');
-
 try {
+  const { error } = require('console');
   const { contextBridge, ipcRenderer } = require('electron')
   const fs = require('fs')
   const path = require('path')
   const Store = require('electron-store');
   const storez = new Store();
-  const { eventJSON } = require('./utils/loungeClientStore')
 
-
+  contextBridge.exposeInMainWorld('ipcRenderer', {
+    send: (channel, data) => {
+      ipcRenderer.send(channel, data);
+    },
+    on: (channel, func) => {
+        ipcRenderer.on(channel, (event, ...args) => func(...args));
+    },
+    once: (channel, func) => {
+      ipcRenderer.once(channel, (event, ...args) => func(...args));
+    },
+    removeListener: (channel, func) => {
+      ipcRenderer.removeListener(channel, func);
+    },
+  });
   contextBridge.exposeInMainWorld('electronStoreMaterials', {
     set: (storeName, key, value) => {
       const store = new Store({ name: storeName });
@@ -21,7 +32,6 @@ try {
       console.log(storeName,key)
     },
   });
-
   contextBridge.exposeInMainWorld('electronStore', {
     get: (key) => storez.get(key),
     set: (key, value) => storez.set(key, value),
@@ -33,7 +43,9 @@ try {
     onDidChange: (key, callback) => storez.onDidChange(key, callback),
     offDidChange: (key, callback) => storez.offDidChange(key, callback),
   });
-
+  contextBridge.exposeInMainWorld('eliteEvent', {
+    multiStores: getEventsArray()
+  })
   async function getEventsArray() {
     // function ignoreEvents(ignoreEventName) {
     //   let ignoreEventsJSON = fs.readFileSync('./events/Appendix/ignoreEvents.json', (err) => { if (err) return console.log(err); });
@@ -47,8 +59,14 @@ try {
     // }
     // const theEvents = await fs.readFileSync('./events/Appendix/events.json','utf-8', (err) => { if (err) return console.log(err); })
     // const eventList = JSON.parse(theEvents);
-    let eventList = await eventJSON();
-    eventList = JSON.parse(eventList);
+    let eventList = fs.readFileSync(path.join(process.cwd(),'events','Appendix','events.json'),'utf-8')
+    if (eventList) { 
+      eventList = JSON.parse(eventList); 
+    }
+    if (!eventList) { 
+      eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
+      eventList = JSON.parse(eventList); 
+    }
     let nameList = []
     eventList.events.forEach((item) => {
       nameList.push(item.event)
@@ -83,23 +101,6 @@ try {
     });
     return multiStores
   }
-  contextBridge.exposeInMainWorld('eliteEvent', {
-    multiStores: getEventsArray()
-  })
-  contextBridge.exposeInMainWorld('ipcRenderer', {
-    send: (channel, data) => {
-      ipcRenderer.send(channel, data);
-    },
-    on: (channel, func) => {
-        ipcRenderer.on(channel, (event, ...args) => func(...args));
-    },
-    once: (channel, func) => {
-      ipcRenderer.once(channel, (event, ...args) => func(...args));
-    },
-    removeListener: (channel, func) => {
-      ipcRenderer.removeListener(channel, func);
-    },
-  });
 }
 catch(e) { console.log(e) }
 

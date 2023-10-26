@@ -1,6 +1,5 @@
-
-const {app} = require('electron')
 const {logs} = require('./logConfig')
+const { app } = require('electron')
 const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
 const path = require('path')
 const fs = require('fs')
@@ -9,10 +8,10 @@ Tail = require('tail').Tail;
 
 const lcs = {
     cwd: app.isPackaged ? path.join(process.cwd(),'resources','app') : process.cwd(),
+    eventJSON: async () => { return fs.readFileSync(path.join(lcs.cwd,'events','Appendix','events.json'),'utf-8', (err) => { if (err) logs("NOPEROPE",err); return null  });},
     logState: { logs: 1, latest: "" },
     worldFixer: { timer: false},
     readLogFileData: {},
-    eventJSON: async function () { return fs.readFileSync(path.join(lcs.cwd,'events','Appendix','events.json'),'utf-8', (err) => { if (err) return logs("NOPEROPE",err); });},
     isJSONFileValid: async function (filePath) {
         try {
             const fileContents = fs.readFileSync(filePath, 'utf-8');

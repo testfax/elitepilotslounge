@@ -202,8 +202,8 @@ function getMats() {
         synthesisStructure = await synthesisJSON(combinedFetch,material)
         materialsDataF(material)
         synthesisComponentsBuilder(synthesisStructure,material)
-        let SynthesisData = getEventFromStore('Synthesis');
-        if (SynthesisData) {  SynthesisDataF(SynthesisData); }
+        let SynthesisData = await getEventFromStore('Synthesis');
+        if (SynthesisData) { SynthesisDataF(SynthesisData); }
         else { console.log("getMats(), Synthesis, No event data.")}
       } catch (error) {
         console.log(error);
@@ -954,6 +954,7 @@ ipcRenderer.on('FromBrain-Materials-Synthesis', (SynthesisData) => { if (Synthes
 function SynthesisDataF(SynthesisData) {
   try {
     //Type
+    console.log(SynthesisData.Name)
     let synthTypeS = SynthesisData.Name.split(" ")
     let synthType = synthTypeS[synthTypeS.length - 1] + "Synth"
     //Name

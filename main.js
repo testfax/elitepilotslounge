@@ -1,10 +1,15 @@
 try {
-  const {webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
+  const { nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
   const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
   const path = require('path')
   const fs = require('fs')
-  fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
+  fs.stat(path.join(app.getPath('appData'),'elitepilotslounge'), (err, stats) => {
+    if (stats.isFile()) {
+      fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
+    }
+  })
   const {logs} = require('./utils/logConfig')
+  console.log(logs);
   logs(`=====LOUNGE-CLIENT=====`.green);
   const Store = require('electron-store');
   const store = new Store();
@@ -17,7 +22,7 @@ try {
   // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
   // //!   every 5 seconds
 
-
+  nativeTheme.themeSource = 'dark'
 
 
   require('./utils/processDetection')
@@ -102,12 +107,14 @@ try {
               },
               show: false,
               alwaysOnTop: false,
-          
-              // !For navigation stuff when coded
-              // frame: false,
-              // transparent: true,
-              // icon: <path-to-icon-file>
-          })
+            })
+            const derp = app.isPackaged
+            win.webContents.executeJavaScript(`window.isPackaged = ${derp}`)
+            
+                // !For navigation stuff when coded
+                // frame: false,
+                // transparent: true,
+                // icon: <path-to-icon-file>
           
           win.webContents.on("context-menu", () => {
               rightClickMenu.popup(win.webContents);
@@ -130,6 +137,8 @@ try {
           
           win.on('resize', () => { windowPosition(win,0) })
           win.on('moved', () => { windowPosition(win,0); })
+          
+
           let winids = {}
           let isLoadFinished = false;
           const handleLoadFinish = () => {
@@ -154,8 +163,9 @@ try {
               }
             }
           };
+          const cwd = app.isPackaged ? path.join(process.cwd(),'resources','app') : process.cwd()
           win.webContents.on('did-finish-load',handleLoadFinish)
-          module.exports = win;
+          module.exports = { win, cwd };
       }
       catch(e) {
           logs("failed to load load window",e)
@@ -223,14 +233,14 @@ try {
               return;
             }
             if (stats.isFile()) {
-              logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
+              // logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
               require(filePath)
               if (files.length == index) { 
                 const loadTime = (Date.now() - appStartTime) / 1000;
-                if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
+                // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
               }
             } else if (stats.isDirectory()) {
-              logs('Directory:', file);
+              logs(`Directory: ${file}`);
             }
           });
         });
@@ -242,7 +252,8 @@ try {
   
 }
 catch(e) {
-    logs("MAIN PROCESS ERROR".yellow,e)
+    console.log(e);
+    // logs("MAIN PROCESS ERROR".yellow,e)
 }
 // require('./searchtxt')
 

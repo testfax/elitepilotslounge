@@ -38,13 +38,14 @@ class Tooltip {
 async function getEventFromStore(event) {
   try {
     // console.log("Tagged Event:",event)
-    let data = null
-    // console.log(window.eliteEvent.multiStores)
-    data = await window.eliteEvent.multiStores.find(item => {
-      // console.log(item)
-    if (item.multiStore.get('data.event') === event)
-      return item.multiStore.get('data.event')
-    })
+    let data = await window.eliteEvent.multiStores
+    data = data.find(i=> i.multiStore.store.data.event === event)
+    
+    // data = await window.eliteEvent.multiStores.find(item => {
+    //   console.log(item)
+    // if (item.multiStore.get('data.event') === event)
+    //   return item.multiStore.get('data.event')
+    // })
     // if (event == "Materials") {
     //   console.log(data);
     // }
