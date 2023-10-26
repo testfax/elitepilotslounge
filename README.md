@@ -19,6 +19,7 @@
 # Files
 - Programs
 - - Primary Install Location. No ability to choose at this time. Moving this file may break the application.
+- - Contains "Uninstall" Utility.
 - - C:\Users\yourUserName\AppData\Local\Programs\elitepilotslounge
 - Roaming
 - - Primary storage for file information regarding journal events. Helps retain real time data in one spot broken down into each Event.
