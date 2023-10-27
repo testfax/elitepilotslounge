@@ -2,6 +2,7 @@
 
 # Current State of Development: 
 - ALPHA
+- Thargoid Sampling requires you to send me your Commander's FID number. Located in the "Commander" journal log event.
 
 # About:
 - This 3rd Party application for Elite: Dangeorus is intended to bridge the gap between individual players and the people that they play with.
