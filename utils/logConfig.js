@@ -13,7 +13,7 @@ try {
 
     
     const logsUtil = {
-        norm: 1,
+        norm: 0,
         strictDev: 0,
         logs: (...input) => {
             if (app.isPackaged) { log.info(...input) }
