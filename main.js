@@ -34,7 +34,8 @@ try {
   nativeTheme.themeSource = 'dark'
 
   //Auto Updater
-  const useUpdater = 1;
+  let useUpdater = 1;
+  if (!isNotDev) { useUpdater = 0 }
   const { autoUpdater, AppUpdater } = require('electron-updater')
   if (useUpdater) { 
     autoUpdater.autoDownload = true
