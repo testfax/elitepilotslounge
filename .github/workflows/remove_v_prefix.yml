@@ -3,7 +3,7 @@ name: Remove V Prefix from Release Tag
 on:
   release:
     types:
-      - published
+      - created
 
 jobs:
   remove_v_prefix:
