@@ -241,10 +241,6 @@ try {
   
   //todo need to add unhandledPromises error handling.
   //The errorHandlers functions sometimes dont capture errors that are the resultant of another function on a different page.
-
-  
-
-  
 }
 catch(e) {
     logs(`MAIN PROCESS ERROR.yellow,${e}`)
