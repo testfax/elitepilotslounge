@@ -33,9 +33,14 @@ try {
   const { mainMenu,rightClickMenu } = require('./menumaker')
   nativeTheme.themeSource = 'dark'
 
+
+  //! Dev mode declaration
+  const isNotDev = app.isPackaged
+
+
   //Auto Updater
   let useUpdater = 1;
-  if (!isNotDev) { useUpdater = 0 }
+  if (app.isPackaged) { useUpdater = 0 }
   const { autoUpdater, AppUpdater } = require('electron-updater')
   if (useUpdater) { 
     autoUpdater.autoDownload = true
@@ -57,7 +62,7 @@ try {
   if (useUpdater) { autoUpdater.checkForUpdates() }
   //! Begin creating the electron window
   let appStartTime = null;
-  const isNotDev = app.isPackaged
+ 
   //! Start splash screen
   let win
   let loadingScreen = null
