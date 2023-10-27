@@ -18,7 +18,7 @@
 - Thargoid Sample
 - - Allows you to see what the war progress is and see what other Commanders that utilize this application are doing with their sampling.
 - - At this time of development, connecting to the socket server requires manual entry. Contact Medi0cr3 on discord. 
- 
+
 # Files
 - Programs
 - - Primary Install Location. No ability to choose at this time. Moving this file may break the application.
@@ -28,7 +28,7 @@
 - - Primary storage for file information regarding journal events. Helps retain real time data in one spot broken down into each Event.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge
 - Error Logs
-- - Error logging is only local at this time and does not get transported to the website. Should you find an error, it could be staged in "main.log" in the logs folder.
+- - Error logging is only local at this time and does not get transported to the website. Should you find an error, it will be found in "main.log" in the logs folder.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
 - App Commander Info
 - - "lounge-client.txt" Contains window positioning, commander information, and wing related information.
