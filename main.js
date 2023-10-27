@@ -30,9 +30,9 @@ try {
   nativeTheme.themeSource = 'dark'
 
   //Auto Updater
-  const useUpdater = 0;
+  const useUpdater = 1;
+  const { autoUpdater, AppUpdater } = require('electron-updater')
   if (useUpdater) { 
-    const { autoUpdater, AppUpdater } = require('electron-updater')
     autoUpdater.autoDownload = true
     autoUpdater.autoInstallOnAppQuit = true
     autoUpdater.on('error',(error)=>{
@@ -49,9 +49,10 @@ try {
       logs(info)
     })
   }
+  if (useUpdater) { autoUpdater.checkForUpdates() }
   //! Begin creating the electron window
   let appStartTime = null;
-  const isDev = app.isPackaged
+  const isNotDev = app.isPackaged
   //! Start splash screen
   let win
   let loadingScreen = null
@@ -90,7 +91,7 @@ try {
       try {
           win = new BrowserWindow({
               title: "Elite Pilots Lounge",
-              width: !isDev ? 1000 : 500,
+              width: !isNotDev ? 1000 : 500,
               height: 800,
               webPreferences: {
                   preload: path.join(__dirname, 'preload.js'),
@@ -123,8 +124,8 @@ try {
               win.setPosition(windowPositionz.moveTo[0],windowPositionz.moveTo[1])
               win.setSize(windowPositionz.resizeTo[0],windowPositionz.resizeTo[1])
               win.show()
-              win.webContents.openDevTools();
-              // if (!isDev) { win.webContents.openDevTools(); }
+              // win.webContents.openDevTools();
+              if (!isNotDev) { win.webContents.openDevTools(); }
           })
           // const primaryDisplay = screen.getPrimaryDisplay();
           // logs(primaryDisplay)
@@ -132,7 +133,7 @@ try {
           win.on('resize', () => { windowPosition(win,0) })
           win.on('moved', () => { windowPosition(win,0); })
           
-
+          
           let winids = {}
           let isLoadFinished = false;
           const handleLoadFinish = () => {
@@ -159,6 +160,40 @@ try {
               }
             }
           };
+          function remainderLoads() {
+            
+            require('./fromRenderer') // Contains all ipcRenderer event listeners that must perform a PC related action.
+            // Brains Directory: Loop through all files and load them.
+            const brainsDirectory = path.join(__dirname, 'events-brain')
+            fs.readdir(brainsDirectory, (err, files) => {
+                if (err) {
+                  console.error('Error reading directory:', err);
+                  return;
+                }
+                files.forEach((file,index) => {
+                  index++
+                  const filePath = path.join(brainsDirectory, file);
+                  fs.stat(filePath, (err, stats) => {
+                    if (err) {
+                      console.error('Error getting file stats:', err);
+                      return;
+                    }
+                    if (stats.isFile()) {
+                      // logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
+                      require(filePath)
+                      if (files.length == index) { 
+                        const loadTime = (Date.now() - appStartTime) / 1000;
+                        // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
+                      }
+                    } else if (stats.isDirectory()) {
+                      logs(`Directory: ${file}`);
+                    }
+                  });
+                });
+            });
+            //
+            
+          }
           const cwd = app.isPackaged ? path.join(process.cwd(),'resources','app') : process.cwd()
           win.webContents.on('did-finish-load',handleLoadFinish)
           module.exports = { win, cwd };
@@ -207,40 +242,7 @@ try {
   //todo need to add unhandledPromises error handling.
   //The errorHandlers functions sometimes dont capture errors that are the resultant of another function on a different page.
 
-  function remainderLoads() {
-    if (useUpdater) { autoUpdater.checkForUpdates() }
-    require('./fromRenderer') // Contains all ipcRenderer event listeners that must perform a PC related action.
-    // Brains Directory: Loop through all files and load them.
-    const brainsDirectory = path.join(__dirname, 'events-brain')
-    fs.readdir(brainsDirectory, (err, files) => {
-        if (err) {
-          console.error('Error reading directory:', err);
-          return;
-        }
-        files.forEach((file,index) => {
-          index++
-          const filePath = path.join(brainsDirectory, file);
-          fs.stat(filePath, (err, stats) => {
-            if (err) {
-              console.error('Error getting file stats:', err);
-              return;
-            }
-            if (stats.isFile()) {
-              // logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
-              require(filePath)
-              if (files.length == index) { 
-                const loadTime = (Date.now() - appStartTime) / 1000;
-                // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
-              }
-            } else if (stats.isDirectory()) {
-              logs(`Directory: ${file}`);
-            }
-          });
-        });
-    });
-    //
-    
-  }
+  
 
   
 }
