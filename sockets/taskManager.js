@@ -29,10 +29,6 @@ try {
             if (data.message == '0') { 
                 taskList.datas = "0" 
             }
-            if (data.message == "2") { 
-                taskList.datas = "2" 
-                logs("hit",taskList.datas)
-            }
         }
         if (data.type == 'brain-ThargoidSample_socket') {
             const client = BrowserWindow.fromId(2);
