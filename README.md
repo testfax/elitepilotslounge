@@ -30,3 +30,6 @@
 - Error Logs
 - - Error logging is only local at this time and does not get transported to the website. Should you find an error, it could be staged in "main.log" in the logs folder.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
+- App Commander Info
+- - "lounge-client.txt" Contains window positioning, commander information, and wing related information.
+- - C:\Users\yourUserName\Saved Games\Frontier Developments\Elite Dangerous
