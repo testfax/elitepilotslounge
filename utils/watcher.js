@@ -36,7 +36,7 @@ try {
             //     });
             // },
             ignoreEvent: function(ignoreEventName) {
-                let ignoreEventsJSON = fs.readFileSync('./events/Appendix/ignoreEvents.json', (err) => { if (err) return logs(err); });
+                let ignoreEventsJSON = fs.readFileSync(path.join(lcs.cwd,'events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
                 ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
                 for (const event of ignoreEventsJSON.events) {
                     if (event.event === ignoreEventName) {

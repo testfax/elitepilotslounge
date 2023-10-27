@@ -204,7 +204,7 @@ function getMats() {
         synthesisComponentsBuilder(synthesisStructure,material)
         let SynthesisData = await getEventFromStore('Synthesis');
         if (SynthesisData) { SynthesisDataF(SynthesisData); }
-        else { console.log("getMats(), Synthesis, No event data.")}
+        // else { console.log("getMats(), Synthesis, No event data.")}
       } catch (error) {
         console.log(error);
       }

@@ -59,18 +59,20 @@ try {
     // }
     // const theEvents = await fs.readFileSync('./events/Appendix/events.json','utf-8', (err) => { if (err) return console.log(err); })
     // const eventList = JSON.parse(theEvents);
-    let eventList = fs.readFileSync(path.join(process.cwd(),'events','Appendix','events.json'),'utf-8')
-    if (eventList) { 
+ 
+  
+      let eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
       eventList = JSON.parse(eventList); 
-    }
-    if (!eventList) { 
-      eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
-      eventList = JSON.parse(eventList); 
-    }
+    
     let nameList = []
-    eventList.events.forEach((item) => {
-      nameList.push(item.event)
-    })
+    if (eventList) { 
+      eventList.events.forEach((item) => {
+        nameList.push(item.event)
+      })
+    }
+    else {
+      console.log("eventList doest have shit")
+    }
     const multiStores = nameList.map((name) => {
       const store = new Store({name:name})
       return {

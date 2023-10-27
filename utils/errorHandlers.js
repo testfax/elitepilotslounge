@@ -88,36 +88,42 @@ const errorFunc = {
         return false;
     },
     errorHandler: function(error,origin,extra) {
-        if (origin == "ExperimentalWarning") return
-        let errorGenReport = {}
-        const currentDateTime = new Date()
-        errorGenReport.timestamp = currentDateTime.toISOString()
-
-        logs("[ERROR TYPE]".red,`${origin}`.yellow)
-        if (extra) {
-            logs("[ERROR Extra]".red, `${extra}`.cyan)
-        }
-        let errArray = new Array() 
-        // logs("TEST".yellow,error);
-        if (typeof error == 'string') { errArray = error.split("/n") }
-        if (typeof error == 'object') { 
-            let newError = { 
-                name: error.name,
-                message: error.message,
-                stack: error.stack
+        if (!app.isPackaged) {
+            if (origin == "ExperimentalWarning") return
+            let errorGenReport = {}
+            const currentDateTime = new Date()
+            errorGenReport.timestamp = currentDateTime.toISOString()
+    
+            logs("[ERROR TYPE]".red,`${origin}`.yellow)
+            if (extra) {
+                logs("[ERROR Extra]".red, `${extra}`.cyan)
             }
-            Object.entries(newError).forEach(([key,value]) => {
-                errArray.push(value)
+            let errArray = new Array() 
+            // logs("TEST".yellow,error);
+            if (typeof error == 'string') { errArray = error.split("/n") }
+            if (typeof error == 'object') { 
+                let newError = { 
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                }
+                Object.entries(newError).forEach(([key,value]) => {
+                    errArray.push(value)
+                })
+             }
+            errArray.forEach((err,index) => {
+                if (index == 0) {  console.error("[ERROR PROBLEM]".red,`${err} `.yellow) }
+                console.error("[ERROR]".red,`${index} ${err} `.cyan)
             })
-         }
-        errArray.forEach((err,index) => {
-            if (index == 0) {  console.error("[ERROR PROBLEM]".red,`${err} `.yellow) }
-            console.error("[ERROR]".red,`${index} ${err} `.cyan)
-        })
-        errorGenReport.stack =  error.stack
-        
-        logs(`APP ${app.getName().bgBrightRed} exited by ${origin} handler... `.red)
-        errorFunc.logGenerator(errorGenReport);
+            errorGenReport.stack =  error.stack
+            
+            logs(`APP ${app.getName().bgBrightRed} exited by ${origin} handler... `.red)
+            errorFunc.logGenerator(errorGenReport);
+        }
+        if (app.isPackaged) {
+            logs(error)
+            app.quit();
+        }
         
     },
     logGenerator: function(errorGenReport) {
@@ -139,7 +145,7 @@ const errorFunc = {
         logs("[LOG GEN]".red,`PRACTICE FOR LOG GENERATOR:`.bgMagenta)
         errorGenReport = Object.keys(errorGenReport).sort((a,b)=> b - a )
         // logs(errorGenReport)
-        // app.quit();
+        
         
     }
 }

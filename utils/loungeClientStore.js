@@ -8,7 +8,7 @@ Tail = require('tail').Tail;
 
 const lcs = {
     cwd: app.isPackaged ? path.join(process.cwd(),'resources','app') : process.cwd(),
-    eventJSON: async () => { return fs.readFileSync(path.join(lcs.cwd,'events','Appendix','events.json'),'utf-8', (err) => { if (err) logs("NOPEROPE",err); return null  });},
+    eventJSON: () => { return fs.readFileSync(path.join(lcs.cwd,'events','Appendix','events.json'),'utf-8', (err) => { if (err) logs("NOPEROPE",err); return null  });},
     logState: { logs: 1, latest: "" },
     worldFixer: { timer: false},
     readLogFileData: {},

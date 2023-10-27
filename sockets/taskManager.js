@@ -14,7 +14,6 @@ try {
     const { ignoreEvent } = require('../utils/watcher')
     const Store = require('electron-store');
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
-    const thisWindow = windowItemsStore.get('electronWindowIds')
     let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
     //!########################################################
     //!############ SOCKET SERVER DIRECT EMITS ################
@@ -23,7 +22,7 @@ try {
         logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green,`${myTime.format(new Date())}`) 
         //Need to send the dcohSystem's data to the frontside so that it can update all the titan systems info. 
         if (data.type == 'dcohSystems') {
-            const client = BrowserWindow.fromId(thisWindow.win); 
+            const client = BrowserWindow.fromId(2);
             client.webContents.send(`dcohSystems-sample`, data);
         } 
         if (data.type == 'findSystemResult') { 
@@ -36,7 +35,7 @@ try {
             }
         }
         if (data.type == 'brain-ThargoidSample_socket') {
-            const client = BrowserWindow.fromId(thisWindow.win);
+            const client = BrowserWindow.fromId(2);
             client.webContents.send("from_brain-ThargoidSample", data);
         }
     }) 

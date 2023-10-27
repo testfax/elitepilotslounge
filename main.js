@@ -1,16 +1,25 @@
+const {logs} = require('./utils/logConfig')
 try {
   const { nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
   const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
+  logs(`=====LOUNGE-CLIENT=====`.green);
+  // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
+  // //!   every 5 seconds
+  require('./utils/processDetection')
+  // require('./sockets/socketMain')
+  //!
+  //!
+  const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
   const path = require('path')
   const fs = require('fs')
+  //!!!!!! Determine if the error logs file is present. If so, then erase it after each until I figure out how to date them each startup the app.
+  //!!!!!!      After that, this function can be commented out.
+  // fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
   fs.stat(path.join(app.getPath('appData'),'elitepilotslounge'), (err, stats) => {
     if (stats.isFile()) {
       fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
     }
   })
-  const {logs} = require('./utils/logConfig')
-  console.log(logs);
-  logs(`=====LOUNGE-CLIENT=====`.green);
   const Store = require('electron-store');
   const store = new Store();
   const electronWindowIds = new Store({ name: "electronWindowIds" });
@@ -18,64 +27,50 @@ try {
   electronWindowIds.set('socketRooms',{})
   const thisWindow = electronWindowIds.get('electronWindowIds')
   const { mainMenu,rightClickMenu } = require('./menumaker')
-  const { autoUpdater, AppUpdater } = require('electron-updater')
-  // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
-  // //!   every 5 seconds
-
   nativeTheme.themeSource = 'dark'
 
-
-  require('./utils/processDetection')
-  const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
-  // require('./sockets/socketMain')
-  //!
   //Auto Updater
-  autoUpdater.autoDownload = true
-  autoUpdater.autoInstallOnAppQuit = true
-  autoUpdater.on('error',(error)=>{
-    logs(error);
-  })
-  // autoUpdater.on('checking-for-update')
-  autoUpdater.on('update-available',(info)=>{
-    logs(info)
-  })
-  autoUpdater.on('update-not-available',(info)=>{
-    logs(info)
-  })
-  autoUpdater.on('update-downloaded',(info)=>{
-    logs(info)
-  })
-  //!
-  
+  const useUpdater = 0;
+  if (useUpdater) { 
+    const { autoUpdater, AppUpdater } = require('electron-updater')
+    autoUpdater.autoDownload = true
+    autoUpdater.autoInstallOnAppQuit = true
+    autoUpdater.on('error',(error)=>{
+      logs(error);
+    })
+    // autoUpdater.on('checking-for-update')
+    autoUpdater.on('update-available',(info)=>{
+      logs(info)
+    })
+    autoUpdater.on('update-not-available',(info)=>{
+      logs(info)
+    })
+    autoUpdater.on('update-downloaded',(info)=>{
+      logs(info)
+    })
+  }
   //! Begin creating the electron window
   let appStartTime = null;
   const isDev = app.isPackaged
-  // const isDev = process.env.NODE_ENV !== 'production'
-  const isMac = process.platform === 'darwin'
   //! Start splash screen
   let win
   let loadingScreen = null
-  // logs(app.isPackaged)
-  const tester = 0
-  // if (app.isPackaged) { app.on('ready', () => { createLoadingScreen(); }); }
-  if (tester) { app.on('ready', () => { createLoadingScreen(); }); }
-  else {
-    app.on('ready', () => { 
-      createWindow();  
-      Menu.setApplicationMenu(mainMenu);
-      appStartTime = Date.now()
+  logs("APP PACKAGING STATUS:",app.isPackaged)
+  app.on('ready', () => { createLoadingScreen(); });
+  // else {
+  //   app.on('ready', () => { 
+  //     createWindow();  
+  //     Menu.setApplicationMenu(mainMenu);
+  //     appStartTime = Date.now()
       
-    });
-    app.whenReady().then(() => {
-      
-      
-    })
-  }
+  //   });
+  //   app.whenReady().then(() => { })
+  // }
   function createLoadingScreen() {
       // Create a loading screen window
       loadingScreen = new BrowserWindow({
-      width: isDev ? 340 : 340,
-        height: 320,
+        width: 340,
+        height: 600,
         frame: false, // Remove window frame
         alwaysOnTop: true, // Make the loading screen always on top
         // Additional options
@@ -91,13 +86,12 @@ try {
           createWindow(); 
       })
   }
-  
   const createWindow = () => {
       try {
           win = new BrowserWindow({
               title: "Elite Pilots Lounge",
-              width: isDev ? 1000 : 500,
-              height: 600,
+              width: !isDev ? 1000 : 500,
+              height: 800,
               webPreferences: {
                   preload: path.join(__dirname, 'preload.js'),
                   nodeIntegration: false,
@@ -108,8 +102,8 @@ try {
               show: false,
               alwaysOnTop: false,
             })
-            const derp = app.isPackaged
-            win.webContents.executeJavaScript(`window.isPackaged = ${derp}`)
+            // const derp = app.isPackaged
+            // win.webContents.executeJavaScript(`window.isPackaged = ${derp}`)
             
                 // !For navigation stuff when coded
                 // frame: false,
@@ -129,8 +123,8 @@ try {
               win.setPosition(windowPositionz.moveTo[0],windowPositionz.moveTo[1])
               win.setSize(windowPositionz.resizeTo[0],windowPositionz.resizeTo[1])
               win.show()
-              win.webContents.openDevTools(); 
-              // if (isDev) { win.webContents.openDevTools(); }
+              win.webContents.openDevTools();
+              // if (!isDev) { win.webContents.openDevTools(); }
           })
           // const primaryDisplay = screen.getPrimaryDisplay();
           // logs(primaryDisplay)
@@ -143,13 +137,15 @@ try {
           let isLoadFinished = false;
           const handleLoadFinish = () => {
             if (!isLoadFinished) {
-              isLoadFinished = true;                
-              if (loadingScreen != null && !isDev) {
+              isLoadFinished = true;             
+              if (loadingScreen.id != null) {
                 winids['loadingScreen'] = loadingScreen.id
                 winids['win'] = win.id
                 winids['appStatus'] = 'clean'
                 electronWindowIds.set('electronWindowIds',winids)
                 // logs("splash",electronWindowIds.get('electronWindowIds'))
+                // setTimeout(() => {
+                // },2000)
                 loadingScreen.close();
                 loadingScreen = null
                 remainderLoads()
@@ -172,7 +168,6 @@ try {
           return;
       }
   }
-
   app.on('window-all-closed', () =>{
       // watcher.wat.watcher.close()
       if (process.platform !== 'darwin') app.quit()
@@ -185,8 +180,6 @@ try {
       }
       wingData(roomCache,0)
   })
-
-
   process.on('uncaughtException', (error,origin) => {
     errorHandler(error,origin)
     //  logs('ReferenceError occurred:'.red, error.stack);
@@ -196,11 +189,11 @@ try {
   })
   .on('TypeError', (error,origin) => {
       errorHandler(error,origin)
-      logs(error)
+      // logs(error)
   })
   .on('ReferenceError', (error,origin) => {
     errorHandler(error,origin)
-      logs(error)
+      // logs(error)
   })
   .on('warning', (warning) => {
     errorHandler(warning.stack,warning.name)
@@ -215,7 +208,7 @@ try {
   //The errorHandlers functions sometimes dont capture errors that are the resultant of another function on a different page.
 
   function remainderLoads() {
-    autoUpdater.checkForUpdates()
+    if (useUpdater) { autoUpdater.checkForUpdates() }
     require('./fromRenderer') // Contains all ipcRenderer event listeners that must perform a PC related action.
     // Brains Directory: Loop through all files and load them.
     const brainsDirectory = path.join(__dirname, 'events-brain')
@@ -252,8 +245,7 @@ try {
   
 }
 catch(e) {
-    console.log(e);
-    // logs("MAIN PROCESS ERROR".yellow,e)
+    logs(`MAIN PROCESS ERROR.yellow,${e}`)
 }
 // require('./searchtxt')
 

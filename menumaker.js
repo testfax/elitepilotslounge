@@ -1,16 +1,9 @@
 const {pageData} = require('./utils/errorHandlers')
 const {app, Menu, BrowserWindow} = require('electron')
 const {logs} = require('./utils/logConfig')
+const {cwd} = require('./utils/loungeClientStore')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
-if (!store.get('electronWindowIds')) { 
-    const setupArray = {
-		"win": 1,
-		"appStatus": "clean"
-	}
-store.set("electronWindowIds",setupArray)
-}
-const thisWindow = store.get('electronWindowIds')
 const {socket_joinRoom, socket_leaveRoom} = require('./sockets/taskManager')
 const path = require('path')
 const fs = require('fs')
@@ -21,62 +14,63 @@ function findActiveSocketKey() {
 }
 const links = {
     dashboard: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/dashboard/dashboard.html')}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/dashboard/dashboard.html')}`)
         pageData.currentPage = "Dashboard"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     friends: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/friends/friends.html')}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/friends/friends.html')}`)
         pageData.currentPage = "Friends"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     statistics: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/statistics/statistics.html')}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/statistics/statistics.html')}`)
         pageData.currentPage = "Statistics"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     engineerProgress: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/engineerProgress/engineerProgress.html')}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/engineerProgress/engineerProgress.html')}`)
         pageData.currentPage = "Engineer Progress"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     materials: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/materials/materials.html')}`)
+        logs(`thisWindow: ${2} browserWindow:${BrowserWindow.getFocusedWindow}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/materials/materials.html')}`)
         pageData.currentPage = "Materials"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
-    },
+    }, 
     sampling: async function() {
         // const response = await socket_joinRoom('brain-ThargoidSample')
         // if (response) { 
-            BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/sampling/sample.html')}`)
+            BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/sampling/sample.html')}`)
             pageData.currentPage = "brain-ThargoidSample"
             store.set('currentPage',pageData.currentPage)
-            BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+            BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         //  }
-        //  else { BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
+        //  else { BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
     },
     logs: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'logs/logs.html')}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'logs/logs.html')}`)
         pageData.currentPage = "Logs"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     test: async function() {
-        BrowserWindow.fromId(thisWindow.win).loadURL(`file://${path.join(__dirname, 'renderers/test/test.html')}`)
+        BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/test/test.html')}`)
         pageData.currentPage = "Test"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(thisWindow.win).setTitle('Elite Pilots Lounge')
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     }
 }
@@ -86,24 +80,24 @@ const template = [
         label: 'Dashboard',
         click: ()=>{links.dashboard();} 
     },
-    {
-        label: 'Friends',
-        click: ()=>{links.friends();} 
-    },
-    {
-        label: 'Information',
-        // click: ()=>{links.statistics();} 
-        submenu: [
-            {
-                label: 'Statistics',
-                click: ()=>{links.statistics()}
-            },
-            {
-                label: 'Engineer Progress',
-                click: ()=>{links.engineerProgress()}
-            }
-        ]
-    },
+    // {
+    //     label: 'Friends',
+    //     click: ()=>{links.friends();} 
+    // },
+    // {
+    //     label: 'Information',
+    //     // click: ()=>{links.statistics();} 
+    //     submenu: [
+    //         {
+    //             label: 'Statistics',
+    //             click: ()=>{links.statistics()}
+    //         },
+    //         {
+    //             label: 'Engineer Progress',
+    //             click: ()=>{links.engineerProgress()}
+    //         }
+    //     ]
+    // },
     {
         label: 'Thargoid',
         // click: ()=>{links.statistics();} 
@@ -122,10 +116,10 @@ const template = [
         label: 'Materials',
         click: ()=>{links.materials();} 
     },
-    {
-        label: 'Logs',
-        click: ()=>{links.logs()} 
-    },
+    // {
+    //     label: 'Logs',
+    //     click: ()=>{links.logs()} 
+    // },
     {
         label: 'Test',
         click: ()=>{links.test()} 

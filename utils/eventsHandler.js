@@ -4,10 +4,10 @@ const {logs} = require('./logConfig')
 const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
 const path = require('path')
 const fs = require('fs')
-const lcs = require('./loungeClientStore')
+const {eventJSON} = require('./loungeClientStore')
 try  {
-    let eventsJSON = fs.readFileSync('./events/Appendix/events.json', (err) => { if (err) return logs(err); });
-    eventsJSON = JSON.parse(eventsJSON)   
+    
+    let eventsJSON = JSON.parse(eventJSON())
     //###### This eventsHandler.js is basically middleware for the specific events "*.js" files. ######
     let failEvents = new Array()
     function handleEvent(eventName, category, eventData, returnable) {
