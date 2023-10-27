@@ -101,7 +101,6 @@ try {
                     
                     if (response.event === "WingInvite") { 
                         //A response from socketServer, Dont really need this.
-                        
                     }
                     if (response.event === "redisRequest") { 
                         callback({response})
@@ -137,8 +136,6 @@ try {
             // }
             // This is the latest occurance that happend of any particular event.
             let readEventsList = await lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation().savedGamePath,"log"),searchEventList)
-            
-          
             if (watcherConsoleDisplay("latestLogsRead")) {
                 logs(
                     "[TM]".green,
@@ -152,7 +149,6 @@ try {
                 readEventsList.firstLoad.forEach(eventItem => {
                     if(searchEventList == "All" && eventItem.event != "WingInvite"  && eventItem.event != "WingAdd" && eventItem.event != "WingJoin" && eventItem.event != "WingLeave") {    
                         if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
-                        
                             // callback... Must be 1
                             // logs(eventItem)
                             const askIgnoreFile = ignoreEvent(eventItem.event)

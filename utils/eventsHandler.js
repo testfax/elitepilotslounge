@@ -5,6 +5,7 @@ const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
 const path = require('path')
 const fs = require('fs')
 const {eventJSON} = require('./loungeClientStore')
+const colorize = require('json-colorizer')
 try  {
     
     let eventsJSON = JSON.parse(eventJSON())
@@ -19,6 +20,7 @@ try  {
             const handler = require(modulePath);
            
             if (returnable) { //! RETURNS DATA FROM EVENT CALLED
+                
                 if (watcherConsoleDisplay(eventName)) { logs("2.3 RETURNABLE -> ".bgMagenta,returnable) }
                 return handler(eventData); 
             }

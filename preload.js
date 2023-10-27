@@ -60,9 +60,14 @@ try {
     // const theEvents = await fs.readFileSync('./events/Appendix/events.json','utf-8', (err) => { if (err) return console.log(err); })
     // const eventList = JSON.parse(theEvents);
  
-  
-      let eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
-      eventList = JSON.parse(eventList); 
+    let eventList = null
+    try {
+      eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
+    }
+    catch(notreallyanerror) {
+      eventList = fs.readFileSync(path.join(process.cwd(),'events','Appendix','events.json'),'utf-8')
+    }
+    eventList = JSON.parse(eventList); 
     
     let nameList = []
     if (eventList) { 

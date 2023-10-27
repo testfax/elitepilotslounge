@@ -6,7 +6,12 @@ try {
     const {logs} = require('../utils/logConfig')
     const Store = require('electron-store');
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
-    let lastTitan = windowItemsStore.get('brain_ThargoidSample') //socket related
+    let lastTitan = null
+    if (!windowItemsStore.get('brain_ThargoidSample')) { //socket related
+      windowItemsStore.set('brain_ThargoidSample',"brain-ThargoidSample_Thor_Controlled")
+      lastTitan = windowItemsStore.get('brain_ThargoidSample')
+    }
+    else { lastTitan = windowItemsStore.get('brain_ThargoidSample') }
     const thisWindow = windowItemsStore.get('electronWindowIds')
     const client = BrowserWindow.fromId(thisWindow.win);
     const lcs = require('../utils/loungeClientStore')
