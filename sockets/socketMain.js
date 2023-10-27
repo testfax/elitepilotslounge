@@ -9,7 +9,7 @@ let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',da
 
 try {
     let commander = JSON.stringify(requestCmdr().commander)
-    if (watcherConsoleDisplay("globalLogs")) {  logs("[SOCKET CLIENT]".blue," OPERATIONAL ".green) }
+    if (watcherConsoleDisplay("globalLogs")) {  logs("[SOCKET CLIENT]".blue," STATUS:"," OPERATIONAL ".green) }
     const manager = new Manager('https://elitepilotslounge.com/socket.io/', {
         query: { 'clientpilot': commander, 'type': 'client'},
         path: '/socket.io/',
