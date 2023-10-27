@@ -42,7 +42,6 @@ const links = {
         findActiveSocketKey()
     },
     materials: async function() {
-        logs(`thisWindow: ${2} browserWindow:${BrowserWindow.getFocusedWindow}`)
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/materials/materials.html')}`)
         pageData.currentPage = "Materials"
         store.set('currentPage',pageData.currentPage)

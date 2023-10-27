@@ -25,7 +25,11 @@ try {
   const electronWindowIds = new Store({ name: "electronWindowIds" });
   electronWindowIds.set('currentPage','Dashboard');
   electronWindowIds.set('socketRooms',{})
-  const thisWindow = electronWindowIds.get('electronWindowIds')
+  if (!electronWindowIds.get('brain_ThargoidSample')) { //socket related
+    electronWindowIds.set('brain_ThargoidSample',"brain-ThargoidSample_Thor_Controlled")
+    lastTitan = electronWindowIds.get('brain_ThargoidSample')
+  }
+  else { lastTitan = electronWindowIds.get('brain_ThargoidSample') }
   const { mainMenu,rightClickMenu } = require('./menumaker')
   nativeTheme.themeSource = 'dark'
 
