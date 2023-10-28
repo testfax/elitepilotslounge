@@ -46,13 +46,12 @@ try {
     }
 
     const logsUtil = {
-        Dev: 1,
         logs: async (...input) => {
             let logMessage = input.join(' ');
             if (app.isPackaged) { 
                 log.info(logMessage); 
             }
-            if (logsUtil.Dev) {
+            else {
                 log.info(logMessage);
             }
         }

@@ -279,7 +279,7 @@ try {
     app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
     ipcMain.on(thisBrain, async (receivedData) => {
       if (receivedData.event == 'template') {
-        logs(colorize(receivedData, { pretty: true }))
+        // logs(colorize(receivedData, { pretty: true }))
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
@@ -661,7 +661,8 @@ try {
                 if (item.systemAddress == receivedData.SystemAddress) {
                   stuff["Original Population"] = item.populationOriginal
                   stuff[`LY to ${titan}`] = Object.values(combinedData.nearestTitan)[0] ? Object.values(combinedData.nearestTitan)[0] : ""
-                  logs(colorize(stuff, { pretty: true }))
+                  // logs(colorize(stuff, { pretty: true }))
+                  logs(stuff)
                 }
               })
             })
@@ -765,7 +766,8 @@ try {
                 if (item.systemAddress == receivedData.SystemAddress) {
                   stuff["Original Population"] = item.populationOriginal
                   stuff[`LY to ${titan}`] = Object.values(combinedData.nearestTitan)[0] ? Object.values(combinedData.nearestTitan)[0] : ""
-                  logs(colorize(stuff, { pretty: true }))
+                  // logs(colorize(stuff, { pretty: true }))
+                  logs(stuff)
                 }
               })
             })

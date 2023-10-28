@@ -89,7 +89,7 @@ const errorFunc = {
     },
     errorHandler: function(error,origin,extra) {
         if (!app.isPackaged) {
-            console.log(error);
+            logs(error)
             // if (origin == "ExperimentalWarning") return
             // let errorGenReport = {}
             // const currentDateTime = new Date()
