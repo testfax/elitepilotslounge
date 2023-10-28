@@ -1,0 +1,24 @@
+name: Remove V Prefix from Release Tag
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  remove_v_prefix:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Remove "v" Prefix
+        run: |
+          tagName=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+          newTagName=$(echo $tagName | sed 's/v//')
+          git tag -d $tagName
+          git tag $newTagName
+          git push origin :$tagName $newTagName
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
