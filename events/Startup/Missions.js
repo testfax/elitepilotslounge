@@ -1,5 +1,6 @@
 try {
     const { BrowserWindow,webContents  } = require('electron');
+    const { logs } = require('../../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../../utils/errorHandlers')
     const lcs = require('../../utils/loungeClientStore')
     const socketEventManager = require('../../sockets/taskManager')
@@ -17,13 +18,13 @@ try {
         //     FID: 'F1279183',
         //     Name: 'Medi0cr3'
         // }
-        if (watcherConsoleDisplay(data.event)) { console.log("3: MISSIONS DATA ".bgMagenta);console.log(colorize(data, { pretty: true })) }
+        if (watcherConsoleDisplay(data.event)) { logs("3: MISSIONS DATA ".bgMagenta);logs(colorize(data, { pretty: true })) }
         
         //! No Requirement to send Commander information to webserver at the moment.
         // Missions(data, (response)=> {})
         const storeMissions = new Store({ name: 'Missions' })
         storeMissions.set('data',data)
-        //console.log(storeMissions.get('data'))
+        //logs(storeMissions.get('data'))
         const client = BrowserWindow.fromId(1); 
         client.webContents.send('Missions', data);
 

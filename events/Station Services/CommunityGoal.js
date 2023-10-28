@@ -1,75 +1,43 @@
 try {
-    const { BrowserWindow,webContents  } = require('electron');
+    const { ipcMain, BrowserWindow,webContents  } = require('electron');
+    const { logs } = require('../../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../../utils/errorHandlers')
     const lcs = require('../../utils/loungeClientStore')
-    const socketEventManager = require('../../sockets/taskManager')
     const colorize = require('json-colorizer');
-    const {CommunityGoal} = require('../../sockets/tasks/stationServices')
+    //! #### Socket Server
+    // const {Materials} = require('../../sockets/tasks/startup')
+    const taskManager = require('../../sockets/taskManager')
     const Store = require('electron-store')
-   
     module.exports = (data) =>{
-        // {
-        //     "timestamp": "2023-05-07T02:34:16Z",
-        //     "event": "CommunityGoal",
-        //     "CurrentGoals": [
-        //       {
-        //         "CGID": 778,
-        //         "Title": "Establish Thargoid Pulse Neutraliser Production",
-        //         "SystemName": "YZ Ceti",
-        //         "MarketName": "Clement Orbital",
-        //         "Expiry": "2023-05-09T05:00:00Z",
-        //         "IsComplete": false,
-        //         "CurrentTotal": 15672054,
-        //         "PlayerContribution": 0,
-        //         "NumContributors": 2188,
-        //         "TopTier": {
-        //           "Name": "Tier 3",
-        //           "Bonus": ""
-        //         },
-        //         "TopRankSize": 10,
-        //         "PlayerInTopRank": false,
-        //         "TierReached": "Tier 1",
-        //         "PlayerPercentileBand": 100,
-        //         "Bonus": 400000
-        //       },
-        //       {
-        //         "CGID": 779,
-        //         "Title": "Protect Deliveries to Clement Orbital",
-        //         "SystemName": "YZ Ceti",
-        //         "MarketName": "Clement Orbital",
-        //         "Expiry": "2023-05-09T05:00:00Z",
-        //         "IsComplete": false,
-        //         "CurrentTotal": 61134035341,
-        //         "PlayerContribution": 346592134,
-        //         "NumContributors": 1878,
-        //         "TopTier": {
-        //           "Name": "Tier 5",
-        //           "Bonus": ""
-        //         },
-        //         "TopRankSize": 10,
-        //         "PlayerInTopRank": false,
-        //         "TierReached": "Tier 3",
-        //         "PlayerPercentileBand": 10,
-        //         "Bonus": 6400000
-        //       }
-        //     ]
-        //   }
-
-        //! This will be fired on every 10 minute server tick.
-
-        if (watcherConsoleDisplay(data.event)) { console.log("3: COMMUNITYGOAL DATA ".bgMagenta);console.log(colorize(data, { pretty: true })) }
-
-        
-        
-        //! No Requirement to send Commander information to webserver at the moment.
-        // CommunityGoal(data, (response)=> {})
-        const storeCommunityGoal = new Store({ name: 'CommunityGoal' })
-        storeCommunityGoal.set('data',data)
-        //console.log(storeCommunityGoal.get('data'))
-        const client = BrowserWindow.fromId(1); 
-        client.webContents.send('CommunityGoal', data);
-
-        
+        const distributionList = [
+        ]
+        //! #### Logs
+        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
+        //! #### Socket Server
+        ipcMain.removeAllListeners(`event-callback-${data.event}`);
+        if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
+            ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
+                if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
+                    logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
+                }
+                taskManager.eventDataStore(receivedData)
+            })
+        }
+        //The response from the socket server will be a callback to this function.
+        //Manipulate the data then send to the brain.
+        // Materials(data, (response)=> { logs("stat",response) })
+        // Materials(data)
+        //Gets sent to socket js file
+        //! #### Save entry into Electron-Store.
+        const store = new Store({ name: `${data.event}` })
+        store.set('data',data)
+        //! #### Send entry to the renderer... NOT RECOMMENDED.
+        // const client = BrowserWindow.fromId(1);
+        // client.webContents.send(`${eventType}`, data);
+        //! #### Send to Brain
+        distributionList.forEach(event => {
+            ipcMain.emit(event,data)
+        })
     }
 }
 catch (error) {

@@ -1,6 +1,6 @@
 try {
     const { ipcMain, BrowserWindow,webContents  } = require('electron');
-    const {logs} = require('../../utils/logConfig')
+    const { logs } = require('../../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../../utils/errorHandlers')
     const lcs = require('../../utils/loungeClientStore')
     const statusFlags = require('../Appendix/statusFlags');
