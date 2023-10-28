@@ -28,7 +28,8 @@
 - - Primary storage for file information regarding journal events. Helps retain real time data in one spot broken down into each Event.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge
 - Error Logs
-- - Error logging is only local at this time and does not get transported to the website. Should you find an error, it will be found in "main.log" in the logs folder.
+- - Error logging is hard coded to remotely report issues during the alpha testing phase.
+- - Error logging, should you find an error, it will be found in "main.log" in the logs folder.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
 - App Commander Info
 - - "lounge-client.txt" Contains window positioning, commander information, and wing related information.
