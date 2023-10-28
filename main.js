@@ -11,8 +11,7 @@ try {
   //   if (stats.isDirectory()) {
   //   }
   // })
-  logs("=====LOUNGE-CLIENT=====");
-  logs("APP PACKAGING STATUS:",app.isPackaged);
+  logs("=ELITE PILOTS LOUNGE=","isPackaged: [",app.isPackaged," ] Version: [",app.getVersion()," ]");
   // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
   // //!   every 5 seconds
   require('./utils/processDetection')
