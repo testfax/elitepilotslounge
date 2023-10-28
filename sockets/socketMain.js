@@ -8,8 +8,8 @@ const store = new Store({ name: 'electronWindowIds'})
 let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
 
 try {
+    // if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue," STATUS:"," OPERATIONAL ".green) }
     let commander = JSON.stringify(requestCmdr().commander)
-    if (watcherConsoleDisplay("globalLogs")) {  logs("[SOCKET CLIENT]".blue," STATUS:"," OPERATIONAL ".green) }
     const manager = new Manager('https://elitepilotslounge.com/socket.io/', {
         query: { 'clientpilot': commander, 'type': 'client'},
         path: '/socket.io/',
@@ -73,14 +73,16 @@ try {
     ]
     if (!store.get('registeredRooms')) { store.set('registeredRooms',registeredRooms) }
     socket.on("connect", () => {
-        function socketReconnect(data) {    
-            return new Promise(async (resolve,reject) => {
-                try { socket.emit('joinRoom',data, async (response) => { 
-                    resolve(response);
-                    store.set(`socketRooms.${data}`, response);
-                }); }
-                catch(error) { errorHandler(error,error.name); reject(error) }
-            })
+        function socketReconnect(data) {
+            if (data != 'unknown') {
+                return new Promise(async (resolve,reject) => {
+                    try { socket.emit('joinRoom',data, async (response) => { 
+                        resolve(response);
+                        store.set(`socketRooms.${data}`, response);
+                    }); }
+                    catch(error) { errorHandler(error,error.name); reject(error) }
+                })
+            }
         }
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Socket ID: ",`${socket.id}`.green) }
         if (store.get('currentPage') == 'brain-ThargoidSample') { socketReconnect(store.get('brain-ThargoidSample.currentTitanState')) }

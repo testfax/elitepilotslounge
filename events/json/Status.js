@@ -1,5 +1,6 @@
 try {
     const { ipcMain, BrowserWindow,webContents  } = require('electron');
+    const {logs} = require('../../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../../utils/errorHandlers')
     const lcs = require('../../utils/loungeClientStore')
     const statusFlags = require('../Appendix/statusFlags');
@@ -34,7 +35,7 @@ try {
             'brain-ThargoidSample'
         ]
         //! #### Logs
-        if (watcherConsoleDisplay(data.event)) { console.log(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); console.log(colorize(data, { pretty: true })) }
+        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
        
 
         //! ### Transpose data
@@ -48,7 +49,7 @@ try {
             Flags1: modStatus.Flags1,
             Flags2: modStatus.Flags2
         }
-        if (watcherConsoleDisplay(data.event)) { console.log(colorize(gimmeFlags, { pretty: true }))  }
+        if (watcherConsoleDisplay(data.event)) { logs(colorize(gimmeFlags, { pretty: true }))  }
         const combinedStatus = {...modStatus,...data}
         // socketEventManager.Status(modStatus);
          //! #### Socket Server
@@ -56,14 +57,14 @@ try {
         //  if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
         //      ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
         //          if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
-        //              console.log(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
+        //              logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
         //          }
         //          taskManager.eventDataStore(receivedData)
         //      })
         //  }
          //The response from the socket server will be a callback to this function.
          //Manipulate the data then send to the brain.
-        // Status(combinedStatus, (response)=> { console.log("stat",response) })
+        // Status(combinedStatus, (response)=> { logs("stat",response) })
         Status(combinedStatus)
         //Gets sent to socket js file
         if (gimmeFlags.Flags1 != 0) { //0 would be a clean shutdown, use shutdown event
@@ -79,7 +80,7 @@ try {
         }
         let socketRoomStatus = lcs.wingData(roomCache,1) //Second Parameter is ReadOnly On/Off, if Off, saves data to lounge-client.txt
         if (socketRoomStatus.length) { 
-            console.log("yep")
+            logs("yep")
             //todo IF commander is in a socket(room), then send to room.
         }
 
@@ -139,7 +140,7 @@ catch (error) {
 
 //     module.exports = (data) => {
 //         try {
-//             if (watcherConsoleDisplay(data.event)) { console.log("3: STATUS DATA ".bgMagenta); console.log(colorize(data, { pretty: true }))  }
+//             if (watcherConsoleDisplay(data.event)) { logs("3: STATUS DATA ".bgMagenta); logs(colorize(data, { pretty: true }))  }
             
 //             let modStatus = {
 //                 event: "Status",
@@ -151,13 +152,13 @@ catch (error) {
 //                 Flags1: modStatus.Flags1,
 //                 Flags2: modStatus.Flags2
 //             }
-//             if (watcherConsoleDisplay(data.event)) { console.log(colorize(gimmeFlags, { pretty: true }))  }
+//             if (watcherConsoleDisplay(data.event)) { logs(colorize(gimmeFlags, { pretty: true }))  }
 //             const combinedStatus = {...modStatus,...data}
 //             socketTaskManager.eventDataStore(modStatus);
 //             if (gimmeFlags.Flags1 != 0) { //0 would be a clean shutdown, use shutdown event
 //                 const storeStatus = new Store({ name: 'Status' })
 //                 storeStatus.set('data',combinedStatus)
-//                 // console.log(combinedStatus);
+//                 // logs(combinedStatus);
 //                 client.webContents.send('Status', combinedStatus);
 //             }
 //             const roomCache = {
@@ -168,7 +169,7 @@ catch (error) {
 //             }
 //             let socketRoomStatus = lcs.wingData(roomCache,1) //Second Parameter is ReadOnly On/Off, if Off, saves data to lounge-client.txt
 //             if (socketRoomStatus.length) { 
-//                 console.log("yep")
+//                 logs("yep")
 //                 //todo IF commander is in a socket(room), then send to room.
 //             }
 
@@ -183,4 +184,4 @@ catch (error) {
 //     errorHandler(error,error)
 // }
 // Call the function from another page like this: 
-//   console.log(someVar.flagsFinder(flags,16842765)); // ["Docked", "Landed", "Landing Gear Down", "In MainShip"]
+//   logs(someVar.flagsFinder(flags,16842765)); // ["Docked", "Landed", "Landing Gear Down", "In MainShip"]

@@ -2,71 +2,49 @@ const {logs} = require('./utils/logConfig')
 try {
   const { nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
   const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
-  logs(`=====LOUNGE-CLIENT=====`.green);
+  const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
+  const path = require('path')
+  const fs = require('fs')
+  // logs('newfile')
+  // fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
+  // fs.stat(path.join(app.getPath('appData'),'elitepilotslounge'), (err, stats) => {
+  //   if (stats.isDirectory()) {
+  //   }
+  // })
+  logs("=====LOUNGE-CLIENT=====");
+  logs("APP PACKAGING STATUS:",app.isPackaged);
   // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
   // //!   every 5 seconds
   require('./utils/processDetection')
   // require('./sockets/socketMain')
   //!
   //!
-  const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
-  const path = require('path')
-  const fs = require('fs')
   //!!!!!! Determine if the error logs file is present. If so, then erase it after each until I figure out how to date them each startup the app.
   //!!!!!!      After that, this function can be commented out.
-  // fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
-  fs.stat(path.join(app.getPath('appData'),'elitepilotslounge'), (err, stats) => {
-    if (stats.isFile()) {
-      fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
-    }
-  })
+
   const Store = require('electron-store');
   const store = new Store();
   const electronWindowIds = new Store({ name: "electronWindowIds" });
   electronWindowIds.set('currentPage','Dashboard');
   electronWindowIds.set('socketRooms',{})
   if (!electronWindowIds.get('brain_ThargoidSample')) { //socket related
-    electronWindowIds.set('brain_ThargoidSample',"brain-ThargoidSample_Thor_Controlled")
-    lastTitan = electronWindowIds.get('brain_ThargoidSample')
+    electronWindowIds.set('brain_ThargoidSample',"unknown")
   }
-  else { lastTitan = electronWindowIds.get('brain_ThargoidSample') }
   const { mainMenu,rightClickMenu } = require('./menumaker')
   nativeTheme.themeSource = 'dark'
-
-
+  
   //! Dev mode declaration
   const isNotDev = app.isPackaged
+    // Auto Updater
+  const { autoUpdater } = require('electron-updater')
 
-
-  //Auto Updater
-  let useUpdater = 1;
-  if (app.isPackaged) { useUpdater = 0 }
-  const { autoUpdater, AppUpdater } = require('electron-updater')
-  if (useUpdater) { 
-    autoUpdater.autoDownload = true
-    autoUpdater.autoInstallOnAppQuit = true
-    autoUpdater.on('error',(error)=>{
-      logs(error);
-    })
-    // autoUpdater.on('checking-for-update')
-    autoUpdater.on('update-available',(info)=>{
-      logs(info)
-    })
-    autoUpdater.on('update-not-available',(info)=>{
-      logs(info)
-    })
-    autoUpdater.on('update-downloaded',(info)=>{
-      logs(info)
-    })
-  }
-  if (useUpdater) { autoUpdater.checkForUpdates() }
   //! Begin creating the electron window
   let appStartTime = null;
- 
+
   //! Start splash screen
   let win
   let loadingScreen = null
-  logs("APP PACKAGING STATUS:",app.isPackaged)
+  
   app.on('ready', () => { createLoadingScreen(); });
   // else {
   //   app.on('ready', () => { 
@@ -100,7 +78,7 @@ try {
   const createWindow = () => {
       try {
           win = new BrowserWindow({
-              title: "Elite Pilots Lounge",
+              title: `Elite Pilots Lounge`,
               width: !isNotDev ? 1000 : 500,
               height: 800,
               webPreferences: {
@@ -129,12 +107,42 @@ try {
               event.returnValue = data;
             });
           win.loadFile(path.join(__dirname, './renderers/test/test.html'));
+          
           win.on("ready-to-show", () => {
+            win.setTitle(`Elite Pilots Lounge - ${app.getVersion()}`)
+            if (app.isPackaged) { 
+              autoUpdater.checkForUpdatesAndNotify();
+              autoUpdater.logger = require('electron-log')
+              // autoUpdater.logger.transports.file.level = 'info';
+              // autoUpdater.autoDownload = true
+              // autoUpdater.autoInstallOnAppQuit = true
+              autoUpdater.on('download-progress', (progressObj) => {
+                let log_message = "Download speed: " + progressObj.bytesPerSecond;
+                log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+                log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+                logs(`${log_message}`)
+              })
+              autoUpdater.on('error',(error)=>{
+                // logs(`-AU error: ${error}`);
+              })
+              autoUpdater.on('checking-for-update', (info)=>{
+                // logs(`-AU checking-for-update: ${info}`)
+              })
+              autoUpdater.on('update-available',(info)=>{
+                logs(`-AU update-available: ${info}`)
+                win.setTitle(`Elite Pilots Lounge - ${info}`)
+              })
+              autoUpdater.on('update-not-available',(info)=>{
+                // logs(`-AU update-not-available: ${info}`)
+              })
+              autoUpdater.on('update-downloaded',(info)=>{
+                // logs(`-AU update-downloaded: ${info}`)
+              })
+            }
               const windowPositionz = windowPosition(win,1)
               win.setPosition(windowPositionz.moveTo[0],windowPositionz.moveTo[1])
               win.setSize(windowPositionz.resizeTo[0],windowPositionz.resizeTo[1])
               win.show()
-              // win.webContents.openDevTools();
               if (!isNotDev) { win.webContents.openDevTools(); }
           })
           // const primaryDisplay = screen.getPrimaryDisplay();
@@ -189,11 +197,11 @@ try {
                       return;
                     }
                     if (stats.isFile()) {
-                      // logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
+                      logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
                       require(filePath)
                       if (files.length == index) { 
                         const loadTime = (Date.now() - appStartTime) / 1000;
-                        // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
+                        if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
                       }
                     } else if (stats.isDirectory()) {
                       logs(`Directory: ${file}`);

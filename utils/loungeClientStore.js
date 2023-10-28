@@ -210,6 +210,7 @@ const lcs = {
                 return fs.statSync(path.join(dir,b)).mtime.getTime() -
                 fs.statSync(path.join(dir,a)).mtime.getTime();
             })
+            
             return path.join(dir, sortedFiles[0]);
         }
         catch(error) {
@@ -351,7 +352,6 @@ const lcs = {
         }
     }
 }
-
 
 module.exports = lcs
 

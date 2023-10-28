@@ -296,10 +296,9 @@ try {
         function inWingStuff(timestamp,action) {
           let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
           thargoidSampling["InWing"] = compiledArray
-          const wingStatus = store.get('wingStatus')
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
-          if (!wingStatus) { store.set('wingStatus',compiledArray) } //Initialize the object in the store.
-          if (wingStatus.combinedData.wingStatus != action) { 
+          if (!store.get('wingStatus')) { store.set('wingStatus',compiledArray) } //Initialize the object in the store.
+          if (store.get('thisSampleSystem.combinedData.wingStatus') != action) { 
             if (store.get('redisFirstUpdateflag')) { 
               const client = BrowserWindow.fromId(thisWindow.win);
               client.webContents.send("from_brain-ThargoidSample", compiledArray);
@@ -418,25 +417,25 @@ try {
             }
         }
         // -------------------------- TEST CODE BELOW
-        if (receivedData.Flags1.includes('Lights On') && (windowItemsStore.get('currentPage') == thisBrain) ) {
+        // if (receivedData.Flags1.includes('Lights On') && (windowItemsStore.get('currentPage') == thisBrain) ) {
           
-          // logs("LIGHTS ON")
-          store.set('redisFirstUpdateflag',false);
-          checkSetupFlag("LIGHTS ON!!!!");
-          const indexToRemove = launchToRedis.indexOf('FSDJump');
-          if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
-          let combinedData = {}
-          let compiledArray = {
-            "event": "reset",
-            "brain": thisBrain,
-            "systemAddress": store.get('thisSampleSystem'),
-            "combinedData": combinedData, 
-            "FID": FID
-          }
+        //   // logs("LIGHTS ON")
+        //   store.set('redisFirstUpdateflag',false);
+        //   checkSetupFlag("LIGHTS ON!!!!");
+        //   const indexToRemove = launchToRedis.indexOf('FSDJump');
+        //   if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
+        //   let combinedData = {}
+        //   let compiledArray = {
+        //     "event": "reset",
+        //     "brain": thisBrain,
+        //     "systemAddress": store.get('thisSampleSystem'),
+        //     "combinedData": combinedData, 
+        //     "FID": FID
+        //   }
           
-          const response = await taskManager.brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
-          logs("RESET:".bgCyan,response)
-        }
+        //   const response = await taskManager.brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
+        //   logs("RESET:".bgCyan,response)
+        // }
         // -------------------------- TEST CODE ABOVE
       }
       if (receivedData.event == 'CollectCargo') {
