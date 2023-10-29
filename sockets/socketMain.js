@@ -1,4 +1,5 @@
 const {app} = require('electron')
+
 const {logs} = require('../utils/logConfig')
 const {watcherConsoleDisplay,errorHandler} = require('../utils/errorHandlers')
 const { Manager } = require('socket.io-client')

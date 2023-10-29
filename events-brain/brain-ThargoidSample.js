@@ -1,7 +1,7 @@
 // const { initializeEvent } = require('../utils/eventsHandler');
 
 try {
-    const {watcherConsoleDisplay,errorHandler,pageData,getCommander} = require('../utils/errorHandlers')
+    const {logF,watcherConsoleDisplay,errorHandler,pageData,getCommander} = require('../utils/errorHandlers')
     const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
     const {logs} = require('../utils/logConfig')
     const Store = require('electron-store');
@@ -18,7 +18,7 @@ try {
     const taskManager = require('../sockets/taskManager')
     const path = require('path')
     const fs = require('fs')
-    const {fetcher} = require('./brain_functions')
+    // const {fetcher} = require('./brain_functions')
     
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //List of events that require a brain to do work in the background. This brain handles the below.
@@ -26,47 +26,7 @@ try {
     //          < Brain Event
     //          ^ Socket Handler
     //          * Socket Complete
-    //todo      *^<>Loadout (Startup)
-    //todo      *^<>Commander (Startup)
-    //!!        Cargo (Startup)
-    //todo      *^<>Cargo (JSON)
-    //todo      <>Market (JSON)
-    //todo      *^<>CollectCargo (Trade)
-    //todo      *^<>EjectCargo (Trade)
-    //todo      *^<>MarketSell (Trade)
-    //todo      <>MarketBuy (Trade)
-    //todo      <>Died (Combat)
-    //todo      <>ShieldState (Combat)
-    //todo      <>Shutdown (Other Events)
-    //todo      <>RebootRepair (Other Events)
-    //todo      <>CockpitBreached (Other Events)
-    //todo      *^<>CargoTransfer (Other Events)
-    //todo      <>SupercruiseDestinationDrop (Other Events)
-    //todo      <>Music (Other Events) -> MusicTrack:"MainMenu"
-    //todo      *^<>LaunchDrone (Other Events)
-    //todo      <>ReceiveText(Other Events)
-    //todo      <>USSDrop (Other Events)
-    //todo      <>WingJoin (Other Events)
-    //todo      <>WingAdd (Other Events)
-    //todo      <>WingLeave (Other Events)
-    //todo      <>WingInvite (Other Events)
-    //todo      <>FSSSignalDiscovered (Exploration)
-    //todo      *^<>FSDJump (Travel)
-    //todo      <>FSDTarget (Travel)
-    //todo      <>StartJump (Travel)
-    //todo      *^<>Location (Travel)
-    //todo      <>SupercruiseExit (Travel)
-    //todo      <>SupercruiseEntry (Travel)
-    //todo      <>NavRouteClear (Travel)
-    //todo      <>Docked (Travel)
-    //todo      <>Undocked (Travel)
-    //todo      <>FactionKillBond (Combat)
-    //todo      <>CarrierNameChanged (Fleet Carriers)
-    //todo      <>CarrierJumpRequest (Fleet Carriers)
-    //todo      *^<>CarrierJump (Fleet Carriers) // Handled through FSDJump functionality.
-    //todo      <>CarrierJumpCancelled (Fleet Carriers)
-    //todo      <>ShipyardSwap (Station Services)
-    //todo      SearchAndRescue (Station Services)
+
     //!Functions!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     function dataHistory(fileName) {
       try {
@@ -148,9 +108,9 @@ try {
                 return !Object.values(thargoidSampling).some((item) => item.event === event);
               });
               const matching = missingEvents.length === 0;
-              logs("Missing Events:".bgRed,missingEvents,"Matching:".yellow,`${matching}`.red)
+              logs("Missing Events:".bgRed,logF(missingEvents),"Matching:".yellow,`${matching}`.red)
             }
-            else { logs("Missing Events:".bgRed,missingEvents,"Matching:".yellow,`${matching}`.green) }
+            else { logs("Missing Events:".bgRed,logF(missingEvents),"Matching:".yellow,`${matching}`.green) }
           }
           //! ERROR CHECKING
           if (matching 
@@ -158,6 +118,7 @@ try {
             && thargoidSampling.Loadout.combinedData.causticProtection >= 16
             && currentSystemState != ''
             ) { 
+              
               store.set('redisFirstUpdateflag',matching)
               taskManager.brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey())
               if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green); }
@@ -200,7 +161,7 @@ try {
       if (windowItemsStore.get('currentPage') == thisBrain) {
         const client = BrowserWindow.fromId(thisWindow.win);
         client.webContents.send("from_brain-ThargoidSample", data);
-        if (review) { logs("Review:".yellow,data,store.get('redisFirstUpdateflag')) }
+        if (review) { logs("Review:".yellow,logF(data),store.get('redisFirstUpdateflag')) }
       }
     }
     function findActiveSocketKey() {
@@ -212,7 +173,7 @@ try {
     //!BRAIN EVENT######################################################
     //!Startup Variables
     const thisBrain = 'brain-ThargoidSample'
-    const visible = 0 //! Sets watcher visibility locally. watchervisibility will still have to be enabled globally in errorHandlers
+    const visible = 1 //! Sets watcher visibility locally. watchervisibility will still have to be enabled globally in errorHandlers
     const store = new Store({ name: `${thisBrain}` })
     if (!store.get('redisFirstUpdateflag')) { store.set('redisFirstUpdateflag',false) }
     if (!store.get('masterTimestamp')) { store.set('masterTimestamp',false) }
@@ -275,12 +236,13 @@ try {
     let FSDChargeCount = 0
     let supercruiseCount = 0;
     let guifocus = 0;
+    let wingCount = 0;
     //!BRAIN EVENTs######################################################
     app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
     ipcMain.on(thisBrain, async (receivedData) => {
       if (receivedData.event == 'template') {
         // logs(colorize(receivedData, { pretty: true }))
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -290,7 +252,7 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Status') {
         function inWingStuff(timestamp,action) {
@@ -300,6 +262,7 @@ try {
           if (!store.get('wingStatus')) { store.set('wingStatus',compiledArray) } //Initialize the object in the store.
           if (store.get('thisSampleSystem.combinedData.wingStatus') != action) { 
             if (store.get('redisFirstUpdateflag')) { 
+              wingCount++
               const client = BrowserWindow.fromId(thisWindow.win);
               client.webContents.send("from_brain-ThargoidSample", compiledArray);
               taskManager.brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey())
@@ -307,8 +270,8 @@ try {
           }
           else { store.set('wingStatus',compiledArray) }
         }
-        if (receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,1) }
-        if (!receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,0) }
+        if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; logs('wing:',wingCount); }
+        if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--; logs('wing:',wingCount); }
         // logs(receivedData)
         // logs("====================================")
         //Viewing GalaxyMap
@@ -417,29 +380,27 @@ try {
             }
         }
         // -------------------------- TEST CODE BELOW
-        // if (receivedData.Flags1.includes('Lights On') && (windowItemsStore.get('currentPage') == thisBrain) ) {
-          
-        //   // logs("LIGHTS ON")
-        //   store.set('redisFirstUpdateflag',false);
-        //   checkSetupFlag("LIGHTS ON!!!!");
-        //   const indexToRemove = launchToRedis.indexOf('FSDJump');
-        //   if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
-        //   let combinedData = {}
-        //   let compiledArray = {
-        //     "event": "reset",
-        //     "brain": thisBrain,
-        //     "systemAddress": store.get('thisSampleSystem'),
-        //     "combinedData": combinedData, 
-        //     "FID": FID
-        //   }
-          
-        //   const response = await taskManager.brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
-        //   logs("RESET:".bgCyan,response)
-        // }
+        
+        if (receivedData.Flags1.includes('Lights On')) {
+          checkSetupFlag("LIGHTS ON!!!!");
+          const indexToRemove = launchToRedis.indexOf('FSDJump');
+          if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
+          let combinedData = {}
+          let compiledArray = {
+            "event": "reset",
+            "brain": thisBrain,
+            "systemAddress": store.get('thisSampleSystem'),
+            "combinedData": combinedData, 
+            "FID": FID
+          }
+          store.set('redisFirstUpdateflag',false)
+          const response = await taskManager.brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
+          logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
+        }
         // -------------------------- TEST CODE ABOVE
       }
       if (receivedData.event == 'CollectCargo') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           if (currentSystemState != "") {
             let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": receivedData, "FID": FID }
@@ -453,10 +414,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Cargo') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
           let combinedData = { "sampleCargo":[],"SampleCargoCount":0,"notSampleCargoCount":0,"notSampleCargo": [],"limpets": 0 }
           let compiledArray = {
@@ -499,11 +460,11 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Commander') {
         // logs("2".red)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
           // used to clear the variable on a soft exit to the menu.
           //JSON Files log files will always have first priority.
@@ -528,11 +489,11 @@ try {
           // }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Loadout') {
         // logs("4".red)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
           const itemSearchTable = dataHistory("itemSearchTable")
           let specificItem = null;
@@ -568,11 +529,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Location') {
-        // logs("3".red)
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
           const propCheck = [
             'DistFromStarLS',
@@ -661,8 +621,8 @@ try {
                 if (item.systemAddress == receivedData.SystemAddress) {
                   stuff["Original Population"] = item.populationOriginal
                   stuff[`LY to ${titan}`] = Object.values(combinedData.nearestTitan)[0] ? Object.values(combinedData.nearestTitan)[0] : ""
-                  // logs(colorize(stuff, { pretty: true }))
-                  logs(stuff)
+                  
+                  logs("[EDL]".red,receivedData.event,logF(stuff))
                 }
               })
             })
@@ -670,11 +630,10 @@ try {
         
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'FSDJump' || receivedData.event == 'CarrierJump') {
         try {
-          // if (store.get('redisFirstUpdateflag')) { logs(`Redis setup is not running and redis is ready to receive ${store.get('redisFirstUpdateflag')}`) }
           if (store.get('thisSampleSystem') == receivedData.SystemAddress) {
             store.set('redisFirstUpdateflag',true)
           }
@@ -767,7 +726,8 @@ try {
                   stuff["Original Population"] = item.populationOriginal
                   stuff[`LY to ${titan}`] = Object.values(combinedData.nearestTitan)[0] ? Object.values(combinedData.nearestTitan)[0] : ""
                   // logs(colorize(stuff, { pretty: true }))
-                  logs(stuff)
+                  
+                  logs("[EDL]".red,receivedData.event,logF(stuff))
                 }
               })
             })
@@ -776,7 +736,7 @@ try {
         catch(e) { logs(e) }
       }
       if (receivedData.event == 'ShipyardSwap') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
           let combinedData = {
             "ShipType": receivedData.shipType,
@@ -792,10 +752,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Market') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           // logs(receivedData)
           // const searchFor = [
@@ -837,10 +797,10 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'MarketSell') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -850,10 +810,11 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'LaunchDrone') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           if (currentSystemState != "") {
             let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": receivedData, "FID": FID }
@@ -878,7 +839,7 @@ try {
           }
         }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'Shutdown') {
         thargoidSampling = {}
@@ -896,7 +857,7 @@ try {
         }
       }
       if (receivedData.event == 'SupercruiseDestinationDrop') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -910,10 +871,10 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'StartJump') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -928,10 +889,10 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'NavRouteClear') {
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -943,12 +904,12 @@ try {
             }
           }
         catch(e) { errorHandler(e,e.name)}
-        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       else {
         eventNames.forEach(eventName =>{
           if (receivedData.event === eventName) {
-            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
             try {
               let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
               compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -958,7 +919,7 @@ try {
               }
             }
             catch(e) { errorHandler(e,e.name)}
-            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
+            if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
           }
         })
       }
@@ -970,8 +931,7 @@ try {
   })
 }
 catch (error) {
-    console.error(error);
-    // errorHandler(error,error.name)
+    errorHandler(error,error.name)
 }
 
 

@@ -898,7 +898,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   if (readyToRecieve) { 
-    console.log(data);
+    // console.log(data);
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
@@ -1001,10 +1001,12 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'CollectCargo') {
           if(isWordPresent(data.combinedData.Type,'sample')) {
             //Update alltime samples collected
-            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(data.combinedData.timestamp)
+            console.log(data.event)
             const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${FID}_samplesCollected_commanderSystem`)
+            console.log(value)
             const currentValue = parseInt(value.textContent, 10);
             const newValue = currentValue + 1;
+            console.log('nv',newValue)
             value.textContent = newValue;
             const description = `Collected: ${data.combinedData.Type_Localised}`
             descriptionContent(data,description)

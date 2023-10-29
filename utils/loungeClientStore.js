@@ -173,21 +173,21 @@ const lcs = {
         return { wing }
     },
     requestCmdr: function(details) { //From lounge-client.txt
-        let result = lcs.loungeClientStore(lcs.savedGameLocation("requestCmdr FUNCTION").loungeClientFile)
-        
-        if (watcherConsoleDisplay('requestCmdrLOGS') && details) { logs("[LCS]".green,"request commander".cyan,details)}
-        let commander = result[0].commander
         try {
-            const derp = commander.commander.length
+            const lcf = lcs.savedGameLocation("lcf").loungeClientFile
+            let result = lcs.loungeClientStore(lcf)
+            if (watcherConsoleDisplay('requestCmdrLOGS') && details) { logs("[LCS]".green,"REQUEST COMMANDER".cyan,details)}
+            let commander = result[0].commander
+            if (!result[0].commander.hasOwnProperty('commander')) { logs("[LCS]".red,"No Commander!!!".yellow); throw new Error("no commander") }
             return { commander }
         }
         catch(e) {
             if (watcherConsoleDisplay('globalLogs')) { logs("[LCS]".yellow,"Fixing Commander: lounge-client.txt".bgRed) }
-            result[0]["commander"] = lcs.reWriteCmdr(lcs.savedGameLocation("requestCmdr catch function").savedGamePath)
+            result[0]["commander"] = lcs.reWriteCmdr(lcs.savedGameLocation('requestCmdr Fix').savedGamePath)
             commander = result[0]["commander"]
             
             lcs.loungeClientStore(lcs.savedGameLocation("requestCmdr catch store function").loungeClientFile,result)
-            if (commander) { 
+            if (commander.hasOwnProperty('commander')) { 
                 // clearInterval(lcs.worldFixer.timer)
                 if (watcherConsoleDisplay('globalLogs')) { 
                     logs("[LCS]".yellow,"Commander Fixed: lounge-client.txt".bgGreen); 

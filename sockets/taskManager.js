@@ -19,7 +19,7 @@ try {
     //!############ SOCKET SERVER DIRECT EMITS ################
 
     socket.on('fromSocketServer', async (data) => { 
-        logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green,`${myTime.format(new Date())}`) 
+        logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green) 
         //Need to send the dcohSystem's data to the frontside so that it can update all the titan systems info. 
         if (data.type == 'dcohSystems') {
             const client = BrowserWindow.fromId(2);
@@ -140,23 +140,25 @@ try {
                 logs(
                     "[TM]".green,
                     "Running latestLogRead by timestamp".yellow,
-                    readEventsList.found.length,
+                    `${readEventsList.found.length}`.cyan,
                     "events",
+                    // found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
+                    // console.logs(readEvents.listItemByTimestampNames)
                     // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
                     )
                 }
             if (readEventsList.found.length >= 1) {
-                readEventsList.firstLoad.forEach(eventItem => {
+                readEventsList.firstLoad.forEach((eventItem,index) => {
                     if(searchEventList == "All" && eventItem.event != "WingInvite"  && eventItem.event != "WingAdd" && eventItem.event != "WingJoin" && eventItem.event != "WingLeave") {    
                         if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
                             // callback... Must be 1
-                            // logs(eventItem)
                             const askIgnoreFile = ignoreEvent(eventItem.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
                             if (!askIgnoreFile && eventItem != null) {
                                 initializeEvent.startEventSearch(eventItem,0)
                             }
                     }
+                    
                 })
 
                 //!!! Old code for just initializing the very last event per category...
@@ -247,11 +249,11 @@ try {
     //      then the log file will NOT be read in its entirity at application startup.
     //      Will only result in events that last get read out of the journal.
     const runState = 1; //Live 1, Dev 0
-    if (runState) { setTimeout(taskList.allEventsInCurrentLogFile,700) }
+    if (runState) {  setTimeout(taskList.allEventsInCurrentLogFile,700) }
     //! Mode
     //! Mode
 }
 catch (error) {
-    console.error("Fix Stack Error".yellow,error);
-    // logs(errorHandler(error,error))
+    // console.error("Fix Stack Error".yellow,error);
+    logs(errorHandler(error,error))
 }

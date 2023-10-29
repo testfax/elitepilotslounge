@@ -16,8 +16,8 @@ try {
             //! #### Logs
             if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
             //! #### Mutate Data
-            let result = lcs.loungeClientStore(lcs.savedGameLocation("initial pull").loungeClientFile)
-            if (result) { 
+            let result = lcs.loungeClientStore(lcs.savedGameLocation('commander-event').loungeClientFile)
+            if (!result[0].commander.hasOwnProperty('commander')) { 
                 //get path for the savedGame path for the lounge-client.txt
                 const path = result[0]["file"]
                 //read commander name 

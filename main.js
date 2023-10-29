@@ -1,3 +1,4 @@
+// require('./temp/searchtxt')
 const {logs} = require('./utils/logConfig')
 try {
   const { nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
@@ -5,22 +6,13 @@ try {
   const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
   const path = require('path')
   const fs = require('fs')
-  // logs('newfile')
-  // fs.writeFileSync(path.join(app.getPath('appData'),'elitepilotslounge','logs','main.log'), '', { flag: 'w' })
-  // fs.stat(path.join(app.getPath('appData'),'elitepilotslounge'), (err, stats) => {
-  //   if (stats.isDirectory()) {
-  //   }
-  // })
-  logs("=ELITE PILOTS LOUNGE=","isPackaged: [",app.isPackaged," ] Version: [",app.getVersion()," ]");
+
+  logs("=ELITE PILOTS LOUNGE=","isPackaged: [",JSON.stringify(app.isPackaged,null,2),"] Version: [",JSON.stringify(app.getVersion(),null,2),"]");
   // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
   // //!   every 5 seconds
   require('./utils/processDetection')
-  // require('./sockets/socketMain')
   //!
   //!
-  //!!!!!! Determine if the error logs file is present. If so, then erase it after each until I figure out how to date them each startup the app.
-  //!!!!!!      After that, this function can be commented out.
-
   const Store = require('electron-store');
   const store = new Store();
   const electronWindowIds = new Store({ name: "electronWindowIds" });
@@ -38,7 +30,7 @@ try {
   const { autoUpdater } = require('electron-updater')
 
   //! Begin creating the electron window
-  let appStartTime = null;
+ appStartTime = null;
 
   //! Start splash screen
   let win
@@ -108,6 +100,7 @@ try {
           win.loadFile(path.join(__dirname, './renderers/test/test.html'));
           
           win.on("ready-to-show", () => {
+            require('./fromRenderer')
             win.setTitle(`Elite Pilots Lounge - ${app.getVersion()}`)
             if (app.isPackaged) { 
               autoUpdater.checkForUpdatesAndNotify();
@@ -155,7 +148,9 @@ try {
           let isLoadFinished = false;
           const handleLoadFinish = () => {
             if (!isLoadFinished) {
-              isLoadFinished = true;             
+              isLoadFinished = true;      
+              const loadTime = (Date.now() - appStartTime) / 1000;
+              logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds")       
               if (loadingScreen.id != null) {
                 winids['loadingScreen'] = loadingScreen.id
                 winids['win'] = win.id
@@ -166,51 +161,16 @@ try {
                 // },2000)
                 loadingScreen.close();
                 loadingScreen = null
-                remainderLoads()
               }
               else {
                 winids['win'] = win.id
                 winids['appStatus'] = 'clean'
                 electronWindowIds.set('electronWindowIds',winids)
                 // logs("nosplash",electronWindowIds.get('electronWindowIds'))
-                remainderLoads()
               }
             }
           };
-          function remainderLoads() {
-            
-            require('./fromRenderer') // Contains all ipcRenderer event listeners that must perform a PC related action.
-            // Brains Directory: Loop through all files and load them.
-            const brainsDirectory = path.join(__dirname, 'events-brain')
-            fs.readdir(brainsDirectory, (err, files) => {
-                if (err) {
-                  console.error('Error reading directory:', err);
-                  return;
-                }
-                files.forEach((file,index) => {
-                  index++
-                  const filePath = path.join(brainsDirectory, file);
-                  fs.stat(filePath, (err, stats) => {
-                    if (err) {
-                      console.error('Error getting file stats:', err);
-                      return;
-                    }
-                    if (stats.isFile()) {
-                      logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
-                      require(filePath)
-                      if (files.length == index) { 
-                        const loadTime = (Date.now() - appStartTime) / 1000;
-                        if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
-                      }
-                    } else if (stats.isDirectory()) {
-                      logs(`Directory: ${file}`);
-                    }
-                  });
-                });
-            });
-            //
-            
-          }
+          
           const cwd = app.isPackaged ? path.join(process.cwd(),'resources','app') : process.cwd()
           win.webContents.on('did-finish-load',handleLoadFinish)
           module.exports = { win, cwd };
@@ -262,7 +222,7 @@ try {
 catch(e) {
     logs(`MAIN PROCESS ERROR.yellow,${e}`)
 }
-// require('./searchtxt')
+
 
 
 // {20:30:30GMT 880.495s} Webserver request failed: code 0, details ''

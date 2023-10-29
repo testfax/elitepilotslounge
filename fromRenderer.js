@@ -6,7 +6,6 @@ const { exec } = require('child_process') //for browser opening
 const {logs} = require('./utils/logConfig') //for browser opening
 const zlib = require('zlib')
 const base64 = require('base64-url')
-const colorize = require('json-colorizer');
 const path = require('path')
 const fs = require('fs')
 const {watcherConsoleDisplay,errorHandler,pageData} = require('./utils/errorHandlers')

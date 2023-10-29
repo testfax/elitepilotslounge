@@ -1,5 +1,5 @@
 const {pageData} = require('./utils/errorHandlers')
-const {app, Menu, BrowserWindow} = require('electron')
+const {Menu, BrowserWindow} = require('electron')
 const {logs} = require('./utils/logConfig')
 const {cwd} = require('./utils/loungeClientStore')
 const Store = require('electron-store');

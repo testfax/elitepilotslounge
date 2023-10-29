@@ -13,13 +13,13 @@ try {
             'brain-ThargoidSample'
         ]
         //! #### Logs
-        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
+        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); }
         //! #### Socket Server
         ipcMain.removeAllListeners(`event-callback-${data.event}`);
         if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
             ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
                 if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
-                    logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
+                    logs(`${data.event.toUpperCase()}-callback!`.cyan)
                 }
                 taskManager.eventDataStore(receivedData)
             })

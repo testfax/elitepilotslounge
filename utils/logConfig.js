@@ -1,5 +1,4 @@
 try {
-    const { app } = require('electron'); 
     const fs = require('fs')
     const path = require('path')
     const log = require('electron-log'); 
@@ -20,7 +19,27 @@ try {
         }
         catch(error) {
             logs("[LOGS]".red,"NO LOGS FOUND....")
+            return "unknown.log" 
         }
+    }
+    function getCommander() {
+        let contents = fs.readFileSync(path.join(logspath,latestLog()),'utf8').split("\n")
+            let cmdr = false
+            for (let index in contents) {
+                let events = contents[index]
+                if (events.length >=3) {
+                    events = events.replace(/\r/g, '');
+                    events = JSON.parse(events);
+                    if (events.event === 'Commander') {
+                        cmdr = {
+                            commander: events.Name,
+                            FID: events.FID
+                        }
+                        return cmdr
+                    }
+                }
+            }
+            return cmdr
     }
     log.initialize({ preload: true });
     // log.transports.file.file = 'session.log'; // Set a fixed filename for the log
@@ -31,29 +50,29 @@ try {
     log.transports.remote = (logData) => { 
         let result = fs.readFileSync(loungeClientFile,'utf8')
         result = JSON.parse(result)
+        let theCommander = result[0].commander
+        if (!result[0].commander.hasOwnProperty('commander')) { theCommander = getCommander(); }
         const formattedLogData = {
-            commander: result[0].commander,
-            journalLog: latestLog(),
+            commander: theCommander,
+            journalLog:  latestLog(),
             timestamp: new Date(),
             level: logData.level,
             message: logData.data,
         };
-        fetch('http://elitepilotslounge.com:3003/', {
-            method: 'POST',
-            body: JSON.stringify(formattedLogData),
-            headers: { 'Content-Type': 'application/json' },
-        });
+        if (theCommander) {
+            fetch('http://elitepilotslounge.com:3003/', {
+                method: 'POST',
+                body: JSON.stringify(formattedLogData),
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+        else { logs("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)}
     }
 
     const logsUtil = {
         logs: async (...input) => {
             let logMessage = input.join(' ');
-            if (app.isPackaged) { 
-                log.info(logMessage); 
-            }
-            else {
-                log.info(logMessage);
-            }
+            log.info(logMessage);
         }
     }
     

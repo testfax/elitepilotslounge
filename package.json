@@ -1,6 +1,6 @@
 {
   "name": "elitepilotslounge",
-  "version": "0.0.0-alpha.8",
+  "version": "0.0.0-alpha.9",
   "description": "3rd Party App",
   "main": "main.js",
   "scripts": {
@@ -18,9 +18,8 @@
     "appId": "com.testfax.elitepilotslounge",
     "productName": "Elite Pilots Lounge",
     "asar": false,
-    "win": {
-      "target": "nsis"
-    },
+    "win": { "target": "nsis" },
+    "linux": { "target": ["deb", "rpm", "AppImage", "snap", "portable"] },
     "files": [
       "**/*",
       "!**/.vscode/**",

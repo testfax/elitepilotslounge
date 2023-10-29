@@ -1,5 +1,4 @@
 try {
-  const {app} = require('electron')
   const {logs} = require('./logConfig')
   const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
   const Store = require('electron-store');
@@ -31,7 +30,8 @@ try {
     }
     
     startWatching() {
-      if (watcherConsoleDisplay("globalLogs")) { logs(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }
+      const pollingValue = this.pollingInterval
+      if (watcherConsoleDisplay("globalLogs")) { logs(`[PD] Monitoring Game Status, Interval: ${JSON.stringify(pollingValue,null,2)}ms `) }
       this.checkIsRunning();
       this.pollingTimer = setInterval(() => {
         // if (watcherConsoleDisplay("globalLogs")) { logs(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }

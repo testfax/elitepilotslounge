@@ -9,7 +9,7 @@ try {
     const thisWindow = store.get('electronWindowIds')
     Tail = require('tail').Tail;
     const path = require('path')
-    require('./processDetection')
+    // require('./processDetection')
     const fs = require('fs')
     const chokidar = require('chokidar') //Monitors File Changes in the Saved Games\ED\ folder.
     const { initializeEvent } = require('./eventsHandler')
@@ -131,6 +131,40 @@ try {
         })
         watcherPath.on('ready', function() { //! Required to know what file to look at once the game loads.
             watcherPath.on('error',error => { logs(error);})
+            loadBrains()
+            function loadBrains() {
+                // Contains all ipcRenderer event listeners that must perform a PC related action.
+                // Brains Directory: Loop through all files and load them.
+                const brainsDirectory = path.join(__dirname, '..','events-brain')
+                fs.readdir(brainsDirectory, (err, files) => {
+                    if (err) {
+                      console.error('Error reading directory:', err);
+                      return;
+                    }
+                    files.forEach((file,index) => {
+                      index++
+                      const filePath = path.join(brainsDirectory, file);
+                      fs.stat(filePath, (err, stats) => {
+                        if (err) {
+                          console.error('Error getting file stats:', err);
+                          return;
+                        }
+                        if (stats.isFile()) {
+                          logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
+                          require(filePath)
+                          if (files.length == index) { 
+                            // const loadTime = (Date.now() - appStartTime) / 1000;
+                            // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
+                          }
+                        } else if (stats.isDirectory()) {
+                          logs(`Directory: ${file}`);
+                        }
+                      });
+                    });
+                });
+                //
+                
+              }
             //APP IS LAUNCHED AND THEN CHECKS TO SEE IF IT IS RUNNING.
             //todo CALL lcs.readLogFile(savedGamePath) to input data into lcs.readLogFileData object Ex: lcs.readLogFileData.commander
             watcherPath.on("add", savedGamePath => {

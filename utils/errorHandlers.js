@@ -9,6 +9,7 @@ const getPath = require('platform-folders')
 // const {savedGameLocation} = require('./loungeClientStore')
 const errorFunc = {
     pageData: { currentPage: "" },
+    logF: (err) => { return JSON.stringify(err, null, 2) },
     getCommander: function(data) {
         let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.txt`
         loungeClientFile = path.normalize(loungeClientFile)
@@ -26,7 +27,7 @@ const errorFunc = {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const eventType = [
             // "All",
-            "BrainEvent",
+            // "BrainEvent",
             // 'BrainCallbacks',
             // "showNoEventHandler",
             // "showNoEventHandlerShowArray",
@@ -45,7 +46,7 @@ const errorFunc = {
             'gameStatus',
             'globalLogs',
             // 'globalIPC',
-            // "latestLogsRead",
+            "latestLogsRead",
             // 'LoadGame',
             // 'Loadout',
             // "Location",
@@ -56,7 +57,7 @@ const errorFunc = {
             // "MissionCompleted",
             // "Materials",
             // "Music",
-            // "requestCmdrLOGS",
+            "requestCmdrLOGS",
             // "ReceiveText",
             // "Synthesis",
             // "savedGameLocationLOGS",
@@ -89,6 +90,7 @@ const errorFunc = {
     },
     errorHandler: function(error,origin,extra) {
         if (!app.isPackaged) {
+            console.log(error);
             logs(error)
             // if (origin == "ExperimentalWarning") return
             // let errorGenReport = {}

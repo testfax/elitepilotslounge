@@ -5,7 +5,6 @@ const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
 const path = require('path')
 const fs = require('fs')
 const {eventJSON} = require('./loungeClientStore')
-const colorize = require('json-colorizer')
 try  {
     
     let eventsJSON = JSON.parse(eventJSON())
@@ -20,7 +19,6 @@ try  {
             const handler = require(modulePath);
            
             if (returnable) { //! RETURNS DATA FROM EVENT CALLED
-                
                 if (watcherConsoleDisplay(eventName)) { logs("2.3 RETURNABLE -> ".bgMagenta,returnable) }
                 return handler(eventData); 
             }
@@ -66,15 +64,14 @@ try  {
         // Sort the array by category
         failEvents.sort((a, b) => a.category.localeCompare(b.category));
         if (watcherConsoleDisplay("showNoEventHandler")) { logs("2.7 ADDED NON-EXISTANT HANDLER TO ARRAY -> ".bgRed,`\n{`,`${category}`.red,`:`,`${eventName}`.yellow,`}`) }
-        if (watcherConsoleDisplay("showNoEventHandlerShowArray")) { logs(colorize(failEvents, { pretty: true }))  }
-        // logs(colorize(failEvents, {STRING_KEY: 'magenta', STRING_VALUE: 'yellow'})); //Array only stays alive for the lifetime of the App.
+        if (watcherConsoleDisplay("showNoEventHandlerShowArray")) { logs(failEvents) }
     }
     const initializeEvent = { //! ONLY FOR "*.log" FILES.        
-        startEventSearch: (JSONevent,returnable,eventMod) => {
-            
+        startEventSearch: (JSONevent,returnable,eventMod) => {            
             let SpecifyEvent = JSONevent.event
             if (eventMod != undefined) { SpecifyEvent = eventMod }; 
             const category = getCategoryFromEvent(SpecifyEvent)
+            
             //todo Need to make big alert if "EVENT" does not exist... Probably should bring it to the front side and make a form that posts to discord informing us.
             if (category == null) { 
                 logs("2.6 NO EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow);
