@@ -10,7 +10,8 @@
 
 # Setup:
 - Download the latest release. The application will notify you of future updates.
-- - Approximately 100mb depending upon release
+- - Approximately 160mb depending upon release
+- - Linux distributions can be requested.
 
 # Features
 - Materials
@@ -34,3 +35,6 @@
 - App Commander Info
 - - "lounge-client.txt" Contains window positioning, commander information, and wing related information.
 - - C:\Users\yourUserName\Saved Games\Frontier Developments\Elite Dangerous
+
+# Discord
+- https://discord.gg/4gFD8mrHk
