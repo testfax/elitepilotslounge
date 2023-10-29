@@ -35,3 +35,6 @@
 - App Commander Info
 - - "lounge-client.txt" Contains window positioning, commander information, and wing related information.
 - - C:\Users\yourUserName\Saved Games\Frontier Developments\Elite Dangerous
+
+# Discord
+- https://discord.gg/4gFD8mrHk
