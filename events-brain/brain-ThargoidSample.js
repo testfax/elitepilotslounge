@@ -176,7 +176,7 @@ try {
     //!BRAIN EVENT######################################################
     //!Startup Variables
     const thisBrain = 'brain-ThargoidSample'
-    const visible = 1 //! Sets watcher visibility locally. watchervisibility will still have to be enabled globally in errorHandlers
+    const visible = 0 //! Sets watcher visibility locally. watchervisibility will still have to be enabled globally in errorHandlers
     const store = new Store({ name: `${thisBrain}` })
     if (!store.get('redisFirstUpdateflag')) { store.set('redisFirstUpdateflag',false) }
     if (!store.get('masterTimestamp')) { store.set('masterTimestamp',false) }
