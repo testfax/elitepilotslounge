@@ -27,7 +27,7 @@ const errorFunc = {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const eventType = [
             // "All",
-            "BrainEvent",
+            // "BrainEvent",
             // 'BrainCallbacks',
             // "showNoEventHandler",
             // "showNoEventHandlerShowArray",
@@ -90,7 +90,7 @@ const errorFunc = {
     },
     errorHandler: function(error,origin,extra) {
         if (!app.isPackaged) {
-            console.log(error);
+            console.log(error,origin,extra);
             logs(error)
             // if (origin == "ExperimentalWarning") return
             // let errorGenReport = {}

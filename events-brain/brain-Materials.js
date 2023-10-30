@@ -9,7 +9,6 @@ try {
     // client.webContents.send('MaterialCollected', data);
     const lcs = require('../utils/loungeClientStore')
     const socketEventManager = require('../sockets/taskManager')
-    const {Materials} = require('../sockets/tasks/startup')
     const path = require('path')
     const fs = require('fs')
     const {fetcher} = require('./brain_functions')

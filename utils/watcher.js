@@ -129,40 +129,7 @@ try {
                 `${savedGamePath}/edmc-journal-lock.txt`
             ],
         })
-        loadBrains()
-            function loadBrains() {
-                // Contains all ipcRenderer event listeners that must perform a PC related action.
-                // Brains Directory: Loop through all files and load them.
-                const brainsDirectory = path.join(__dirname, '..','events-brain')
-                fs.readdir(brainsDirectory, (err, files) => {
-                    if (err) {
-                      console.error('Error reading directory:', err);
-                      return;
-                    }
-                    files.forEach((file,index) => {
-                      index++
-                      const filePath = path.join(brainsDirectory, file);
-                      fs.stat(filePath, (err, stats) => {
-                        if (err) {
-                          console.error('Error getting file stats:', err);
-                          return;
-                        }
-                        if (stats.isFile()) {
-                          logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
-                          require(filePath)
-                          if (files.length == index) { 
-                            // const loadTime = (Date.now() - appStartTime) / 1000;
-                            // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
-                          }
-                        } else if (stats.isDirectory()) {
-                          logs(`Directory: ${file}`);
-                        }
-                      });
-                    });
-                });
-                //
-                
-              }
+        
         watcherPath.on('ready', function() { //! Required to know what file to look at once the game loads.
             watcherPath.on('error',error => { logs(error);})
             

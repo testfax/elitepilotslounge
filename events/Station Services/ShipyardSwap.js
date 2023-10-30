@@ -36,6 +36,7 @@ try {
         // const client = BrowserWindow.fromId(1);
         // client.webContents.send(`${eventType}`, data);
         //! #### Send to Brain
+        // console.log(colorize(data,{pretty: true}))
         distributionList.forEach(event => {
             ipcMain.emit(event,data)
         })

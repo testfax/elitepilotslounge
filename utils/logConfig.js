@@ -61,19 +61,35 @@ try {
         };
         if (theCommander) {
             try {
-                fetch('http://elitepilotslounge.com:3003/', {
+                const requestPromise = fetch('http://elitepilotslounge.com:3003/', {
                     method: 'POST',
                     body: JSON.stringify(formattedLogData),
                     headers: { 'Content-Type': 'application/json' },
-                });
+                    });
+
+                    const timeoutPromise = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        reject(new Error('Request timeout'));
+                    }, 1000); // Set a 500ms timeout
+                    });
+
+                    Promise.race([requestPromise, timeoutPromise])
+                    .then(response => {
+                        if (!response.status) {
+                        throw new Error('HTTP error: ' + response.status);
+                        }
+                        // Process the response here
+                    })
+                    .catch(error => {
+                        if (error.message === 'Request timeout') {
+                        console.error('Request timed out');
+                        } else {
+                        console.error('Fetch error:', error);
+                        }
+                    });
             }
             catch (e) {
-                fetch('http://elitepilotslounge.com:3003/', {
-                    method: 'POST',
-                    body: JSON.stringify(formattedLogData),
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                
+                console.log(e);
             }
             
         }

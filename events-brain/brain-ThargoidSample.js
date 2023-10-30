@@ -274,8 +274,8 @@ try {
           }
           else { store.set('wingStatus',compiledArray) }
         }
-        if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; logs('wing:',wingCount); }
-        if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--; logs('wing:',wingCount); }
+        if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; }
+        if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--; }
         // logs(receivedData)
         // logs("====================================")
         //Viewing GalaxyMap

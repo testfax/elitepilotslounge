@@ -1003,19 +1003,46 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         if (sampleOLRating > 0) { ol.textContent = formattedNumber_sampleOLRating }
       }
       if (data.event == 'CollectCargo') {
-          if(isWordPresent(data.combinedData.Type,'sample')) {try {
-            //Update alltime samples collected
-            console.log(data.event)
-            const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesCollected_commanderSystem`)
-            const currentValue = parseInt(value.textContent, 10);
-            const newValue = currentValue + 1;
-            value.textContent = newValue;
-            const description = `Collected: ${data.combinedData.Type_Localised}`
-            descriptionContent(data,description)
-          }
-          catch (e) {
-            console.log(e)
-          }
+          if(isWordPresent(data.combinedData.Type,'sample')) {
+            try {
+              //Update alltime samples collected
+              const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesCollected_commanderSystem`)
+              const currentValue = parseInt(value.textContent, 10);
+              const newValue = currentValue + 1;
+              value.textContent = newValue;
+              const description = `Collected: ${data.combinedData.Type_Localised}`
+              descriptionContent(data,description)
+
+              //CAUSTIC OVERLOAD
+              const cp = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_causticProtection_commanderSystem`)
+              const cp_val = parseInt(cp.textContent,10)
+              const scc = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesInCargo_commanderSystem`)
+              const scc_val = parseInt(scc.textContent,10)
+              const sampleOLRating = scc_val >= cp_val ? ((scc_val - cp_val) / cp_val) : 0
+              const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
+              if (scc_val >= cp_val) {
+                document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`).textContent = formattedNumber_sampleOLRating + "OL"
+              }
+              else {
+                document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`).textContent = ""
+              }
+
+              //SAMPLE RATING
+              const sampleRatingDom = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_sampleRating_commanderSystem`)
+              const rll = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_launchResearchLimpet_commanderSystem`)
+              const rll_val = parseInt(rll.textContent,10)
+              const sampCol = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesCollected_commanderSystem`)
+              const sampCol_val = parseInt(sampCol.textContent,10)
+              let sampleRating = null
+              let sampleRating_view = null;
+              if (sampCol_val == 0 || rll_val == 0) { sampleRating = 0; sampleRating_view = 0 }
+              else { sampleRating = rll_val / sampCol_val; sampleRating_view = 1}
+              currentcolorpercentage = progressBar(sampleRating)
+              sampleRatingDom.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
+              const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+              if (sampleRating_view) { sampleRatingDom.textContent = `${formattedNumber2} ` }
+            }
+            catch (e) { console.log(e) }
           }
           else {
             const description = `Collected: ${data.combinedData.Type_Localised}`
@@ -1161,7 +1188,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
     //todo if parent element is hidden, alive it, use function in functions.js
     const FID = Object.keys(commanderData)[0]
     const commander = Object.values(commanderData)[0]
-    
+    console.log(commander)
     const TR1 = document.createElement('tr')
     container.insertAdjacentElement('afterend',TR1)
     TR1.setAttribute('class',`font-BLOCKY`)
@@ -1224,11 +1251,11 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
     TR1.appendChild(TH4)
     TH4.setAttribute('class','w3-center aligned-element')
         const rll = commander.limpetsLaunched.Research
-        const sac = commander.samplesCollected 
+        const sampCol = commander.samplesCollected 
         let sampleRating = null
         let sampleRating_view = null;
-        if (sac == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
-        else { sampleRating = sac / rll; sampleRating_view = 1}
+        if (sampCol == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
+        else { sampleRating = rll / sampCol; sampleRating_view = 1}
         currentcolorpercentage = progressBar(sampleRating)
         let distance = sampleRating
         if (distance === 1) {
@@ -1253,7 +1280,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
 
     const TH5 = document.createElement('th')
     TR1.appendChild(TH5)
-    TH5.setAttribute('class',`w3-text-brightgreen font-BLOCKY aligned-element`)
+    TH5.setAttribute('class',`w3-text-brightgreen font-BLOCKY aligned-element fitwidth`)
 
         const SPAN6 = document.createElement('span')
         TH5.appendChild(SPAN6)
@@ -1269,7 +1296,8 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
         const scc = commander.cargo.SampleCargoCount
         const sampleOLRating = scc >= cp ? ((scc - cp) / cp) : 0
         const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-        if (sampleOLRating > 0) { SPAN7.innerText = formattedNumber_sampleOLRating }
+        if (sampleOLRating > 0) { SPAN7.innerText = formattedNumber_sampleOLRating + "OL"}
+        else { SPAN7.innerText = `` }
     
     const TH6 = document.createElement('th')
     TR1.appendChild(TH6)
@@ -1310,7 +1338,8 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       TH9.appendChild(SPAN11)
       SPAN11.setAttribute('id',`${systemAddress}_${FID}_soldToCarrier_commanderSystem`)
       SPAN11.setAttribute('class',`w3-text-orange font-BLOCKY `)
-      SPAN11.innerText = `${commander.soldToCarrier + commander.soldToRMS}`
+      const addedSamples = (commander.soldToCarrier + commander.soldToRMS)
+      SPAN11.innerText = `${addedSamples}`
 
     const TH10 = document.createElement('th')
     TR1.appendChild(TH10)
