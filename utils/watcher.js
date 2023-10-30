@@ -129,9 +129,7 @@ try {
                 `${savedGamePath}/edmc-journal-lock.txt`
             ],
         })
-        watcherPath.on('ready', function() { //! Required to know what file to look at once the game loads.
-            watcherPath.on('error',error => { logs(error);})
-            loadBrains()
+        loadBrains()
             function loadBrains() {
                 // Contains all ipcRenderer event listeners that must perform a PC related action.
                 // Brains Directory: Loop through all files and load them.
@@ -165,6 +163,9 @@ try {
                 //
                 
               }
+        watcherPath.on('ready', function() { //! Required to know what file to look at once the game loads.
+            watcherPath.on('error',error => { logs(error);})
+            
             //APP IS LAUNCHED AND THEN CHECKS TO SEE IF IT IS RUNNING.
             //todo CALL lcs.readLogFile(savedGamePath) to input data into lcs.readLogFileData object Ex: lcs.readLogFileData.commander
             watcherPath.on("add", savedGamePath => {

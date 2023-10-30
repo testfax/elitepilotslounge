@@ -60,11 +60,22 @@ try {
             message: logData.data,
         };
         if (theCommander) {
-            fetch('http://elitepilotslounge.com:3003/', {
-                method: 'POST',
-                body: JSON.stringify(formattedLogData),
-                headers: { 'Content-Type': 'application/json' },
-            });
+            try {
+                fetch('http://elitepilotslounge.com:3003/', {
+                    method: 'POST',
+                    body: JSON.stringify(formattedLogData),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
+            catch (e) {
+                fetch('http://elitepilotslounge.com:3003/', {
+                    method: 'POST',
+                    body: JSON.stringify(formattedLogData),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                
+            }
+            
         }
         else { logs("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)}
     }

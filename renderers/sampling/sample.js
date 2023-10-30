@@ -872,7 +872,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   const TH9 = document.createElement('th')
   TR1.appendChild(TH9)
   TH9.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH9.innerText = `To Carrier`
+  TH9.innerText = `To Carrier/RMS`
 
   const TH10 = document.createElement('th')
   TR1.appendChild(TH10)
@@ -898,7 +898,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   if (readyToRecieve) { 
-    // console.log(data);
+    console.log(data);
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
@@ -973,6 +973,10 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           descriptionContent(data,description)
         }
       }
+      if (data.event == 'Location') { 
+        const description = `Lost In Space: ${data.systemAddress}`
+        descriptionContent(data,description)
+      }
       if (data.event == 'FSDJump') {
         const description = `Jumped: ${data.combinedData.StarSystem}`
         descriptionContent(data,description)
@@ -999,17 +1003,19 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         if (sampleOLRating > 0) { ol.textContent = formattedNumber_sampleOLRating }
       }
       if (data.event == 'CollectCargo') {
-          if(isWordPresent(data.combinedData.Type,'sample')) {
+          if(isWordPresent(data.combinedData.Type,'sample')) {try {
             //Update alltime samples collected
             console.log(data.event)
-            const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${FID}_samplesCollected_commanderSystem`)
-            console.log(value)
+            const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesCollected_commanderSystem`)
             const currentValue = parseInt(value.textContent, 10);
             const newValue = currentValue + 1;
-            console.log('nv',newValue)
             value.textContent = newValue;
             const description = `Collected: ${data.combinedData.Type_Localised}`
             descriptionContent(data,description)
+          }
+          catch (e) {
+            console.log(e)
+          }
           }
           else {
             const description = `Collected: ${data.combinedData.Type_Localised}`
@@ -1026,8 +1032,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         const description = `Ejected: ${data.combinedData.Count} ${data.combinedData.Type_Localised}`
         descriptionContent(data,description)
       }
-      if (data.event == 'MarketSell') {
-        const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${FID}_soldToCarrier_commanderSystem`)
+      if (data.event == 'MarketSell' || data.event == 'CargoTransfer') {
+        const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_soldToCarrier_commanderSystem`)
         const currentValue = parseInt(value.textContent, 10);
         const newValue = currentValue + 1;
         value.textContent = newValue;
@@ -1304,7 +1310,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       TH9.appendChild(SPAN11)
       SPAN11.setAttribute('id',`${systemAddress}_${FID}_soldToCarrier_commanderSystem`)
       SPAN11.setAttribute('class',`w3-text-orange font-BLOCKY `)
-      SPAN11.innerText = `${commander.soldToCarrier}`
+      SPAN11.innerText = `${commander.soldToCarrier + commander.soldToRMS}`
 
     const TH10 = document.createElement('th')
     TR1.appendChild(TH10)

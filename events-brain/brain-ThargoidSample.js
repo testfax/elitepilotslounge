@@ -18,6 +18,7 @@ try {
     const taskManager = require('../sockets/taskManager')
     const path = require('path')
     const fs = require('fs')
+    const colorize = require('json-colorizer')
     // const {fetcher} = require('./brain_functions')
     
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -157,11 +158,13 @@ try {
       }
     }
     function blastToUI(data,review) { 
-      review = false
+      review = true
       if (windowItemsStore.get('currentPage') == thisBrain) {
         const client = BrowserWindow.fromId(thisWindow.win);
         client.webContents.send("from_brain-ThargoidSample", data);
-        if (review) { logs("Review:".yellow,logF(data),store.get('redisFirstUpdateflag')) }
+        // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
+        if (review) { console.log("Review:".yellow,colorize(data,{pretty: true}),store.get('redisFirstUpdateflag')) }
+        // if (review) { logs("Review:".yellow,logF(data),store.get('redisFirstUpdateflag')) }
       }
     }
     function findActiveSocketKey() {
@@ -179,13 +182,14 @@ try {
     if (!store.get('masterTimestamp')) { store.set('masterTimestamp',false) }
     if (!store.get('systemAddress')) { store.set('systemAddress',false) }
     if (!store.get('activeStarSystem')) { store.set('activeStarSystem',false) }
+    if (!store.get('currentCarrierMarket')) { store.set('currentCarrierMarket',false) }
     let thargoidSampling = {}
     //!                   List all events that will be looked for by this brain.
     const eventNames = [
       "Fsd Charging",
       "CollectCargo",
       "EjectCargo",
-      "MarketSell",
+      // "MarketSell",
       "MarketBuy",
       "Shutdown",
       // "LaunchDrone",
@@ -193,11 +197,11 @@ try {
       "FSDTarget",
       // "NavRouteClear",
       "FSSSignalDiscovered",
-      "Docked",
+      // "Docked",
       "DockingRequested",
       "DockingGranted",
       "DockingCancelled",
-      "Undocked",
+      // "Undocked",
       "FactionKillBond",
       "CarrierJumpRequest",
       "CarrierJump",
@@ -220,6 +224,7 @@ try {
       "HeatWarning",
       "BuyDrones",
       "SystemsShutdown",
+      // "CargoTransfer",
     ]
     //!                   Events that must be present in the store for thargoid sample to fire to redis.
     let launchToRedis = [
@@ -241,7 +246,6 @@ try {
     app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
     ipcMain.on(thisBrain, async (receivedData) => {
       if (receivedData.event == 'template') {
-        // logs(colorize(receivedData, { pretty: true }))
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
@@ -419,6 +423,7 @@ try {
       if (receivedData.event == 'Cargo') {
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
+          store.set('masterTimestamp',receivedData.timestamp)
           let combinedData = { "sampleCargo":[],"SampleCargoCount":0,"notSampleCargoCount":0,"notSampleCargo": [],"limpets": 0 }
           let compiledArray = {
             "event": receivedData.event,
@@ -480,7 +485,7 @@ try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'), "combinedData": receivedData, "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           // if (store.get('redisFirstUpdateflag')) { ipcMain.emit(`event-callback-${receivedData.event}`,compiledArray) }
-          thargoidSampling["Cargo"] = currentCargo
+          thargoidSampling["Cargo"] = store.get('cargo')
           thargoidSampling[receivedData.event] = compiledArray
 
           // if (store.get('redisFirstUpdateflag')) { 
@@ -531,9 +536,46 @@ try {
         catch(e) { errorHandler(e,e.name)}
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
+      if (receivedData.event == 'Docked') {
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+        try {
+          let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          if (receivedData.StationType == 'FleetCarrier') { 
+            store.set('currentCarrierMarket',receivedData.MarketID)
+            compiledArray.combinedData["stationType"] = receivedData.StationType
+          }
+          compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+            if (store.get('redisFirstUpdateflag')) { 
+              blastToUI(compiledArray)
+              taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+            }
+          }
+        catch(e) { errorHandler(e,e.name)}
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+      }
+      if (receivedData.event == 'Unocked') {
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+        try {
+          if (receivedData.StationType == 'FleetCarrier') { 
+            store.set('currentCarrierMarket',false)
+          }
+          else {
+            thargoidSampling['stationType'] = false
+          }
+          let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+            if (store.get('redisFirstUpdateflag')) { 
+              blastToUI(compiledArray)
+              taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+            }
+          }
+        catch(e) { errorHandler(e,e.name)}
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+      }
       if (receivedData.event == 'Location') {
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try{
+          
           const propCheck = [
             'DistFromStarLS',
             'Docked',
@@ -554,6 +596,10 @@ try {
           currentSystemState = "";
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": receivedData.SystemAddress, "combinedData":combinedData, "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+          if (receivedData.Docked && receivedData.StationType == 'FleetCarrier') { 
+            store.set('currentCarrierMarket',receivedData.MarketID)
+            compiledArray.combinedData["stationType"] = receivedData.StationType
+          }
           propCheck.forEach(ele => {
             if (receivedData.hasOwnProperty(ele)) {
               if (ele == "ThargoidWar") {
@@ -564,7 +610,6 @@ try {
               else { combinedData[ele] = receivedData[ele] }
             }
           })
-          // logs(colorize(compiledArray, { pretty: true }))
           let nearestTitanToCmdr = distances(combinedData.StarPos,'titanLocation')
           const [titan,ly] = Object.entries(nearestTitanToCmdr)[0]
           nearestTitanToCmdr = {[titan]:ly}
@@ -580,9 +625,11 @@ try {
           }
           const response = await taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           const broadcastability = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
-          const timestampExpiry = new Date(receivedData.timestamp) - new Date(store.get('masterTimestamp'))
-          const timestampMaxAge = 20 * 60 * 1000
-          if (broadcastability[0] && timestampExpiry <= timestampMaxAge) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
+          const now = new Date();
+          const timeDifference = new Date(now.toISOString()) - new Date(store.get('masterTimestamp'))
+          const timestampMaxAge = 2 * 60 * 60 * 1000
+          if (broadcastability[0] && timeDifference >= timestampMaxAge) { logs("Previous Sampling System and greater than 2 hours:",broadcastability[0] && timeDifference <= timestampMaxAge); store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
+          else {store.set('redisFirstUpdateflag',false);}
           
           //! For Console display:
           //! For Console display:
@@ -634,6 +681,7 @@ try {
       }
       if (receivedData.event == 'FSDJump' || receivedData.event == 'CarrierJump') {
         try {
+          supercruiseCount = 0;
           if (store.get('thisSampleSystem') == receivedData.SystemAddress) {
             store.set('redisFirstUpdateflag',true)
           }
@@ -799,12 +847,46 @@ try {
         catch(e) { errorHandler(e,e.name)}
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
+      if (receivedData.event == 'CargoTransfer') {
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+        try {
+          let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+          // console.log(colorize(compiledArray,{pretty: true}))
+          if (store.get('currentCarrierMarket') && receivedData.MarketID == store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount > 0) { 
+            // Selling to a Fleet Carrier
+            compiledArray.combinedData["stationType"] = 'Fleet Carrier'
+            blastToUI(compiledArray)
+            taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+          }
+          if (!store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount >= 0) {
+            // Selling to other than Fleet Carrier (Very likely a rescue megaship)
+            compiledArray.combinedData["stationType"] = 'Not Fleet Carrier'
+            compiledArray.combinedData["event"] = 'MarketSellNotFC'
+            compiledArray["event"] = 'MarketSellNotFC'
+            blastToUI(compiledArray)
+            taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+          }
+        }
+        catch(e) { errorHandler(e,e.name)}
+        if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+      }
       if (receivedData.event == 'MarketSell') {
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
-          if (store.get('redisFirstUpdateflag')) { 
+          // console.log(colorize(compiledArray,{pretty: true}))
+          if (store.get('currentCarrierMarket') && thargoidSampling.stationType == 'Fleet Carrier' && receivedData.MarketID == store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount > 0) { 
+            // Selling to a Fleet Carrier
+            blastToUI(compiledArray)
+            taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+          }
+          if (!store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount >= 0) {
+            // Selling to other than Fleet Carrier (Very likely a rescue megaship)
+            compiledArray.combinedData["stationType"] = 'Not Fleet Carrier'
+            compiledArray.combinedData["event"] = 'MarketSellNotFC'
+            compiledArray["event"] = 'MarketSellNotFC'
             blastToUI(compiledArray)
             taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }

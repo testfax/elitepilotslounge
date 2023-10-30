@@ -27,7 +27,7 @@ const errorFunc = {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const eventType = [
             // "All",
-            // "BrainEvent",
+            "BrainEvent",
             // 'BrainCallbacks',
             // "showNoEventHandler",
             // "showNoEventHandlerShowArray",

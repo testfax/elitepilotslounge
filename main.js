@@ -30,7 +30,7 @@ try {
   const { autoUpdater } = require('electron-updater')
 
   //! Begin creating the electron window
- appStartTime = null;
+ let appStartTime = null;
 
   //! Start splash screen
   let win

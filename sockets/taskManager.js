@@ -84,6 +84,7 @@ try {
                     const timerID = uuid.v4().slice(-5); 
                     if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
                     data = {event,...data,"titanSocket":titanSocket }
+                    // console.log(data)
                     socket.emit('eventTransmit',data, async (response) => { resolve(response) });
                 }
                 catch(error) { errorHandler(error,error.name); reject(error) }

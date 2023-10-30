@@ -49,14 +49,14 @@ const links = {
         findActiveSocketKey()
     }, 
     sampling: async function() {
-        // const response = await socket_joinRoom('brain-ThargoidSample')
-        // if (response) { 
+        const response = await socket_joinRoom('brain-ThargoidSample')
+        if (response) { 
             BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/sampling/sample.html')}`)
             pageData.currentPage = "brain-ThargoidSample"
             store.set('currentPage',pageData.currentPage)
             BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
-        //  }
-        //  else { BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
+         }
+         else { BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
     },
     logs: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'logs/logs.html')}`)
