@@ -11,7 +11,7 @@
 # Setup:
 - Download the latest release. The application will notify you of future updates.
 - - Approximately 160mb depending upon release
-- - Linux distributions can be requested.
+- - Linux distributions can be requested onceI figure it out :D
 
 # Features
 - Materials
