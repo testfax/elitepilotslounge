@@ -29,7 +29,7 @@
 - - Primary storage for file information regarding journal events. Helps retain real time data in one spot broken down into each Event.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge
 - Error Logs
-- - Error logging is hard coded to remotely report issues during the alpha testing phase.
+- - Error logging is hard coded to remotely report issues during the alpha testing phase only!
 - - Error logging, should you find an error, it will be found in "main.log" in the logs folder.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
 - App Commander Info
