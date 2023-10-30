@@ -158,13 +158,13 @@ try {
       }
     }
     function blastToUI(data,review) { 
-      review = true
+      review = false
       if (windowItemsStore.get('currentPage') == thisBrain) {
         const client = BrowserWindow.fromId(thisWindow.win);
         client.webContents.send("from_brain-ThargoidSample", data);
         // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
-        if (review) { console.log("Review:".yellow,colorize(data,{pretty: true}),store.get('redisFirstUpdateflag')) }
-        // if (review) { logs("Review:".yellow,logF(data),store.get('redisFirstUpdateflag')) }
+        // if (review) { console.log("Review:".yellow,colorize(data,{pretty: true}),store.get('redisFirstUpdateflag')) }
+        if (review) { logs("Review:".yellow,logF(data),store.get('redisFirstUpdateflag')) }
       }
     }
     function findActiveSocketKey() {
