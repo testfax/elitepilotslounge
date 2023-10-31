@@ -10,7 +10,11 @@ const fs = require('fs')
 function findActiveSocketKey() {
     const rooms = store.get('socketRooms')
     const entry = Object.entries(rooms).find(([key, value]) => value === true);
-    if (entry) { socket_leaveRoom(entry[0]) } 
+    if (entry) { 
+        const array = entry[0].split("_")
+        const roomObj = {brain:array[0],name:array[1],state:array[2]}
+        socket_leaveRoom(roomObj)
+     }
 }
 const links = {
     dashboard: async function() {
@@ -49,14 +53,15 @@ const links = {
         findActiveSocketKey()
     }, 
     sampling: async function() {
-        const response = await socket_joinRoom('brain-ThargoidSample')
-        if (response) { 
+        // const response = await socket_joinRoom('brain-ThargoidSample')
+        // console.log(response)
+        // if (response) { 
             BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/sampling/sample.html')}`)
             pageData.currentPage = "brain-ThargoidSample"
             store.set('currentPage',pageData.currentPage)
             BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
-         }
-         else { BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
+        //  }
+        //  else { BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
     },
     logs: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'logs/logs.html')}`)

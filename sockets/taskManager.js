@@ -1,6 +1,6 @@
 try {
     const {logs} = require('../utils/logConfig')
-    const {watcherConsoleDisplay,errorHandler} = require('../utils/errorHandlers')
+    const {watcherConsoleDisplay,errorHandler,logF} = require('../utils/errorHandlers')
     const { io, Manager } = require('socket.io-client')
     const { app, BrowserWindow } = require('electron');
     const { socket } = require('./socketMain')
@@ -44,6 +44,7 @@ try {
         //! Transmits all events that the client receives to the server as long as Task Manager is being called from the "EVENT" js file.
         // This is the catch all...
         socket_joinRoom: async function(data) {
+            logs("SOCKETJOIN".yellow,logF(data))
             const titanState = `${data.brain}_${data.name}_${data.state}`
             return new Promise(async (resolve,reject) => {
                 try { socket.emit('joinRoom',titanState, async (response) => { 
@@ -57,6 +58,7 @@ try {
             })
         },
         socket_leaveRoom: async function(data) {
+            logs("SOCKETLEAVE".yellow,logF(data))
             const titanState = `${data.brain}_${data.name}_${data.state}`
             return new Promise(async (resolve,reject) => {
                 try { socket.emit('leaveRoom',titanState, async (response) => { 

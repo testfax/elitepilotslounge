@@ -35,7 +35,7 @@ try {
             'brain-ThargoidSample'
         ]
         //! #### Logs
-        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
+        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(data) }
        
 
         //! ### Transpose data
@@ -49,7 +49,8 @@ try {
             Flags1: modStatus.Flags1,
             Flags2: modStatus.Flags2
         }
-        if (watcherConsoleDisplay(data.event)) { logs(colorize(gimmeFlags, { pretty: true }))  }
+        // if (watcherConsoleDisplay(data.event)) { logs(colorize(gimmeFlags, { pretty: true }))  }
+        if (watcherConsoleDisplay(data.event)) { logs(gimmeFlags)  }
         const combinedStatus = {...modStatus,...data}
         // socketEventManager.Status(modStatus);
          //! #### Socket Server
@@ -80,7 +81,7 @@ try {
         }
         let socketRoomStatus = lcs.wingData(roomCache,1) //Second Parameter is ReadOnly On/Off, if Off, saves data to lounge-client.txt
         if (socketRoomStatus.length) { 
-            logs("yep")
+            logs("In Wing Socket")
             //todo IF commander is in a socket(room), then send to room.
         }
 

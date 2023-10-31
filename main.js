@@ -11,6 +11,8 @@ function main() {
     
     const electronWindowIds = new Store({ name: "electronWindowIds" });
     electronWindowIds.set('currentPage','Dashboard');
+    electronWindowIds.set('appVersion',app.getVersion());
+    electronWindowIds.set('specifyDev',0);
     electronWindowIds.set('socketRooms',{})
     if (!electronWindowIds.get('electronWindowIds')) {
       electronWindowIds.set('electronWindowIds',{
@@ -183,8 +185,8 @@ function main() {
               require('./fromRenderer')
               win.setTitle(`Elite Pilots Lounge - ${app.getVersion()}`)
               if (app.isPackaged) { 
-                autoUpdater.checkForUpdatesAndNotify();
                 autoUpdater.logger = require('electron-log')
+                autoUpdater.checkForUpdatesAndNotify();
                 // autoUpdater.logger.transports.file.level = 'info';
                 // autoUpdater.autoDownload = true
                 // autoUpdater.autoInstallOnAppQuit = true
@@ -202,7 +204,7 @@ function main() {
                 })
                 autoUpdater.on('update-available',(info)=>{
                   logs(`-AU update-available: ${info}`)
-                  win.setTitle(`Elite Pilots Lounge - ${info}`)
+                  win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(info)}`)
                 })
                 autoUpdater.on('update-not-available',(info)=>{
                   // logs(`-AU update-not-available: ${info}`)

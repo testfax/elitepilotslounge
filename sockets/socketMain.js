@@ -1,4 +1,4 @@
-const {app} = require('electron')
+const {app, BrowserWindow} = require('electron')
 
 const {logs} = require('../utils/logConfig')
 const {watcherConsoleDisplay,errorHandler} = require('../utils/errorHandlers')
@@ -86,10 +86,14 @@ try {
             }
         }
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Socket ID: ",`${socket.id}`.green) }
-        if (store.get('currentPage') == 'brain-ThargoidSample') { socketReconnect(store.get('brain-ThargoidSample.currentTitanState')) }
+        if (store.get('currentPage') == 'brain-ThargoidSample' && store.get('brain-ThargoidSample.currentTitanState')) { 
+            socketReconnect(store.get('brain-ThargoidSample.currentTitanState'))
+        }
+        BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - Connected to Server - ${app.getVersion()}`,)
     })
     socket.on("disconnect", (reason) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason:".bgRed,reason) }
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - Server Disconnected',reason)
         const roomCache = {
             Inviter: 0,
             Others: [],
@@ -115,6 +119,7 @@ try {
 
     socket.io.on("reconnect_attempt", (e) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Reconnect Attempt#:".red,e) }
+        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - Server Reconnect Attempt#:',e)
     })
     //todo Code listeners from server.
 }

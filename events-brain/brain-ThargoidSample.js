@@ -385,7 +385,7 @@ try {
         }
         // -------------------------- TEST CODE BELOW
         
-        if (receivedData.Flags1.includes('Lights On')) {
+        if (receivedData.Flags1.includes('Lights On') && FID == 'F1279183' && windowItemsStore.get('specifyDev')) {
           checkSetupFlag("LIGHTS ON!!!!");
           const indexToRemove = launchToRedis.indexOf('FSDJump');
           if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
