@@ -2,7 +2,7 @@ const {logs} = require('./utils/logConfig')
 main();
 function main() {
   try {
-    const { nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
+    const { dialog, nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
     const Store = require('electron-store');
     const path = require('path')
     const fs = require('fs')
@@ -12,12 +12,8 @@ function main() {
     electronWindowIds.set('socketServerStatus','Not Connected to Server');
     electronWindowIds.set('appVersion',app.getVersion());
     electronWindowIds.set('socketRooms',{})
-    if (app.isPackaged) {
-      electronWindowIds.set('specifyDev',0);
-    }
-    else {
-      electronWindowIds.set('specifyDev',1);
-    }
+    if (app.isPackaged) { electronWindowIds.set('specifyDev',0); }
+    else { electronWindowIds.set('specifyDev',1) }
     if (!electronWindowIds.get('electronWindowIds')) {
       electronWindowIds.set('electronWindowIds',{
         "loadingScreen": 1,
@@ -28,7 +24,6 @@ function main() {
     if (!electronWindowIds.get('brain_ThargoidSample')) { //socket related
       electronWindowIds.set('brain_ThargoidSample',"unknown")
     }
-
     logs("=ELITE PILOTS LOUNGE=","isPackaged: [",JSON.stringify(app.isPackaged,null,2),"] Version: [",JSON.stringify(app.getVersion(),null,2),"]");
     // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
     // //!   every 5 seconds
@@ -54,21 +49,16 @@ function main() {
       // autoUpdater.autoDownload = true
       // autoUpdater.autoInstallOnAppQuit = true
       autoUpdater.on('download-progress', (progressObj) => {
-        let log_message = "Download speed: " + progressObj.bytesPerSecond;
-        log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-        log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-        logs(`${log_message}`)
-        win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} ::: Downloading Update ${JSON.stringify(info.version)} - ${JSON.stringify(progressObj.percent)}%`)
+        const thisPercent = progressObj.percent / 100
+        const formattedNumber = (thisPercent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+        win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} Downloading New Update ${formattedNumber}`)
       })
       autoUpdater.on('error',(error)=>{
-        // logs(`-AU error: ${error}`);
       })
       autoUpdater.on('checking-for-update', (info)=>{
-        // logs(`-AU checking-for-update: ${info}`)
       })
       autoUpdater.on('update-available',(info)=>{
-        logs(`-AU update-available: ${info}`)
-        win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} ::: ${JSON.stringify(info.version)} Update Available, Close Client to Install.`)
+        win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} - ${JSON.stringify(info.version)} Update Available, Close Client to Install.`)
       })
       autoUpdater.on('update-not-available',(info)=>{
         // logs(`-AU update-not-available: ${info}`)

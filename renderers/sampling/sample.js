@@ -1056,12 +1056,19 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               const sampCol = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesCollected_commanderSystem`)
               const sampCol_val = parseInt(sampCol.textContent,10)
               let sampleRating = null
-              let sampleRating_view = null;
+              let sampleRating_view = null
               if (sampCol_val == 0 || rll_val == 0) { sampleRating = 0; sampleRating_view = 0 }
-              else { sampleRating = rll_val / sampCol_val; sampleRating_view = 1}
+              else { 
+                sampleRating = sampCol_val / rll_val
+                if (sampleRating == NaN) { 
+                  sampleRating = 0
+                  sampleRating_view = 0
+                }
+                sampleRating_view = 1
+              } 
               currentcolorpercentage = progressBar(sampleRating)
               sampleRatingDom.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
-              const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+              const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
               if (sampleRating_view) { sampleRatingDom.textContent = `${formattedNumber2} ` }
             }
             catch (e) { console.log(e) }
