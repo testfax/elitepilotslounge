@@ -9,16 +9,98 @@ const Store = require('electron-store');
 try  {
     loadBrains()
     getEventsArray()
+    function getEventsArray() {
+        let eventList = null
+        try { eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
+        }
+        catch(notreallyanerror) { eventList = fs.readFileSync(path.join(process.cwd(),'events','Appendix','events.json'),'utf-8') }
+        eventList = JSON.parse(eventList); 
+        let nameList = []
+        if (eventList) { 
+          eventList.events.forEach((item) => {
+            nameList.push(item.event)
+          })
+        }
+        else { console.log("eventList doest have shit") }
+        const multiStores = nameList.map((name) => {
+          const store = new Store({name:name})
+          return {
+            multiStore: {
+              get: (key) => store.get(key),
+              set: (key, value) => store.set(key, value),
+              delete: (key) => store.delete(key),
+              has: (key) => store.has(key),
+              clear: () => store.clear(),
+              get size() { return store.size },
+              get store() { return store.store },
+              onDidChange: (key, callback) => store.onDidChange(key, callback),
+              offDidChange: (key, callback) => store.offDidChange(key, callback),
+            },
+            store,
+          };
+        })
+        
+        multiStores.forEach(({ multiStore, store }) => {
+          if (!store.get('data')) {
+            store.set('data',{})
+          }
+          // multiStore.set('key', 'value');
+          // console.log(multiStore.get('key'));
+        
+          // store.set('key2', 'value2');
+          // console.log(store.get('key2'));
+        });
+        return multiStores
+    }
+    function loadBrains() {
+        // Contains all ipcRenderer event listeners that must perform a PC related action.
+        // Brains Directory: Loop through all files and load them.
+        let brainsDirectory = null;
+        if (app.isPackaged) {
+            brainsDirectory = path.join(process.cwd(),'resources','app','events-brain')
+        }
+        else {
+            brainsDirectory = path.join(process.cwd(),'events-brain')
+        }
+        fs.readdir(brainsDirectory, (err, files) => {
+            if (err) {
+                logs(err)
+                return;
+            }
+            files.forEach((file,index) => {
+                index++
+                const filePath = path.join(brainsDirectory, file);
+                fs.stat(filePath, (err, stats) => {
+                    if (err) {
+                        logs(err)
+                    return;
+                    }
+                    if (stats.isFile()) {
+                        logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
+                        try {  require(filePath) }
+                        catch(e) { console.log(e); }
+                    if (files.length == index) { 
+                        // const loadTime = (Date.now() - appStartTime) / 1000;
+                        // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
+                    }
+                    } else if (stats.isDirectory()) {
+                        logs(`Directory: ${file}`);
+                    }
+                });
+            });
+        });
+    }
+    
     let eventsJSON = JSON.parse(eventJSON())
     //###### This eventsHandler.js is basically middleware for the specific events "*.js" files. ######
     let failEvents = new Array()
     function handleEvent(eventName, category, eventData, returnable) {
         let modulePath; let fileType;
         if (category == "json") { fileType = '.json' } else { fileType = '.js' }
-        modulePath = path.join(__dirname,'..','events', category, eventName + ".js");
+            modulePath = path.join(__dirname,'..','events', category, eventName + ".js");
         if (fs.existsSync(modulePath)) {
             if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) }
-           
+            
             const handler = require(modulePath);
             
             if (returnable) { //! RETURNS DATA FROM EVENT CALLED
@@ -35,7 +117,7 @@ try  {
                     catch (e) {
                         console.log(e)
                     }
-
+    
                 }   
                 catch(error) {
                     // logs("2.5 Error:",modulePath)
@@ -95,86 +177,10 @@ try  {
             }
         }
     }
-    const jsonEvent = { //! ONLY FOR "*.json" FILES.
-         
+    const jsonEvent = { //! ONLY FOR "*.json" FILES. 
     }
-    function getEventsArray() {
-        let eventList = null
-        try { eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
-        }
-        catch(notreallyanerror) { eventList = fs.readFileSync(path.join(process.cwd(),'events','Appendix','events.json'),'utf-8') }
-        eventList = JSON.parse(eventList); 
-        let nameList = []
-        if (eventList) { 
-          eventList.events.forEach((item) => {
-            nameList.push(item.event)
-          })
-        }
-        else { console.log("eventList doest have shit") }
-        const multiStores = nameList.map((name) => {
-          const store = new Store({name:name})
-          return {
-            multiStore: {
-              get: (key) => store.get(key),
-              set: (key, value) => store.set(key, value),
-              delete: (key) => store.delete(key),
-              has: (key) => store.has(key),
-              clear: () => store.clear(),
-              get size() { return store.size },
-              get store() { return store.store },
-              onDidChange: (key, callback) => store.onDidChange(key, callback),
-              offDidChange: (key, callback) => store.offDidChange(key, callback),
-            },
-            store,
-          };
-        })
-        
-        multiStores.forEach(({ multiStore, store }) => {
-          if (!store.get('data')) {
-            store.set('data',{})
-          }
-          // multiStore.set('key', 'value');
-          // console.log(multiStore.get('key'));
-        
-          // store.set('key2', 'value2');
-          // console.log(store.get('key2'));
-        });
-        return multiStores
-      }
-      function loadBrains() {
-        // Contains all ipcRenderer event listeners that must perform a PC related action.
-        // Brains Directory: Loop through all files and load them.
-        const brainsDirectory = path.join(process.cwd(),'events-brain')
-        fs.readdir(brainsDirectory, (err, files) => {
-            if (err) {
-                console.error('Error reading directory:', err);
-                return;
-            }
-            files.forEach((file,index) => {
-                index++
-                const filePath = path.join(brainsDirectory, file);
-                fs.stat(filePath, (err, stats) => {
-                    if (err) {
-                        console.error('Error getting file stats:', err);
-                    return;
-                    }
-                    if (stats.isFile()) {
-                        logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
-                        try {  require(filePath) }
-                        catch(e) { console.log(e); }
-                    if (files.length == index) { 
-                        // const loadTime = (Date.now() - appStartTime) / 1000;
-                        // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
-                    }
-                    } else if (stats.isDirectory()) {
-                        logs(`Directory: ${file}`);
-                    }
-                });
-            });
-        });
-        
-        
-      }
+    
+   
     module.exports = { initializeEvent, jsonEvent }
 }
 catch (error) {

@@ -30,6 +30,7 @@ function main() {
     require('./utils/processDetection')
     const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
     const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
+    
   
     //!
     //!
@@ -142,7 +143,6 @@ function main() {
             win.loadFile(path.join(__dirname, './renderers/test/test.html'));
             
             win.on("ready-to-show", () => {
-              
               require('./fromRenderer')
               win.setTitle(`Elite Pilots Lounge - ${electronWindowIds.get('socketServerStatus')} - ${app.getVersion()}`)
               
