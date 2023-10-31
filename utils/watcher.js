@@ -1,6 +1,6 @@
 //! Watcher Console Display is located in errorHandler.js
 
-const {watcherConsoleDisplay,errorHandler,pageData} = require('../utils/errorHandlers')
+const {watcherConsoleDisplay,errorHandler,pageData} = require('./errorHandlers')
 try {
     const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
     const {logs} = require('./logConfig')

@@ -3,17 +3,21 @@ main();
 function main() {
   try {
     const { nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
-    const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
-    const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
     const Store = require('electron-store');
     const path = require('path')
     const fs = require('fs')
     
     const electronWindowIds = new Store({ name: "electronWindowIds" });
-    electronWindowIds.set('currentPage','Dashboard');
+    electronWindowIds.set('currentPage','test');
+    electronWindowIds.set('socketServerStatus','Not Connected to Server');
     electronWindowIds.set('appVersion',app.getVersion());
-    electronWindowIds.set('specifyDev',0);
     electronWindowIds.set('socketRooms',{})
+    if (app.isPackaged) {
+      electronWindowIds.set('specifyDev',0);
+    }
+    else {
+      electronWindowIds.set('specifyDev',1);
+    }
     if (!electronWindowIds.get('electronWindowIds')) {
       electronWindowIds.set('electronWindowIds',{
         "loadingScreen": 1,
@@ -28,89 +32,13 @@ function main() {
     logs("=ELITE PILOTS LOUNGE=","isPackaged: [",JSON.stringify(app.isPackaged,null,2),"] Version: [",JSON.stringify(app.getVersion(),null,2),"]");
     // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
     // //!   every 5 seconds
-    function getEventsArray() {
-      let eventList = null
-      try { eventList = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','events.json'),'utf-8')
-      }
-      catch(notreallyanerror) { eventList = fs.readFileSync(path.join(process.cwd(),'events','Appendix','events.json'),'utf-8') }
-      eventList = JSON.parse(eventList); 
-      let nameList = []
-      if (eventList) { 
-        eventList.events.forEach((item) => {
-          nameList.push(item.event)
-        })
-      }
-      else { console.log("eventList doest have shit") }
-      const multiStores = nameList.map((name) => {
-        const store = new Store({name:name})
-        return {
-          multiStore: {
-            get: (key) => store.get(key),
-            set: (key, value) => store.set(key, value),
-            delete: (key) => store.delete(key),
-            has: (key) => store.has(key),
-            clear: () => store.clear(),
-            get size() { return store.size },
-            get store() { return store.store },
-            onDidChange: (key, callback) => store.onDidChange(key, callback),
-            offDidChange: (key, callback) => store.offDidChange(key, callback),
-          },
-          store,
-        };
-      })
-      
-      multiStores.forEach(({ multiStore, store }) => {
-        if (!store.get('data')) {
-          store.set('data',{})
-        }
-        // multiStore.set('key', 'value');
-        // console.log(multiStore.get('key'));
-      
-        // store.set('key2', 'value2');
-        // console.log(store.get('key2'));
-      });
-      return multiStores
-    }
-    function loadBrains() {
-      // Contains all ipcRenderer event listeners that must perform a PC related action.
-      // Brains Directory: Loop through all files and load them.
-      const brainsDirectory = path.join(process.cwd(),'events-brain')
-      fs.readdir(brainsDirectory, (err, files) => {
-          if (err) {
-              console.error('Error reading directory:', err);
-              return;
-          }
-          files.forEach((file,index) => {
-              index++
-              const filePath = path.join(brainsDirectory, file);
-              fs.stat(filePath, (err, stats) => {
-                  if (err) {
-                      console.error('Error getting file stats:', err);
-                  return;
-                  }
-                  if (stats.isFile()) {
-                      logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
-                      try {  require(filePath) }
-                      catch(e) { console.log(e); }
-                  if (files.length == index) { 
-                      // const loadTime = (Date.now() - appStartTime) / 1000;
-                      // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
-                  }
-                  } else if (stats.isDirectory()) {
-                      logs(`Directory: ${file}`);
-                  }
-              });
-          });
-      });
-      //
-      
-    }
     require('./utils/processDetection')
-    getEventsArray()
-    loadBrains()
+    const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
+    const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
+  
     //!
     //!
-    
+   
   
     const { mainMenu,rightClickMenu } = require('./menumaker')
     nativeTheme.themeSource = 'dark'
@@ -119,7 +47,46 @@ function main() {
     const isNotDev = app.isPackaged
       // Auto Updater
     const { autoUpdater } = require('electron-updater')
-
+    if (app.isPackaged) { 
+      autoUpdater.logger = require('electron-log')
+      autoUpdater.checkForUpdatesAndNotify();
+      // autoUpdater.logger.transports.file.level = 'info';
+      // autoUpdater.autoDownload = true
+      // autoUpdater.autoInstallOnAppQuit = true
+      autoUpdater.on('download-progress', (progressObj) => {
+        let log_message = "Download speed: " + progressObj.bytesPerSecond;
+        log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+        log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+        logs(`${log_message}`)
+        win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} ::: Downloading Update ${JSON.stringify(info.version)} - ${JSON.stringify(progressObj.percent)}%`)
+      })
+      autoUpdater.on('error',(error)=>{
+        // logs(`-AU error: ${error}`);
+      })
+      autoUpdater.on('checking-for-update', (info)=>{
+        // logs(`-AU checking-for-update: ${info}`)
+      })
+      autoUpdater.on('update-available',(info)=>{
+        logs(`-AU update-available: ${info}`)
+        win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} ::: ${JSON.stringify(info.version)} Update Available, Close Client to Install.`)
+      })
+      autoUpdater.on('update-not-available',(info)=>{
+        // logs(`-AU update-not-available: ${info}`)
+      })
+      autoUpdater.on('update-downloaded',(info)=>{
+        dialog.showMessageBox({
+          type: 'info',
+          title: 'Update Available',
+          message: 'A new version of the app is available. App will now automatically install and restart once completed.',
+          buttons: ['Continue']
+        }).then((result) => {
+          if (result.response === 0) {
+            // User chose to install now, quit the app and install the update.
+            autoUpdater.quitAndInstall();
+          }
+        });
+      })
+    }
     //! Begin creating the electron window
     let appStartTime = null;
 
@@ -140,12 +107,15 @@ function main() {
       
         // Load your loading screen HTML file
         loadingScreen.loadFile('loading.html');
-        
         // Wait for the main window to be ready
         app.whenReady().then(() => {
-            Menu.setApplicationMenu(mainMenu);
-            appStartTime = Date.now()
-            createWindow(); 
+        })
+        loadingScreen.on("ready-to-show", () => {
+          loadingScreen.show()
+          Menu.setApplicationMenu(mainMenu);
+          appStartTime = Date.now()
+          
+          createWindow();
         })
     }
     const createWindow = () => {
@@ -182,37 +152,10 @@ function main() {
             win.loadFile(path.join(__dirname, './renderers/test/test.html'));
             
             win.on("ready-to-show", () => {
+              
               require('./fromRenderer')
-              win.setTitle(`Elite Pilots Lounge - ${app.getVersion()}`)
-              if (app.isPackaged) { 
-                autoUpdater.logger = require('electron-log')
-                autoUpdater.checkForUpdatesAndNotify();
-                // autoUpdater.logger.transports.file.level = 'info';
-                // autoUpdater.autoDownload = true
-                // autoUpdater.autoInstallOnAppQuit = true
-                autoUpdater.on('download-progress', (progressObj) => {
-                  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-                  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-                  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-                  logs(`${log_message}`)
-                })
-                autoUpdater.on('error',(error)=>{
-                  // logs(`-AU error: ${error}`);
-                })
-                autoUpdater.on('checking-for-update', (info)=>{
-                  // logs(`-AU checking-for-update: ${info}`)
-                })
-                autoUpdater.on('update-available',(info)=>{
-                  logs(`-AU update-available: ${info}`)
-                  win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(info)}`)
-                })
-                autoUpdater.on('update-not-available',(info)=>{
-                  // logs(`-AU update-not-available: ${info}`)
-                })
-                autoUpdater.on('update-downloaded',(info)=>{
-                  // logs(`-AU update-downloaded: ${info}`)
-                })
-              }
+              win.setTitle(`Elite Pilots Lounge - ${electronWindowIds.get('socketServerStatus')} - ${app.getVersion()}`)
+              
               const windowPositionz = windowPosition(win,1)
               win.setPosition(windowPositionz.moveTo[0],windowPositionz.moveTo[1])
               win.setSize(windowPositionz.resizeTo[0],windowPositionz.resizeTo[1])

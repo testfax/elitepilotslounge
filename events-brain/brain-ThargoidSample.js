@@ -73,7 +73,7 @@ try {
       const sortedDistances = Object.fromEntries(distancesArray);
       return sortedDistances
     }
-    function redisUpdaterSetup(dataEvent,thargoidSampling) {
+    async function redisUpdaterSetup(dataEvent,thargoidSampling) {
       // Order of events from login:
       // Cargo -> Commander -> Location -> Loadout
       // Cargo resets all variables
@@ -92,8 +92,8 @@ try {
           //Remove Duplicates
           launchToRedis = [...new Set(launchToRedis)]
           //Check to make sure all the launch Events are in thargoidSampling
-          
           const matching = launchToRedis.every((event) => { 
+            // logs("[BE TS]".bgRed,`${event}`.red,"thargoidSample variable MALFORMED".yellow)
             return Object.values(thargoidSampling).some((item) => item.event === event)
           })
           //! ERROR CHECKING
@@ -121,15 +121,17 @@ try {
             ) { 
               
               store.set('redisFirstUpdateflag',matching)
-              taskManager.brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey())
               if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green); }
+              
+              let response = await taskManager.brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey())
+              if (response) { windowItemsStore.set(`socketRooms.${response.socketInfo}`, response.titanSocket) }
           }
           else { store.set('redisFirstUpdateflag',false) 
             if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${event} Allow more events until updater stop`) }
           }
         }
       }
-      catch(e) { logs("redisUpdaterSetu".bgMagenta) }
+      catch(e) { logs("redisUpdaterSetup Failure".bgMagenta,logF(console.error(e)));  }
     }
     function fetchFromDCOH(data){ 
       const systemData = fetch(`https://dcoh.watch/api/v1/Overwatch/System/${data}`)
@@ -160,11 +162,9 @@ try {
     function blastToUI(data,review) { 
       review = false
       if (windowItemsStore.get('currentPage') == thisBrain) {
-        const client = BrowserWindow.fromId(thisWindow.win);
-        client.webContents.send("from_brain-ThargoidSample", data);
-        // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
-        // if (review) { console.log("Review:".yellow,colorize(data,{pretty: true}),store.get('redisFirstUpdateflag')) }
         if (review) { logs("Review:".yellow,logF(data),store.get('redisFirstUpdateflag')) }
+        const client = BrowserWindow.fromId(thisWindow.win);
+        if (client) { client.webContents.send("from_brain-ThargoidSample", data); }
       }
     }
     function findActiveSocketKey() {
@@ -228,7 +228,7 @@ try {
     ]
     //!                   Events that must be present in the store for thargoid sample to fire to redis.
     let launchToRedis = [
-      // 'InWing',
+      'InWing',
       'LaunchDrone',
       'Cargo',
       'Location',
@@ -245,6 +245,7 @@ try {
     //!BRAIN EVENTs######################################################
     app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
     ipcMain.on(thisBrain, async (receivedData) => {
+      // console.log(`${receivedData.event}`.cyan)
       if (receivedData.event == 'template') {
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
@@ -261,22 +262,22 @@ try {
       if (receivedData.event == 'Status') {
         function inWingStuff(timestamp,action) {
           let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
-          thargoidSampling["InWing"] = compiledArray
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+          thargoidSampling["InWing"] = compiledArray
           if (!store.get('wingStatus')) { store.set('wingStatus',compiledArray) } //Initialize the object in the store.
           if (store.get('thisSampleSystem.combinedData.wingStatus') != action) { 
             if (store.get('redisFirstUpdateflag')) { 
               wingCount++
-              const client = BrowserWindow.fromId(thisWindow.win);
-              client.webContents.send("from_brain-ThargoidSample", compiledArray);
+              blastToUI(compiledArray)
               taskManager.brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey())
             }
           }
           else { store.set('wingStatus',compiledArray) }
         }
+        if (!Object.keys(thargoidSampling).includes('InWing')) { inWingStuff(receivedData.timestamp,0) }
         if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; }
         if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--; }
-        // logs(receivedData)
+        
         // logs("====================================")
         //Viewing GalaxyMap
         if (receivedData.GuiFocus == 6 && eventNames.includes('GalaxyMap') && guifocus != 6) { guifocus = 6
@@ -360,13 +361,13 @@ try {
                 taskManager.brain_ThargoidSample_socket(compiledArray,'StartJump_Charging',findActiveSocketKey())
               }
               FSDChargeCount++
-              logs("FSDChargeCount",FSDChargeCount)
+              // logs("FSDChargeCount",FSDChargeCount)
             }
           catch(e) { errorHandler(e,e.name)}
         }
         if (!receivedData.Flags1.includes('Fsd Charging') && !receivedData.Flags1.includes('Supercruise') && FSDChargeCount >= 1) { 
           FSDChargeCount = 0
-          logs("FSDChargeCount",FSDChargeCount)
+          // logs("FSDChargeCount",FSDChargeCount)
           let compiledArray = { "event": 'StartJump_Charging', "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
 
@@ -384,8 +385,8 @@ try {
             }
         }
         // -------------------------- TEST CODE BELOW
-        
-        if (receivedData.Flags1.includes('Lights On') && FID == 'F1279183' && windowItemsStore.get('specifyDev')) {
+        // console.log(receivedData.Flags1.includes('Lights On'),FID,windowItemsStore.get('specifyDev'))
+        if (receivedData.Flags1.includes('Lights On') && windowItemsStore.get('specifyDev')) {
           checkSetupFlag("LIGHTS ON!!!!");
           const indexToRemove = launchToRedis.indexOf('FSDJump');
           if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
@@ -400,6 +401,8 @@ try {
           store.set('redisFirstUpdateflag',false)
           const response = await taskManager.brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
           logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
+          const sendIt = {"event":"reset","systemAddress":store.get('systemAddress'),"FID": FID}
+          blastToUI(sendIt)
         }
         // -------------------------- TEST CODE ABOVE
       }
@@ -487,11 +490,6 @@ try {
           // if (store.get('redisFirstUpdateflag')) { ipcMain.emit(`event-callback-${receivedData.event}`,compiledArray) }
           thargoidSampling["Cargo"] = store.get('cargo')
           thargoidSampling[receivedData.event] = compiledArray
-
-          // if (store.get('redisFirstUpdateflag')) { 
-          //   const client = BrowserWindow.fromId(thisWindow.win);
-          //   client.webContents.send("from_brain-ThargoidSample", compiledArray);
-          // }
         }
         catch(e) { errorHandler(e,e.name)}
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
@@ -895,7 +893,6 @@ try {
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
       }
       if (receivedData.event == 'LaunchDrone') {
-        
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
         try {
           if (currentSystemState != "") {
@@ -912,9 +909,12 @@ try {
             // After these checks, then blast it to the UI.
             let response = await taskManager.brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
             response = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
+            
             if (response[0]) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
             else {
-              const sendIt = {"event":"Initialize","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
+              const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
+              //If the titlebar for this system doesn't exist, this will create it.
+              //The server will populate it if another commander initiates it.
               blastToUI(sendIt)
               redisUpdaterSetup(receivedData.event,thargoidSampling)
             }

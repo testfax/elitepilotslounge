@@ -74,8 +74,7 @@ try {
     ]
     if (!store.get('registeredRooms')) { store.set('registeredRooms',registeredRooms) }
     socket.on("connect", () => {
-        function socketReconnect(data) {
-            if (data != 'unknown') {
+        function socketReconnect(data) { if (data != 'unknown') {
                 return new Promise(async (resolve,reject) => {
                     try { socket.emit('joinRoom',data, async (response) => { 
                         resolve(response);
@@ -86,14 +85,16 @@ try {
             }
         }
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Socket ID: ",`${socket.id}`.green) }
-        if (store.get('currentPage') == 'brain-ThargoidSample' && store.get('brain-ThargoidSample.currentTitanState')) { 
-            socketReconnect(store.get('brain-ThargoidSample.currentTitanState'))
+        if (store.get('currentPage') == 'brain-ThargoidSample' && store.get('brain_ThargoidSample.currentTitanState')) { 
+            socketReconnect(store.get('brain_ThargoidSample.currentTitanState'))
         }
-        BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - Connected to Server - ${app.getVersion()}`,)
+        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Connected to Server`) }
+        store.set('socketServerStatus','Connected to Server')
     })
     socket.on("disconnect", (reason) => {
-        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason:".bgRed,reason) }
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - Server Disconnected',reason)
+        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason: ".bgRed,reason) }
+        BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Disconnected: ${JSON.stringify(reason)}`,)
+        store.set('socketServerStatus','Server Disconnected')
         const roomCache = {
             Inviter: 0,
             Others: [],
@@ -118,8 +119,9 @@ try {
     })
 
     socket.io.on("reconnect_attempt", (e) => {
-        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Reconnect Attempt#:".red,e) }
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - Server Reconnect Attempt#:',e)
+        if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Reconnect Attempt # ".red,e) }
+        store.set('socketServerStatus','Server Reconnect')
+        BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Reconnect Attempt: #${JSON.stringify(e)}`,)
     })
     //todo Code listeners from server.
 }

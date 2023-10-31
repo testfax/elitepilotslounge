@@ -898,7 +898,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   if (readyToRecieve) { 
-    console.log(data);
+    // console.log(data);
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
@@ -906,11 +906,32 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
         }
       }
-      if (data.event == 'Initialize') {
+      if (data.event == 'reset') {
+        try {
+          const checkViewable = document.getElementById(`${data.systemAddress}_${data.FID}_row_commanderSystem`)
+          if (checkViewable) { console.log("Removing Row",data.FID); checkViewable.remove() }
+        }
+        catch (e) {
+          console.log(e)
+        }
+      }
+      if (data.event == 'Initialize-Server') {
+        const FID = data.FID
+        const checkViewable = document.getElementById(`${Object.values(data.events)[0].location.SystemAddress}_commanderTitleBarSystem`)
+        if (checkViewable && !checkViewable.classList.contains('w3-hide')) { developeCommander() }
+        if (checkViewable && checkViewable.classList.contains('w3-hide')) { checkViewable.classList.remove('w3-hide'); developeCommander() }
+        function developeCommander() {
+          create_activeCommanders(Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
+        }
+      }
+      if (data.event == 'Initialize-Client') {
         const FID = data.FID
         const checkViewable = document.getElementById(`${data.systemAddress}_commanderTitleBarSystem`)
         if (checkViewable && checkViewable.classList.contains('w3-hide')) { 
           checkViewable.classList.remove('w3-hide')
+          developeCommander()
+        }
+        function developeCommander(){
           let primaryObj = { 
             [FID]: {
               inWing: data.events.find(i => i.event === 'InWing').combinedData.wingStatus,
@@ -931,10 +952,11 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               samplesCollected: data.events.find(i => i.event === 'Cargo').combinedData.SampleCargoCount > 0 ? 0 : 0,
               samplesEjected: 0,
               soldToCarrier: 0,
+              soldToRMS: 0,
               status: "I'm new here..."
             }
           }
-          console.log("init:",primaryObj)
+          // console.log("Initialize-Client:",primaryObj)
           create_activeCommanders(data.systemAddress,primaryObj,checkViewable,'ipc')
         }
       }
@@ -1188,7 +1210,9 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
     //todo if parent element is hidden, alive it, use function in functions.js
     const FID = Object.keys(commanderData)[0]
     const commander = Object.values(commanderData)[0]
-    console.log(commander)
+
+    // console.log("COMMANDER:",commander)
+
     const TR1 = document.createElement('tr')
     container.insertAdjacentElement('afterend',TR1)
     TR1.setAttribute('class',`font-BLOCKY`)
@@ -1339,6 +1363,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       SPAN11.setAttribute('id',`${systemAddress}_${FID}_soldToCarrier_commanderSystem`)
       SPAN11.setAttribute('class',`w3-text-orange font-BLOCKY `)
       const addedSamples = (commander.soldToCarrier + commander.soldToRMS)
+
       SPAN11.innerText = `${addedSamples}`
 
     const TH10 = document.createElement('th')

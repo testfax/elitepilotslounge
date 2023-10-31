@@ -44,7 +44,7 @@ try {
         //! Transmits all events that the client receives to the server as long as Task Manager is being called from the "EVENT" js file.
         // This is the catch all...
         socket_joinRoom: async function(data) {
-            logs("SOCKETJOIN".yellow,logF(data))
+            // logs("SOCKETJOIN".yellow,logF(data))
             const titanState = `${data.brain}_${data.name}_${data.state}`
             return new Promise(async (resolve,reject) => {
                 try { socket.emit('joinRoom',titanState, async (response) => { 
@@ -58,7 +58,7 @@ try {
             })
         },
         socket_leaveRoom: async function(data) {
-            logs("SOCKETLEAVE".yellow,logF(data))
+            // logs("SOCKETLEAVE".yellow,logF(data))
             const titanState = `${data.brain}_${data.name}_${data.state}`
             return new Promise(async (resolve,reject) => {
                 try { socket.emit('leaveRoom',titanState, async (response) => { 
@@ -158,6 +158,7 @@ try {
                             const askIgnoreFile = ignoreEvent(eventItem.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
                             if (!askIgnoreFile && eventItem != null) {
+                                // console.log(`${eventItem.event}`.green)
                                 initializeEvent.startEventSearch(eventItem,0)
                             }
                     }

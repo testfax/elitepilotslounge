@@ -4,7 +4,7 @@ const {logs} = require('./utils/logConfig')
 const {cwd} = require('./utils/loungeClientStore')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
-const {socket_joinRoom, socket_leaveRoom} = require('./sockets/taskManager')
+const {socket_leaveRoom} = require('./sockets/taskManager')
 const path = require('path')
 const fs = require('fs')
 function findActiveSocketKey() {
@@ -21,35 +21,31 @@ const links = {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/dashboard/dashboard.html')}`)
         pageData.currentPage = "Dashboard"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
+        .setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     friends: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/friends/friends.html')}`)
         pageData.currentPage = "Friends"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     statistics: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/statistics/statistics.html')}`)
         pageData.currentPage = "Statistics"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     engineerProgress: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/engineerProgress/engineerProgress.html')}`)
         pageData.currentPage = "Engineer Progress"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     materials: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/materials/materials.html')}`)
         pageData.currentPage = "Materials"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     }, 
     sampling: async function() {
@@ -59,7 +55,6 @@ const links = {
             BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/sampling/sample.html')}`)
             pageData.currentPage = "brain-ThargoidSample"
             store.set('currentPage',pageData.currentPage)
-            BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         //  }
         //  else { BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge - !!!!!!!Socket Server Failure!!!!!!!') }
     },
@@ -67,23 +62,21 @@ const links = {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'logs/logs.html')}`)
         pageData.currentPage = "Logs"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     test: async function() {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/test/test.html')}`)
         pageData.currentPage = "Test"
         store.set('currentPage',pageData.currentPage)
-        BrowserWindow.fromId(2).setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     }
 }
 
 const template = [
-    {
-        label: 'Dashboard',
-        click: ()=>{links.dashboard();} 
-    },
+    // {
+    //     label: 'Dashboard',
+    //     click: ()=>{links.dashboard();} 
+    // },
     // {
     //     label: 'Friends',
     //     click: ()=>{links.friends();} 
@@ -103,18 +96,19 @@ const template = [
     //     ]
     // },
     {
-        label: 'Thargoid',
+        label: 'Thargoid Sampling',
         // click: ()=>{links.statistics();} 
-        submenu: [
-            {
-                label: 'Sampling',
-                click: ()=>{links.sampling()}
-            },
-            {
-                label: 'Test',
-                click: ()=>{links.test()}
-            }
-        ]
+        click: ()=>{links.sampling()}
+        // submenu: [
+        //     {
+        //         label: 'Sampling',
+        //         click: ()=>{links.sampling()}
+        //     },
+        //     // {
+        //     //     label: 'Test',
+        //     //     click: ()=>{links.test()}
+        //     // }
+        // ]
     },
     {
         label: 'Materials',
@@ -124,15 +118,15 @@ const template = [
     //     label: 'Logs',
     //     click: ()=>{links.logs()} 
     // },
-    {
-        label: 'Test',
-        click: ()=>{links.test()} 
-    }
+    // {
+    //     label: 'Test',
+    //     click: ()=>{links.test()} 
+    // }
 ]
 const contextMenu = [
     {
         label: 'Test',
-        click: ()=>{links.test()} 
+        // click: ()=>{links.test()} 
     }
 ]
 
