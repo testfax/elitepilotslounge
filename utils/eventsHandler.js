@@ -7,7 +7,7 @@ const fs = require('fs')
 const {eventJSON} = require('./loungeClientStore')
 const Store = require('electron-store');
 try  {
-    loadBrains()
+    // loadBrains()
     getEventsArray()
     function getEventsArray() {
         let eventList = null
@@ -52,44 +52,7 @@ try  {
         });
         return multiStores
     }
-    function loadBrains() {
-        // Contains all ipcRenderer event listeners that must perform a PC related action.
-        // Brains Directory: Loop through all files and load them.
-        let brainsDirectory = null;
-        if (app.isPackaged) {
-            brainsDirectory = path.join(process.cwd(),'resources','app','events-brain')
-        }
-        else {
-            brainsDirectory = path.join(process.cwd(),'events-brain')
-        }
-        fs.readdir(brainsDirectory, (err, files) => {
-            if (err) {
-                logs(err)
-                return;
-            }
-            files.forEach((file,index) => {
-                index++
-                const filePath = path.join(brainsDirectory, file);
-                fs.stat(filePath, (err, stats) => {
-                    if (err) {
-                        logs(err)
-                    return;
-                    }
-                    if (stats.isFile()) {
-                        logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
-                        try {  require(filePath) }
-                        catch(e) { console.log(e); }
-                    if (files.length == index) { 
-                        // const loadTime = (Date.now() - appStartTime) / 1000;
-                        // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
-                    }
-                    } else if (stats.isDirectory()) {
-                        logs(`Directory: ${file}`);
-                    }
-                });
-            });
-        });
-    }
+
     
     let eventsJSON = JSON.parse(eventJSON())
     //###### This eventsHandler.js is basically middleware for the specific events "*.js" files. ######
@@ -161,7 +124,7 @@ try  {
     const initializeEvent = { //! ONLY FOR "*.log" FILES.        
         startEventSearch: (JSONevent,returnable,eventMod) => {            
             let SpecifyEvent = JSONevent.event
-            if (eventMod != undefined) { SpecifyEvent = eventMod }; 
+            if (eventMod != undefined) { SpecifyEvent = eventMod };
             const category = getCategoryFromEvent(SpecifyEvent)
             
             //todo Need to make big alert if "EVENT" does not exist... Probably should bring it to the front side and make a form that posts to discord informing us.

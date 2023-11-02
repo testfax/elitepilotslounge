@@ -1,102 +1,104 @@
 {
   "data": [
     {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
-      "Count": 3,
-      "Grade": "3",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T05:30:27Z",
-      "Total": 189
-    },
-    {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
-      "Count": 3,
-      "Grade": "3",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T05:23:24Z",
-      "Total": 186
-    },
-    {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
-      "Count": 3,
-      "Grade": "3",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T05:14:38Z",
-      "Total": 183
-    },
-    {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
-      "Count": 3,
-      "Grade": "3",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T05:10:25Z",
-      "Total": 180
-    },
-    {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
-      "Count": 3,
-      "Grade": "3",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T05:07:52Z",
-      "Total": 177
-    },
-    {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
-      "Count": 3,
-      "Grade": "3",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T05:04:44Z",
-      "Total": 174
-    },
-    {
-      "Name": "tg_shipsystemsdata",
-      "Name_Localised": "Ship Systems Data",
+      "Name": "tg_weaponparts",
+      "Name_Localised": "Weapon Parts",
       "Count": 3,
       "Grade": "4",
       "Operator": "+",
       "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T04:59:40Z",
+      "timeStamp": "2023-11-02T01:35:10Z",
       "Total": 123
     },
     {
-      "Name": "tg_shipflightdata",
-      "Name_Localised": "Ship Flight Data",
+      "Name": "tg_weaponparts",
+      "Name_Localised": "Weapon Parts",
+      "Count": 3,
+      "Grade": "4",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-02T01:29:34Z",
+      "Total": 120
+    },
+    {
+      "Name": "tg_biomechanicalconduits",
+      "Name_Localised": "Bio-Mechanical Conduits",
       "Count": 3,
       "Grade": "3",
       "Operator": "+",
       "Operator_Sign": "»",
-      "timeStamp": "2023-10-30T04:52:44Z",
-      "Total": 171
+      "timeStamp": "2023-11-02T01:28:56Z",
+      "Total": 200
     },
     {
-      "Name": "nickel",
-      "Count": 2,
-      "Grade": "1",
-      "Operator": "-",
-      "Operator_Sign": "«",
-      "timeStamp": "2023-10-30T04:52:37Z",
-      "Total": 224
-    },
-    {
-      "Name": "vanadium",
+      "Name": "tg_weaponparts",
+      "Name_Localised": "Weapon Parts",
       "Count": 3,
-      "Grade": "2",
-      "Operator": "-",
-      "Operator_Sign": "«",
-      "timeStamp": "2023-10-30T04:52:37Z",
-      "Total": 136
+      "Grade": "4",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-02T01:26:17Z",
+      "Total": 117
+    },
+    {
+      "Name": "tg_biomechanicalconduits",
+      "Name_Localised": "Bio-Mechanical Conduits",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-02T01:25:20Z",
+      "Total": 197
+    },
+    {
+      "Name": "tg_biomechanicalconduits",
+      "Name_Localised": "Bio-Mechanical Conduits",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-02T01:24:42Z",
+      "Total": 194
+    },
+    {
+      "Name": "tg_wreckagecomponents",
+      "Name_Localised": "Wreckage Components",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-01T23:40:39Z",
+      "Total": 200
+    },
+    {
+      "Name": "tg_wreckagecomponents",
+      "Name_Localised": "Wreckage Components",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-01T23:39:43Z",
+      "Total": 197
+    },
+    {
+      "Name": "tg_wreckagecomponents",
+      "Name_Localised": "Wreckage Components",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-01T23:38:48Z",
+      "Total": 194
+    },
+    {
+      "Name": "tg_wreckagecomponents",
+      "Name_Localised": "Wreckage Components",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2023-11-01T20:09:06Z",
+      "Total": 188
     }
   ]
 }

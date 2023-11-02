@@ -1,4 +1,9 @@
 const {logs} = require('./utils/logConfig')
+const colors = require('colors')
+logs('RUN'.green)
+logs('RUN'.green)
+logs('RUN'.green)
+logs('RUN'.green)
 main();
 function main() {
   try {
@@ -24,17 +29,59 @@ function main() {
     if (!electronWindowIds.get('brain_ThargoidSample')) { //socket related
       electronWindowIds.set('brain_ThargoidSample',"unknown")
     }
+    
+    // setTimeout(() => {
+    //   logs("procecss detection script")
+    // },2000)
+    function loadBrains() {
+        // Contains all ipcRenderer event listeners that must perform a PC related action.
+        // Brains Directory: Loop through all files and load them.
+        let brainsDirectory = null;
+        if (app.isPackaged) {
+            brainsDirectory = path.join(process.cwd(),'resources','app','events-brain')
+        }
+        else {
+            brainsDirectory = path.join(process.cwd(),'events-brain')
+        }
+        fs.readdir(brainsDirectory, (err, files) => {
+            if (err) {
+                logs(err)
+                return;
+            }
+            files.forEach((file,index) => {
+                index++
+                const filePath = path.join(brainsDirectory, file);
+                fs.stat(filePath, (err, stats) => {
+                    if (err) {
+                        logs(err)
+                    return;
+                    }
+                    if (stats.isFile()) {
+                        logs('[BRAIN]'.bgCyan,"File:", `${file}`.magenta);
+                        try {  require(filePath) }
+                        catch(e) { console.log(e); }
+                    if (files.length == index) { 
+                        // const loadTime = (Date.now() - appStartTime) / 1000;
+                        // if (watcherConsoleDisplay("globalLogs")) { logs("App-Initialization-Timer".bgMagenta,loadTime,"Seconds") }
+                    }
+                    } else if (stats.isDirectory()) {
+                        logs(`Directory: ${file}`);
+                    }
+                });
+            });
+        });
+    }
     logs("=ELITE PILOTS LOUNGE=","isPackaged: [",JSON.stringify(app.isPackaged,null,2),"] Version: [",JSON.stringify(app.getVersion(),null,2),"]");
     // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
     // //!   every 5 seconds
-    require('./utils/processDetection')
+
     const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
     const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
     
   
     //!
     //!
-   
+    
   
     const { mainMenu,rightClickMenu } = require('./menumaker')
     nativeTheme.themeSource = 'dark'
@@ -73,6 +120,13 @@ function main() {
         }).then((result) => {
           if (result.response === 0) {
             // User chose to install now, quit the app and install the update.
+            // const appDataFolderPath = path.join(process.env.APPDATA, 'elitepilotslounge');
+            // //Removes the roaming folder for a clean install.
+            // //Have seen users not be able to load the program, due to corrupted roaming/elitepilotslounge.
+            // if (fs.existsSync(appDataFolderPath)) {
+            //   console.log(appDataFolderPath)
+            //   fs.rmdirSync(appDataFolderPath, { recursive: true });
+            // }
             autoUpdater.quitAndInstall();
           }
         });
@@ -85,12 +139,20 @@ function main() {
     let win
     let loadingScreen = null
     
+    // app.on('ready', () => { });
     app.on('ready', () => { createLoadingScreen(); });
     function createLoadingScreen() {
         // Create a loading screen window
         loadingScreen = new BrowserWindow({
           width: 340,
-          height: 600,
+          height: 620,
+          webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: false,
+            nodeIntegrationInWorker: true,
+            // devTools: true,
+            contextIsolation: true,
+          },
           frame: false, // Remove window frame
           alwaysOnTop: true, // Make the loading screen always on top
           // Additional options
@@ -103,10 +165,31 @@ function main() {
         })
         loadingScreen.on("ready-to-show", () => {
           loadingScreen.show()
+          // if (!isNotDev) { loadingScreen.webContents.openDevTools(); }
           Menu.setApplicationMenu(mainMenu);
           appStartTime = Date.now()
-          
-          createWindow();
+          loadBrains()
+          require('./fromRenderer')
+          require('./utils/processDetection')
+          const {allEventsInCurrentLogFile} = require('./sockets/taskManager')
+          ipcMain.on('tailState', (receivedData) => {
+            if (receivedData) { 
+              logs('[TAIL] STATUS:'.green,receivedData)
+              allEventsInCurrentLogFile((callback)=>{
+                if (typeof callback == 'object') {
+                  const data = `Loading Events... ${callback.current} \ ${callback.total} ${callback.percent}`
+                  loadingScreen.webContents.send("loading-journalLoad", data);
+                }
+                if (callback == 'journalLoadComplete') {
+                  console.log("Journal loads complete".yellow)
+                  createWindow();
+                }
+              })
+            }
+            else {
+              logs_error('[TAIL] STATUS:'.red,receivedData)
+            }
+          })
         })
     }
     const createWindow = () => {
@@ -136,14 +219,11 @@ function main() {
             win.webContents.on("context-menu", () => {
                 rightClickMenu.popup(win.webContents);
             })
-            // ipcMain.on('electron-store-get-data', (event, key) => {
-            //     const data = store.get(key);
-            //     event.returnValue = data;
-            //   });
             win.loadFile(path.join(__dirname, './renderers/test/test.html'));
-            
             win.on("ready-to-show", () => {
-              require('./fromRenderer')
+              // logs("splash",electronWindowIds.get('electronWindowIds'))
+              
+              
               win.setTitle(`Elite Pilots Lounge - ${electronWindowIds.get('socketServerStatus')} - ${app.getVersion()}`)
               
               const windowPositionz = windowPosition(win,1)
@@ -161,6 +241,7 @@ function main() {
 
             let winids = {}
             let isLoadFinished = false;
+
             const handleLoadFinish = () => {
               if (!isLoadFinished) {
                 isLoadFinished = true;      
@@ -207,6 +288,7 @@ function main() {
             leave: 1
         }
         wingData(roomCache,0)
+        
     })
     process.on('uncaughtException', (error,origin) => {
       errorHandler(error,origin)

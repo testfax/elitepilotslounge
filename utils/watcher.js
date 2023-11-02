@@ -3,7 +3,7 @@
 const {watcherConsoleDisplay,errorHandler,pageData} = require('./errorHandlers')
 try {
     const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
-    const {logs} = require('./logConfig')
+    const {logs,logs_error} = require('./logConfig')
     const Store = require('electron-store');
     const store = new Store({ name: 'electronWindowIds'})
     const thisWindow = store.get('electronWindowIds')
@@ -46,24 +46,16 @@ try {
                 }
                 return null; // Return null if event name not found
             },
-            sendlogEvent: function(eventData) {
-                if (lcs.logState) {
-                    // const logsStore = new Store({ name: 'LogsDisplay'})
-                    // const oldData = logsStore.get('data')
-                    // const combinedData = { ...{oldData},...{eventData} }
-                    // logsStore.set('data',combinedData)
-                    // if (pageData.currentPage = 'Logs') {
-                    //     const client = BrowserWindow.fromId(thisWindow.win);
-                    //     client.webContents.send('LogsDisplay', eventData);
-                    // }
-                }
-            },
             tailFile: function(savedGamePath) { //called from wat.eliteProcess() function. Only for *.log files. *.json files are handled at the bottom of this page with watcher.on('change')
                 const currentJournalLog = lcs.latestLog(savedGamePath,"log")
                 continueWatcherBuild(currentJournalLog)
+
+
+
                 function continueWatcherBuild(currentJournalLog) {
                     if (watcherConsoleDisplay('globalLogs')) { 
                         logs("[TAIL]".green,"Monitoring:".green ,path.parse(currentJournalLog).base)
+                        
                     }
                     const tailLogOptions = { separator: /\n/ }
                     const tailLog = new Tail(currentJournalLog,tailLogOptions);
@@ -78,6 +70,7 @@ try {
                             const askIgnoreFile = wat.ignoreEvent(inspectedEvent.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
                             if (!askIgnoreFile && inspectedEvent != null) {
+                                // logs("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow) 
                                 if (watcherConsoleDisplay(inspectedEvent.event)) { logs("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow) }
                                 const result = initializeEvent.startEventSearch(inspectedEvent,0)
                                
@@ -85,11 +78,12 @@ try {
                             }
                         }
                         catch(e) {
-                            logs("[TAIL]".red, "The current Journal Log is corrupted, can not continue with unknown event:",`${data}`.red)
+                            logs_error("[TAIL]".red, "The current Journal Log is corrupted, can not continue with unknown event:",`${data}`.red)
                             errorHandler(e,e.name)
                         }
                     });
-                    tailLog.on("error", function(error) { logs('ERROR: ', error); });
+                    tailLog.on("error", function(error) { logs_error('ERROR: ', error); });
+                    ipcMain.emit('tailState',tailLog.isWatching)
                 }
             },
             tailJsonFile: function(data,eventMod) { //For JSON files only

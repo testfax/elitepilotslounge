@@ -3,13 +3,13 @@ const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 const thisWindow = store.get('electronWindowIds')
 const { exec } = require('child_process') //for browser opening
-const {logs} = require('./utils/logConfig') //for browser opening
+const {logs,logs_error} = require('./utils/logConfig') //for browser opening
 const zlib = require('zlib')
 const base64 = require('base64-url')
 const path = require('path')
 const fs = require('fs')
-const {watcherConsoleDisplay,errorHandler,pageData} = require('./utils/errorHandlers')
-const lcs = require('./utils/loungeClientStore')
+const {watcherConsoleDisplay,errorHandler,pageData,logF} = require('./utils/errorHandlers')
+const {latestLogRead,latestLog,savedGameLocation} = require('./utils/loungeClientStore')
 const taskManager = require('./sockets/taskManager')
 let redisValidatorMsg = null;
 function redisValidator(redisRequestObject) {
@@ -109,7 +109,7 @@ ipcMain.on('launchEDSY', (event,message) => {
 })
 ipcMain.on('fetchLatestLog', (event,message) => {
   //ipcRenderer.send('launchEDSY',LoadoutData);
-  const readEventsList = lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation().savedGamePath,"log"),["All"])
+  const readEventsList = latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),["All"])
   const client = BrowserWindow.fromId(thisWindow.win);
   client.webContents.send('buildLogsDisplay', readEventsList.firstLoad);
 })
@@ -140,4 +140,7 @@ ipcMain.on('joinSamplingRoom', (event,message) => {
 })
 ipcMain.on('leaveSamplingRoom', (event,message) => {
   taskManager.socket_leaveRoom(message)
+})
+ipcMain.on('logs', (event,message) => { 
+  logs_error("[RENDERER]".bgMagenta,logF(message));
 })

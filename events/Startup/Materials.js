@@ -2,7 +2,6 @@ try {
     const { ipcMain, BrowserWindow,webContents  } = require('electron');
     const { logs } = require('../../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../../utils/errorHandlers')
-    const lcs = require('../../utils/loungeClientStore')
     const colorize = require('json-colorizer');
     //! #### Socket Server
     // const {Materials} = require('../../sockets/tasks/startup')

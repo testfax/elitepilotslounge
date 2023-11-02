@@ -1,3 +1,5 @@
+// const { ipcRenderer } = require("electron");
+
 let myClassSave = null;
 const windowLoaded =  new Promise(resolve => { window.onload = resolve; });
 windowLoaded.then(() => { 
@@ -103,6 +105,9 @@ let readyToRecieve = null;
 function newToolTip() {
   const elementsWithTooltip = document.querySelectorAll(".tooltip-element");
   elementsWithTooltip.forEach(element => new Tooltip(element))
+}
+function imageLoadError(e) {
+  ipcRenderer.send('logs',`File Location Failure:${e}`)
 }
 //FUNCTIONS FROM CLICKING
 window.addEventListener("click", clickedEvent);
@@ -847,43 +852,43 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   const TH4 = document.createElement('th')
   TR1.appendChild(TH4)
   TH4.setAttribute('class',`w3-text-yellow font-BLOCKY`)
-  TH4.innerText = `Sample Rating`
+  TH4.innerText = `Sample\nRating`
 
   const TH5 = document.createElement('th')
   TR1.appendChild(TH5)
   TH5.setAttribute('class',`w3-text-yellow font-BLOCKY`)
-  TH5.innerText = `Samples In Cargo`
+  TH5.innerText = `Samples\nIn Cargo`
 
   const TH6 = document.createElement('th')
   TR1.appendChild(TH6)
   TH6.setAttribute('class',`w3-text-yellow font-BLOCKY`)
-  TH6.innerText = `Limpets Cargo`
+  TH6.innerText = `Limpets\nCargo`
 
   const TH7 = document.createElement('th')
   TR1.appendChild(TH7)
   TH7.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH7.innerText = `Caustic Protection`
+  TH7.innerText = `Caustic\nProtection`
 
   const TH8 = document.createElement('th')
   TR1.appendChild(TH8)
   TH8.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH8.innerText = `Cargo Capacity`
+  TH8.innerText = `Cargo\nCapacity`
 
   const TH9 = document.createElement('th')
   TR1.appendChild(TH9)
   TH9.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH9.innerText = `To Carrier/RMS`
+  TH9.innerText = `To\nCarrier/RMS`
 
   const TH10 = document.createElement('th')
   TR1.appendChild(TH10)
   TH10.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH10.innerText = `Samples Collected`
+  TH10.innerText = `Samples\nCollected`
 
   const TH11 = document.createElement('th')
   TR1.appendChild(TH11)
   TH11.setAttribute('id',`limpetsLaunched`)
   TH11.setAttribute('class',`tooltip-element pointer-help w3-text-pink font-BLOCKY`)
-  TH11.innerText = `Limpets Launched`
+  TH11.innerText = `Limpets\nLaunched`
   // newToolTip()
   if (specificCommanderSystemData){
     specificCommanderSystemData.forEach((cmdrData,index) => {
@@ -898,7 +903,6 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   if (readyToRecieve) { 
-    // console.log(data);
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
@@ -906,10 +910,11 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
         }
       }
+
       if (data.event == 'reset') {
         try {
           const checkViewable = document.getElementById(`${data.systemAddress}_${data.FID}_row_commanderSystem`)
-          if (checkViewable) { console.log("Removing Row",data.FID); checkViewable.remove() }
+          if (checkViewable) { primaryChar++; checkViewable.remove() }
         }
         catch (e) {
           console.log(e)
@@ -927,37 +932,55 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'Initialize-Client') {
         const FID = data.FID
         const checkViewable = document.getElementById(`${data.systemAddress}_commanderTitleBarSystem`)
-        if (checkViewable && checkViewable.classList.contains('w3-hide')) { 
+        if (checkViewable && checkViewable.classList.contains('w3-hide')) {
           checkViewable.classList.remove('w3-hide')
           developeCommander()
         }
         function developeCommander(){
-          let primaryObj = { 
-            [FID]: {
-              inWing: data.events.find(i => i.event === 'InWing').combinedData.wingStatus,
-              timestamp: data.events.find(i => i.event === 'Commander').combinedData.timestamp,
-              cargo: data.events.find(i => i.event === 'Cargo').combinedData,
-              commanderData: data.events.find(i => i.event === 'Commander').combinedData,
-              docked: "",
-              undocked: "",
-              ejectedCargo: data.events.find(i => i.event === 'EjectCargo') ? data.events.find(i => i.event === 'EjectCargo').combinedData.Count : 0,
-              limpetsLaunched: {
-                LastLaunchedType: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type,
-                Repair: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type == 'Repair' ? 0 : 0,
-                Research: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type == 'Research' ? 0 : 0,
-                Collection: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type == 'Collection' ? 0 : 0, 
-              },
-              loadout: data.events.find(i => i.event === 'Loadout').combinedData,
-              location: data.events.find(i => i.event === 'Location').combinedData,
-              samplesCollected: data.events.find(i => i.event === 'Cargo').combinedData.SampleCargoCount > 0 ? 0 : 0,
-              samplesEjected: 0,
-              soldToCarrier: 0,
-              soldToRMS: 0,
-              status: "I'm new here..."
+          try {
+            let primaryObj = { 
+              [FID]: {
+                inWing: data.events.find(i => i.event === 'InWing').combinedData.wingStatus,
+                timestamp: data.events.find(i => i.event === 'Commander').combinedData.timestamp,
+                cargo: data.events.find(i => i.event === 'Cargo').combinedData,
+                commanderData: data.events.find(i => i.event === 'Commander').combinedData,
+                docked: "",
+                undocked: "",
+                ejectedCargo: data.events.find(i => i.event === 'EjectCargo') ? data.events.find(i => i.event === 'EjectCargo').combinedData.Count : 0,
+                limpetsLaunched: {
+                  LastLaunchedType: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type,
+                  Repair: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type == 'Repair' ? 1 : 0,
+                  Research: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type == 'Research' ? 1 : 0,
+                  Collection: data.events.find(i => i.event === 'LaunchDrone').combinedData.Type == 'Collection' ? 1 : 0, 
+                },
+                loadout: data.events.find(i => i.event === 'Loadout').combinedData,
+                location: data.events.find(i => i.event === 'Location').combinedData,
+                samplesCollected: data.events.find(i => i.event === 'Cargo').combinedData.SampleCargoCount > 0 ? 0 : 0,
+                samplesEjected: 0,
+                soldToCarrier: 0,
+                soldToRMS: 0,
+                status: `Hanging out in: ${data.events.find(i => i.event === 'Location').combinedData.StarSystem }`
+              }
             }
+            if (data.events.find(i => i.event === 'FSDJump')) {
+              primaryObj[FID].location = data.events.find(i => i.event === 'FSDJump').combinedData
+              primaryObj[FID].status =  `Hanging out in: ${data.events.find(i => i.event === 'FSDJump').combinedData.StarSystem }`
+            }
+            else {
+              if (data.events.find(i => i.event === 'Location').combinedData.Docked) { 
+                const station = data.events.find(i => i.event === 'Location').combinedData.StationName
+                const StarSystem = data.events.find(i => i.event === 'Location').combinedData.StarSystem
+                primaryObj[FID].status = `Docked: ${station} In ${StarSystem}`
+              }
+            }
+            
+            // console.log("Initialize-Client:",data.systemAddress,primaryObj,checkViewable,'ipc')
+            create_activeCommanders(data.systemAddress,primaryObj,checkViewable,'ipc')
           }
-          // console.log("Initialize-Client:",primaryObj)
-          create_activeCommanders(data.systemAddress,primaryObj,checkViewable,'ipc')
+          catch (e) {
+            console.log(e)
+          }
+          
         }
       }
       if (data.event == 'LaunchDrone') {
@@ -1004,11 +1027,19 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         descriptionContent(data,description)
       }
       if (data.event == 'Loadout') {
-        document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(data.combinedData.timestamp)
-        document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_causticProtection_commanderSystem`).textContent = data.combinedData.causticProtection
-        document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_cargoCapacity_commanderSystem`).textContent = data.combinedData.cargoCapacity
-        const description = `Loadout Changed`
-        descriptionContent(data,description)
+        try {
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_ship_commanderSystem`).textContent = data.combinedData.ship.toUpperCase()
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_causticProtection_commanderSystem`).textContent = data.combinedData.causticProtection
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_cargoCapacity_commanderSystem`).textContent = data.combinedData.cargoCapacity
+          const img = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_shipIMG_commanderSystem`)
+          img.src = `../../public/images/ships_cartoon/${data.combinedData.ship}.png`
+          // img.setAttribute('onerror', imageLoadError(img.src));
+          const description = `Loadout Changed`
+          descriptionContent(data,description)
+        }
+        catch (e) {
+          ipcRenderer.send('logs',e)
+        }
       }
       if (data.event == 'Cargo') {
         document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(data.combinedData.timestamp)
@@ -1096,7 +1127,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         const description = `Sold ${data.combinedData.Count} ${data.combinedData.Type_Localised} `
         descriptionContent(data,description)
       }
-      //Remaining Items are to update the "STATUS" block on the page.
+      //Remaining Items update the "STATUS" block on the page.
       if (data.event == 'Shutdown') {
         const description = 'Player Offline In System'
         descriptionContent(data,description)
@@ -1148,7 +1179,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         let description = null;
         if (data.combinedData.MusicTrack == 'Combat_Hunters') {description = `Freaking Glaives....`; descriptionContent(data,description)}
         if (data.combinedData.MusicTrack == 'MainMenu') {description = `At Main Menu`; descriptionContent(data,description)}
-        if (data.combinedData.MusicTrack == 'Combat_Unknown') {description = `Running Away...`; descriptionContent(data,description)}
+        if (data.combinedData.MusicTrack == 'Combat_Unknown') {description = `FSD Anomaly Detected`; descriptionContent(data,description)}
         if (data.combinedData.MusicTrack == 'Unknown_Encounter') {description = `I hate Thargoids...`; descriptionContent(data,description)}
         
       }
@@ -1212,206 +1243,214 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   }
 })
 function create_activeCommanders(systemAddress,commanderData,previousSibling) {
-  if (commanderData) { 
-    let container = previousSibling
-    //todo if parent element is hidden, alive it, use function in functions.js
-    const FID = Object.keys(commanderData)[0]
-    const commander = Object.values(commanderData)[0]
-
-    // console.log("COMMANDER:",commander)
-
-    const TR1 = document.createElement('tr')
-    container.insertAdjacentElement('afterend',TR1)
-    TR1.setAttribute('class',`font-BLOCKY`)
-    TR1.setAttribute('id',`${systemAddress}_${FID}_row_commanderSystem`)
-    
-    const TH1 = document.createElement('th')
-    TR1.appendChild(TH1)
-    TH1.setAttribute('class',`w3-text-orange font-BLOCKY aligned-element fitwidth`)
-    TH1.setAttribute('id',`${systemAddress}_${FID}_date_commanderSystem`)
-    TH1.innerText = `${timeConversion(commander.timestamp)}`
-
-    const TH2 = document.createElement('th')
-    TR1.appendChild(TH2)
-    TH2.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth aligned-element`)
-    
-        const img2 = document.createElement('img')
-        TH2.appendChild(img2)
-        img2.setAttribute('id',`${systemAddress}_${FID}_wingIMG_commanderSystem`)
-        if (commander.inWing) { 
-          img2.setAttribute('class',`gradePics2`)
-        }
-        else { img2.setAttribute('class',`w3-hide gradePics2`) }
-        img2.setAttribute('style',`vertical-align: top;`)
-        img2.setAttribute('src',`../../public/images/Wings-galaxy-map.png`)
-        
-
-        const SPAN2 = document.createElement('span')
-        TH2.appendChild(SPAN2)
-        SPAN2.setAttribute('id',`${systemAddress}_${FID}_commander_commanderSystem`)
-        SPAN2.innerText = `${commander.commanderData.Name}`
-
-    const TH3 = document.createElement('th')
-    TR1.appendChild(TH3)
-    TH3.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth `)
-
-        const img1 = document.createElement('img')
-        TH3.appendChild(img1)
-        img1.setAttribute('id',`${systemAddress}_${FID}_shipIMG_commanderSystem`)
-        img1.setAttribute('class',`circle-background gradePics`)
-        img1.setAttribute('style',`vertical-align: top;`)
-        img1.setAttribute('src',`../../public/images/ships_cartoon/${commander.loadout.ship}.png`)
-
-        const SPAN4 = document.createElement('span')
-        TH3.appendChild(SPAN4)
-        SPAN4.setAttribute('id',`${systemAddress}_${FID}_ship_commanderSystem`)
-        SPAN4.setAttribute('class',`aligned-element`)
-        SPAN4.innerText = `${commander.loadout.ship.toUpperCase()}`
-    
-    const TH35 = document.createElement('th')
-    TR1.appendChild(TH35)
-    TH35.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth aligned-element`)
-
-        const SPAN35 = document.createElement('span')
-        TH35.appendChild(SPAN35)
-        SPAN35.setAttribute('id',`${systemAddress}_${FID}_status_commanderSystem`)
-        SPAN35.setAttribute('class',``)
-        SPAN35.innerText = commander.status
-
-    const TH4 = document.createElement('th')
-    TR1.appendChild(TH4)
-    TH4.setAttribute('class','w3-center aligned-element')
-        const rll = commander.limpetsLaunched.Research
-        const sampCol = commander.samplesCollected 
-        let sampleRating = null
-        let sampleRating_view = null;
-        if (sampCol == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
-        else { sampleRating = rll / sampCol; sampleRating_view = 1}
-        currentcolorpercentage = progressBar(sampleRating)
-        let distance = sampleRating
-        if (distance === 1) {
-          distance = 100;
-        } else if (distance < 1) {
-          distance *= 100;
-        }
-        const progress_container = document.createElement('span')
-        TH4.appendChild(progress_container)
-        progress_container.setAttribute('class','progress-container')
-        // progress_container.setAttribute('style','text-align: right;')
+  try {
+    if (commanderData) { 
+      let container = previousSibling
+      //todo if parent element is hidden, alive it, use function in functions.js
+      const FID = Object.keys(commanderData)[0]
+      const commander = Object.values(commanderData)[0]
+  
+      // console.log("Previous TR:",container)
+      // console.log("COMMANDER:",commander)
+  
+      const TR1 = document.createElement('tr')
+      container.insertAdjacentElement('afterend',TR1)
+      TR1.setAttribute('class',`font-BLOCKY`)
+      TR1.setAttribute('id',`${systemAddress}_${FID}_row_commanderSystem`)
       
-        const progress_bar = document.createElement('span')
-        progress_container.appendChild(progress_bar);
-        progress_bar.setAttribute("id",`${systemAddress}_${FID}_sampleRating_commanderSystem`)
-        progress_bar.setAttribute("class","w3-vivid-highvis progress-bar warprogresspercent")
-        progress_bar.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
-        const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
-        if (sampleRating_view) {
-          progress_bar.innerText = `${formattedNumber2} `
-        }
+      const TH1 = document.createElement('th')
+      TR1.appendChild(TH1)
+      TH1.setAttribute('class',`w3-text-orange font-BLOCKY aligned-element fitwidth`)
+      TH1.setAttribute('id',`${systemAddress}_${FID}_date_commanderSystem`)
+      TH1.innerText = `${timeConversion(commander.timestamp)}`
+  
+      const TH2 = document.createElement('th')
+      TR1.appendChild(TH2)
+      TH2.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth aligned-element`)
+      
+          const img2 = document.createElement('img')
+          TH2.appendChild(img2)
+          img2.setAttribute('id',`${systemAddress}_${FID}_wingIMG_commanderSystem`)
+          if (commander.inWing) { 
+            img2.setAttribute('class',`gradePics2`)
+          }
+          else { img2.setAttribute('class',`w3-hide gradePics2`) }
+          img2.setAttribute('style',`vertical-align: top;`)
+          img2.setAttribute('src',`../../public/images/Wings-galaxy-map.png`)
+          
+  
+          const SPAN2 = document.createElement('span')
+          TH2.appendChild(SPAN2)
+          SPAN2.setAttribute('id',`${systemAddress}_${FID}_commander_commanderSystem`)
+          SPAN2.innerText = `${commander.commanderData.Name}`
+  
+      const TH3 = document.createElement('th')
+      TR1.appendChild(TH3)
+      TH3.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth `)
+  
+          const img1 = document.createElement('img')
+          TH3.appendChild(img1)
+          img1.setAttribute('id',`${systemAddress}_${FID}_shipIMG_commanderSystem`)
+          img1.setAttribute('class',`circle-background gradePics`)
+          img1.setAttribute('style',`vertical-align: top;`)
+          const imgFile = `../../public/images/ships_cartoon/${commander.loadout.ship}.png`
+          img1.setAttribute('src',imgFile) 
+          // img1.setAttribute('onerror', imageLoadError(imgFile));
 
-    const TH5 = document.createElement('th')
-    TR1.appendChild(TH5)
-    TH5.setAttribute('class',`w3-text-brightgreen font-BLOCKY aligned-element fitwidth`)
-
-        const SPAN6 = document.createElement('span')
-        TH5.appendChild(SPAN6)
-        SPAN6.setAttribute('id',`${systemAddress}_${FID}_samplesInCargo_commanderSystem`)
-        SPAN6.setAttribute('class',`w3-text-brightgreen `)
-        SPAN6.innerHTML = `${commander.cargo.SampleCargoCount}` + "&nbsp;&nbsp;"
-
-        const SPAN7 = document.createElement('span')
-        TH5.appendChild(SPAN7)
-        SPAN7.setAttribute('id',`${systemAddress}_${FID}_OLPercent_commanderSystem`)
-        SPAN7.setAttribute('class',`w3-text-red `)
-        const cp = commander.loadout.causticProtection
-        const scc = commander.cargo.SampleCargoCount
-        const sampleOLRating = scc >= cp ? ((scc - cp) / cp) : 0
-        const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-        if (sampleOLRating > 0) { SPAN7.innerText = formattedNumber_sampleOLRating + "OL"}
-        else { SPAN7.innerText = `` }
-    
-    const TH6 = document.createElement('th')
-    TR1.appendChild(TH6)
-    TH6.setAttribute('class',`w3-text-yellow font-BLOCKY aligned-element`)
-
-        const SPAN8 = document.createElement('span')
-        TH6.appendChild(SPAN8)
-        SPAN8.setAttribute('id',`${systemAddress}_${FID}_limpetsCargo_commanderSystem`)
-        SPAN8.setAttribute('class',`w3-text-orange font-BLOCKY `)
-        SPAN8.innerText = `${commander.cargo.limpets}`
-
-
-    const TH7 = document.createElement('th')
-    TR1.appendChild(TH7)
-    TH7.setAttribute('class','aligned-element')
-    
-        const SPAN9 = document.createElement('span')
-        TH7.appendChild(SPAN9)
-        SPAN9.setAttribute('id',`${systemAddress}_${FID}_causticProtection_commanderSystem`)
-        SPAN9.setAttribute('class',`w3-text-orange font-BLOCKY `)
-        SPAN9.innerText = `${commander.loadout.causticProtection}`
-
-    const TH8 = document.createElement('th')
-    TR1.appendChild(TH8)
-    TH8.setAttribute('class','aligned-element')
-
-        const SPAN10 = document.createElement('span')
-        TH8.appendChild(SPAN10)
-        SPAN10.setAttribute('id',`${systemAddress}_${FID}_cargoCapacity_commanderSystem`)
-        SPAN10.setAttribute('class',`w3-text-orange font-BLOCKY `)
-        SPAN10.innerText = `${commander.loadout.cargoCapacity}`
-
-    const TH9 = document.createElement('th')
-    TR1.appendChild(TH9)
-    TH9.setAttribute('class','aligned-element')
-
-      const SPAN11 = document.createElement('span')
-      TH9.appendChild(SPAN11)
-      SPAN11.setAttribute('id',`${systemAddress}_${FID}_soldToCarrier_commanderSystem`)
-      SPAN11.setAttribute('class',`w3-text-orange font-BLOCKY `)
-      const addedSamples = (commander.soldToCarrier + commander.soldToRMS)
-
-      SPAN11.innerText = `${addedSamples}`
-
-    const TH10 = document.createElement('th')
-    TR1.appendChild(TH10)
-    TH10.setAttribute('class','aligned-element')
-
-      const SPAN12 = document.createElement('span')
-      TH10.appendChild(SPAN12)
-      SPAN12.setAttribute('id',`${systemAddress}_${FID}_samplesCollected_commanderSystem`)
-      SPAN12.setAttribute('class',`w3-text-orange font-BLOCKY `)
-      SPAN12.innerText = `${commander.samplesCollected}`
-
-    const TH11 = document.createElement('th')
-    TR1.appendChild(TH11)
-    TH11.setAttribute('class','w3-text-white font-BLOCKY fitwidth w3-center aligned-element')
-    
-    
-      const SPAN13 = document.createElement('span')
-      TH11.appendChild(SPAN13)
-      SPAN13.setAttribute('id',`${systemAddress}_${FID}_launchResearchLimpet_commanderSystem`)
-      SPAN13.setAttribute('class',`w3-text-brightgreen `)
-      SPAN13.innerText = `${commander.limpetsLaunched.Research}`
-
-      const SPAN135 = document.createElement('span')
-      TH11.appendChild(SPAN135)
-      SPAN135.innerText = " | "
-
-      const SPAN14 = document.createElement('span')
-      TH11.appendChild(SPAN14)
-      SPAN14.setAttribute('id',`${systemAddress}_${FID}_launchCollectorLimpet_commanderSystem`)
-      SPAN14.setAttribute('class',`w3-text-yellow `)
-      SPAN14.innerText = `${commander.limpetsLaunched.Collection}`
-
-      const SPAN145 = document.createElement('span')
-      TH11.appendChild(SPAN145)
-      SPAN145.innerText = " | "
-
-      const SPAN15 = document.createElement('span')
-      TH11.appendChild(SPAN15)
-      SPAN15.setAttribute('id',`${systemAddress}_${FID}_launchRepairLimpet_commanderSystem`)
-      SPAN15.setAttribute('class',`w3-text-cyan`)
-      SPAN15.innerText = `${commander.limpetsLaunched.Repair}`
+          const SPAN4 = document.createElement('span')
+          TH3.appendChild(SPAN4)
+          SPAN4.setAttribute('id',`${systemAddress}_${FID}_ship_commanderSystem`)
+          SPAN4.setAttribute('class',`aligned-element`)
+          SPAN4.innerText = `${commander.loadout.ship.toUpperCase()}`
+      
+      const TH35 = document.createElement('th')
+      TR1.appendChild(TH35)
+      TH35.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth aligned-element`)
+  
+          const SPAN35 = document.createElement('span')
+          TH35.appendChild(SPAN35)
+          SPAN35.setAttribute('id',`${systemAddress}_${FID}_status_commanderSystem`)
+          SPAN35.setAttribute('class',``)
+          SPAN35.innerText = commander.status
+  
+      const TH4 = document.createElement('th')
+      TR1.appendChild(TH4)
+      TH4.setAttribute('class','w3-center aligned-element')
+          const rll = commander.limpetsLaunched.Research
+          const sampCol = commander.samplesCollected 
+          let sampleRating = null
+          let sampleRating_view = null;
+          if (sampCol == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
+          else { sampleRating = rll / sampCol; sampleRating_view = 1}
+          currentcolorpercentage = progressBar(sampleRating)
+          let distance = sampleRating
+          if (distance === 1) {
+            distance = 100;
+          } else if (distance < 1) {
+            distance *= 100;
+          }
+          const progress_container = document.createElement('span')
+          TH4.appendChild(progress_container)
+          progress_container.setAttribute('class','progress-container')
+          // progress_container.setAttribute('style','text-align: right;')
+        
+          const progress_bar = document.createElement('span')
+          progress_container.appendChild(progress_bar);
+          progress_bar.setAttribute("id",`${systemAddress}_${FID}_sampleRating_commanderSystem`)
+          progress_bar.setAttribute("class","w3-vivid-highvis progress-bar warprogresspercent")
+          progress_bar.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
+          const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+          if (sampleRating_view) {
+            progress_bar.innerText = `${formattedNumber2} `
+          }
+  
+      const TH5 = document.createElement('th')
+      TR1.appendChild(TH5)
+      TH5.setAttribute('class',`w3-text-brightgreen font-BLOCKY aligned-element fitwidth`)
+  
+          const SPAN6 = document.createElement('span')
+          TH5.appendChild(SPAN6)
+          SPAN6.setAttribute('id',`${systemAddress}_${FID}_samplesInCargo_commanderSystem`)
+          SPAN6.setAttribute('class',`w3-text-brightgreen `)
+          SPAN6.innerHTML = `${commander.cargo.SampleCargoCount}` + "&nbsp;&nbsp;"
+  
+          const SPAN7 = document.createElement('span')
+          TH5.appendChild(SPAN7)
+          SPAN7.setAttribute('id',`${systemAddress}_${FID}_OLPercent_commanderSystem`)
+          SPAN7.setAttribute('class',`w3-text-red `)
+          const cp = commander.loadout.causticProtection
+          const scc = commander.cargo.SampleCargoCount
+          const sampleOLRating = scc >= cp ? ((scc - cp) / cp) : 0
+          const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
+          if (sampleOLRating > 0) { SPAN7.innerText = formattedNumber_sampleOLRating + "OL"}
+          else { SPAN7.innerText = `` }
+      
+      const TH6 = document.createElement('th')
+      TR1.appendChild(TH6)
+      TH6.setAttribute('class',`w3-text-yellow font-BLOCKY aligned-element`)
+  
+          const SPAN8 = document.createElement('span')
+          TH6.appendChild(SPAN8)
+          SPAN8.setAttribute('id',`${systemAddress}_${FID}_limpetsCargo_commanderSystem`)
+          SPAN8.setAttribute('class',`w3-text-orange font-BLOCKY `)
+          SPAN8.innerText = `${commander.cargo.limpets}`
+  
+  
+      const TH7 = document.createElement('th')
+      TR1.appendChild(TH7)
+      TH7.setAttribute('class','aligned-element')
+      
+          const SPAN9 = document.createElement('span')
+          TH7.appendChild(SPAN9)
+          SPAN9.setAttribute('id',`${systemAddress}_${FID}_causticProtection_commanderSystem`)
+          SPAN9.setAttribute('class',`w3-text-orange font-BLOCKY `)
+          SPAN9.innerText = `${commander.loadout.causticProtection}`
+  
+      const TH8 = document.createElement('th')
+      TR1.appendChild(TH8)
+      TH8.setAttribute('class','aligned-element')
+  
+          const SPAN10 = document.createElement('span')
+          TH8.appendChild(SPAN10)
+          SPAN10.setAttribute('id',`${systemAddress}_${FID}_cargoCapacity_commanderSystem`)
+          SPAN10.setAttribute('class',`w3-text-orange font-BLOCKY `)
+          SPAN10.innerText = `${commander.loadout.cargoCapacity}`
+  
+      const TH9 = document.createElement('th')
+      TR1.appendChild(TH9)
+      TH9.setAttribute('class','aligned-element')
+  
+        const SPAN11 = document.createElement('span')
+        TH9.appendChild(SPAN11)
+        SPAN11.setAttribute('id',`${systemAddress}_${FID}_soldToCarrier_commanderSystem`)
+        SPAN11.setAttribute('class',`w3-text-orange font-BLOCKY `)
+        const addedSamples = (commander.soldToCarrier + commander.soldToRMS)
+  
+        SPAN11.innerText = `${addedSamples}`
+  
+      const TH10 = document.createElement('th')
+      TR1.appendChild(TH10)
+      TH10.setAttribute('class','aligned-element')
+  
+        const SPAN12 = document.createElement('span')
+        TH10.appendChild(SPAN12)
+        SPAN12.setAttribute('id',`${systemAddress}_${FID}_samplesCollected_commanderSystem`)
+        SPAN12.setAttribute('class',`w3-text-orange font-BLOCKY `)
+        SPAN12.innerText = `${commander.samplesCollected}`
+  
+      const TH11 = document.createElement('th')
+      TR1.appendChild(TH11)
+      TH11.setAttribute('class','w3-text-white font-BLOCKY fitwidth w3-center aligned-element')
+      
+      
+        const SPAN13 = document.createElement('span')
+        TH11.appendChild(SPAN13)
+        SPAN13.setAttribute('id',`${systemAddress}_${FID}_launchResearchLimpet_commanderSystem`)
+        SPAN13.setAttribute('class',`w3-text-brightgreen `)
+        SPAN13.innerText = `${commander.limpetsLaunched.Research}`
+  
+        const SPAN135 = document.createElement('span')
+        TH11.appendChild(SPAN135)
+        SPAN135.innerText = " | "
+  
+        const SPAN14 = document.createElement('span')
+        TH11.appendChild(SPAN14)
+        SPAN14.setAttribute('id',`${systemAddress}_${FID}_launchCollectorLimpet_commanderSystem`)
+        SPAN14.setAttribute('class',`w3-text-yellow `)
+        SPAN14.innerText = `${commander.limpetsLaunched.Collection}`
+  
+        const SPAN145 = document.createElement('span')
+        TH11.appendChild(SPAN145)
+        SPAN145.innerText = " | "
+  
+        const SPAN15 = document.createElement('span')
+        TH11.appendChild(SPAN15)
+        SPAN15.setAttribute('id',`${systemAddress}_${FID}_launchRepairLimpet_commanderSystem`)
+        SPAN15.setAttribute('class',`w3-text-cyan`)
+        SPAN15.innerText = `${commander.limpetsLaunched.Repair}`
+    }
+  }
+  catch (e) {
+    ipcRenderer.send('logs',e)
   }
 }

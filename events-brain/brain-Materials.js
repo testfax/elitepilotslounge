@@ -8,7 +8,6 @@ try {
     const client = BrowserWindow.fromId(thisWindow.win);
     // client.webContents.send('MaterialCollected', data);
     const lcs = require('../utils/loungeClientStore')
-    const socketEventManager = require('../sockets/taskManager')
     const path = require('path')
     const fs = require('fs')
     const {fetcher} = require('./brain_functions')
@@ -402,8 +401,10 @@ try {
             // logs(historyArray[0].Name,historyArray[0].Total);
             materialHistory("ADD",historyArray);  
           })
-          const client = BrowserWindow.fromId(thisWindow.win);
-          client.webContents.send('FromBrain-Materials-Synthesis', receivedData);
+          if (windowItemsStore.get('currentPage') == 'Materials') {
+            const client = BrowserWindow.fromId(thisWindow.win);
+            client.webContents.send('FromBrain-Materials-Synthesis', receivedData);
+          }
           if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
         }
       }

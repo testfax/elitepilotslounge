@@ -93,7 +93,7 @@ try {
     })
     socket.on("disconnect", (reason) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason: ".bgRed,reason) }
-        BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Disconnected: ${JSON.stringify(reason)}`,)
+        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Disconnected: ${JSON.stringify(reason)}`) }
         store.set('socketServerStatus','Server Disconnected')
         const roomCache = {
             Inviter: 0,
@@ -121,7 +121,7 @@ try {
     socket.io.on("reconnect_attempt", (e) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Reconnect Attempt # ".red,e) }
         store.set('socketServerStatus','Server Reconnect')
-        BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Reconnect Attempt: #${JSON.stringify(e)}`,)
+        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Reconnect Attempt: #${JSON.stringify(e)}`) }
     })
     //todo Code listeners from server.
 }

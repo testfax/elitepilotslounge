@@ -11,6 +11,7 @@ try {
 
     const utilities = {
         fetcher: async function(FET,callback) {
+            // console.log("fetcher".red,FET)
             if (watcherConsoleDisplay('globalIPC')) { 
                 logs("[IPC]".bgMagenta,`brain_functions: {fetcher}`);
             }
@@ -192,4 +193,3 @@ catch(e) {
     // logs(e)
     errorHandler(e,e.name)
 }
-

@@ -76,16 +76,13 @@ try {
                     Promise.race([requestPromise, timeoutPromise])
                     .then(response => {
                         if (!response.status) {
-                        throw new Error('HTTP error: ' + response.status);
+                            // throw new Error('HTTP error: ' + response.status);
+                            logsUtil.logs_error('HTTP error: ' + response.status)
                         }
                         // Process the response here
                     })
                     .catch(error => {
-                        if (error.message === 'Request timeout') {
-                        console.error('Request timed out');
-                        } else {
-                        console.error('Fetch error:', error);
-                        }
+                        // logsUtil.logs_error('logConfig->Fetch', error);
                     });
             }
             catch (e) {
@@ -93,14 +90,18 @@ try {
             }
             
         }
-        else { logs("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)}
+        else { logsUtil.logs_error("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)}
     }
 
     const logsUtil = {
         logs: async (...input) => {
             let logMessage = input.join(' ');
             log.info(logMessage);
-        }
+        },
+        logs_error: async (...input) => {
+            let logMessage = input.join(' ');
+            log.error(logMessage);
+        },
     }
     
     module.exports = logsUtil;

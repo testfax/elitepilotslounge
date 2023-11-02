@@ -1,4 +1,4 @@
-const {logs} = require('./logConfig')
+const {logs,logs_error} = require('./logConfig')
 const { app } = require('electron')
 const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
 const path = require('path')
@@ -60,6 +60,7 @@ const lcs = {
                 //Reads, removes all the \r and turns it into an array from the carriage returns
                 //Maps each array item to a JSON object, reverse orders the array,  then loops through each findEvent given 
                 //   and locates the first occurance(reverse order) and appends to the found array.
+                let findEventsStartTime = Date.now()
                 lcs.logState.latest = latestLog;
                 let data = fs.readFileSync(latestLog,'utf8', (err) => { if (err) return logs(err); })
                 data = data.replace(/\r/g,'').split('\n')
@@ -72,12 +73,14 @@ const lcs = {
                 let listItems = [];
                 let listItemByTimestamp = []
                 let listItemByTimestampNames = []
+                const totalLines = data.length
                 if (findEvents.find((e) => e === "All")) {
                     const fileEvents = await lcs.eventJSON()
                     let appendixList = JSON.parse(fileEvents)
                     appendixList.events.forEach((events) => {
                         list.push(events.event)
                     });
+                    
                     list.forEach((event) => {
                         const result = data.find((element) => event === element.event);
                         if (result) { 
@@ -106,9 +109,12 @@ const lcs = {
                     if (watcherConsoleDisplay('globalLogs')) { 
                         logs("[LCS]".yellow,`${path.parse(latestLog).base} Event Search did not find any previous:`,`[${findEvents}]`.yellow)
                     }
-                    return { found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames }
+                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames }
                 }
-                return { found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad }
+                else {
+                    
+                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad }
+                }
 
             }
             else return "[LCS] No Search Array Items Provided as a Second Argument".red
@@ -217,7 +223,7 @@ const lcs = {
             // logs(dir,"\n",error)
 
             if (watcherConsoleDisplay('globalLogs')) { 
-                logs("[LCS]".red,"NO LOGS FOUND....")
+                logs_error("[LCS]".red,"NO LOGS FOUND....")
             }
             // logs(error);
         }

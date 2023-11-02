@@ -4,7 +4,7 @@ try {
     const { io, Manager } = require('socket.io-client')
     const { app, BrowserWindow } = require('electron');
     const { socket } = require('./socketMain')
-    const lcs = require('../utils/loungeClientStore')
+    const {latestLog,latestLogRead,requestCmdr,savedGameLocation} = require('../utils/loungeClientStore')
     const uuid = require('uuid');
     const fs = require('fs')
     const path = require('path')
@@ -35,7 +35,6 @@ try {
             client.webContents.send("from_brain-ThargoidSample", data);
         }
     }) 
-
     //!######################################################## 
     //!######################################################## 
     //!######################################################## 
@@ -96,7 +95,7 @@ try {
             try {
                 const timerID = uuid.v4().slice(-5); 
                 if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
-                const theCommander = lcs.requestCmdr().commander
+                const theCommander = requestCmdr().commander
                 data = {...data,...theCommander}
                 let discuss = socket.emit('eventTransmit',data, (response) => {
                     //! No response necessarily needed, unless there's some kind of visual need to show on the client.
@@ -123,13 +122,12 @@ try {
             catch(error) { errorHandler(error,error.name) }
         },
         // Reads current log file and pushes events through event handler. 3 Second Delay.
-        allEventsInCurrentLogFile: async function() {
+        allEventsInCurrentLogFile: async (callback) => {
             const searchEventList = ["All"]
             // This is all occurances as they happened in the past. That way things can be iterated on. Example being if you launch the client after you've been playing elite for an hour.
-            // const firstLoadList = lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList).firstLoad
+            // const firstLoadList = latestLogRead(latestLog(savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList).firstLoad
             // if (firstLoadList) {
             //     const lastEventInFirstLoadList = firstLoadList[firstLoadList.length - 1].timestamp
-                
             //     let currentDateTime = new Date();
             //     currentDateTime = currentDateTime.toISOString();
             //     if (new Date(lastEventInFirstLoadList) - new Date(currentDateTime) < new Date()) { logs(
@@ -138,12 +136,12 @@ try {
             //     )}
             // }
             // This is the latest occurance that happend of any particular event.
-            let readEventsList = await lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation().savedGamePath,"log"),searchEventList)
+            let readEventsList = await latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),searchEventList)
             if (watcherConsoleDisplay("latestLogsRead")) {
                 logs(
                     "[TM]".green,
-                    "Running latestLogRead by timestamp".yellow,
-                    `${readEventsList.found.length}`.cyan,
+                    "Running latestLogRead: ".yellow,
+                    `${readEventsList.totalLines}`.cyan,
                     "events",
                     // found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
                     // console.logs(readEvents.listItemByTimestampNames)
@@ -152,17 +150,25 @@ try {
                 }
             if (readEventsList.found.length >= 1) {
                 readEventsList.firstLoad.forEach((eventItem,index) => {
+                    index++
+                    const percent = index / readEventsList.totalLines
+                    const formattedNumber = (percent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
+                    callback({current:index,total:readEventsList.totalLines,percent:formattedNumber})
+                    if (index == readEventsList.totalLines) {
+                        const loadTime = (Date.now() - readEventsList.findEventsStartTime) / 1000;
+                        callback('journalLoadComplete')
+                        logs("Find Events Initialization-Timer".bgMagenta,loadTime,"Seconds","LINES: ",readEventsList.totalLines)
+                    }
                     if(searchEventList == "All" && eventItem.event != "WingInvite"  && eventItem.event != "WingAdd" && eventItem.event != "WingJoin" && eventItem.event != "WingLeave") {    
                         if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
-                            // callback... Must be 1
-                            const askIgnoreFile = ignoreEvent(eventItem.event)
-                            //! CHECKED, gathers a category name if it is found, if not, it will return null
-                            if (!askIgnoreFile && eventItem != null) {
-                                // console.log(`${eventItem.event}`.green)
-                                initializeEvent.startEventSearch(eventItem,0)
-                            }
+                        // callback... Must be 1
+                        const askIgnoreFile = ignoreEvent(eventItem.event)
+                        //! CHECKED, gathers a category name if it is found, if not, it will return null
+                        if (!askIgnoreFile && eventItem != null) {
+                            // console.log(`${eventItem.event}`.green)
+                            initializeEvent.startEventSearch(eventItem,0)
+                        }
                     }
-                    
                 })
 
                 //!!! Old code for just initializing the very last event per category...
@@ -181,7 +187,7 @@ try {
         gameStatus: function(data) {
             try {
                 const timerID = uuid.v4().slice(-5); 
-                data = {...data,...lcs.requestCmdr().commander}
+                data = {...data,...requestCmdr().commander}
                 let data2 = {...data}
                 if (watcherConsoleDisplay(data.event)) { console.time(timerID); logs("[PD]".yellow,"GameStatus??".green,data.status) }
                 //! No response necessarily needed, unless there's some kind of visual need to show on the client.
@@ -191,7 +197,7 @@ try {
                 //IF loungeclient is launched after the game is opened for any reason, it will check to see if the "STATUS.json" file contains
                 //   an "In Wing" hex code and find the last WingInvite and WingJoin events and automatically put you back in the correct socket.
                 if (data2.status) {
-                    let jsonStatusFilePath = path.normalize(lcs.savedGameLocation("gameStatus taskManager.js").savedGamePath + "/Status.json")
+                    let jsonStatusFilePath = path.normalize(savedGameLocation("gameStatus taskManager.js").savedGamePath + "/Status.json")
                     let jsonStatus = fs.readFileSync(jsonStatusFilePath,'utf8', (err) => { if (err) return logs(err); })
                     try {
                         if (jsonStatus) { jsonStatus = JSON.parse(jsonStatus) }
@@ -215,7 +221,7 @@ try {
                         //! TESTING MODE
                         // const searchEvents = ["WingInvite","WingJoin","WingLeave"]
                         const searchEvents = ["WingInvite","WingJoin","WingAdd"]
-                        const readEvents = lcs.latestLogRead(lcs.latestLog(lcs.savedGameLocation("gameStatus taskManager.js").savedGamePath,"log"),searchEvents)
+                        const readEvents = latestLogRead(latestLog(savedGameLocation("gameStatus taskManager.js").savedGamePath,"log"),searchEvents)
                         
                         if (readEvents.found.length >= 1) {
                             for (let a in readEvents.found) { 
@@ -244,6 +250,7 @@ try {
                 errorHandler(error,error.name) 
             }
         },
+        journalRun: false, //ReadAllJournalEvents true, Off false
     }
     module.exports = taskList
 
@@ -252,8 +259,11 @@ try {
     //Reads current log file and outputs as if the Events are occuring real time. Basically, if this is not enabled
     //      then the log file will NOT be read in its entirity at application startup.
     //      Will only result in events that last get read out of the journal.
-    const runState = 1; //Live 1, Dev 0
-    if (runState) {  setTimeout(taskList.allEventsInCurrentLogFile,700) }
+    // if (taskList.journalRun) {  setTimeout(taskList.allEventsInCurrentLogFile,700) }
+    // if (taskList.journalRun) {  taskList.allEventsInCurrentLogFile }
+    // 
+    // IS CALLED FROM MAIN PROCESS DURING LOAD 
+    //
     //! Mode
     //! Mode
 }
