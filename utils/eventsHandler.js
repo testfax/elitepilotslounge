@@ -6,6 +6,7 @@ const path = require('path')
 const fs = require('fs')
 const {eventJSON} = require('./loungeClientStore')
 const Store = require('electron-store');
+// const {brain_ThargoidSample_socket} = require('../sockets/taskManager')
 try  {
     // loadBrains()
     getEventsArray()
@@ -53,17 +54,17 @@ try  {
         return multiStores
     }
 
-    
+    let indexEvents = 0
     let eventsJSON = JSON.parse(eventJSON())
     //###### This eventsHandler.js is basically middleware for the specific events "*.js" files. ######
     let failEvents = new Array()
     function handleEvent(eventName, category, eventData, returnable) {
         let modulePath; let fileType;
         if (category == "json") { fileType = '.json' } else { fileType = '.js' }
-            modulePath = path.join(__dirname,'..','events', category, eventName + ".js");
-        if (fs.existsSync(modulePath)) {
-            if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) }
-            
+        modulePath = path.join(__dirname,'..','events', category, eventName + ".js");
+            if (fs.existsSync(modulePath)) {
+                if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) }
+                
             const handler = require(modulePath);
             
             if (returnable) { //! RETURNS DATA FROM EVENT CALLED
@@ -144,7 +145,7 @@ try  {
     }
     
    
-    module.exports = { initializeEvent, jsonEvent }
+    module.exports = { initializeEvent, jsonEvent, indexEvents }
 }
 catch (error) {
     errorHandler(error,error.name)

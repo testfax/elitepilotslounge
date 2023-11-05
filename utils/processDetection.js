@@ -1,4 +1,5 @@
 try {
+  const { ipcMain } = require('electron');
   const {logs} = require('./logConfig')
   const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
   const Store = require('electron-store');
@@ -87,18 +88,20 @@ try {
             logs("[PD]".yellow," -t- -> Commander??".green,true)
           }
           watcher.eliteIO['status'] = true
-          watcher.tailFile(watcher.savedGameP)
+          // watcher.tailFile(watcher.savedGameP)
           const {gameStatus} = require('../sockets/taskManager')
           gameStatus(watcher.eliteIO)
+          ipcMain.emit('eliteProcess',watcher.eliteIO.status)
         }
       }, 15000);
     }
     else {
       if (watcherConsoleDisplay('globalLogs')) { logs("[PD]".yellow, "Commander??".green,true) }
       watcher.eliteIO['status'] = true
-      watcher.tailFile(watcher.savedGameP)
+      // watcher.tailFile(watcher.savedGameP)
       const {gameStatus} = require('../sockets/taskManager')
       gameStatus(watcher.eliteIO)
+      ipcMain.emit('eliteProcess',watcher.eliteIO.status)
     }
   });
   eliteDangerousWatcher.on('stop', () => {
@@ -108,6 +111,7 @@ try {
     const {gameStatus} = require('../sockets/taskManager')
     gameStatus(watcher.eliteIO)
     store.set('data',{})
+    ipcMain.emit('eliteProcess',watcher.eliteIO.status)
   });
 
   eliteDangerousWatcher.startWatching()

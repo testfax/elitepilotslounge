@@ -34,22 +34,7 @@ try {
     const jsonEntries = {
         //! Transmits all events that the client receives to the server as long as task is being called from the "EVENT" js file.
         //! Can use a callback to the originating event.js
-        CollectCargo: function(data,callback) { 
-            try { data = {...data}; transmitter(data,callback); }
-            catch(error) { errorHandler(error,error.name) }
-        },
-        EjectCargo: function(data,callback) { 
-            try { data = {...data}; transmitter(data,callback); }
-            catch(error) { errorHandler(error,error.name) }
-        },
-        MarketSell: function(data,callback) { 
-            try { data = {...data}; transmitter(data,callback); }
-            catch(error) { errorHandler(error,error.name) }
-        },
-        MarketBuy: function(data,callback) { 
-            try { data = {...data}; transmitter(data,callback); }
-            catch(error) { errorHandler(error,error.name) }
-        },
+        
     }
     module.exports = jsonEntries
 }

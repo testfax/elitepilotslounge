@@ -160,7 +160,7 @@ try {
     review = false
     // if (data.event == 'FSDJump' || data.event == 'Location') { logs("Review:".yellow,logF(data)) }
     if (windowItemsStore.get('currentPage') == thisBrain) {
-      if (review && data.event != 'FSDJump' && data.event != 'Location') { logs("Review:".yellow,logF(data)) }
+      if (review && data.event != 'FSDJump' && data.event != 'Location') { logs("Review:".yellow,logF(data.event)) }
       const client = BrowserWindow.fromId(thisWindow.win);
       if (client) { client.webContents.send("from_brain-ThargoidSample", data); }
     }
@@ -185,13 +185,13 @@ try {
   //!                   List all events that will be looked for by this brain.
   const eventNames = [
     "Fsd Charging",
-    "CollectCargo",
+    // "CollectCargo",
     "EjectCargo",
     // "MarketSell",
     "MarketBuy",
     "Shutdown",
     // "LaunchDrone",
-    "StartJump",
+    // "StartJump",
     "FSDTarget",
     // "NavRouteClear",
     "FSSSignalDiscovered",
@@ -244,6 +244,7 @@ try {
   app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
   ipcMain.on(thisBrain, async (receivedData) => {
     // logs(`${receivedData.event}`.cyan)
+    
     if (receivedData.event == 'template') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
@@ -895,6 +896,7 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'LaunchDrone') {
+
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
         if (currentSystemState != "") {

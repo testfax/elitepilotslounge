@@ -5,7 +5,6 @@ try {
     const lcs = require('../../utils/loungeClientStore')
     const colorize = require('json-colorizer');
     //! #### Socket Server
-    // const {FactionKillBond} = require('../../sockets/tasks/combat')
     const taskManager = require('../../sockets/taskManager')
     const Store = require('electron-store')
     module.exports = (data) =>{

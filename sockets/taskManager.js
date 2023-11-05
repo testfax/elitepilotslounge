@@ -1,10 +1,10 @@
 try {
-    const {logs} = require('../utils/logConfig')
+    const {logs,logs_error} = require('../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler,logF} = require('../utils/errorHandlers')
     const { io, Manager } = require('socket.io-client')
     const { app, BrowserWindow } = require('electron');
     const { socket } = require('./socketMain')
-    const {latestLog,latestLogRead,requestCmdr,savedGameLocation} = require('../utils/loungeClientStore')
+    let {latestLog,latestLogRead,requestCmdr,savedGameLocation,updateEventIndexNumber} = require('../utils/loungeClientStore')
     const uuid = require('uuid');
     const fs = require('fs')
     const path = require('path')
@@ -22,8 +22,13 @@ try {
         logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green) 
         //Need to send the dcohSystem's data to the frontside so that it can update all the titan systems info. 
         if (data.type == 'dcohSystems') {
-            const client = BrowserWindow.fromId(2);
-            client.webContents.send(`dcohSystems-sample`, data);
+            try {
+                const client = BrowserWindow.fromId(2);
+                client.webContents.send(`dcohSystems-sample`, data);
+            }
+            catch (e) {
+                logs_error("[TM]".red,"'fromSocketServer'->No Thargoid Sample Window",e)
+            }
         } 
         if (data.type == 'findSystemResult') { 
             if (data.message == '0') { 
@@ -31,8 +36,13 @@ try {
             }
         }
         if (data.type == 'brain-ThargoidSample_socket') {
-            const client = BrowserWindow.fromId(2);
-            client.webContents.send("from_brain-ThargoidSample", data);
+            try {
+                const client = BrowserWindow.fromId(2);
+                client.webContents.send("from_brain-ThargoidSample", data);
+            }
+            catch (e) {
+                logs_error("[TM]".red,"No Thargoid Sample Window",e)
+            }
         }
     }) 
     //!######################################################## 
@@ -84,9 +94,9 @@ try {
                 try {
                     const timerID = uuid.v4().slice(-5); 
                     if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
-                    data = {event,...data,"titanSocket":titanSocket }
+                    dataList = {event,...data,"titanSocket":titanSocket }
                     // console.log(data)
-                    socket.emit('eventTransmit',data, async (response) => { resolve(response) });
+                    socket.emit('eventTransmit',dataList, async (response) => { resolve(response) });
                 }
                 catch(error) { errorHandler(error,error.name); reject(error) }
             })
@@ -97,6 +107,7 @@ try {
                 if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
                 const theCommander = requestCmdr().commander
                 data = {...data,...theCommander}
+                // console.log(data);
                 let discuss = socket.emit('eventTransmit',data, (response) => {
                     //! No response necessarily needed, unless there's some kind of visual need to show on the client.
                     //! The below is for troubleshooting purposes.
@@ -123,7 +134,8 @@ try {
         },
         // Reads current log file and pushes events through event handler. 3 Second Delay.
         allEventsInCurrentLogFile: async (callback) => {
-            const searchEventList = ["All"]
+            try {
+                const searchEventList = ["All"]
             // This is all occurances as they happened in the past. That way things can be iterated on. Example being if you launch the client after you've been playing elite for an hour.
             // const firstLoadList = latestLogRead(latestLog(savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList).firstLoad
             // if (firstLoadList) {
@@ -139,8 +151,8 @@ try {
             let readEventsList = await latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),searchEventList)
             if (watcherConsoleDisplay("latestLogsRead")) {
                 logs(
-                    "[TM]".green,
-                    "Running latestLogRead: ".yellow,
+                    "[TM]".yellow,
+                    "Running latestLogRead: ".green,
                     `${readEventsList.totalLines}`.cyan,
                     "events",
                     // found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
@@ -149,15 +161,23 @@ try {
                     )
                 }
             if (readEventsList.found.length >= 1) {
-                readEventsList.firstLoad.forEach((eventItem,index) => {
-                    index++
-                    const percent = index / readEventsList.totalLines
+                let index = 0;
+                for (const eventItem of readEventsList.firstLoad) {
+                    index++;
+                    const percent = index / readEventsList.totalLines;
                     const formattedNumber = (percent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
+                    
+                    updateEventIndexNumber(index)
+                    const now = new Date(eventItem.timestamp);
+                    eventItem["timestamp"] = now.toISOString() + `+${index}`
+                    // console.log(index, readEventsList.totalLines, formattedNumber)
+                    // console.log(`${eventItem["timestamp"]}`.cyan,`${eventItem.event}`)
+                    
                     callback({current:index,total:readEventsList.totalLines,percent:formattedNumber})
                     if (index == readEventsList.totalLines) {
                         const loadTime = (Date.now() - readEventsList.findEventsStartTime) / 1000;
+                        logs("[TM]".green,"Completed LatestLogsRead".bgMagenta,`${loadTime}`.cyan,"LINES:",`${readEventsList.totalLines}`.cyan)
                         callback('journalLoadComplete')
-                        logs("Find Events Initialization-Timer".bgMagenta,loadTime,"Seconds","LINES: ",readEventsList.totalLines)
                     }
                     if(searchEventList == "All" && eventItem.event != "WingInvite"  && eventItem.event != "WingAdd" && eventItem.event != "WingJoin" && eventItem.event != "WingLeave") {    
                         if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
@@ -169,7 +189,7 @@ try {
                             initializeEvent.startEventSearch(eventItem,0)
                         }
                     }
-                })
+                }
 
                 //!!! Old code for just initializing the very last event per category...
                 // for (let a in readEventsList.found) { 
@@ -182,6 +202,11 @@ try {
                 //     }
                 // }
             }
+            }
+            catch (e) {
+                logs_error("[TM]".red,"allEventsInCurrentLogFile".yellow,e)
+            }
+            
         },
         //! Transmits status of the elite dangerous process. There is a poll rate checking every 15 seconds right now.
         gameStatus: function(data) {

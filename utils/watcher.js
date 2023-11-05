@@ -13,8 +13,9 @@ try {
     const fs = require('fs')
     const chokidar = require('chokidar') //Monitors File Changes in the Saved Games\ED\ folder.
     const { initializeEvent } = require('./eventsHandler')
-    const lcs = require('./loungeClientStore')
+    let lcs = require('./loungeClientStore')
     let lcsStuff = lcs.savedGameLocation("lcsStuff watcher.js");
+    let eventsArray = []
     if (lcs.requestCmdr() != false && lcs.requestCmdr() != 'undefined') {
         const savedGamePath = lcsStuff.savedGamePath;
         const wat = {
@@ -49,9 +50,6 @@ try {
             tailFile: function(savedGamePath) { //called from wat.eliteProcess() function. Only for *.log files. *.json files are handled at the bottom of this page with watcher.on('change')
                 const currentJournalLog = lcs.latestLog(savedGamePath,"log")
                 continueWatcherBuild(currentJournalLog)
-
-
-
                 function continueWatcherBuild(currentJournalLog) {
                     if (watcherConsoleDisplay('globalLogs')) { 
                         logs("[TAIL]".green,"Monitoring:".green ,path.parse(currentJournalLog).base)
@@ -65,8 +63,19 @@ try {
                         try {
                             inspectedEvent = JSON.parse(data) //turn string into a JSON array
                             //  wat.sendlogEvent(inspectedEvent)
-                            
                             //! CHECK TO SEE IF EVENT IS IN THE IGNORE FILE....
+                            
+                            //!Increment Event Index number
+                            let eventIndexNumber = lcs.eventIndexNumber
+                            eventIndexNumber++
+                            lcs.updateEventIndexNumber(eventIndexNumber)
+                            const now = new Date(inspectedEvent.timestamp);
+                            inspectedEvent["timestamp"] = now.toISOString() + `+${eventIndexNumber}`
+                            // console.log(index, readEventsList.totalLines, formattedNumber)
+                            // console.log(`${inspectedEvent["timestamp"]}`.cyan,`${inspectedEvent.event}`)
+                            //!
+
+
                             const askIgnoreFile = wat.ignoreEvent(inspectedEvent.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
                             if (!askIgnoreFile && inspectedEvent != null) {
@@ -83,7 +92,8 @@ try {
                         }
                     });
                     tailLog.on("error", function(error) { logs_error('ERROR: ', error); });
-                    ipcMain.emit('tailState',tailLog.isWatching)
+                    // logs('emitting tailState')
+                    // ipcMain.emit('tailState',tailLog.isWatching)
                 }
             },
             tailJsonFile: function(data,eventMod) { //For JSON files only
@@ -99,13 +109,20 @@ try {
                             if (watcherConsoleDisplay(event)) { logs("1: Watcher.... ".bgCyan,`${event}`.yellow); }
                         }
                         // logs(colorize(data, {pretty: true}))
+                  
+                        //!Increase Event Index - Not used to keep up with journal log file numbers. or else everything is off on another journal initial read.
+                        let eventIndexNumber = lcs.eventIndexNumber
+                        eventIndexNumber
+                        lcs.updateEventIndexNumber(eventIndexNumber)
+                        const now = new Date(dataObj.timestamp);
+                        dataObj["timestamp"] = now.toISOString() + `+${eventIndexNumber}`
+                        console.log(`${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
+                        //!
                         const result = sendJSONevent = initializeEvent.startEventSearch(dataObj,0,eventMod);
                         // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }
                     }
                     catch(e) {
-                        logs(data,eventMod)
-                        logs(eventMod,e)
-                        logs("JSON PARSE FAIL".yellow,"Could not parse:".red,data)
+                        logs_error("JSON PARSE FAIL".yellow,"Could not parse:".red,"EventMod:".red,eventMod,"Data:".red,data,e)
                     }
                 }
                 if (!data) { 
@@ -113,6 +130,7 @@ try {
                 }
             }
         }
+
         //! BEGIN WATCHING ELITE DANGEROUS FOLDER
         watcherPath = chokidar.watch(savedGamePath, {
             persistent: true,

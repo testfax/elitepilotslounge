@@ -36,11 +36,7 @@ try {
         Status: function(data,callback) { 
             try { data = {...data}; transmitter(data,callback); }
             catch(error) { errorHandler(error,error.name) }
-        },
-        Cargo: function(data,callback) { 
-            try { data = {...data}; transmitter(data,callback); }
-            catch(error) { errorHandler(error,error.name) }
-        },
+        }
         // Market: function(data,callback) { 
         //     try { data = {...data}; transmitter(data,callback); }
         //     catch(error) { errorHandler(error,error.name) }

@@ -12,6 +12,11 @@ const lcs = {
     logState: { logs: 1, latest: "" },
     worldFixer: { timer: false},
     readLogFileData: {},
+    eventIndexNumber: 0,
+    updateEventIndexNumber: function(newIndex) {
+        lcs.eventIndexNumber = newIndex
+        // console.log("updated eventIndexNumber".red,lcs.eventIndexNumber)
+    },
     isJSONFileValid: async function (filePath) {
         try {
             const fileContents = fs.readFileSync(filePath, 'utf-8');

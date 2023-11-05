@@ -16,15 +16,15 @@ try {
         if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
         //! #### Socket Server
         // ipcMain.removeListener(`event-callback-${data.event}`)
-        ipcMain.removeAllListeners(`event-callback-${data.event}`);
-        if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
-            ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
-                if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
-                    logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
-                }
-                taskManager.eventDataStore(receivedData)
-            })
-        }
+        // ipcMain.removeAllListeners(`event-callback-${data.event}`);
+        // if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
+        //     ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
+        //         if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
+        //             logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
+        //         }
+        //         taskManager.eventDataStore(receivedData)
+        //     })
+        // }
         //The response from the socket server will be a callback to this function.
         //Manipulate the data then send to the brain.
         // Cargo(data, (response)=> { logs("stat",response) })

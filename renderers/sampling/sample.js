@@ -906,7 +906,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
-          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(data.combinedData.timestamp)
+          const [timestamp,index] = data.combinedData.thisSampleSystem.split("+")
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
         }
       }
@@ -914,7 +915,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'reset') {
         try {
           const checkViewable = document.getElementById(`${data.systemAddress}_${data.FID}_row_commanderSystem`)
-          if (checkViewable) { primaryChar++; checkViewable.remove() }
+          if (checkViewable) { checkViewable.remove() }
         }
         catch (e) {
           console.log(e)
@@ -1044,6 +1045,9 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'Cargo') {
         document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(data.combinedData.timestamp)
         document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesInCargo_commanderSystem`).textContent = data.combinedData.SampleCargoCount
+        if (data.combinedData.SampleCargoCount == 0) {
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`).innerHTML = ""
+        }
         document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_limpetsCargo_commanderSystem`).textContent = data.combinedData.limpets
        
         //update overload
@@ -1053,7 +1057,9 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         const ol = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`)
         const sampleOLRating = scc >= cp ? ((scc - cp) / cp) : 0
         const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-        if (sampleOLRating > 0) { ol.textContent = formattedNumber_sampleOLRating }
+        if (sampleOLRating > 0) { ol.innerHTML = "&nbsp;" + formattedNumber_sampleOLRating + "&nbsp;OL" }
+        else { ol.innerHTML = "" }
+        
       }
       if (data.event == 'CollectCargo') {
           if(isWordPresent(data.combinedData.Type,'sample')) {
@@ -1063,22 +1069,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               const currentValue = parseInt(value.textContent, 10);
               const newValue = currentValue + 1;
               value.textContent = newValue;
-              const description = `Collected: ${data.combinedData.Type_Localised}`
+              const description = `+ ${data.combinedData.Type_Localised}`
               descriptionContent(data,description)
-
-              //CAUSTIC OVERLOAD
-              const cp = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_causticProtection_commanderSystem`)
-              const cp_val = parseInt(cp.textContent,10)
-              const scc = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesInCargo_commanderSystem`)
-              const scc_val = parseInt(scc.textContent,10)
-              const sampleOLRating = scc_val >= cp_val ? ((scc_val - cp_val) / cp_val) : 0
-              const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-              if (scc_val >= cp_val) {
-                document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`).textContent = formattedNumber_sampleOLRating + "OL"
-              }
-              else {
-                document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`).textContent = ""
-              }
 
               //SAMPLE RATING
               const sampleRatingDom = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_sampleRating_commanderSystem`)
@@ -1100,7 +1092,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               currentcolorpercentage = progressBar(sampleRating)
               sampleRatingDom.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
               const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-              if (sampleRating_view) { sampleRatingDom.textContent = `${formattedNumber2} ` }
+              if (sampleRating_view) { sampleRatingDom.innerHTML = `${formattedNumber2}` }
             }
             catch (e) { console.log(e) }
           }
@@ -1321,7 +1313,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           let sampleRating = null
           let sampleRating_view = null;
           if (sampCol == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
-          else { sampleRating = rll / sampCol; sampleRating_view = 1}
+          else { sampleRating =  sampCol / rll; sampleRating_view = 1}
           currentcolorpercentage = progressBar(sampleRating)
           let distance = sampleRating
           if (distance === 1) {
@@ -1341,7 +1333,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           progress_bar.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
           const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
           if (sampleRating_view) {
-            progress_bar.innerText = `${formattedNumber2} `
+            progress_bar.innerText = `${formattedNumber2}`
           }
   
       const TH5 = document.createElement('th')
@@ -1352,7 +1344,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           TH5.appendChild(SPAN6)
           SPAN6.setAttribute('id',`${systemAddress}_${FID}_samplesInCargo_commanderSystem`)
           SPAN6.setAttribute('class',`w3-text-brightgreen `)
-          SPAN6.innerHTML = `${commander.cargo.SampleCargoCount}` + "&nbsp;&nbsp;"
+          SPAN6.innerHTML = `${commander.cargo.SampleCargoCount}`
   
           const SPAN7 = document.createElement('span')
           TH5.appendChild(SPAN7)
@@ -1362,8 +1354,8 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           const scc = commander.cargo.SampleCargoCount
           const sampleOLRating = scc >= cp ? ((scc - cp) / cp) : 0
           const formattedNumber_sampleOLRating = (sampleOLRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-          if (sampleOLRating > 0) { SPAN7.innerText = formattedNumber_sampleOLRating + "OL"}
-          else { SPAN7.innerText = `` }
+          if (sampleOLRating > 0) { SPAN7.innerHTML = "&nbsp;&nbsp;" + formattedNumber_sampleOLRating + "&nbsp;OL"}
+          else { SPAN7.innerText = "" }
       
       const TH6 = document.createElement('th')
       TR1.appendChild(TH6)
