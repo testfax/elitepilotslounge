@@ -6,7 +6,6 @@ try {
     const colorize = require('json-colorizer');
     //! #### Socket Server
     const taskManager = require('../../sockets/taskManager')
-    // const {Commander} = require('../../sockets/tasks/startup')
     const Store = require('electron-store')
     module.exports = (data) =>{
         try {
@@ -14,7 +13,7 @@ try {
                 'brain-ThargoidSample'
             ]
             //! #### Logs
-            if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(data) }
+            if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data,{pretty:true})) }
             //! #### Mutate Data
             let result = lcs.loungeClientStore(lcs.savedGameLocation('commander-event').loungeClientFile)
             if (!result[0].commander.hasOwnProperty('commander')) { 
@@ -32,7 +31,7 @@ try {
             if (!ipcMain.listenerCount(`event-callback-${data.event}`)) { 
                 ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
                     if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
-                        logs(`${data.event.toUpperCase()}-callback!`.cyan,receivedData) 
+                        logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(data,{pretty:true})) 
                     } 
                     taskManager.eventDataStore(receivedData) 
                 }) 

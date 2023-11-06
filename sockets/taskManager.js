@@ -12,7 +12,6 @@ try {
         updateEventIndexNumber,
         updateInitialReadStatus,
         getInitialReadStatus,
-        getStartStop,
         updateStartStop,
     } = require('../utils/loungeClientStore')
     const uuid = require('uuid');
@@ -325,7 +324,6 @@ try {
                 errorHandler(error,error.name) 
             }
         },
-        journalRun: false, //ReadAllJournalEvents true, Off false
     }
     module.exports = taskList
 

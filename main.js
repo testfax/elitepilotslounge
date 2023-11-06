@@ -198,9 +198,9 @@ function main() {
                 }
               })
             }
-            else {
-              logs_error('[PD]'.yellow,"GameStatus??".green,"Elite Not Running")
-            }
+            // else {
+            //   logs_error('[PD]'.yellow,"GameStatus??".green,"Elite Not Running")
+            // }
           })
         })
     }
@@ -214,7 +214,6 @@ function main() {
                     preload: path.join(__dirname, 'preload.js'),
                     nodeIntegration: false,
                     nodeIntegrationInWorker: true,
-                    // devTools: true,
                     contextIsolation: true,
                 },
                 show: false,
@@ -294,19 +293,18 @@ function main() {
         }
     }
     app.on('window-all-closed', () =>{
-        // watcher.wat.watcher.close()
-        if (process.platform !== 'darwin') app.quit()
-        const roomCache = {
-      Inviter: 0,
-      Others: [],
-      Rooms: [],
-      leave: 1
-    }
-    wingData(roomCache,0)
-    logs("=ELITE PILOTS LOUNGE= CLOSED".red,"isPackaged:".yellow,`${JSON.stringify(app.isPackaged,null,2)}`.cyan, "Version:".yellow,`${JSON.stringify(app.getVersion(),null,2)}`.cyan);
-    // logs(`App Quit`.red)
-    return
-    
+      logs("=ELITE PILOTS LOUNGE= CLOSED".red,"isPackaged:".yellow,`${JSON.stringify(app.isPackaged,null,2)}`.cyan, "Version:".yellow,`${JSON.stringify(app.getVersion(),null,2)}`.cyan);
+          // watcher.wat.watcher.close()
+      if (process.platform !== 'darwin') app.quit()
+      const roomCache = {
+        Inviter: 0,
+        Others: [],
+        Rooms: [],
+        leave: 1
+      }
+      wingData(roomCache,0)
+      // logs(`App Quit`.red)
+      return
     })
     process.on('uncaughtException', (error,origin) => {
       errorHandler(error,origin)
@@ -336,7 +334,7 @@ function main() {
     //The errorHandlers functions sometimes dont capture errors that are the resultant of another function on a different page.
   }
   catch(e) {
-      console.log("MAIN PROCESS ERROR".yellow,e.stack)
+      logs_error("MAIN PROCESS ERROR".yellow,e.stack)
   }
 }
 

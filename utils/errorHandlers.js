@@ -92,6 +92,9 @@ const errorFunc = {
     },
     errorHandler: function(error,extra,origin) {
         if (!app.isPackaged) {
+            if (BrowserWindow.fromId(1)) { 
+                BrowserWindow.fromId(1).send('loading-eventActioned',error.stack)
+            }
             logs_error("\n","[ERROR AREA]".bgYellow,`${extra}`.cyan,"\n","[ERROR STACK]".bgRed,error.stack,"\n","[ERROR ORIGIN]".bgYellow,origin)
             
             // if (origin == "ExperimentalWarning") return
@@ -127,7 +130,14 @@ const errorFunc = {
         }
         if (app.isPackaged) {
             logs_error(error.stack,origin,extra)
-            app.quit();
+            if (BrowserWindow.fromId(1)) {
+                //Send critical erro to loading screen
+                BrowserWindow.fromId(1).send('loading-eventActioned',error.stack)
+            }
+            if (BrowserWindow.fromId(2)) {
+                //Terminate the client if criticla error is discovered.
+                app.quit();
+            }
         }
         
     },

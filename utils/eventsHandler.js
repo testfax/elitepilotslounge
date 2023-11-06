@@ -175,15 +175,19 @@ try  {
     }
     const initializeEvent = { //! ONLY FOR "*.log" FILES.        
         startEventSearch: async (JSONevent,returnable,eventMod) => { 
-                 
             let SpecifyEvent = JSONevent.event
             if (eventMod != undefined) { SpecifyEvent = eventMod };
             const category = getCategoryFromEvent(SpecifyEvent)
             
             //todo Need to make big alert if "EVENT" does not exist... Probably should bring it to the front side and make a form that posts to discord informing us.
             if (category == null) { 
-                logs("2.6 NO EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow);
-                return false
+                if (!returnable) { logs("2.6 NO CATEGORY:EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow); }
+                if (returnable) { 
+                    let eventIndexNumbers = eventIndexNumber
+                    eventIndexNumbers++
+                    updateEventIndexNumber(eventIndexNumbers)
+                    return true
+                }
             }
             //category should give the Folder Path (Folder Path)
             const result = await handleEvent(SpecifyEvent, category, JSONevent, returnable);

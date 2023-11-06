@@ -37,15 +37,18 @@ try {
             //     });
             // },
             ignoreEvent: function(ignoreEventName) {
-                let ignoreEventsJSON = fs.readFileSync(path.join(lcs.cwd,'events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
-                ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
-                for (const event of ignoreEventsJSON.events) {
-                    if (event.event === ignoreEventName) {
-                        // logs("IGNORE TEST".red,ignoreEventName)
-                        return event.category;
+                try {
+                    let ignoreEventsJSON = fs.readFileSync(path.join(process.cwd(),'.','events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
+                    ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
+                    for (const event of ignoreEventsJSON.events) {
+                        if (event.event === ignoreEventName) {
+                            // logs("IGNORE TEST".red,ignoreEventName)
+                            return event.event;
+                        }
                     }
+                    return null; // Return null if event name not found
                 }
-                return null; // Return null if event name not found
+                catch(e) { errorHandler(e,"wat.ignoreEvent")}
             },
             tailFile: function(savedGamePath) { //called from wat.eliteProcess() function. Only for *.log files. *.json files are handled at the bottom of this page with watcher.on('change')
                 const currentJournalLog = lcs.latestLog(savedGamePath,"log")
