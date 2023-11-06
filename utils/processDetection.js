@@ -6,6 +6,7 @@ try {
   const store = new Store({ name: `brain-ThargoidSample` })
   const { exec } = require('child_process');
   const { EventEmitter } = require('events');
+  const colors = require('colors')
 
 
   function isProcessRunning(processName, callback) {
@@ -32,7 +33,7 @@ try {
     
     startWatching() {
       const pollingValue = this.pollingInterval
-      if (watcherConsoleDisplay("globalLogs")) { logs(`[PD] Monitoring Game Status, Interval: ${JSON.stringify(pollingValue,null,2)}ms `) }
+      if (watcherConsoleDisplay("globalLogs")) { logs(`[PD]`.yellow,`Monitoring Game Status, Interval: ${JSON.stringify(pollingValue,null,2)}ms`.bgWhite) }
       this.checkIsRunning();
       this.pollingTimer = setInterval(() => {
         // if (watcherConsoleDisplay("globalLogs")) { logs(`Monitoring Game Status, Interval: ${this.pollingInterval}ms `.bgWhite) }

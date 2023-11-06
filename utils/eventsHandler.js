@@ -1,10 +1,10 @@
 //! Watcher Console Display is located in loungeClientStore.js
 const {app} = require('electron')
-const {logs} = require('./logConfig')
-const {watcherConsoleDisplay,errorHandler} = require('./errorHandlers')
+const {logs,logs_error} = require('./logConfig')
+const {watcherConsoleDisplay,errorHandler,logF} = require('./errorHandlers')
 const path = require('path')
 const fs = require('fs')
-const {eventJSON} = require('./loungeClientStore')
+const {eventJSON,getInitialReadStatus,eventIndexNumber,updateEventIndexNumber,cwd} = require('./loungeClientStore')
 const Store = require('electron-store');
 // const {brain_ThargoidSample_socket} = require('../sockets/taskManager')
 try  {
@@ -53,46 +53,97 @@ try  {
         });
         return multiStores
     }
-
-    let indexEvents = 0
+    function ignoreEvent(ignoreEventName) {
+        try {
+            let ignoreEventsJSON = fs.readFileSync(path.join(cwd,'.','events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs_error(err); });
+            ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
+            for (const event of ignoreEventsJSON.events) {
+                if (event.event === ignoreEventName) {
+                    // logs("IGNORE TEST".red,ignoreEventName)
+                    return event.category;
+                }
+            }
+            return null; // Return null if event name not found
+        }
+        catch (e) {
+            logs_error(e.stack)
+        }
+    }
     let eventsJSON = JSON.parse(eventJSON())
     //###### This eventsHandler.js is basically middleware for the specific events "*.js" files. ######
     let failEvents = new Array()
-    function handleEvent(eventName, category, eventData, returnable) {
+    async function handleEvent(eventName, category, eventData, returnable) {
         let modulePath; let fileType;
-        if (category == "json") { fileType = '.json' } else { fileType = '.js' }
-        modulePath = path.join(__dirname,'..','events', category, eventName + ".js");
-            if (fs.existsSync(modulePath)) {
-                if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) }
-                
-            const handler = require(modulePath);
+        // if (category == "json") { fileType = '.json' } else { fileType = '.js' } //!!!!!!!!!!NOT USED
+        modulePath = path.join(cwd,'.','events', category, eventName + ".js");
+        
+        const askIgnoreFile = ignoreEvent(eventData)
+        if (fs.existsSync(modulePath)) {
+            
+            //Force set returnable or not. Not absoulutely necessary as the only time the log files are read in bulk
+            //    is during initial application start up.
+            let initialReadStatus = getInitialReadStatus()
+            if (initialReadStatus) { returnable = true; 
+                if (watcherConsoleDisplay(eventName)) { 
+                    logs('Force Set initialReadStatus:true'.bgBlue,returnable)
+                } 
+            }
+
+            
+            if (watcherConsoleDisplay(eventName)) { 
+                logs(`2: ${path.join(category, eventName + ".js")} `.bgCyan,"FILE EXISTS ".green) 
+                logs("eventsHandler -> initialReadStatus:".red,initialReadStatus)
+            }
+
+           
+            //Let the event know that it is returnable or not.
+            eventData['returnable'] = returnable
             
             if (returnable) { //! RETURNS DATA FROM EVENT CALLED
                 if (watcherConsoleDisplay(eventName)) { logs("2.3 RETURNABLE -> ".bgMagenta,returnable) }
-                return handler(eventData); 
+                if (eventName != "WingInvite"  && eventName != "WingAdd" && eventName != "WingJoin" && eventName != "WingLeave" && !askIgnoreFile) {
+                    if (watcherConsoleDisplay(eventName)) { logs('[EH]'.green,"Ignorable:".yellow,`${askIgnoreFile}`) }
+                    const handler = require(modulePath);
+                    const result = await handler(eventData);
+                    if (result == undefined) { 
+                        logs_error('[EH]'.red,"Unhandled Returnable Event:".yellow,`${eventData.event}`)
+                       
+                    }
+                    return result
+                }
+                else {
+                    //Keep eventIndexNumber accurate with handled journal events. Even though we're ignoring the ones above. As gameStatus will handle them separately.
+                    let eventIndexNumbers = eventIndexNumber
+                    eventIndexNumbers++
+                    logs('eventsHandler -> returnable',askIgnoreFile)
+                    updateEventIndexNumber(eventIndexNumbers)
+                    return true
+                }
             }
             else { //! DOESN"T RETURN ANYTHING FROM THE EVENT CALLED.
                 try {
                     if (watcherConsoleDisplay(eventName)) { logs("2.4: Event Handling -> ".bgCyan,`${eventName}`.yellow); }
-                    try {
-                        handler(eventData);
-                        // console.log(`${eventData.event}`.yellow)
-                    }
-                    catch (e) {
-                        console.log(e)
-                    }
-    
+                    try { const handler = require(modulePath); handler(eventData); }
+                    catch (e) { errorHandler(e,"eventsHandler") }
                 }   
                 catch(error) {
                     // logs("2.5 Error:",modulePath)
                     //todo FUTURE GUI NOTIFICATIN FOR COMMANDER SPECIFIC ?ADMINS?
-                    // if (watcherConsoleDisplay("showNoEventHandler")) { logs("2.5: NO HANDLER -> ".bgRed, `${eventName + ".js"}`.yellow); }
+                    if (watcherConsoleDisplay("showNoEventHandler")) { logs("2.5: NO HANDLER -> ".bgRed, `${eventName + ".js"}`.yellow); }
                     incrimentNoHandler(category,eventName);
                 }
             }
         }
         else {
-            if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")}`.bgCyan,"FILE DOES NOT EXIST".red) } 
+            if (watcherConsoleDisplay(eventName)) { logs(`2: ${path.join(category, eventName + ".js")}`.bgCyan,"FILE DOES NOT EXIST".red) }
+            if (category != 'json') { 
+                logs_error('[EH]'.red,`${modulePath}`.yellow,"Does Not Exist.".cyan) 
+                let eventIndexNumbers = eventIndexNumber
+                eventIndexNumbers++
+                updateEventIndexNumber(eventIndexNumbers)
+                logs('[EH]'.green,'Advancing to next line in journal')
+            }
+            return true
         }
     }
     function getCategoryFromEvent(eventName) {
@@ -123,7 +174,8 @@ try  {
         if (watcherConsoleDisplay("showNoEventHandlerShowArray")) { logs(failEvents) }
     }
     const initializeEvent = { //! ONLY FOR "*.log" FILES.        
-        startEventSearch: (JSONevent,returnable,eventMod) => {            
+        startEventSearch: async (JSONevent,returnable,eventMod) => { 
+                 
             let SpecifyEvent = JSONevent.event
             if (eventMod != undefined) { SpecifyEvent = eventMod };
             const category = getCategoryFromEvent(SpecifyEvent)
@@ -131,12 +183,12 @@ try  {
             //todo Need to make big alert if "EVENT" does not exist... Probably should bring it to the front side and make a form that posts to discord informing us.
             if (category == null) { 
                 logs("2.6 NO EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow);
-                return
+                return false
             }
             //category should give the Folder Path (Folder Path)
-            const result = handleEvent(SpecifyEvent, category, JSONevent, returnable);
+            const result = await handleEvent(SpecifyEvent, category, JSONevent, returnable);
             if (returnable && result) { 
-                if (watcherConsoleDisplay(SpecifyEvent)) { logs("3: Event Returning to Watcher -> ".bgCyan,result); }
+                if (watcherConsoleDisplay(SpecifyEvent)) { logs("3: Event Returning to Watcher -> ".bgCyan,await result); }
                 return result 
             }
         }
@@ -145,7 +197,7 @@ try  {
     }
     
    
-    module.exports = { initializeEvent, jsonEvent, indexEvents }
+    module.exports = { initializeEvent, jsonEvent }
 }
 catch (error) {
     errorHandler(error,error.name)

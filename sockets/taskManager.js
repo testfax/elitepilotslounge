@@ -4,14 +4,24 @@ try {
     const { io, Manager } = require('socket.io-client')
     const { app, BrowserWindow } = require('electron');
     const { socket } = require('./socketMain')
-    let {latestLog,latestLogRead,requestCmdr,savedGameLocation,updateEventIndexNumber} = require('../utils/loungeClientStore')
+    let {
+        latestLog,
+        latestLogRead,
+        requestCmdr,
+        savedGameLocation,
+        updateEventIndexNumber,
+        updateInitialReadStatus,
+        getInitialReadStatus,
+        getStartStop,
+        updateStartStop,
+    } = require('../utils/loungeClientStore')
     const uuid = require('uuid');
     const fs = require('fs')
     const path = require('path')
     const statusFlags = require('../events/Appendix/statusFlags.json');
     const utilities = require('../events/eventUtilities');
     const { initializeEvent } = require('../utils/eventsHandler')
-    const { ignoreEvent } = require('../utils/watcher')
+    
     const Store = require('electron-store');
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
     let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
@@ -27,7 +37,7 @@ try {
                 client.webContents.send(`dcohSystems-sample`, data);
             }
             catch (e) {
-                logs_error("[TM]".red,"'fromSocketServer'->No Thargoid Sample Window",e)
+                logs("[TM]".yellow,"'fromSocketServer'->No Thargoid Sample Window",)
             }
         } 
         if (data.type == 'findSystemResult') { 
@@ -41,7 +51,7 @@ try {
                 client.webContents.send("from_brain-ThargoidSample", data);
             }
             catch (e) {
-                logs_error("[TM]".red,"No Thargoid Sample Window",e)
+                logs("[TM]".yellow,"No Thargoid Sample Window")
             }
         }
     }) 
@@ -95,7 +105,6 @@ try {
                     const timerID = uuid.v4().slice(-5); 
                     if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
                     dataList = {event,...data,"titanSocket":titanSocket }
-                    // console.log(data)
                     socket.emit('eventTransmit',dataList, async (response) => { resolve(response) });
                 }
                 catch(error) { errorHandler(error,error.name); reject(error) }
@@ -107,7 +116,6 @@ try {
                 if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
                 const theCommander = requestCmdr().commander
                 data = {...data,...theCommander}
-                // console.log(data);
                 let discuss = socket.emit('eventTransmit',data, (response) => {
                     //! No response necessarily needed, unless there's some kind of visual need to show on the client.
                     //! The below is for troubleshooting purposes.
@@ -135,76 +143,118 @@ try {
         // Reads current log file and pushes events through event handler. 3 Second Delay.
         allEventsInCurrentLogFile: async (callback) => {
             try {
+                callback('starting-allEventsInCurrentLogFile')
                 const searchEventList = ["All"]
-            // This is all occurances as they happened in the past. That way things can be iterated on. Example being if you launch the client after you've been playing elite for an hour.
-            // const firstLoadList = latestLogRead(latestLog(savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList).firstLoad
-            // if (firstLoadList) {
-            //     const lastEventInFirstLoadList = firstLoadList[firstLoadList.length - 1].timestamp
-            //     let currentDateTime = new Date();
-            //     currentDateTime = currentDateTime.toISOString();
-            //     if (new Date(lastEventInFirstLoadList) - new Date(currentDateTime) < new Date()) { logs(
-            //         "Old.................................",
-            //         new Date()
-            //     )}
-            // }
-            // This is the latest occurance that happend of any particular event.
-            let readEventsList = await latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),searchEventList)
-            if (watcherConsoleDisplay("latestLogsRead")) {
-                logs(
-                    "[TM]".yellow,
-                    "Running latestLogRead: ".green,
-                    `${readEventsList.totalLines}`.cyan,
-                    "events",
-                    // found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
-                    // console.logs(readEvents.listItemByTimestampNames)
-                    // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
-                    )
-                }
-            if (readEventsList.found.length >= 1) {
-                let index = 0;
-                for (const eventItem of readEventsList.firstLoad) {
-                    index++;
-                    const percent = index / readEventsList.totalLines;
-                    const formattedNumber = (percent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
-                    
-                    updateEventIndexNumber(index)
-                    const now = new Date(eventItem.timestamp);
-                    eventItem["timestamp"] = now.toISOString() + `+${index}`
-                    // console.log(index, readEventsList.totalLines, formattedNumber)
-                    // console.log(`${eventItem["timestamp"]}`.cyan,`${eventItem.event}`)
-                    
-                    callback({current:index,total:readEventsList.totalLines,percent:formattedNumber})
-                    if (index == readEventsList.totalLines) {
-                        const loadTime = (Date.now() - readEventsList.findEventsStartTime) / 1000;
-                        logs("[TM]".green,"Completed LatestLogsRead".bgMagenta,`${loadTime}`.cyan,"LINES:",`${readEventsList.totalLines}`.cyan)
-                        callback('journalLoadComplete')
+                // This is all occurances as they happened in the past. That way things can be iterated on. Example being if you launch the client after you've been playing elite for an hour.
+                // const firstLoadList = latestLogRead(latestLog(savedGameLocation("Development Mode taskManager.js").savedGamePath,"log"),searchEventList).firstLoad
+                // if (firstLoadList) {
+                //     const lastEventInFirstLoadList = firstLoadList[firstLoadList.length - 1].timestamp
+                //     let currentDateTime = new Date();
+                //     currentDateTime = currentDateTime.toISOString();
+                //     if (new Date(lastEventInFirstLoadList) - new Date(currentDateTime) < new Date()) { logs(
+                //         "Old.................................",
+                //         new Date()
+                //     )}
+                // }
+                // This is the latest occurance that happend of any particular event.
+                let readEventsList = await latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),searchEventList)
+                if (watcherConsoleDisplay("latestLogsRead")) {
+                    logs(
+                        "[TM]".yellow,
+                        "Running latestLogRead: ".green,
+                        `${readEventsList.totalLines}`.cyan,
+                        "events",
+                        // found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
+                        // console.logs(readEvents.listItemByTimestampNames)
+                        // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
+                        )
                     }
-                    if(searchEventList == "All" && eventItem.event != "WingInvite"  && eventItem.event != "WingAdd" && eventItem.event != "WingJoin" && eventItem.event != "WingLeave") {    
-                        if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${eventItem.event}`.yellow) }
-                        // callback... Must be 1
-                        const askIgnoreFile = ignoreEvent(eventItem.event)
-                        //! CHECKED, gathers a category name if it is found, if not, it will return null
-                        if (!askIgnoreFile && eventItem != null) {
-                            // console.log(`${eventItem.event}`.green)
-                            initializeEvent.startEventSearch(eventItem,0)
+                if (readEventsList.found.length >= 1) {
+                    updateStartStop(true)
+                    updateInitialReadStatus(true)
+                    continueReadLatestLogTM(0) //Start journal entry from line 0.
+                    function restartFailedEvent(startIndex) { //If the event handler fails to read the event data correctly on the first read, it will try another time.
+                        logs("startStop initiated, 1000ms break:".red)
+                        setTimeout(() => { readLatestLogTM(startIndex) },1000);
+                    }
+                    async function continueReadLatestLogTM(startIndex) { 
+                        let index = startIndex;
+                        let failedArray = []
+                        for (const eventItem of readEventsList.firstLoad.slice(startIndex)) {
+                            index++;
+                            const percent = index / readEventsList.totalLines;
+                            const formattedNumber = (percent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
+                            callback({current:index,total:readEventsList.totalLines,percent:formattedNumber})
+
+                            updateEventIndexNumber(index)
+                            
+                            const now = new Date(eventItem.timestamp);
+                            if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${index}`.red,`${eventItem.event}`.yellow,`${eventItem.timestamp}`.cyan) }
+                            if (now != 'Invalid Date') {
+                                eventItem["timestamp"] = now.toISOString() + `+${index}`
+                            }
+                            else { //For invalid Timestamps.
+                                // logs_error('[TM]'.red,'Timestamp Issue'.yellow,"event ITEM:".bgMagenta,now,"Invalid Date in [TM]. Exiting Client.".red)
+                               
+                                //attemptobject must be coded if below is used
+                                // if(!attemptCount.hasOwnProperty(eventItem.event)) { attemptCount[eventItem.event] = { attempts: 0 }; }
+                                // else {
+                                //     attemptCount[eventItem.event].attempts++
+                                //     logs_error("event ITEM:".bgMagenta,now,logF(attemptCount),"Invalid Date in [TM]. Exiting Client.".red)
+                                //     // return 
+                                //     app.quit();
+                                // }
+                            }
+                            
+                            let eventHandled = null;
+                            //! Make the client wait on each event.
+                            eventHandled = await initializeEvent.startEventSearch(eventItem,true)
+                            updateStartStop(false)
+                            if (eventHandled && (index + 1) <= readEventsList.totalLines) {
+                                updateStartStop(true); 
+                                setTimeout(() => {
+                                    continueReadLatestLogTM(index)
+                                }, 0);
+                                break;
+                            } 
+                            //for failures, try again.
+                            if (eventHandled == undefined && (index + 1) <= readEventsList.totalLines) {
+                                if (!failedArray.includes(eventItem.event)) { failedArray.push(eventItem.event)}
+                                //!!!!! retry a failed event.
+                                // restartFailedEvent(startIndex);
+                                //!!!!!
+                                if (failedArray.includes(eventItem.event)) {
+                                    BrowserWindow.fromId(1).send('handleFailure',`Failed to Handle Journal Event: ${eventItem.event}`)
+                                    updateStartStop(true); 
+                                    setTimeout(() => {
+                                        continueReadLatestLogTM(index)
+                                    }, 0);
+                                }
+                                break;
+                                
+                            }
+                            if (watcherConsoleDisplay('startup-read')) {
+                                if (!eventHandled) { logs_error("allEventsInCurrentLogFile FAIL".red,`${eventItem.event}`.cyan,`${eventHandled}`.cyan); return }
+                                if (eventHandled) { logs("allEventsInCurrentLogFile".green,`${eventItem.event}`.cyan,`${eventHandled}`.cyan) }
+                            }
+                            if (index == readEventsList.totalLines && failedArray.length == 0) {
+                                const loadTime = (Date.now() - readEventsList.findEventsStartTime) / 1000;
+                                logs("[TM]".green,"LatestLogsRead ".green,`${loadTime} Seconds`.cyan,"LINES:".green,`${readEventsList.totalLines}`.cyan)
+                                updateInitialReadStatus(false)
+                                logs("[TM]".green,"Set -> initialReadStatus:false".bgGreen,getInitialReadStatus())
+                                callback('journalLoadComplete')
+                                break;
+                            }
                         }
                     }
+                    
                 }
-
-                //!!! Old code for just initializing the very last event per category...
-                // for (let a in readEventsList.found) { 
-                //     const eventData2 = {...readEventsList.found[a]}
-                //     //Wing stuff should only be read from if Status flag indicates wing. Review taskmanager.gameStatus for functionality
-                //    if(searchEventList == "All" && eventData2.event != "WingInvite"  && eventData2.event != "WingAdd" && eventData2.event != "WingJoin" && eventData2.event != "WingLeave") {    
-                //     if (watcherConsoleDisplay(eventData2.event)) { logs("1: Client Startup Init.... ".bgCyan,`${eventData2.event}`.yellow) }
-                //         // callback... Must be 1
-                //         initializeEvent.startEventSearch(eventData2,0)
-                //     }
-                // }
-            }
             }
             catch (e) {
-                logs_error("[TM]".red,"allEventsInCurrentLogFile".yellow,e)
+                // logs_error("ERROR STACK:".bgRed,e.stack,"ERROR ORIGIN:".yellow,e.origin,"[TM]".red,"allEventsInCurrentLogFile".yellow)
+                // throw Error(e, {cause:e})
+                errorHandler(e,"allEventsInCurrentLogFile");
+                
             }
             
         },
@@ -294,5 +344,5 @@ try {
 }
 catch (error) {
     // console.error("Fix Stack Error".yellow,error);
-    logs(errorHandler(error,error))
+    errorHandler(error.stack,"Task Manager")
 }

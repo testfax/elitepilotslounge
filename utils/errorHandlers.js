@@ -1,11 +1,12 @@
 const { app, BrowserWindow } = require('electron')
-const {logs} = require('./logConfig')
+const {logs,logs_error} = require('./logConfig')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 const thisWindow = store.get('electronWindowIds')
 const path = require('path')
 const fs = require('fs')
 const getPath = require('platform-folders')
+const colors = require('colors')
 // const {savedGameLocation} = require('./loungeClientStore')
 const errorFunc = {
     pageData: { currentPage: "" },
@@ -41,6 +42,7 @@ const errorFunc = {
             // "EngineerProgress",
             // "Docked",
             // "Undocked",
+            // 'Fileheader',
             // 'Friends',
             // 'FSDJump',
             'gameStatus',
@@ -88,10 +90,10 @@ const errorFunc = {
         }
         return false;
     },
-    errorHandler: function(error,origin,extra) {
+    errorHandler: function(error,extra,origin) {
         if (!app.isPackaged) {
-            console.log(error,origin,extra);
-            logs(error)
+            logs_error("\n","[ERROR AREA]".bgYellow,`${extra}`.cyan,"\n","[ERROR STACK]".bgRed,error.stack,"\n","[ERROR ORIGIN]".bgYellow,origin)
+            
             // if (origin == "ExperimentalWarning") return
             // let errorGenReport = {}
             // const currentDateTime = new Date()
@@ -124,7 +126,7 @@ const errorFunc = {
             // errorFunc.logGenerator(errorGenReport);
         }
         if (app.isPackaged) {
-            logs(error)
+            logs_error(error.stack,origin,extra)
             app.quit();
         }
         

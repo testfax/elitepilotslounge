@@ -5,11 +5,6 @@ try {
     const lcs = require('../../utils/loungeClientStore')
     const statusFlags = require('../Appendix/statusFlags');
     const utilities = require('../eventUtilities');
-    const colorize = require('json-colorizer');
-    // const Store = require('electron-store')
-    // const store = new Store({ name: 'electronWindowIds'})
-    // const thisWindow = store.get('electronWindowIds')
-    // const client = BrowserWindow.fromId(thisWindow.win);
     //! #### Socket Server
     // const taskManager = require('../../sockets/taskManager')
     const {Status} = require('../../sockets/tasks/jsonEntries')
@@ -31,72 +26,75 @@ try {
     // }
     // //! EVENT SIMULATOR
     module.exports = (data) =>{
-        const distributionList = [
-            'brain-ThargoidSample'
-        ]
-        //! #### Logs
-        if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(data) }
-       
-
-        //! ### Transpose data
-        let modStatus = {
-            event: "Status",
-            Flags1: utilities.flagsFinder(statusFlags.flags,data.Flags),
-            Flags2: utilities.flagsFinder(statusFlags.flags2,data.Flags2),
-            hex_flags: {Flags1: data.Flags,Flags2:data.Flags2}
+        try {
+            const distributionList = [
+                'brain-ThargoidSample'
+            ]
+            //! #### Logs
+            if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(data) }
+           
+    
+            //! ### Transpose data
+            let modStatus = {
+                event: "Status",
+                Flags1: utilities.flagsFinder(statusFlags.flags,data.Flags),
+                Flags2: utilities.flagsFinder(statusFlags.flags2,data.Flags2),
+                hex_flags: {Flags1: data.Flags,Flags2:data.Flags2}
+            }
+            let gimmeFlags = {
+                Flags1: modStatus.Flags1,
+                Flags2: modStatus.Flags2
+            }
+            // if (watcherConsoleDisplay(data.event)) { logs(colorize(gimmeFlags, { pretty: true }))  }
+            if (watcherConsoleDisplay(data.event)) { logs(gimmeFlags)  }
+            const combinedStatus = {...modStatus,...data}
+            // socketEventManager.Status(modStatus);
+             //! #### Socket Server
+            //  ipcMain.removeAllListeners(`event-callback-${data.event}`);
+            //  if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
+            //      ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
+            //          if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
+            //              logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
+            //          }
+            //          taskManager.eventDataStore(receivedData)
+            //      })
+            //  }
+             //The response from the socket server will be a callback to this function.
+             //Manipulate the data then send to the brain.
+            // Status(combinedStatus, (response)=> { logs("stat",response) })
+            Status(combinedStatus)
+            //Gets sent to socket js file
+            if (gimmeFlags.Flags1 != 0) { //0 would be a clean shutdown, use shutdown event
+                //! #### Save entry into Electron-Store.
+                const store = new Store({ name: `${data.event}` })
+                store.set('data',combinedStatus)
+            }
+            const roomCache = {
+                Inviter: 1,
+                Others: 1,
+                Rooms: ["ReadOnly1"],
+                leave: 0
+            }
+            let socketRoomStatus = lcs.wingData(roomCache,1) //Second Parameter is ReadOnly On/Off, if Off, saves data to lounge-client.txt
+            if (socketRoomStatus.length) { 
+                logs("In Wing Socket")
+                //todo IF commander is in a socket(room), then send to room.
+            }
+    
+            //todo Send data to front end.
+            //!NIGHT VISION IS NOT TRIGGERED IN STATUS FILE AS OF UPDATE 14.
+    
+            
+            //! #### Send entry to the renderer... NOT RECOMMENDED. USE BRAIN
+            // const client = BrowserWindow.fromId(1);
+            // client.webContents.send(`${eventType}`, data);
+            //! #### Send to Brain
+            distributionList.forEach(event => {
+                ipcMain.emit(event,combinedStatus)
+            })
+            if (data.returnable) { return true }
         }
-        let gimmeFlags = {
-            Flags1: modStatus.Flags1,
-            Flags2: modStatus.Flags2
-        }
-        // if (watcherConsoleDisplay(data.event)) { logs(colorize(gimmeFlags, { pretty: true }))  }
-        if (watcherConsoleDisplay(data.event)) { logs(gimmeFlags)  }
-        const combinedStatus = {...modStatus,...data}
-        // socketEventManager.Status(modStatus);
-         //! #### Socket Server
-        //  ipcMain.removeAllListeners(`event-callback-${data.event}`);
-        //  if (!ipcMain.listenerCount(`event-callback-${data.event}`)) {
-        //      ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
-        //          if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
-        //              logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
-        //          }
-        //          taskManager.eventDataStore(receivedData)
-        //      })
-        //  }
-         //The response from the socket server will be a callback to this function.
-         //Manipulate the data then send to the brain.
-        // Status(combinedStatus, (response)=> { logs("stat",response) })
-        Status(combinedStatus)
-        //Gets sent to socket js file
-        if (gimmeFlags.Flags1 != 0) { //0 would be a clean shutdown, use shutdown event
-            //! #### Save entry into Electron-Store.
-            const store = new Store({ name: `${data.event}` })
-            store.set('data',combinedStatus)
-        }
-        const roomCache = {
-            Inviter: 1,
-            Others: 1,
-            Rooms: ["ReadOnly1"],
-            leave: 0
-        }
-        let socketRoomStatus = lcs.wingData(roomCache,1) //Second Parameter is ReadOnly On/Off, if Off, saves data to lounge-client.txt
-        if (socketRoomStatus.length) { 
-            logs("In Wing Socket")
-            //todo IF commander is in a socket(room), then send to room.
-        }
-
-        //todo Send data to front end.
-        //!NIGHT VISION IS NOT TRIGGERED IN STATUS FILE AS OF UPDATE 14.
-
-        
-        //! #### Send entry to the renderer... NOT RECOMMENDED. USE BRAIN
-        // const client = BrowserWindow.fromId(1);
-        // client.webContents.send(`${eventType}`, data);
-        //! #### Send to Brain
-        distributionList.forEach(event => {
-            ipcMain.emit(event,combinedStatus)
-        })
-        
+        catch (e) { if (data.returnable) { return false }; errorHandler(e,e.name); }
     }
 }
 catch (error) {

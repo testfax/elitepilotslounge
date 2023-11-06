@@ -53,7 +53,6 @@ try {
                 function continueWatcherBuild(currentJournalLog) {
                     if (watcherConsoleDisplay('globalLogs')) { 
                         logs("[TAIL]".green,"Monitoring:".green ,path.parse(currentJournalLog).base)
-                        
                     }
                     const tailLogOptions = { separator: /\n/ }
                     const tailLog = new Tail(currentJournalLog,tailLogOptions);
@@ -116,7 +115,7 @@ try {
                         lcs.updateEventIndexNumber(eventIndexNumber)
                         const now = new Date(dataObj.timestamp);
                         dataObj["timestamp"] = now.toISOString() + `+${eventIndexNumber}`
-                        console.log(`${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
+                        // console.log(`${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
                         //!
                         const result = sendJSONevent = initializeEvent.startEventSearch(dataObj,0,eventMod);
                         // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }

@@ -12,6 +12,23 @@ const lcs = {
     logState: { logs: 1, latest: "" },
     worldFixer: { timer: false},
     readLogFileData: {},
+    startStop: false,
+    getStartStop: function() {
+        return lcs.startStop
+    },
+    updateStartStop: function(status) {
+        lcs.startStop = status
+        // logs("updated startStop".cyan,`${lcs.startStop}`.yellow)
+    },
+    initialReadStatus: false,
+    getInitialReadStatus: function() {
+        return lcs.initialReadStatus
+    },
+    updateInitialReadStatus: function(status) {
+        lcs.initialReadStatus = status
+        // console.log("updated initialReadStatus".cyan,lcs.initialReadStatus)
+    },
+
     eventIndexNumber: 0,
     updateEventIndexNumber: function(newIndex) {
         lcs.eventIndexNumber = newIndex

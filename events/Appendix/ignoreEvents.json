@@ -6,6 +6,11 @@
     },
     "events": [
       { 
+        "category": "startup",
+        "event": "Fileheader",
+        "reason": ""
+      },
+      { 
         "category": "other events",
         "event": "ModuleInfo",
         "reason": "Event is coded for ModulesInfo.json: *.log event has NO DATA."

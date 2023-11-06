@@ -120,12 +120,12 @@ function main() {
         })
       }
     }
-    logs("=ELITE PILOTS LOUNGE=","isPackaged: [",JSON.stringify(app.isPackaged,null,2),"] Version: [",JSON.stringify(app.getVersion(),null,2),"]");
+    logs("=ELITE PILOTS LOUNGE= START".green,"isPackaged:".yellow,`${JSON.stringify(app.isPackaged,null,2)}`.cyan, "Version:".yellow,`${JSON.stringify(app.getVersion(),null,2)}`.cyan);
     // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
     // //!   every 5 seconds
 
     const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
-    const {wingData, windowPosition,eventIndexNumber } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
+    const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
     
   
     //!
@@ -181,23 +181,20 @@ function main() {
           require('./utils/processDetection')
           ipcMain.on('eliteProcess', (receivedData) => {
             if (receivedData && loadingScreen) { 
+              loadingScreen.webContents.send('eliteRunning',receivedData)
               const {allEventsInCurrentLogFile} = require('./sockets/taskManager')
               allEventsInCurrentLogFile((callback)=>{
+                if (callback == 'starting-allEventsInCurrentLogFile') { loadingScreen.webContents.send('starting-allEventsInCurrentLogFile','started') }
                 if (callback.current == 1) { loadingScreen.webContents.send('loadingInProgress','started') }
                 if (typeof callback == 'object') {
                   const data = `Loading Events... ${callback.current} \ ${callback.total} ${callback.percent}`
                   loadingScreen.webContents.send("loading-journalLoad", data);
                 }
                 if (callback == 'journalLoadComplete') {
-                  // logs("[WATCHER]".cyan,"Starting Tail".green)
+                  loadingScreen.webContents.send("loading-journalLoad", 'Loading Events... Completed');
                   const watcher = require('./utils/watcher')
                   watcher.tailFile(watcher.savedGameP)
                   createWindow();
-                  
-                  // logs('[TAIL] Watching Log:'.green,tailState)
-                  // ipcMain.on('tailState', (tailState) => {
-                  // })
-                  // logs('watch running')
                 }
               })
             }
@@ -265,7 +262,7 @@ function main() {
               if (!isLoadFinished) {
                 isLoadFinished = true;      
                 const loadTime = (Date.now() - appStartTime) / 1000;
-                logs("App-Initialization-Timer".bgMagenta,"Seconds:",`${loadTime}`.cyan)       
+                logs("App-Initialization-Timer".bgMagenta,`${loadTime} Seconds`.cyan)       
                 if (loadingScreen.id != null) {
                   winids['loadingScreen'] = loadingScreen.id
                   winids['win'] = win.id
@@ -299,15 +296,17 @@ function main() {
     app.on('window-all-closed', () =>{
         // watcher.wat.watcher.close()
         if (process.platform !== 'darwin') app.quit()
-        logs(`App Quit`.red)
         const roomCache = {
-            Inviter: 0,
-            Others: [],
-            Rooms: [],
-            leave: 1
-        }
-        wingData(roomCache,0)
-        
+      Inviter: 0,
+      Others: [],
+      Rooms: [],
+      leave: 1
+    }
+    wingData(roomCache,0)
+    logs("=ELITE PILOTS LOUNGE= CLOSED".red,"isPackaged:".yellow,`${JSON.stringify(app.isPackaged,null,2)}`.cyan, "Version:".yellow,`${JSON.stringify(app.getVersion(),null,2)}`.cyan);
+    // logs(`App Quit`.red)
+    return
+    
     })
     process.on('uncaughtException', (error,origin) => {
       errorHandler(error,origin)
@@ -337,7 +336,7 @@ function main() {
     //The errorHandlers functions sometimes dont capture errors that are the resultant of another function on a different page.
   }
   catch(e) {
-      console.log("MAIN PROCESS ERROR".yellow,e)
+      console.log("MAIN PROCESS ERROR".yellow,e.stack)
   }
 }
 

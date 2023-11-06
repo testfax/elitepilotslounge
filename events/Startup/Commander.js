@@ -14,7 +14,7 @@ try {
                 'brain-ThargoidSample'
             ]
             //! #### Logs
-            if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(colorize(data, { pretty: true })) }
+            if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(data) }
             //! #### Mutate Data
             let result = lcs.loungeClientStore(lcs.savedGameLocation('commander-event').loungeClientFile)
             if (!result[0].commander.hasOwnProperty('commander')) { 
@@ -32,7 +32,7 @@ try {
             if (!ipcMain.listenerCount(`event-callback-${data.event}`)) { 
                 ipcMain.once(`event-callback-${data.event}`, (receivedData,visibile) => { 
                     if (watcherConsoleDisplay('BrainCallbacks') || visibile) { 
-                        logs(`${data.event.toUpperCase()}-callback!`.cyan,colorize(receivedData, { pretty: true })) 
+                        logs(`${data.event.toUpperCase()}-callback!`.cyan,receivedData) 
                     } 
                     taskManager.eventDataStore(receivedData) 
                 }) 
@@ -49,14 +49,16 @@ try {
             // const client = BrowserWindow.fromId(1);
             // client.webContents.send(`${data.event}`, data);
             //! #### Send to Brain
-            distributionList.forEach(event => {
-                ipcMain.emit(event,data)
-            })
+            if (distributionList > 0) {
+                distributionList.forEach(event => {
+                    ipcMain.emit(event,data)
+                })
+            }
+            if (data.returnable) { return true }
         }
-        catch (e) { errorHandler(e,e.name) }
+        catch (e) { if (data.returnable) { return false }; errorHandler(e,e.name); }
     }
 }
 catch (error) {
     errorHandler(error,error.name)
-//    console.error(error);
 }
