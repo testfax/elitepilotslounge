@@ -38,7 +38,13 @@ try {
             // },
             ignoreEvent: function(ignoreEventName) {
                 try {
-                    let ignoreEventsJSON = fs.readFileSync(path.join(process.cwd(),'.','events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
+                    let ignoreEventsJSON;
+                    if (app.isPackaged) {
+                        ignoreEventsJSON = fs.readFileSync(path.join(process.cwd(),'resources','app','events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
+                    }
+                    else {
+                        ignoreEventsJSON = fs.readFileSync(path.join(process.cwd(),'.','events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
+                    }
                     ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
                     for (const event of ignoreEventsJSON.events) {
                         if (event.event === ignoreEventName) {

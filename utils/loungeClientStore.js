@@ -91,6 +91,7 @@ const lcs = {
                 const firstLoad = data.reverse()
                 let found = []
                 let notFound = []
+                let reverse = []
                 let list = [];
                 let listItems = [];
                 let listItemByTimestamp = []
@@ -122,10 +123,12 @@ const lcs = {
                 }
                 if (findEvents.find((e) => e !== "All")) {
                     findEvents.forEach((event) => {
-                        const result = data.find((element) => element.event === event);
-                        if (result) { found.push(result); }
+                        const result = data.reverse().find((element) => element.event === event)
+                        if (result) { found.push(result); reverse.push(result);  }
                         if (!result) { notFound.push(event) }
                     });
+                    
+
                 }
                 if (found.length == 0) {
                     if (watcherConsoleDisplay('globalLogs')) { 
@@ -135,7 +138,7 @@ const lcs = {
                 }
                 else {
                     
-                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad }
+                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad, reverse }
                 }
 
             }
@@ -365,6 +368,9 @@ const lcs = {
         //Update the object with what you want and then send it back as instructions, the function expects an object once you send it.
         let result = lcs.loungeClientStore(lcs.savedGameLocation("window position").loungeClientFile)
         //
+        if (!result[0].hasOwnProperty('clientSize')) { 
+            return {moveTo:[700,100], resizeTo:[366,600]}
+        }
         if (init) {
             //If init is truthy, then return the result of the file contents and send back what you need.
             const moveTo = result[0].clientPosition; const resizeTo = result[0].clientSize;

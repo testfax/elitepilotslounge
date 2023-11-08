@@ -96,7 +96,7 @@ ipcMain.on('launchEDSY', (event,message) => {
     if (watcherConsoleDisplay('globalIPC')) { 
       logs("[IPC]".bgMagenta,"LAUNCH EDSY LOADOUT");
     }
-    // logs("[IPC]".bgMagenta,"clipboard.Write");
+    logs("[IPC]".bgMagenta,message);
     const loadoutString = JSON.stringify(message)
     const gzippedData = zlib.gzipSync(loadoutString)
     const encodedData = base64.encode(gzippedData)

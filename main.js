@@ -1,5 +1,6 @@
 const {logs,logs_error} = require('./utils/logConfig')
 const colors = require('colors')
+//require('./systems')
 main();
 function main() {
   try {
@@ -149,15 +150,15 @@ function main() {
     function createLoadingScreen() {
         // Create a loading screen window
         loadingScreen = new BrowserWindow({
-          width: 340,
-          height: 620,
+          width: 0,
+          height: 0,
           webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
             nodeIntegrationInWorker: true,
-            // devTools: true,
             contextIsolation: true,
           },
+          show: false,
           frame: false, // Remove window frame
           alwaysOnTop: true, // Make the loading screen always on top
           // Additional options
@@ -166,6 +167,7 @@ function main() {
         // Load your loading screen HTML file
         loadingScreen.loadFile('loading.html');
         // Wait for the main window to be ready
+        
         app.whenReady().then(() => {
         })
         loadingScreen.on("ready-to-show", () => {
@@ -173,27 +175,42 @@ function main() {
           loadingScreen.setPosition(windowPositionz.moveTo[0],windowPositionz.moveTo[1])
           loadingScreen.setSize(windowPositionz.resizeTo[0],windowPositionz.resizeTo[1])
           loadingScreen.show()
-          // if (!isNotDev) { loadingScreen.webContents.openDevTools(); }
-          Menu.setApplicationMenu(mainMenu);
+          if (!isNotDev) { loadingScreen.webContents.openDevTools(); }
+          
           appStartTime = Date.now()
           loadBrains()
           require('./fromRenderer')
           require('./utils/processDetection')
+          let displayMessages = [
+            {launcherWait: 'Please launch Elite: Dangerous',class:'w3-vivid-yellow'},
+            {allEventsInCurrentLogFile: 'Started to read Journal...',class:'font-BLOCKY-green'},
+            {journalInProgress: 'Loading Events...',class:''},
+            {journalCompleted: 'Loading Events... Completed',class:'w3-large font-BLOCKY-green'},
+            {journalPercent:'',class:''} //DONT CHANGE THIS INDEX
+          ]
+          let percentShown = 0;
+          function giveItemMSG(action) {  return displayMessages.find(item => action in item); }
+          loadingScreen.webContents.send('displayMessage',giveItemMSG('launcherWait'))
           ipcMain.on('eliteProcess', (receivedData) => {
             if (receivedData && loadingScreen) { 
-              loadingScreen.webContents.send('eliteRunning',receivedData)
               const {allEventsInCurrentLogFile} = require('./sockets/taskManager')
               allEventsInCurrentLogFile((callback)=>{
-                if (callback == 'starting-allEventsInCurrentLogFile') { loadingScreen.webContents.send('starting-allEventsInCurrentLogFile','started') }
-                if (callback.current == 1) { loadingScreen.webContents.send('loadingInProgress','started') }
+              
+                if (callback == 'starting-allEventsInCurrentLogFile') { loadingScreen.webContents.send('displayMessage',giveItemMSG('allEventsInCurrentLogFile')) }
+                if (callback.current == 1) { loadingScreen.webContents.send('displayMessage',giveItemMSG('journalInProgress')) }
+                if (callback.percent == '25%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "25%".cyan); percentShown = 1; }
+                if (callback.percent == '50%' && percentShown == 1) { logs('[EH]'.green,"LatestLogsRead:".yellow, "50%".cyan); percentShown = 0; }
+                if (callback.percent == '75%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "75%".cyan); percentShown = 1; }
                 if (typeof callback == 'object') {
                   const data = `Loading Events... ${callback.current} \ ${callback.total} ${callback.percent}`
-                  loadingScreen.webContents.send("loading-journalLoad", data);
+                  displayMessages[4].journalPercent = data
+                  loadingScreen.webContents.send("displayMessage", displayMessages[4]);
                 }
                 if (callback == 'journalLoadComplete') {
-                  loadingScreen.webContents.send("loading-journalLoad", 'Loading Events... Completed');
+                  loadingScreen.webContents.send("displayMessage", giveItemMSG('journalCompleted'));
                   const watcher = require('./utils/watcher')
                   watcher.tailFile(watcher.savedGameP)
+                  Menu.setApplicationMenu(mainMenu);
                   createWindow();
                 }
               })

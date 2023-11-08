@@ -12,7 +12,7 @@ try {
     // if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue," STATUS:"," OPERATIONAL ".green) }
     let commander = JSON.stringify(requestCmdr().commander)
     const manager = new Manager('https://elitepilotslounge.com/socket.io/', {
-        query: { 'clientpilot': commander, 'type': 'client'},
+        query: { 'clientpilot': commander, 'type': 'client', 'version':app.getVersion()},
         path: '/socket.io/',
         upgrade: true,
         rememberUpgrade: true,

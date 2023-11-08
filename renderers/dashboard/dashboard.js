@@ -5,6 +5,7 @@ windowLoaded.then(() => { myClassSave = new ClassSave('dashboardData'); });
 //FUNCTIONS FROM CLICKING
 window.addEventListener("click", clickedEvent);
 function clickedEvent(evt) {
+  console.log(evt)
   //Use arraySearch(f) to parse through something your looking for in an array or if you are comparing multiple arrays. 
   //    Combines forEach and find loop methods.
   //    In this parent function, we are only selecting one item to look for, which we will put in an array anyways for the 

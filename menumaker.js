@@ -1,7 +1,7 @@
 const {pageData} = require('./utils/errorHandlers')
-const {Menu, BrowserWindow} = require('electron')
-const {logs} = require('./utils/logConfig')
-const {cwd} = require('./utils/loungeClientStore')
+const {Menu, BrowserWindow, ipcMain} = require('electron')
+const {logs,logs_error} = require('./utils/logConfig')
+const {cwd,latestLogRead,latestLog,savedGameLocation} = require('./utils/loungeClientStore')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 const {socket_leaveRoom} = require('./sockets/taskManager')
@@ -21,7 +21,6 @@ const links = {
         BrowserWindow.fromId(2).loadURL(`file://${path.join(cwd, 'renderers/dashboard/dashboard.html')}`)
         pageData.currentPage = "Dashboard"
         store.set('currentPage',pageData.currentPage)
-        .setTitle('Elite Pilots Lounge')
         findActiveSocketKey()
     },
     friends: async function() {
@@ -69,6 +68,29 @@ const links = {
         pageData.currentPage = "Test"
         store.set('currentPage',pageData.currentPage)
         findActiveSocketKey()
+    },
+    toEdsy: async function() {
+        try {
+            const { exec } = require('child_process')
+            const zlib = require('zlib')
+            const base64 = require('base64-url')
+            let REL = await latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),['Loadout'])
+            // console.log("TOEDSY:".yellow,REL.reverse[0])
+            const message = REL.reverse[0]
+            if (message) { 
+                const loadoutString = JSON.stringify(message)
+                const gzippedData = zlib.gzipSync(loadoutString)
+                const encodedData = base64.encode(gzippedData)
+                const url = `https://edsy.org/#/I=${encodedData}`
+        
+                exec(`start chrome "${url}`, (error, stdout, stderr) => {
+                    if (error) { console.error('Error', error)}
+                })
+            }
+        }
+        catch (e) {
+            logs_error(e)
+        }
     }
 }
 
@@ -77,6 +99,7 @@ const template = [
     //     label: 'Dashboard',
     //     click: ()=>{links.dashboard();} 
     // },
+    
     // {
     //     label: 'Friends',
     //     click: ()=>{links.friends();} 
@@ -113,6 +136,10 @@ const template = [
     {
         label: 'Materials',
         click: ()=>{links.materials();} 
+    },
+    {
+        label: 'Loadout -> EDSY',
+        click: ()=>{links.toEdsy();} 
     },
     // {
     //     label: 'Logs',
