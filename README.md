@@ -2,7 +2,6 @@
 
 # Current State of Development: 
 - ALPHA
-- Thargoid Sampling requires you to send me your Commander's FID number. Located in the "Commander" journal log event.
 
 # About:
 - This 3rd Party application for Elite: Dangeorus is intended to bridge the gap between individual players and the people that they play with.
@@ -18,7 +17,6 @@
 - - Allows you to see what materials you use or collect real time. This data is not shared.
 - Thargoid Sample
 - - Allows you to see what the war progress is and see what other Commanders that utilize this application are doing with their sampling.
-- - At this time of development, connecting to the socket server requires manual entry. Contact Medi0cr3 on discord. 
 
 # Files
 - Programs
