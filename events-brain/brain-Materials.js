@@ -517,52 +517,6 @@ try {
         }
         catch (e) {errorHandler(e,e.name)}
       }
-      // if (receivedData.event == 'MaterialDiscovered') { //todo Is this even needed?
-      //   if (watcherConsoleDisplay('BrainEvent' && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
-      //   try {
-      //       const store = new Store({ name: 'Materials' })
-      //       let materialData = store.get('data')
-      //       let materialObject = findMatObject(materialData, "Name",receivedData.Name)
-      //       // let materialGradeInfos = gradeInfos(materialObject.Grade,materialObject.Count)
-      //       const calcValues = {
-      //         ...materialObject,
-      //         ...{ "timestamp":receivedData.timestamp},
-      //         ...{ "ReduceBy": receivedData.DiscoveryNumber },
-      //         ...{ "materialData": materialData }
-      //       }
-      //       const category = receivedData.Category
-      //       let materialDataUpdated = calcValues.materialData
-      //       let total = null;
-      //       let historyArray = [
-      //         {Total: "" }
-      //       ]
-      //       materialDataUpdated[category].forEach(item => {
-      //         if (item.Name == receivedData.Name) {
-      //           total = item.Count + calcValues.ReduceBy;
-      //           historyArray[0].Operator = "+"
-      //           historyArray[0].Operator_Sign = "»"
-      //           item.Count = total
-      //         }
-      //       })
-      //       historyArray[0].Name = receivedData.Name
-      //       if (receivedData.Name_Localised) {
-      //         historyArray[0].Name_Localised = receivedData.Name_Localised
-      //       }
-      //       else {
-      //         historyArray[0].Name_Localised = ""
-      //       }
-      //       historyArray[0].Count = calcValues.ReduceBy
-      //       historyArray[0].timeStamp = calcValues.timestamp
-      //       historyArray[0].Total = total;
-      //       historyArray[0].Grade = calcValues.Grade;
-      //       // This updates the total materials in the Materials.json store.
-      //       store.set('data',materialDataUpdated)
-      //       materialHistory("ADD",historyArray);
-          
-      //     logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp);
-      //   }
-      //   catch(e) {errorHandler(e,e.name)}
-      // }
       if (receivedData.event == 'MaterialDiscarded') {
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         try {
@@ -609,6 +563,53 @@ try {
         }
         catch(e) {errorHandler(e,e.name)}
       }
+      // if (receivedData.event == 'MaterialDiscovered') { //todo Is this even needed?
+      //   if (watcherConsoleDisplay('BrainEvent' && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
+      //   try {
+      //       const store = new Store({ name: 'Materials' })
+      //       let materialData = store.get('data')
+      //       let materialObject = findMatObject(materialData, "Name",receivedData.Name)
+      //       // let materialGradeInfos = gradeInfos(materialObject.Grade,materialObject.Count)
+      //       const calcValues = {
+      //         ...materialObject,
+      //         ...{ "timestamp":receivedData.timestamp},
+      //         ...{ "ReduceBy": receivedData.DiscoveryNumber },
+      //         ...{ "materialData": materialData }
+      //       }
+      //       const category = receivedData.Category
+      //       let materialDataUpdated = calcValues.materialData
+      //       let total = null;
+      //       let historyArray = [
+      //         {Total: "" }
+      //       ]
+      //       materialDataUpdated[category].forEach(item => {
+      //         if (item.Name == receivedData.Name) {
+      //           total = item.Count + calcValues.ReduceBy;
+      //           historyArray[0].Operator = "+"
+      //           historyArray[0].Operator_Sign = "»"
+      //           item.Count = total
+      //         }
+      //       })
+      //       historyArray[0].Name = receivedData.Name
+      //       if (receivedData.Name_Localised) {
+      //         historyArray[0].Name_Localised = receivedData.Name_Localised
+      //       }
+      //       else {
+      //         historyArray[0].Name_Localised = ""
+      //       }
+      //       historyArray[0].Count = calcValues.ReduceBy
+      //       historyArray[0].timeStamp = calcValues.timestamp
+      //       historyArray[0].Total = total;
+      //       historyArray[0].Grade = calcValues.Grade;
+      //       // This updates the total materials in the Materials.json store.
+      //       store.set('data',materialDataUpdated)
+      //       materialHistory("ADD",historyArray);
+          
+      //     logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp);
+      //   }
+      //   catch(e) {errorHandler(e,e.name)}
+      // }
+      
     })
 }
 catch (error) {
