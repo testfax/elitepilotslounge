@@ -785,15 +785,12 @@ function addMaterialHistory(historyArray) {
   try {
     const container = document.getElementById('histbar_container')
     let elementArray = Array.from(document.getElementsByClassName('matHistDynamicDomTR'));
-    // console.log(elementArray)
-    if (elementArray.length >= 2) {
+    if (elementArray.length >= 10) {
       const lastEle = elementArray[elementArray.length - 1]
       lastEle.remove()
     } 
-    
     const updateTot = gradeInfos(historyArray[0].Grade,historyArray[0].Total)
     let updateItem = document.getElementsByClassName(`${historyArray[0].Name}_count`)
-    
     let updateItemTotal = document.getElementsByClassName(`${historyArray[0].Name}_count_tot`)
     
     if (historyArray[0].Total >= updateTot[0]) {

@@ -1,24 +1,104 @@
 {
   "data": [
     {
-      "Name": "heatconductionwiring",
-      "Name_Localised": "Heat Conduction Wiring",
-      "Count": 2,
+      "Name": "guardian_sentinel_wreckagecomponents",
+      "Name_Localised": "Guardian Wreckage Components",
+      "Count": 3,
       "Grade": "1",
-      "Operator": "-",
-      "Operator_Sign": "«",
-      "timeStamp": "2024-02-02T19:34:01.000Z",
-      "Total": 178
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:39:41.000Z",
+      "Total": 256
     },
     {
-      "Name": "basicconductors",
-      "Name_Localised": "Basic Conductors",
-      "Count": 2,
+      "Name": "guardian_powerconduit",
+      "Name_Localised": "Guardian Power Conduit",
+      "Count": 3,
+      "Grade": "2",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:39:10.000Z",
+      "Total": 244
+    },
+    {
+      "Name": "guardian_sentinel_wreckagecomponents",
+      "Name_Localised": "Guardian Wreckage Components",
+      "Count": 3,
       "Grade": "1",
-      "Operator": "-",
-      "Operator_Sign": "«",
-      "timeStamp": "2024-02-02T19:34:01.000Z",
-      "Total": 172
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:38:35.000Z",
+      "Total": 253
+    },
+    {
+      "Name": "guardian_powerconduit",
+      "Name_Localised": "Guardian Power Conduit",
+      "Count": 3,
+      "Grade": "2",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:38:31.000Z",
+      "Total": 241
+    },
+    {
+      "Name": "guardian_powerconduit",
+      "Name_Localised": "Guardian Power Conduit",
+      "Count": 3,
+      "Grade": "2",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:38:16.000Z",
+      "Total": 238
+    },
+    {
+      "Name": "guardian_sentinel_wreckagecomponents",
+      "Name_Localised": "Guardian Wreckage Components",
+      "Count": 3,
+      "Grade": "1",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:19:55.000Z",
+      "Total": 250
+    },
+    {
+      "Name": "guardian_powerconduit",
+      "Name_Localised": "Guardian Power Conduit",
+      "Count": 3,
+      "Grade": "2",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:18:42.000Z",
+      "Total": 235
+    },
+    {
+      "Name": "guardian_powerconduit",
+      "Name_Localised": "Guardian Power Conduit",
+      "Count": 3,
+      "Grade": "2",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:16:47.000Z",
+      "Total": 232
+    },
+    {
+      "Name": "guardian_techcomponent",
+      "Name_Localised": "Guardian Technology Component",
+      "Count": 3,
+      "Grade": "3",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:16:14.000Z",
+      "Total": 164
+    },
+    {
+      "Name": "guardian_powercell",
+      "Name_Localised": "Guardian Power Cell",
+      "Count": 3,
+      "Grade": "1",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-02-02T21:04:51.000Z",
+      "Total": 206
     }
   ]
 }

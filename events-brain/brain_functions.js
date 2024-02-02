@@ -100,11 +100,11 @@ try {
                 let materialData = fs.readFileSync('./events/Appendix/materialHistory.json','utf8', (err) => { if (err) return logs(err); });
                 materialData = JSON.parse(materialData);
                 //If the incoming material matches the timestamp and name of the history timestamp and name. exit the process.
-                
+                if (FET.material[0].timeStamp.includes("+")) { 
+                    FET.material[0].timeStamp = FET.material[0].timeStamp.split("+")[[0]]
+                }
                 const timeStampMatch = result.data.find(ts => {
-                    if (FET.material[0].timeStamp.includes("+")) { 
-                        FET.material[0].timeStamp = FET.material[0].timeStamp.split("+")[[0]]
-                    }
+                    
                     if (ts.timeStamp.includes("+")) { 
                         ts.timeStamp = ts.timeStamp.split("+")[[0]]
                     }
@@ -123,9 +123,8 @@ try {
                     return
                 }
                 //Remove 1 element to allow room for the next. Max 10. 
-                if (result.data.length >= 10) { 
+                if (result.data.length >= 10) {
                     result.data.splice(9);
-                    // console.log(result.data)
                 }
                 let maxCount = null;
                 const gradeStuff = gradeInfos(FET.material[0].Grade)

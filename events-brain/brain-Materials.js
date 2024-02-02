@@ -55,7 +55,6 @@ try {
             { grade: "5", count: "100" }
           ]
           findGrade = gradeCountArray.find(i => i.grade == x)
-          
           let findColor = null
           let calc = null;
           if (y) { 
@@ -270,7 +269,7 @@ try {
               historyArray[0].Name_Localised = MaterialCollectedData.Name_Localised
               historyArray[0].Count = MaterialCollectedData.Count
               historyArray[0].timeStamp = MaterialCollectedData.timestamp
-              const gradeStuff = gradeInfos(MaterialCollectedData.Count,matObject.Grade)
+              const gradeStuff = gradeInfos(matObject.Grade,MaterialCollectedData.Count)
               total = mat.Count + MaterialCollectedData.Count
               if (total > gradeStuff[0]) { total = gradeStuff[0] }
               else { total = mat.Count + MaterialCollectedData.Count }

@@ -452,6 +452,10 @@
       },
       {
         "category": "other events",
+        "event": "DockSRV"
+      },
+      {
+        "category": "other events",
         "event": "EndCrewSession"
       },
       {
