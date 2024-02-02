@@ -951,10 +951,10 @@ function addMaterialHistory(historyArray) {
 }
 //! SYNTHESIS DATA
 ipcRenderer.on('FromBrain-Materials-Synthesis', (SynthesisData) => { if (SynthesisData) { SynthesisDataF(SynthesisData); } else { console.log("Synthesis, No Event Data") } });
-function SynthesisDataF(SynthesisData) {
+async function SynthesisDataF(SynthesisData) {
   try {
     //Type
-    console.log(SynthesisData.Name)
+    // console.log(SynthesisData)
     let synthTypeS = SynthesisData.Name.split(" ")
     let synthType = synthTypeS[synthTypeS.length - 1] + "Synth"
     //Name
@@ -963,9 +963,8 @@ function SynthesisDataF(SynthesisData) {
     document.getElementById('timeStamp_synth').innerText = timeConvert(SynthesisData.timestamp).toUpperCase();
     document.getElementById('synthName').innerText = synthName.toUpperCase();
     document.getElementById('synthType').setAttribute('src',`../../public/images/${synthType}.png`);
-    let materialData = getEventFromStore(journalEvent);
+    let materialData = await getEventFromStore(journalEvent);
     if (materialData) {
-      // console.log(materialData);
       const container = document.getElementById('synthbar_container')
       let synthDynamicDom = document.getElementsByClassName('synthDynamicDom')
       synthDynamicDom = Array.from(synthDynamicDom)

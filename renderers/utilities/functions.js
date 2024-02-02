@@ -170,6 +170,11 @@ async function fetcher(FET,callback) {
   }
 }
 function timeConvert(inputDateTime,addTo) {
+  // 2023-11-04T04:29:13.000Z+4594
+  // console.log(inputDateTime)
+  if (inputDateTime.includes("+")) { 
+    inputDateTime = inputDateTime.split("+")[[0]]
+  }
   if (!addTo) { addTo = 0 }  
   const date = new Date(inputDateTime);
   date.setUTCHours(date.getUTCHours() - addTo)

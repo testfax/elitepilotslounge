@@ -35,7 +35,7 @@ const forRedis = fetch(`https://dcoh.watch/api/v1/Overwatch/Systems`)
 .then(data => {
     
     let buildMaster = []
-    const targetTitan = 'Taranis'
+    const targetTitan = 'Thor'
     data.systems.forEach(system=>{
         if (
             system.maelstrom.name == targetTitan &&

@@ -1,6 +1,6 @@
 /node_modules
 /dist
 /searchtxt.js
-.vscode
+/.vscode
 temp/searchtxt.js
 /temp

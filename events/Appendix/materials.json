@@ -717,7 +717,7 @@
       "Name": "ancienttechnologicaldata",
       "Name_Localised": "Pattern Epsilon Obelisk Data",
       "State": 0,
-      "Grade": "5",
+      "Grade": "4",
       "Group": "guardian ruins encoded",
       "known_uses": [],
       "location": "This material can not be traded at any Material Trader.",
@@ -875,7 +875,7 @@
       "Name": "tg_interdictiondata",
       "Name_Localised": "Thargoid Interdiction Telemetry",
       "State": 0,
-      "Grade": "5",
+      "Grade": "3",
       "Group": "thargoid data",
       "known_uses": [],
       "location": "This material can not be traded at any Material Trader.",
@@ -1067,7 +1067,7 @@
     {
       "Name": "electrochemicalarrays",
       "Name_Localised": "Electrochemical Arrays",
-      "State": 1,
+      "State": 0,
       "Grade": "3",
       "Group": "capacitors",
       "known_uses": [
@@ -1081,7 +1081,7 @@
     {
       "Name": "gridresistors",
       "Name_Localised": "Grid Resistors",
-      "State": 1,
+      "State": 0,
       "Grade": "1",
       "Group": "capacitors",
       "known_uses": [
@@ -1095,7 +1095,7 @@
     {
       "Name": "hybridcapacitors",
       "Name_Localised": "Hybrid Capacitors",
-      "State": 1,
+      "State": 0,
       "Grade": "2",
       "Group": "capacitors",
       "known_uses": [],
@@ -1107,7 +1107,7 @@
     {
       "Name": "militarysupercapacitors",
       "Name_Localised": "Military Supercapacitors",
-      "State": 1,
+      "State": 0,
       "Grade": "5",
       "Group": "capacitors",
       "known_uses": [],
@@ -1119,7 +1119,7 @@
     {
       "Name": "polymercapacitors",
       "Name_Localised": "Polymer Capacitors",
-      "State": 1,
+      "State": 0,
       "Grade": "4",
       "Group": "capacitors",
       "known_uses": [],

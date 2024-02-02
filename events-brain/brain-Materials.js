@@ -133,8 +133,10 @@ try {
                 gPath = path.normalize(gPath)
                 const fetched = fs.readFileSync(gPath,'utf8', (err) => { if (err) return logs(err); });
                 const response = JSON.parse(fetched)
+                
                 // const data = await arrayCombiner(fetcher(FET), journalData)
                 const data = arrayCombiner(response, journalData)
+                
                 return data
               }
               catch(e) { errorHandler(e,e.name)}
@@ -143,6 +145,7 @@ try {
                 try {
                   let mats_array = json_materials_array
                     let jData = journalData
+                    
                     const currentDate = new Date();
                     // jData['timestamp'] = currentDate.toISOString();
                     const newStamp = { "matsCombinedStamp": currentDate.toISOString() }
@@ -217,6 +220,7 @@ try {
         //Compbines all materials.json information and Materiels event journal data together and sorts.
         let materials = receivedData
         const ran = getMats(materials)
+        
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Comp`.green,receivedData.timestamp); }
       }
       if (receivedData.event == 'MaterialCollected') {
@@ -339,6 +343,7 @@ try {
         catch(e) { errorHandler(e,e.name) }
       }
       if (receivedData.event == 'Synthesis') {
+        
         if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE Mat]".bgCyan,`${receivedData.event} Wait`.yellow,receivedData.timestamp); }
         
         runSynthMats();
@@ -355,7 +360,7 @@ try {
             else { materialName = mat.Name_Localised }
             let materialObject = findMatObject(materialData, "Name",mat.Name)
             let materialGradeInfos = gradeInfos(materialObject.Grade,materialObject.Count)
-            // logs(materialObject)
+            
             const calcValues = {
               ...mat,
               ...materialObject,
@@ -398,7 +403,7 @@ try {
             historyArray[0].Operator_Sign = "«"
             // This updates the total materials in the Materials.json store.
             store.set('data',materialDataUpdated)
-            // logs(historyArray[0].Name,historyArray[0].Total);
+            logs(historyArray[0].Name,historyArray[0].Total);
             materialHistory("ADD",historyArray);  
           })
           if (windowItemsStore.get('currentPage') == 'Materials') {

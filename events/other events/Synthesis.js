@@ -6,6 +6,7 @@ try {
     const taskManager = require('../../sockets/taskManager')
     const Store = require('electron-store')
     module.exports = (data) =>{
+        
         try {
             const distributionList = [
                 'brain-Materials'
@@ -21,7 +22,7 @@ try {
                     }
                     taskManager.eventDataStore(receivedData)
                 })
-            }
+            } 
             //The response from the socket server will be a callback to this function.
             //Manipulate the data then send to the brain.
             // LaunchDrone(data, (response)=> { logs("stat",response) })
@@ -34,9 +35,11 @@ try {
             // const client = BrowserWindow.fromId(1);
             // client.webContents.send(`${eventType}`, data);
             //! #### Send to Brain
-            if (distributionList > 0) {
+            
+            if (distributionList.length > 0) {
                 distributionList.forEach(event => {
                     ipcMain.emit(event,data)
+                   
                 })
             }
             if (data.returnable) { return true }
