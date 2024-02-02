@@ -102,6 +102,9 @@ try {
                 //If the incoming material matches the timestamp and name of the history timestamp and name. exit the process.
                 
                 const timeStampMatch = result.data.find(ts => {
+                    if (FET.material[0].timeStamp.includes("+")) { 
+                        FET.material[0].timeStamp = FET.material[0].timeStamp.split("+")[[0]]
+                    }
                     if (ts.timeStamp.includes("+")) { 
                         ts.timeStamp = ts.timeStamp.split("+")[[0]]
                     }
@@ -129,9 +132,7 @@ try {
                 // logs(FET.material[0].Total, gradeStuff[0])
                 if (FET.material[0].Total > gradeStuff[0]) { maxCount = gradeStuff[0] }
                 else { maxCount = FET.material[0].Total }
-                if (FET.material[0].timeStamp.includes("+")) { 
-                    FET.material[0].timeStamp = FET.material[0].timeStamp.split("+")[[0]]
-                }
+                
                 result.data.unshift({
                     Name: FET.material[0].Name,
                     Name_Localised: FET.material[0].Name_Localised,
