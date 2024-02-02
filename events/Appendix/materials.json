@@ -998,7 +998,7 @@
     {
       "Name": "galvanisingalloys",
       "Name_Localised": "Galvanising Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "2",
       "Group": "alloys",
       "known_uses": [
@@ -1013,7 +1013,7 @@
     {
       "Name": "phasealloys",
       "Name_Localised": "Phase Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "3",
       "Group": "alloys",
       "known_uses": [
@@ -1029,7 +1029,7 @@
     {
       "Name": "protolightalloys",
       "Name_Localised": "Proto Light Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "4",
       "Group": "alloys",
       "known_uses": [],
@@ -1041,7 +1041,7 @@
     {
       "Name": "protoradiolicalloys",
       "Name_Localised": "Proto Radiolic Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "5",
       "Group": "alloys",
       "known_uses": [
@@ -1055,7 +1055,7 @@
     {
       "Name": "salvagedalloys",
       "Name_Localised": "Salvaged Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "1",
       "Group": "alloys",
       "known_uses": [],
