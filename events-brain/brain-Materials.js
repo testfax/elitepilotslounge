@@ -403,7 +403,7 @@ try {
             historyArray[0].Operator_Sign = "«"
             // This updates the total materials in the Materials.json store.
             store.set('data',materialDataUpdated)
-            logs(historyArray[0].Name,historyArray[0].Total);
+            // logs(historyArray[0].Name,historyArray[0].Total);
             materialHistory("ADD",historyArray);  
           })
           if (windowItemsStore.get('currentPage') == 'Materials') {

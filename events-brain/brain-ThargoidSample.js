@@ -385,24 +385,24 @@ try {
       }
       // -------------------------- TEST CODE BELOW
       // console.log(receivedData.Flags1.includes('Lights On'),FID,windowItemsStore.get('specifyDev'))
-      if (receivedData.Flags1.includes('Lights On') && windowItemsStore.get('specifyDev')) {
-        checkSetupFlag("LIGHTS ON!!!!");
-        const indexToRemove = launchToRedis.indexOf('FSDJump');
-        if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
-        let combinedData = {}
-        let compiledArray = {
-          "event": "reset",
-          "brain": thisBrain,
-          "systemAddress": store.get('thisSampleSystem'),
-          "combinedData": combinedData, 
-          "FID": FID
-        }
-        store.set('redisFirstUpdateflag',false)
-        const response = await brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
-        logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
-        const sendIt = {"event":"reset","systemAddress":store.get('systemAddress'),"FID": FID}
-        blastToUI(sendIt)
-      }
+      // if (receivedData.Flags1.includes('Lights On') && windowItemsStore.get('specifyDev')) {
+      //   checkSetupFlag("LIGHTS ON!!!!");
+      //   const indexToRemove = launchToRedis.indexOf('FSDJump');
+      //   if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
+      //   let combinedData = {}
+      //   let compiledArray = {
+      //     "event": "reset",
+      //     "brain": thisBrain,
+      //     "systemAddress": store.get('thisSampleSystem'),
+      //     "combinedData": combinedData, 
+      //     "FID": FID
+      //   }
+      //   store.set('redisFirstUpdateflag',false)
+      //   const response = await brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
+      //   logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
+      //   const sendIt = {"event":"reset","systemAddress":store.get('systemAddress'),"FID": FID}
+      //   blastToUI(sendIt)
+      // }
       // -------------------------- TEST CODE ABOVE
     }
     if (receivedData.event == 'CollectCargo') {

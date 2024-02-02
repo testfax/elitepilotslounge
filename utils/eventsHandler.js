@@ -62,10 +62,11 @@ try  {
                     else {
                         ignoreEventsJSON = fs.readFileSync(path.join(process.cwd(),'.','events','Appendix','ignoreEvents.json'), (err) => { if (err) return logs(err); });
                     }
-            ignoreEventsJSON = JSON.parse(ignoreEventsJSON) 
+            ignoreEventsJSON = JSON.parse(ignoreEventsJSON)
+            // console.log(ignoreEventName.event)
             for (const event of ignoreEventsJSON.events) {
-                if (event.event === ignoreEventName) {
-                    // logs("IGNORE TEST".red,ignoreEventName)
+                if (event.event === ignoreEventName.event) {
+                    // logs("[EH]".yellow,ignoreEventName.event)
                     return event.category;
                 }
             }
@@ -147,7 +148,7 @@ try  {
                 let eventIndexNumbers = eventIndexNumber
                 eventIndexNumbers++
                 updateEventIndexNumber(eventIndexNumbers)
-                logs('[EH]'.green,'Advancing to next line in journal')
+                // logs('[EH]'.green,'Advancing to next line in journal')
             }
             return true
         }

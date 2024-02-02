@@ -82,14 +82,14 @@
       "Total": 212
     },
     {
-      "Name": "tg_weaponparts",
-      "Name_Localised": "Weapon Parts",
-      "Count": 3,
-      "Grade": "4",
-      "Operator": "+",
-      "Operator_Sign": "»",
-      "timeStamp": "2023-11-04T04:29:13.000Z+4594",
-      "Total": 138
+      "Name": "heatconductionwiring",
+      "Name_Localised": "Heat Conduction Wiring",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-02-02T17:11:57.000Z+85",
+      "Total": 184
     }
   ]
 }

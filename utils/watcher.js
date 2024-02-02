@@ -108,6 +108,7 @@ try {
                 if (data) { 
                     try {
                         if (watcherConsoleDisplay('showBuffer')) {  logs("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
+                        
                         let dataObj = JSON.parse(data)
                         const event = dataObj.event
                         if (eventMod != undefined) {   
@@ -120,7 +121,7 @@ try {
                   
                         //!Increase Event Index - Not used to keep up with journal log file numbers. or else everything is off on another journal initial read.
                         let eventIndexNumber = lcs.eventIndexNumber
-                        eventIndexNumber
+                        // eventIndexNumber
                         lcs.updateEventIndexNumber(eventIndexNumber)
                         const now = new Date(dataObj.timestamp);
                         dataObj["timestamp"] = now.toISOString() + `+${eventIndexNumber}`
