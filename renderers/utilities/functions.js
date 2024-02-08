@@ -37,7 +37,6 @@ class Tooltip {
 }
 async function getEventFromStore(event) {
   try {
-    
     let data = await window.eliteEvent.multiStores
     data = data.find(i=> i.multiStore.store.data.event === event)
     

@@ -76,9 +76,10 @@ function clickedEvent(evt) {
         if (iname.innerText == 'check_box') { iname.innerText = 'check_box_outline_blank'; boxStatus = 0 }
         else { iname.innerText = 'check_box'; boxStatus = 1 }
         const mats = retrieveMaterialStore(clickedEventMod,boxStatus)
+        
         QuickMaterialReference(mats,boxStatus)
-        function retrieveMaterialStore(name,boxStatus) {
-          const materialStoreData = getEventFromStore('Materials');
+        async function retrieveMaterialStore(name,boxStatus) {
+          const materialStoreData = await getEventFromStore('Materials');
           let returnMe = null;
           Object.values(materialStoreData).forEach((value) => {
             if (Array.isArray(value)) {
@@ -93,7 +94,8 @@ function clickedEvent(evt) {
           window.electronStoreMaterials.set('Materials','data',materialStoreData)
           return returnMe
         }
-        function QuickMaterialReference(mats,StateQRM) {
+        async function QuickMaterialReference(mats,StateQRM) {
+          mats = await mats
           const FET = {
             type: "QRM",
             method: "POST",
@@ -119,7 +121,6 @@ function clickedEvent(evt) {
 ipcRenderer.on('updateMaterialsStore', (response) => { window.electronStoreMaterials.set('Materials','data',response) })
 //Grade Function to find grade max counts
 function gradeInfos(x,y) {
-  // console.log(x,y);
   try {
     let findGrade = null;
     
@@ -789,6 +790,7 @@ function addMaterialHistory(historyArray) {
       const lastEle = elementArray[elementArray.length - 1]
       lastEle.remove()
     } 
+    console.log(historyArray[0].Grade,historyArray[0].Total)
     const updateTot = gradeInfos(historyArray[0].Grade,historyArray[0].Total)
     let updateItem = document.getElementsByClassName(`${historyArray[0].Name}_count`)
     let updateItemTotal = document.getElementsByClassName(`${historyArray[0].Name}_count_tot`)
@@ -1042,12 +1044,11 @@ async function SynthesisDataF(SynthesisData) {
 }
 //build common mats dom
 function buildCommonMatsDom(mat) {
-  // console.log(mat);
   const container = document.getElementById('commonMatBar_container')
   // let matCommonMatsDynamicDom = document.getElementsByClassName('matCommonMatsDom')
   // matCommonMatsDynamicDom = Array.from(matCommonMatsDynamicDom)
   // matCommonMatsDynamicDom.forEach(dom => { dom.remove(); })
-  
+
   let materialName = mat.Name;
 // let materialObject = findMatObject(response[0].data, "Name",materialName)
 let materialGradeInfos = gradeInfos(mat.Grade,mat.Count)

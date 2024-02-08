@@ -1756,7 +1756,7 @@
     {
       "Name": "tg_causticgeneratorparts",
       "Name_Localised": "Corrosive Mechanisms",
-      "State": 0,
+      "State": 1,
       "Grade": "3",
       "Group": "thargoid maelstrom",
       "known_uses": [
@@ -1770,7 +1770,7 @@
     {
       "Name": "tg_causticshard",
       "Name_Localised": "Caustic Shard",
-      "State": 0,
+      "State": 1,
       "Grade": "2",
       "Group": "thargoid maelstrom",
       "known_uses": [

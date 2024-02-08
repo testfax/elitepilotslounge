@@ -63,7 +63,7 @@ try {
                     console.log(FET)
                 // }
                 // else { logs("[IPC]".bgRed,`fromRenderer: {fetcherMain} is not proper JSON...`) }
-            }            
+            }       
             let result
             try {
                 result = fs.readFileSync(FET.filePath[0],'utf8', (err) => { if (err) return logs(err); });
