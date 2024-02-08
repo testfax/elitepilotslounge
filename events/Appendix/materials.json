@@ -1779,7 +1779,7 @@
       "location": "A single shard of crystalised caustic gas (low rarity).",
       "description": "This material can not be traded at any Material Trader.",
       "extra": "",
-      "StateQRM": 0
+      "StateQRM": 1
     },
     {
       "Name": "unknownenergysource",

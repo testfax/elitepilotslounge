@@ -72,7 +72,6 @@ try {
                 else {
                     result = fs.readFileSync(path.join(process.cwd(),FET.filePath[0]), 'utf8', (err) => { if (err) return logs(err); });
                 }
-                logs(result)
                 // result = fs.readFileSync(FET.filePath[0],'utf8', (err) => { if (err) return logs(err); });
             }
             catch(e) { errorHandler(e,e.name)}
@@ -104,7 +103,14 @@ try {
                 newData = JSON.stringify(result, null, 2);
             }
             if (FET.type && FET.type == "materialHistory") {
-                let materialData = fs.readFileSync('./events/Appendix/materialHistory.json','utf8', (err) => { if (err) return logs(err); });
+                // let materialData = fs.readFileSync('./events/Appendix/materialHistory.json','utf8', (err) => { if (err) return logs(err); });
+                let materialData = null;
+                if (app.isPackaged) {
+                    materialData = fs.readFileSync(path.join(process.cwd(),'resources','app','.','events','Appendix','materialHistory.json'), 'utf8', (err) => { if (err) return logs(err); });
+                }
+                else {
+                    materialData = fs.readFileSync(path.join(process.cwd(),'events','Appendix','materialHistory.json'), 'utf8', (err) => { if (err) return logs(err); });
+                }
                 materialData = JSON.parse(materialData);
                 //If the incoming material matches the timestamp and name of the history timestamp and name. exit the process.
                 if (FET.material[0].timeStamp.includes("+")) { 
@@ -188,7 +194,13 @@ try {
             }
             if (FET.method == "POST") {
                 // logs("saving POST")
-                fs.writeFileSync(FET.filePath[0], newData, { flag: 'w' }, err => { if (err) { throw err}; }) 
+                // fs.writeFileSync(FET.filePath[0], newData, { flag: 'w' }, err => { if (err) { throw err}; }) 
+                if (app.isPackaged) {
+                    materialData = fs.writeFileSync(path.join(process.cwd(),'resources','app',FET.filePath[0]), newData, { flag: 'w' }, (err) => { if (err) return logs(err); });
+                }
+                else {
+                    materialData = fs.writeFileSync(path.join(process.cwd(),FET.filePath[0]), newData, { flag: 'w' }, (err) => { if (err) return logs(err); });
+                }
             }
         
             //If Lounge Client is on the Materials Page, then send to the renderer process functions.js
