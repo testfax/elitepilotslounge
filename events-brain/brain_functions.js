@@ -66,7 +66,14 @@ try {
             }       
             let result
             try {
-                result = fs.readFileSync(FET.filePath[0],'utf8', (err) => { if (err) return logs(err); });
+                if (app.isPackaged) {
+                    result = fs.readFileSync(path.join(process.cwd(),'resources','app',FET.filePath[0]), 'utf8', (err) => { if (err) return logs(err); });
+                }
+                else {
+                    result = fs.readFileSync(path.join(process.cwd(),FET.filePath[0]), 'utf8', (err) => { if (err) return logs(err); });
+                }
+                logs(result)
+                // result = fs.readFileSync(FET.filePath[0],'utf8', (err) => { if (err) return logs(err); });
             }
             catch(e) { errorHandler(e,e.name)}
             result = JSON.parse(result);
