@@ -7,15 +7,24 @@ const {requestCmdr,wingData} = require('../utils/loungeClientStore')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
-
+const jwt = require('jsonwebtoken')
 try {
-    // if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue," STATUS:"," OPERATIONAL ".green) }
     let commander = JSON.stringify(requestCmdr().commander)
+    const payload = {
+        user: commander.commander,
+        userID: commander.FID
+    }
+    const secretKey = 'somefatcat'
+    const token = jwt.sign(payload, secretKey)
+    // if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue," STATUS:"," OPERATIONAL ".green) }
     const manager = new Manager('https://elitepilotslounge.com/socket.io/', {
-        query: { 'clientpilot': commander, 'type': 'client', 'version':app.getVersion()},
+        secure: true,
+        query: { 'clientpilot': commander, 'type': 'client', 'version':app.getVersion(), token: token},
         path: '/socket.io/',
         upgrade: true,
         rememberUpgrade: true,
+        withCredentials: true,
+        auth: { token: token }
     })
     //todo Need to add Auth: {} validation when hitting this endpoint. Probably need to include a discord login due to injection of game files.
     const socket = manager.socket("/")
