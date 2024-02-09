@@ -1,12 +1,12 @@
 {
   "name": "elitepilotslounge",
-  "version": "0.0.0-alpha.33",
+  "version": "0.0.0-alpha.34",
   "description": "3rd Party App",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "dist": "electron-builder -p always"
+    "dist": "electron-builder"
   },
   "repository": "https://github.com/testfax/elitepilotslounge",
   "publish": {
