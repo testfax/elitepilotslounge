@@ -1067,7 +1067,7 @@
     {
       "Name": "electrochemicalarrays",
       "Name_Localised": "Electrochemical Arrays",
-      "State": 0,
+      "State": 1,
       "Grade": "3",
       "Group": "capacitors",
       "known_uses": [
@@ -1081,7 +1081,7 @@
     {
       "Name": "gridresistors",
       "Name_Localised": "Grid Resistors",
-      "State": 0,
+      "State": 1,
       "Grade": "1",
       "Group": "capacitors",
       "known_uses": [
@@ -1095,7 +1095,7 @@
     {
       "Name": "hybridcapacitors",
       "Name_Localised": "Hybrid Capacitors",
-      "State": 0,
+      "State": 1,
       "Grade": "2",
       "Group": "capacitors",
       "known_uses": [],
@@ -1107,7 +1107,7 @@
     {
       "Name": "militarysupercapacitors",
       "Name_Localised": "Military Supercapacitors",
-      "State": 0,
+      "State": 1,
       "Grade": "5",
       "Group": "capacitors",
       "known_uses": [],
@@ -1119,7 +1119,7 @@
     {
       "Name": "polymercapacitors",
       "Name_Localised": "Polymer Capacitors",
-      "State": 0,
+      "State": 1,
       "Grade": "4",
       "Group": "capacitors",
       "known_uses": [],
@@ -1765,7 +1765,7 @@
       "location": "This material can not be traded at any Material Trader.",
       "description": "Components recovered from the debris of a destroyed caustic generator. They are reactive to heat sources in close proximity.",
       "extra": "",
-      "StateQRM": 0
+      "StateQRM": 1
     },
     {
       "Name": "tg_causticshard",
@@ -1779,7 +1779,7 @@
       "location": "A single shard of crystalised caustic gas (low rarity).",
       "description": "This material can not be traded at any Material Trader.",
       "extra": "",
-      "StateQRM": 0
+      "StateQRM": 1
     },
     {
       "Name": "unknownenergysource",

@@ -75,6 +75,7 @@ async function drop(clickedEvent,other) {
       const box = document.getElementById(clickedEvent)
       if (box.classList.contains('pointer') && clickedEvent[0] != null) { //CLASS POINTER MUST BE PRESENT ON "NAMED ATTRIBUTE"
         let container = document.getElementById(`${clickedEvent}_container`)
+        console.log("container",container)
         let identify = clickedEvent.split("_")
         let arrow = null;
         // let ModclickedEvent = null
@@ -115,6 +116,7 @@ async function drop(clickedEvent,other) {
               category: identify[0],
               state: state
             }
+            
             fetcher(FET);
         }
       }

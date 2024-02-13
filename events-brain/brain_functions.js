@@ -77,17 +77,22 @@ try {
             result = JSON.parse(result);
             let newData = null
             if (FET.type && FET.type == "QRM") {
-                Object.values(result).forEach((value) => {
-                    if (Array.isArray(value)) {
-                        value.forEach((material) => {
-                            if (material.Name === FET.selectedMat.Name) {
-                            material.StateQRM = FET.selectedMat.StateQRM;
+                try {
+                    console.log("FAIL:".red,FET.selectedMat.Name)
+                    Object.values(result).forEach((value) => {
+                        if (Array.isArray(value)) {
+                            value.forEach((material) => {
+                                if (material.Name === FET.selectedMat.Name) {
+                                material.StateQRM = FET.selectedMat.StateQRM;
+                            }
+                        });
                         }
                     });
-                    }
-                });
-                
-                newData = JSON.stringify(result, null, 2);
+                    newData = JSON.stringify(result, null, 2);
+                }
+                catch (e) {
+                    console.log(e)
+                }
             }
             if (FET.type && FET.type == "Materials") {
                 Object.values(result).forEach((value) => {
@@ -183,11 +188,16 @@ try {
                 }
             }
             if (FET.method == "POST") {
-                if (app.isPackaged) {
-                    fs.writeFileSync(path.join(process.cwd(),'resources','app',FET.filePath[0]), newData, { flag: 'w' }, (err) => { if (err) return logs(err); });
+                try {
+                    if (app.isPackaged) {
+                        fs.writeFileSync(path.join(process.cwd(),'resources','app',FET.filePath[0]), newData, { flag: 'w' }, (err) => { if (err) return logs(err); });
+                    }
+                    else {
+                        fs.writeFileSync(path.join(process.cwd(),FET.filePath[0]), newData, { flag: 'w' }, (err) => { if (err) return logs(err); });
+                    }
                 }
-                else {
-                    fs.writeFileSync(path.join(process.cwd(),FET.filePath[0]), newData, { flag: 'w' }, (err) => { if (err) return logs(err); });
+                catch (e) {
+                    logs(e,e.stack)
                 }
             }
         

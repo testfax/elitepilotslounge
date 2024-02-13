@@ -29,7 +29,7 @@ const journalEvent = "Materials"
 
 //FUNCTIONS FROM CLICKING
 window.addEventListener("click", clickedEvent);
-function clickedEvent(evt) {
+async function clickedEvent(evt) {
   //Use arraySearch(f) to parse through something your looking for in an array or if you are comparing multiple arrays. 
   //    Combines forEach and find loop methods.
   //    In this parent function, we are only selecting one item to look for, which we will put in an array anyways for the 
@@ -48,6 +48,7 @@ function clickedEvent(evt) {
     }
     const nonUiEvents = ['expandall','collapseall','checkbox']
     const events = arraySearch(nonUiEvents,clickedNameEvent)
+    
     if (events.found.length) {
       if (evt.target.hasAttribute('expandall')) {
         const allExpansion = document.getElementsByClassName('expansion')
@@ -56,7 +57,6 @@ function clickedEvent(evt) {
         Array.from(allExpansion).forEach(item => {
           if (item.classList.contains('w3-hide')) {
             item.classList.remove('w3-hide')
-            
           }
         })
       }
@@ -71,15 +71,18 @@ function clickedEvent(evt) {
         })
       }
       if (events.found.find(i => i ==='checkbox') == 'checkbox') {
+        
         const iname = document.getElementById(clickedEvent[0]); 
         let boxStatus = null;
         if (iname.innerText == 'check_box') { iname.innerText = 'check_box_outline_blank'; boxStatus = 0 }
         else { iname.innerText = 'check_box'; boxStatus = 1 }
-        const mats = retrieveMaterialStore(clickedEventMod,boxStatus)
+        
+        let mats = await retrieveMaterialStore(clickedEventMod,boxStatus)
         
         QuickMaterialReference(mats,boxStatus)
         async function retrieveMaterialStore(name,boxStatus) {
           const materialStoreData = await getEventFromStore('Materials');
+          
           let returnMe = null;
           Object.values(materialStoreData).forEach((value) => {
             if (Array.isArray(value)) {
@@ -95,6 +98,7 @@ function clickedEvent(evt) {
           return returnMe
         }
         async function QuickMaterialReference(mats,StateQRM) {
+         
           mats = await mats
           const FET = {
             type: "QRM",
@@ -103,6 +107,7 @@ function clickedEvent(evt) {
             StateQRM: StateQRM,
             filePath: ["./events/Appendix/materials.json"]
           }
+
           fetcher(FET);
           if (StateQRM == 0) {
             const QRMname = document.getElementById(`${mats.Name}_QRM`)

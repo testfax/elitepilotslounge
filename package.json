@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder -p always"
   },
   "repository": "https://github.com/testfax/elitepilotslounge",
   "publish": {
