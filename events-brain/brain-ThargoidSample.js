@@ -130,22 +130,22 @@ try {
     }
     catch(e) { logs("redisUpdaterSetup Failure".bgMagenta,logF(console.error(e)));  }
   }
-  function fetchFromDCOH(data){ 
-    const systemData = fetch(`https://dcoh.watch/api/v1/Overwatch/System/${data}`)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok',response.status);
-          }
-          return response.json();
-      })
-      .then(item => {
-        logs(item.populationOriginal);
+  // function fetchFromDCOH(data){ 
+  //   const systemData = fetch(`https://dcoh.watch/api/v1/Overwatch/System/${data}`)
+  //     .then(response => {
+  //         if (!response.ok) {
+  //             throw new Error('Network response was not ok',response.status);
+  //         }
+  //         return response.json();
+  //     })
+  //     .then(item => {
+  //       logs(item.populationOriginal);
          
-      })
-      .catch(e => {
-          logs(`[DCOH] specific system failed`.bgYellow,e)
-      })
-  }
+  //     })
+  //     .catch(e => {
+  //         logs(`[DCOH] specific system failed`.bgYellow,e)
+  //     })
+  // }
   function checkSetupFlag(event) {
     if (store.get('redisFirstUpdateflag')) { 
       if (event) { logs(`${event}`.bgCyan,"{",`{redisFirstUpdateflag:`.green,store.get('redisFirstUpdateflag'),"}") }
