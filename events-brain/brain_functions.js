@@ -78,7 +78,6 @@ try {
             let newData = null
             if (FET.type && FET.type == "QRM") {
                 try {
-                    console.log("FAIL:".red,FET.selectedMat.Name)
                     Object.values(result).forEach((value) => {
                         if (Array.isArray(value)) {
                             value.forEach((material) => {

@@ -998,7 +998,7 @@
     {
       "Name": "galvanisingalloys",
       "Name_Localised": "Galvanising Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "2",
       "Group": "alloys",
       "known_uses": [
@@ -1013,7 +1013,7 @@
     {
       "Name": "phasealloys",
       "Name_Localised": "Phase Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "3",
       "Group": "alloys",
       "known_uses": [
@@ -1029,7 +1029,7 @@
     {
       "Name": "protolightalloys",
       "Name_Localised": "Proto Light Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "4",
       "Group": "alloys",
       "known_uses": [],
@@ -1041,7 +1041,7 @@
     {
       "Name": "protoradiolicalloys",
       "Name_Localised": "Proto Radiolic Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "5",
       "Group": "alloys",
       "known_uses": [
@@ -1055,7 +1055,7 @@
     {
       "Name": "salvagedalloys",
       "Name_Localised": "Salvaged Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "1",
       "Group": "alloys",
       "known_uses": [],
@@ -1067,7 +1067,7 @@
     {
       "Name": "electrochemicalarrays",
       "Name_Localised": "Electrochemical Arrays",
-      "State": 1,
+      "State": 0,
       "Grade": "3",
       "Group": "capacitors",
       "known_uses": [
@@ -1081,7 +1081,7 @@
     {
       "Name": "gridresistors",
       "Name_Localised": "Grid Resistors",
-      "State": 1,
+      "State": 0,
       "Grade": "1",
       "Group": "capacitors",
       "known_uses": [
@@ -1095,7 +1095,7 @@
     {
       "Name": "hybridcapacitors",
       "Name_Localised": "Hybrid Capacitors",
-      "State": 1,
+      "State": 0,
       "Grade": "2",
       "Group": "capacitors",
       "known_uses": [],
@@ -1107,7 +1107,7 @@
     {
       "Name": "militarysupercapacitors",
       "Name_Localised": "Military Supercapacitors",
-      "State": 1,
+      "State": 0,
       "Grade": "5",
       "Group": "capacitors",
       "known_uses": [],
@@ -1119,7 +1119,7 @@
     {
       "Name": "polymercapacitors",
       "Name_Localised": "Polymer Capacitors",
-      "State": 1,
+      "State": 0,
       "Grade": "4",
       "Group": "capacitors",
       "known_uses": [],
@@ -1619,7 +1619,7 @@
       "location": "Found at settlements, ship wrecks, or mission rewards, Can be traded at Manufactured Material Traders in high security, populated industrial economies.",
       "description": "Advanced component found in Imperial systems. Known to be salvaged from signal sources. Imperial shielding is an advanced form of shield management using proprietary technology.",
       "extra": "",
-      "StateQRM": 1
+      "StateQRM": 0
     },
     {
       "Name": "shieldemitters",
@@ -1756,7 +1756,7 @@
     {
       "Name": "tg_causticgeneratorparts",
       "Name_Localised": "Corrosive Mechanisms",
-      "State": 1,
+      "State": 0,
       "Grade": "3",
       "Group": "thargoid maelstrom",
       "known_uses": [
@@ -1765,12 +1765,12 @@
       "location": "This material can not be traded at any Material Trader.",
       "description": "Components recovered from the debris of a destroyed caustic generator. They are reactive to heat sources in close proximity.",
       "extra": "",
-      "StateQRM": 1
+      "StateQRM": 0
     },
     {
       "Name": "tg_causticshard",
       "Name_Localised": "Caustic Shard",
-      "State": 1,
+      "State": 0,
       "Grade": "2",
       "Group": "thargoid maelstrom",
       "known_uses": [
@@ -1779,7 +1779,7 @@
       "location": "A single shard of crystalised caustic gas (low rarity).",
       "description": "This material can not be traded at any Material Trader.",
       "extra": "",
-      "StateQRM": 1
+      "StateQRM": 0
     },
     {
       "Name": "unknownenergysource",
@@ -1853,7 +1853,7 @@
     {
       "Name": "heatresistantceramics",
       "Name_Localised": "Heat Resistant Ceramics",
-      "State": 0,
+      "State": 1,
       "Grade": "2",
       "Group": "thermic",
       "known_uses": [
@@ -1867,7 +1867,7 @@
     {
       "Name": "militarygradealloys",
       "Name_Localised": "Military Grade Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "5",
       "Group": "thermic",
       "known_uses": [],
@@ -1879,7 +1879,7 @@
     {
       "Name": "precipitatedalloys",
       "Name_Localised": "Precipitated Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "3",
       "Group": "thermic",
       "known_uses": [],
@@ -1891,7 +1891,7 @@
     {
       "Name": "temperedalloys",
       "Name_Localised": "Tempered Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "1",
       "Group": "thermic",
       "known_uses": [],
@@ -1903,7 +1903,7 @@
     {
       "Name": "thermicalloys",
       "Name_Localised": "Thermic Alloys",
-      "State": 0,
+      "State": 1,
       "Grade": "4",
       "Group": "thermic",
       "known_uses": [

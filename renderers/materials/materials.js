@@ -1,7 +1,6 @@
 let myClassSave = null;
 const windowLoaded =  new Promise(resolve => { window.onload = resolve; });
 windowLoaded.then(() => { 
-
   //FUNCTIONS FROM MOUSEOVER
   const pointer = document.getElementsByClassName("pointer")
   Array.from(pointer).forEach((point)=>{
@@ -20,8 +19,6 @@ windowLoaded.then(() => {
       }
     });
   })
-
-
 });
 
 //resource variables
@@ -71,18 +68,14 @@ async function clickedEvent(evt) {
         })
       }
       if (events.found.find(i => i ==='checkbox') == 'checkbox') {
-        
         const iname = document.getElementById(clickedEvent[0]); 
         let boxStatus = null;
         if (iname.innerText == 'check_box') { iname.innerText = 'check_box_outline_blank'; boxStatus = 0 }
         else { iname.innerText = 'check_box'; boxStatus = 1 }
-        
         let mats = await retrieveMaterialStore(clickedEventMod,boxStatus)
-        
         QuickMaterialReference(mats,boxStatus)
         async function retrieveMaterialStore(name,boxStatus) {
           const materialStoreData = await getEventFromStore('Materials');
-          
           let returnMe = null;
           Object.values(materialStoreData).forEach((value) => {
             if (Array.isArray(value)) {
