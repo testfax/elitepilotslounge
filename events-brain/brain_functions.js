@@ -201,7 +201,6 @@ try {
             }
         
             //If Lounge Client is on the Materials Page, then send to the renderer process functions.js
-            
             if (FET.type && FET.type == "materialHistory" && pageData.currentPage == 'Materials') {
                 const client = BrowserWindow.fromId(thisWindow.win);
                 client.webContents.send('fetcherMatHistory', FET.material);
