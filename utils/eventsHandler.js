@@ -120,10 +120,9 @@ try  {
                 }
                 else {
                     //Keep eventIndexNumber accurate with handled journal events. Even though we're ignoring the ones above. As gameStatus will handle them separately.
-                    let eventIndexNumbers = eventIndexNumber
-                    eventIndexNumbers++
-                    
-                    updateEventIndexNumber(eventIndexNumbers)
+                    // let eventIndexNumbers = eventIndexNumber
+                    // eventIndexNumbers++
+                    // updateEventIndexNumber(eventIndexNumbers,`EH2 ${eventName}`)
                     return true
                 }
             }
@@ -147,7 +146,7 @@ try  {
                 logs_error('[EH]'.red,`${modulePath}`.yellow,"Does Not Exist.".cyan) 
                 let eventIndexNumbers = eventIndexNumber
                 eventIndexNumbers++
-                updateEventIndexNumber(eventIndexNumbers)
+                updateEventIndexNumber(eventIndexNumbers,`EH1 ${eventName}`)
                 // logs('[EH]'.green,'Advancing to next line in journal')
             }
             return true
@@ -190,9 +189,9 @@ try  {
             if (category == null) { 
                 if (!returnable) { logs("2.6 NO CATEGORY:EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow); }
                 if (returnable) { 
-                    let eventIndexNumbers = eventIndexNumber
-                    eventIndexNumbers++
-                    updateEventIndexNumber(eventIndexNumbers)
+                    console.log('hit check updateeventindexnumber')
+                    // eventIndexNumber++
+                    // updateEventIndexNumber(eventIndexNumber,"starteventsearch")
                     return true
                 }
             }

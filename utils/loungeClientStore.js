@@ -30,9 +30,9 @@ const lcs = {
     },
 
     eventIndexNumber: 0,
-    updateEventIndexNumber: function(newIndex) {
+    updateEventIndexNumber: function(newIndex,fileType) {
         lcs.eventIndexNumber = newIndex
-        // console.log("updated eventIndexNumber".red,lcs.eventIndexNumber)
+        console.log(fileType,"updated eventIndexNumber".red,lcs.eventIndexNumber)
     },
     isJSONFileValid: async function (filePath) {
         try {

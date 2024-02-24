@@ -185,7 +185,7 @@ try {
                             const formattedNumber = (percent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:0});
                             callback({current:index,total:readEventsList.totalLines,percent:formattedNumber})
 
-                            updateEventIndexNumber(index)
+                            updateEventIndexNumber(index,`[TM]-${eventItem.event}`)
                             
                             const now = new Date(eventItem.timestamp);
                             if (watcherConsoleDisplay('startup-read')) { logs("[STARTUP READ]".cyan,`${index}`.red,`${eventItem.event}`.yellow,`${eventItem.timestamp}`.cyan) }

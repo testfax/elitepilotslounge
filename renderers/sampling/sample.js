@@ -1,5 +1,3 @@
-// const { ipcRenderer } = require("electron");
-
 let myClassSave = null;
 const windowLoaded =  new Promise(resolve => { window.onload = resolve; });
 windowLoaded.then(() => { 
@@ -822,6 +820,7 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
 }
 //Builds the Titelbar holding the info legend for the commadner
 function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTitan) {
+
   let container = document.getElementById(`activeSystembar_container_${thisTitan.name}_${thisTitan.state}`)
   const TR1 = document.createElement('tr')
   container.appendChild(TR1)
@@ -893,6 +892,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   if (specificCommanderSystemData){
     specificCommanderSystemData.forEach((cmdrData,index) => {
       if (index >= 1) { 
+        console.log("In Wing:",Object.values(cmdrData)[0].inWing)
         create_activeCommanders(systemAddress,cmdrData,TR1)
       }
     })

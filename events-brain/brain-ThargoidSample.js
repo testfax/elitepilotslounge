@@ -265,6 +265,7 @@ try {
         thargoidSampling["InWing"] = compiledArray
         store.set('wingStatus',compiledArray) //Initialize the object in the store.
         if (store.get('redisFirstUpdateflag')) { 
+          console.log(compiledArray)
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey())
         }
@@ -272,7 +273,7 @@ try {
       if (!Object.keys(thargoidSampling).includes('InWing')) { inWingStuff(receivedData.timestamp,0) }
       if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; }
       if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--;  }
-
+      
       // logs("====================================")
       //Viewing GalaxyMap
       if (receivedData.GuiFocus == 6 && eventNames.includes('GalaxyMap') && guifocus != 6) { guifocus = 6
@@ -419,6 +420,9 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'Cargo') {
+      //! This is from the Cargo.json file, it will not be iterated on during the initial load.
+      //! Cargo will only change if there's a Buy, Sell, Transfer, Collection, Ejection, or Launch.
+      //! Simply put, it is not necessary and will impede counting if its iterated on during initial launch of epl.
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try{
         store.set('masterTimestamp',receivedData.timestamp)
@@ -458,6 +462,7 @@ try {
         currentCargo = compiledArray
         store.set('cargo',compiledArray)
         if (store.get('redisFirstUpdateflag')) { 
+          // console.log(compiledArray)
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
@@ -914,6 +919,7 @@ try {
             const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
             //If the titlebar for this system doesn't exist, this will create it.
             //The server will populate it if another commander initiates it.
+            console.log(compiledArray)
             blastToUI(sendIt)
             redisUpdaterSetup(receivedData.event,thargoidSampling)
           }

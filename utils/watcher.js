@@ -16,6 +16,7 @@ try {
     let lcs = require('./loungeClientStore')
     let lcsStuff = lcs.savedGameLocation("lcsStuff watcher.js");
     let eventsArray = []
+    
     if (lcs.requestCmdr() != false && lcs.requestCmdr() != 'undefined') {
         const savedGamePath = lcsStuff.savedGamePath;
         const wat = {
@@ -74,13 +75,12 @@ try {
                             //! CHECK TO SEE IF EVENT IS IN THE IGNORE FILE....
                             
                             //!Increment Event Index number
-                            let eventIndexNumber = lcs.eventIndexNumber
-                            eventIndexNumber++
-                            lcs.updateEventIndexNumber(eventIndexNumber)
+                            lcs.eventIndexNumber++
+                            lcs.updateEventIndexNumber(lcs.eventIndexNumber,`JL-${inspectedEvent.event}`)
                             const now = new Date(inspectedEvent.timestamp);
-                            inspectedEvent["timestamp"] = now.toISOString() + `+${eventIndexNumber}`
+                            inspectedEvent["timestamp"] = now.toISOString() + `+${lcs.eventIndexNumber}`
                             // console.log(index, readEventsList.totalLines, formattedNumber)
-                            // console.log(`${inspectedEvent["timestamp"]}`.cyan,`${inspectedEvent.event}`)
+                            // console.log(`JL-${inspectedEvent["timestamp"]}`.cyan,`${inspectedEvent.event}`)
                             //!
 
 
@@ -119,13 +119,17 @@ try {
                         }
                         // logs(colorize(data, {pretty: true}))
                   
-                        //!Increase Event Index - Not used to keep up with journal log file numbers. or else everything is off on another journal initial read.
-                        let eventIndexNumber = lcs.eventIndexNumber
-                        // eventIndexNumber
-                        lcs.updateEventIndexNumber(eventIndexNumber)
+                        const exceptionList = [
+                            'Cargo',
+                        ]
                         const now = new Date(dataObj.timestamp);
-                        dataObj["timestamp"] = now.toISOString() + `+${eventIndexNumber}`
-                        // console.log(`${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
+                        if (exceptionList.includes(dataObj.event)) {
+                            dataObj["timestamp"] = now.toISOString() + `+${lcs.eventIndexNumber + 1}`
+                        }
+                        else {
+                            dataObj["timestamp"] = now.toISOString() + `-0`
+                        }
+                        console.log(`JS-${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
                         //!
                         const result = sendJSONevent = initializeEvent.startEventSearch(dataObj,0,eventMod);
                         // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }

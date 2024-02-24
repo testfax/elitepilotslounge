@@ -130,7 +130,8 @@ ipcMain.on('RedisData',(event,message)=> { //Implements a validator.
 ipcMain.on('RedisData-SampleSystems',(event,message)=> { //No validator needed for this small task.
   if (watcherConsoleDisplay('globalIPC')) { logs("[IPC]".bgMagenta,"RETRIEVE: ",message.description); }
   taskManager.eventDataStore(message, (response) => {
-    // logs(Object.values(response)[0].redisQueryResult);
+    // console.log(response)
+    // logs(Object.values(response)[0].redisResult);
     const client = BrowserWindow.fromId(thisWindow.win);
     client.webContents.send(`${message.from}`, response);
   })
