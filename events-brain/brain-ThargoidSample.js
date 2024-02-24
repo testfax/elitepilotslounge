@@ -263,20 +263,16 @@ try {
         let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         thargoidSampling["InWing"] = compiledArray
-        if (!store.get('wingStatus')) { store.set('wingStatus',compiledArray) } //Initialize the object in the store.
-        if (store.get('thisSampleSystem.combinedData.wingStatus') != action) { 
-          if (store.get('redisFirstUpdateflag')) { 
-            wingCount++
-            blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey())
-          }
+        store.set('wingStatus',compiledArray) //Initialize the object in the store.
+        if (store.get('redisFirstUpdateflag')) { 
+          blastToUI(compiledArray)
+          brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey())
         }
-        else { store.set('wingStatus',compiledArray) }
       }
       if (!Object.keys(thargoidSampling).includes('InWing')) { inWingStuff(receivedData.timestamp,0) }
       if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; }
-      if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--; }
-      
+      if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--;  }
+
       // logs("====================================")
       //Viewing GalaxyMap
       if (receivedData.GuiFocus == 6 && eventNames.includes('GalaxyMap') && guifocus != 6) { guifocus = 6
@@ -384,25 +380,25 @@ try {
           }
       }
       // -------------------------- TEST CODE BELOW
-      // console.log(receivedData.Flags1.includes('Lights On'),FID,windowItemsStore.get('specifyDev'))
-      // if (receivedData.Flags1.includes('Lights On') && windowItemsStore.get('specifyDev')) {
-      //   checkSetupFlag("LIGHTS ON!!!!");
-      //   const indexToRemove = launchToRedis.indexOf('FSDJump');
-      //   if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
-      //   let combinedData = {}
-      //   let compiledArray = {
-      //     "event": "reset",
-      //     "brain": thisBrain,
-      //     "systemAddress": store.get('thisSampleSystem'),
-      //     "combinedData": combinedData, 
-      //     "FID": FID
-      //   }
-      //   store.set('redisFirstUpdateflag',false)
-      //   const response = await brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
-      //   logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
-      //   const sendIt = {"event":"reset","systemAddress":store.get('systemAddress'),"FID": FID}
-      //   blastToUI(sendIt)
-      // }
+      // console.log("status test code:",receivedData.Flags1.includes('Lights On'),FID,windowItemsStore.get('specifyDev'))
+      if (receivedData.Flags1.includes('Lights On') && windowItemsStore.get('specifyDev')) {
+        checkSetupFlag("LIGHTS ON!!!!");
+        const indexToRemove = launchToRedis.indexOf('FSDJump');
+        if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
+        let combinedData = {}
+        let compiledArray = {
+          "event": "reset",
+          "brain": thisBrain,
+          "systemAddress": store.get('thisSampleSystem'),
+          "combinedData": combinedData, 
+          "FID": FID
+        }
+        store.set('redisFirstUpdateflag',false)
+        const response = await brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
+        logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
+        const sendIt = {"event":"reset","systemAddress":store.get('systemAddress'),"FID": FID}
+        blastToUI(sendIt)
+      }
       // -------------------------- TEST CODE ABOVE
     }
     if (receivedData.event == 'CollectCargo') {
@@ -896,7 +892,6 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'LaunchDrone') {
-
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
         if (currentSystemState != "") {

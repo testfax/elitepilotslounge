@@ -2,7 +2,6 @@ try {
     const { ipcMain, BrowserWindow,webContents  } = require('electron');
     const { logs } = require('../../utils/logConfig')
     const {watcherConsoleDisplay,errorHandler} = require('../../utils/errorHandlers')
-    const lcs = require('../../utils/loungeClientStore')
     const socketEventManager = require('../../sockets/taskManager')
     const colorize = require('json-colorizer');
     const {wingData} = require('../../utils/loungeClientStore')
@@ -27,7 +26,7 @@ try {
             newWing.wing.Others.push(data.Name)
             const newOthers = [...new Set(newWing.wing.Others)]
             newWing.wing.Others[newOthers]
-            if (errorHandler.watcherConsoleDisplay(data.event)) { logs("MODIFIED WING".red,newWing.wing) }
+            if (watcherConsoleDisplay(data.event)) { logs("MODIFIED WING".red,newWing.wing) }
             wingData(newWing.wing,0)
             //! #### Socket Server
             ipcMain.removeAllListeners(`event-callback-${data.event}`);
