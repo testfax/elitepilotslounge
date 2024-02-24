@@ -12,7 +12,7 @@ const errorFunc = {
     pageData: { currentPage: "" },
     logF: (err) => { return JSON.stringify(err, null, 2) },
     getCommander: function(data) {
-        let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.txt`
+        let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.json`
         loungeClientFile = path.normalize(loungeClientFile)
         let result = fs.readFileSync(loungeClientFile,'utf8', (err) => { if (err) return logs(err); });
         result = JSON.parse(result)

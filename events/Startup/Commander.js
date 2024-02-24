@@ -17,7 +17,7 @@ try {
             //! #### Mutate Data
             let result = lcs.loungeClientStore(lcs.savedGameLocation('commander-event').loungeClientFile)
             if (!result[0].commander.hasOwnProperty('commander')) { 
-                //get path for the savedGame path for the lounge-client.txt
+                //get path for the savedGame path for the lounge-client.json
                 const path = result[0]["file"]
                 //read commander name 
                 result[0]["commander"] = { commander: data.Name, FID: data.FID }

@@ -150,7 +150,7 @@ try {
             ignoreInitial: false,
             ignored: [
                 `${savedGamePath}/*.cache`, 
-                `${savedGamePath}/lounge-client.txt`,
+                `${savedGamePath}/lounge-client.json`,
                 `${savedGamePath}/edmc-journal-lock.txt`
             ],
         })

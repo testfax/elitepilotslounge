@@ -3,7 +3,7 @@ try {
     const path = require('path')
     const log = require('electron-log'); 
     const getPath = require('platform-folders')
-    let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.txt`
+    let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.json`
     loungeClientFile = path.normalize(loungeClientFile)
     let logspath = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/`
     logspath = path.normalize(logspath)
@@ -18,7 +18,7 @@ try {
             return path.join(sortedFiles[0]);
         }
         catch(error) {
-            logs("[LOGS]".red,"NO LOGS FOUND....")
+            logsUtil.logs("[LOGS]".red,"NO LOGS FOUND....")
             return "unknown.log" 
         }
     }

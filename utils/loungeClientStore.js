@@ -203,7 +203,7 @@ const lcs = {
         if (watcherConsoleDisplay('wingData')) { logs("[LCS]".yellow,"WINGDATA".green,"OUTPUT:".bgWhite,wing,"Read Only:".yellow,readOnly) }
         return { wing }
     },
-    requestCmdr: function(details) { //From lounge-client.txt
+    requestCmdr: function(details) { //From lounge-client.json
         try {
             const lcf = lcs.savedGameLocation("lcf").loungeClientFile
             let result = lcs.loungeClientStore(lcf)
@@ -213,7 +213,7 @@ const lcs = {
             return { commander }
         }
         catch(e) {
-            if (watcherConsoleDisplay('globalLogs')) { logs("[LCS]".yellow,"Fixing Commander: lounge-client.txt".bgRed) }
+            if (watcherConsoleDisplay('globalLogs')) { logs("[LCS]".yellow,"Fixing Commander: lounge-client.json".bgRed) }
             result[0]["commander"] = lcs.reWriteCmdr(lcs.savedGameLocation('requestCmdr Fix').savedGamePath)
             commander = result[0]["commander"]
             
@@ -221,7 +221,7 @@ const lcs = {
             if (commander.hasOwnProperty('commander')) { 
                 // clearInterval(lcs.worldFixer.timer)
                 if (watcherConsoleDisplay('globalLogs')) { 
-                    logs("[LCS]".yellow,"Commander Fixed: lounge-client.txt".bgGreen); 
+                    logs("[LCS]".yellow,"Commander Fixed: lounge-client.json".bgGreen); 
                 }
                 return { commander } 
             }
@@ -298,11 +298,11 @@ const lcs = {
         }
         let savedGamePath = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/`
         savedGamePath = path.normalize(savedGamePath)
-        let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.txt`
+        let loungeClientFile = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/lounge-client.json`
         loungeClientFile = path.normalize(loungeClientFile)
-        const loungeClientFilePath = path.join(savedGamePath, 'lounge-client.txt')
+        const loungeClientFilePath = path.join(savedGamePath, 'lounge-client.json')
 
-        //! Initial lounge-client.txt starting json
+        //! Initial lounge-client.json starting json
         const loungeClientObject = {
             file: loungeClientFilePath, 
             wing: {Inviter: "", Others: [], Rooms:[]}, 
@@ -316,9 +316,9 @@ const lcs = {
             const loungeClientCondition2 = lcs.isJSONFileValid(loungeClientFilePath)
             if (!loungeClientCondition.size >=1 || !loungeClientCondition2) {
                 if (watcherConsoleDisplay('globalLogs')) { 
-                    logs("BYTES:".red,loungeClientCondition.size,"| VALID:".red,loungeClientCondition2,"|".red,"Re-Writing lounge-client.txt with defaults")
+                    logs("BYTES:".red,loungeClientCondition.size,"| VALID:".red,loungeClientCondition2,"|".red,"Re-Writing lounge-client.json with defaults")
                 }
-                loungeClientObject['commander'] = lcs.reWriteCmdr(savedGamePath) //Emplaced incase loss of lounge-client.txt file integrity.
+                loungeClientObject['commander'] = lcs.reWriteCmdr(savedGamePath) //Emplaced incase loss of lounge-client.json file integrity.
                 const fileD = [loungeClientObject]
                 fs.writeFileSync(loungeClientFile, JSON.stringify(fileD), { flag: 'w' })
                 return { savedGamePath, loungeClientFile, loungeClientFilePath }
@@ -327,16 +327,16 @@ const lcs = {
         }
         catch(e) {
             if (watcherConsoleDisplay('globalLogs')) { 
-                logs("[LCS]".red,"Missing File. Created lounge-client.txt file.",e)
+                logs("[LCS]".red,"Missing File. Created lounge-client.json file.",e)
             }
-            loungeClientObject['commander'] = lcs.reWriteCmdr(savedGamePath) //Emplaced incase loss of lounge-client.txt file integrity.
+            loungeClientObject['commander'] = lcs.reWriteCmdr(savedGamePath) //Emplaced incase loss of lounge-client.json file integrity.
             const fileD = [loungeClientObject]
             fs.writeFileSync(loungeClientFile, JSON.stringify(fileD), { flag: 'w' })
             return { savedGamePath, loungeClientFile, loungeClientFilePath }
         }
     },
     loungeClientStore: function(gPath,instructions) {
-        //! Specifically for lounge-client.txt
+        //! Specifically for lounge-client.json
         //!This function can Read a the "gPath" file and if "instructions" property is provided it will save.
         try {
             // Instructions should not be passed in initially! Do the following first.
@@ -352,19 +352,19 @@ const lcs = {
             return result
         }
         catch(e) {
-            //! If you keep getting this error when moving the box, then code in to delete the contents of the lounge-client.txt file.
-            //! When the player tries to reopen the client, it will repopulate the lounge-client.txt file from scratch.
-            lcs.reWriteCmdr(lcs.savedGameLocation("loungeClientStore").loungeClientFile) //Emplaced incase loss of lounge-client.txt file integrity.
+            //! If you keep getting this error when moving the box, then code in to delete the contents of the lounge-client.json file.
+            //! When the player tries to reopen the client, it will repopulate the lounge-client.json file from scratch.
+            lcs.reWriteCmdr(lcs.savedGameLocation("loungeClientStore").loungeClientFile) //Emplaced incase loss of lounge-client.json file integrity.
             if (watcherConsoleDisplay('globalLogs')) { 
-                logs("[LCS]".red,"Failed to write to lounge-client.txt. reWriteCmdr() started...")
+                logs("[LCS]".red,"Failed to write to lounge-client.json. reWriteCmdr() started...")
             }
             
         }
     },
     windowPosition: function(win,init) {
-        //Since the intent is to get the window Size and Position, lets call the function that validates the path of the lounge-client.txt
+        //Since the intent is to get the window Size and Position, lets call the function that validates the path of the lounge-client.json
         //After that is received, lets call the Store function to get the contents of that file.
-        //Then, once you receive the result from getting the contents of the lounge-client.txt
+        //Then, once you receive the result from getting the contents of the lounge-client.json
         //Update the object with what you want and then send it back as instructions, the function expects an object once you send it.
         let result = lcs.loungeClientStore(lcs.savedGameLocation("window position").loungeClientFile)
         //
