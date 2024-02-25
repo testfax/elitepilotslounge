@@ -163,12 +163,11 @@ try {
                         "Running latestLogRead: ".green,
                         `${readEventsList.totalLines}`.cyan,
                         "events",
-                        // found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
-                        // console.logs(readEvents.listItemByTimestampNames)
-                        // colorize(readEventsList.listItemByTimestampNames,{pretty: true})
-                        )
-                    }
-                if (readEventsList.found.length >= 1) {
+                        //! propertise of readEventsList
+                        //! found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad
+                    )
+                }
+                if (readEventsList.totalLines > 0) {
                     updateStartStop(true)
                     updateInitialReadStatus(true)
                     continueReadLatestLogTM(0) //Start journal entry from line 0.

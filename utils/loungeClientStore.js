@@ -114,7 +114,6 @@ const lcs = {
                 let partLog = latestLog.split("\\")
                 partLog = partLog[partLog.length -1]
                 partLog = { logName: partLog, maxLines: totalLines, firstLoad: firstLoad[0] }
-                // lcs.loungeClientStore(lcs.savedGameLocation().savedGamePath,partLog)
                 if (findEvents.find((e) => e === "All")) {
                     const fileEvents = await lcs.eventJSON()
                     let appendixList = JSON.parse(fileEvents)

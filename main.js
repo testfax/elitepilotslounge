@@ -1,9 +1,10 @@
 const { logs,logs_error } = require('./utils/logConfig')
 const { errorHandler} = require('./utils/errorHandlers')
-const { wingData, windowPosition } = require('./utils/loungeClientStore')
+const { updatePreviousMaxLines, wingData, windowPosition } = require('./utils/loungeClientStore')
 const colors = require('colors')
 // require('./systems')
 
+// updatePreviousMaxLines([1,2])
 main();
 function main() {
   try {
@@ -187,7 +188,7 @@ function main() {
             {allEventsInCurrentLogFile: 'Started to read Journal...',class:'font-BLOCKY-green'},
             {journalInProgress: 'Loading Events...',class:''},
             {journalCompleted: 'Loading Events... Completed',class:'w3-large font-BLOCKY-green'},
-            {journalPercent:'',class:''} //DONT CHANGE THIS INDEX
+            {journalPercent:'',class:''}, //DONT CHANGE THIS INDEX
           ]
           let percentShown = 0;
           function giveItemMSG(action) {  return displayMessages.find(item => action in item); }
@@ -196,7 +197,6 @@ function main() {
             if (receivedData && loadingScreen) { 
               const {allEventsInCurrentLogFile} = require('./sockets/taskManager')
               allEventsInCurrentLogFile((callback)=>{
-              
                 if (callback == 'starting-allEventsInCurrentLogFile') { loadingScreen.webContents.send('displayMessage',giveItemMSG('allEventsInCurrentLogFile')) }
                 if (callback.current == 1) { loadingScreen.webContents.send('displayMessage',giveItemMSG('journalInProgress')) }
                 if (callback.percent == '25%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "25%".cyan); percentShown = 1; }
