@@ -6,6 +6,7 @@ const { Manager } = require('socket.io-client')
 const {requestCmdr,wingData} = require('../utils/loungeClientStore')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
+const thargoidSampling_store = new Store({ name: 'brain-ThargoidSample'})
 let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
 const jwt = require('jsonwebtoken')
 try {
@@ -82,9 +83,11 @@ try {
         "brain-ThargoidSample_Taranis_Alert",
         "brain-ThargoidSample_Taranis_Invasion",
     ]
-    if (!store.get('registeredRooms')) { store.set('registeredRooms',registeredRooms) }
+    if (!thargoidSampling_store.get('brain_ThargoidSample')) { thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',"unknown")}
+    if (!thargoidSampling_store.get('registeredRooms')) { thargoidSampling_store.set('registeredRooms',registeredRooms) }
     socket.on("connect", () => {
-        function socketReconnect(data) { if (data != 'unknown') {
+        function socketReconnect(data) { 
+            if (data != 'unknown') {
                 return new Promise(async (resolve,reject) => {
                     try { socket.emit('joinRoom',data, async (response) => { 
                         resolve(response);
@@ -95,9 +98,12 @@ try {
             }
         }
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Socket ID: ",`${socket.id}`.green) }
-        if (store.get('currentPage') == 'brain-ThargoidSample' && store.get('brain_ThargoidSample.currentTitanState')) { 
-            socketReconnect(store.get('brain_ThargoidSample.currentTitanState'))
+        //! Add other sockets with if statements
+        //Thargoid Sampling
+        if (store.get('currentPage') == 'brain-ThargoidSample' && thargoidSampling_store.get('brain_ThargoidSample.currentTitanState')) { 
+            socketReconnect(thargoidSampling_store.get('brain_ThargoidSample.currentTitanState'))
         }
+        //Finally send to browser
         if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Connected to Server`) }
         store.set('socketServerStatus','Connected to Server')
     })

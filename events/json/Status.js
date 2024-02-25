@@ -7,7 +7,6 @@ try {
     const utilities = require('../eventUtilities');
     //! #### Socket Server
     // const taskManager = require('../../sockets/taskManager')
-    const {Status} = require('../../sockets/tasks/jsonEntries')
     const Store = require('electron-store')
     // //! EVENT SIMULATOR
     // module.exports = (data) => {
@@ -62,7 +61,7 @@ try {
              //The response from the socket server will be a callback to this function.
              //Manipulate the data then send to the brain.
             // Status(combinedStatus, (response)=> { logs("stat",response) })
-            Status(combinedStatus)
+            
             //Gets sent to socket js file
             if (gimmeFlags.Flags1 != 0) { //0 would be a clean shutdown, use shutdown event
                 //! #### Save entry into Electron-Store.

@@ -27,10 +27,6 @@ function main() {
         "appStatus": "clean"
       })
     }
-    if (!electronWindowIds.get('brain_ThargoidSample')) { //socket related
-      electronWindowIds.set('brain_ThargoidSample',"unknown")
-    }
-    
     // setTimeout(() => {
     //   logs("procecss detection script")
     // },2000)

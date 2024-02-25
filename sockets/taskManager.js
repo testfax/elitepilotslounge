@@ -23,6 +23,7 @@ try {
     
     const Store = require('electron-store');
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
+    const thargoidSampling_store = new Store({ name: 'brain-ThargoidSample'})
     let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
     //!########################################################
     //!############ SOCKET SERVER DIRECT EMITS ################
@@ -69,7 +70,7 @@ try {
                     resolve(response);
                     if (data.brain == 'brain-ThargoidSample') { 
                         windowItemsStore.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
-                        windowItemsStore.set('brain_ThargoidSample.currentTitanState',`${data.brain}_${data.name}_${data.state}`);
+                        thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',`${data.brain}_${data.name}_${data.state}`);
                     }
                  }); }
                 catch(error) { errorHandler(error,error.name); reject(error) }
@@ -83,7 +84,7 @@ try {
                     resolve(response);
                     if (data.brain == 'brain-ThargoidSample') { 
                         windowItemsStore.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
-                        windowItemsStore.set('brain_ThargoidSample.currentTitanState',"");
+                        thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',"");
                     }
                  }); }
                 catch(error) { errorHandler(error,error.name); reject(error) }
@@ -93,7 +94,6 @@ try {
             return new Promise(async (resolve,reject) => {
                 try { socket.emit('roomStatus',data, async (response) => { 
                     resolve(response);
-                    // windowItemsStore.set('brain_ThargoidSample_socket_state',response) 
                  }); }
                 catch(error) { errorHandler(error,error.name); reject(error) }
             })
