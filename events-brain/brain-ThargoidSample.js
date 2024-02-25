@@ -247,7 +247,7 @@ try {
   app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
   ipcMain.on(thisBrain, async (receivedData) => {
     // logs(`${receivedData.event}`.cyan)
-    
+    store.set('masterTimestamp',receivedData.timestamp)
     if (receivedData.event == 'template') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
@@ -428,7 +428,7 @@ try {
       //! Simply put, it is not necessary and will impede counting if its iterated on during initial launch of epl.
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try{
-        store.set('masterTimestamp',receivedData.timestamp)
+        
         let combinedData = { "sampleCargo":[],"SampleCargoCount":0,"notSampleCargoCount":0,"notSampleCargo": [],"limpets": 0 }
         let compiledArray = {
           "event": receivedData.event,
