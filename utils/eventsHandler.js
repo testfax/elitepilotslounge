@@ -188,8 +188,7 @@ try  {
             //todo Need to make big alert if "EVENT" does not exist... Probably should bring it to the front side and make a form that posts to discord informing us.
             if (category == null) { 
                 if (!returnable) { logs("2.6 NO CATEGORY:EVENT IN 'appendix/events.json'-> ".bgRed,`${SpecifyEvent}`.yellow); }
-                if (returnable) { 
-                    console.log('hit check updateeventindexnumber')
+                if (returnable) {
                     // eventIndexNumber++
                     // updateEventIndexNumber(eventIndexNumber,"starteventsearch")
                     return true

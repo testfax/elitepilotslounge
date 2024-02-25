@@ -2,6 +2,7 @@ try {
   const {logF,watcherConsoleDisplay,errorHandler,pageData,getCommander} = require('../utils/errorHandlers')
   const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
   const {logs,logs_error} = require('../utils/logConfig')
+  const {updatePreviousMaxLines} = require('../utils/loungeClientStore')
   const Store = require('electron-store');
   const windowItemsStore = new Store({ name: 'electronWindowIds'})
   let lastTitan = null
@@ -190,6 +191,7 @@ try {
     // "MarketSell",
     "MarketBuy",
     "Shutdown",
+    // "Fileheader",
     // "LaunchDrone",
     // "StartJump",
     "FSDTarget",
@@ -462,7 +464,6 @@ try {
         currentCargo = compiledArray
         store.set('cargo',compiledArray)
         if (store.get('redisFirstUpdateflag')) { 
-          // console.log(compiledArray)
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
@@ -625,14 +626,19 @@ try {
         const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         const broadcastability = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
         const now = new Date();
-        const timeDifference = new Date(now.toISOString()) - new Date(store.get('masterTimestamp'))
-        const timestampMaxAge = 2 * 60 * 60 * 1000
-        if (broadcastability[0] && timeDifference >= timestampMaxAge) { logs("Previous Sampling System and greater than 2 hours:",broadcastability[0] && timeDifference <= timestampMaxAge); store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
+        const masterTimeStamp = store.get('masterTimestamp').split("+")
+        const timeDifference = new Date(now.toISOString()) - new Date(masterTimeStamp[0])
+        const timestampMaxAge = 2 * 60 * 60 * 1000 //2 hrs
+        if (broadcastability[0] && timeDifference >= timestampMaxAge) { 
+          logs("Previous Sampling System and greater than 2 hours:",broadcastability[0] && timeDifference <= timestampMaxAge); 
+          store.set('redisFirstUpdateflag',true); 
+          blastToUI(compiledArray) 
+        }
         else {store.set('redisFirstUpdateflag',false);}
         
         //! For Console display:
         //! For Console display:
-        const showJumps = 1
+        const showJumps = 0
         //! For Console display:
         //! For Console display:
         if (showJumps) {
@@ -739,7 +745,7 @@ try {
   
         //! For Console display:
         //! For Console display:
-        const showJumps = 1
+        const showJumps = 0
         //! For Console display:
         //! For Console display:
         if (showJumps) {
@@ -919,7 +925,6 @@ try {
             const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
             //If the titlebar for this system doesn't exist, this will create it.
             //The server will populate it if another commander initiates it.
-            console.log(compiledArray)
             blastToUI(sendIt)
             redisUpdaterSetup(receivedData.event,thargoidSampling)
           }
@@ -993,9 +998,32 @@ try {
       catch(e) { errorHandler(e,e.name)}
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
+    if (receivedData.event == 'Fileheader') {
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+      try {
+        let compiledArray = { 
+          "event": receivedData.event, 
+          "brain": thisBrain, 
+          "combinedData": receivedData, 
+          "systemAddress": store.get('thisSampleSystem'), "FID": FID 
+        }
+        compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+        compiledArray.combinedData['logFile'] = await updatePreviousMaxLines([0,1])
+        compiledArray.combinedData.logFile[0].firstLoad['timestamp'] = compiledArray.combinedData.logFile[0].firstLoad.timestamp + "+1"
+        thargoidSampling[receivedData.event] = compiledArray
+        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+          // if (store.get('redisFirstUpdateflag')) {
+          //   // blastToUI(compiledArray)
+          //   brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+          // }
+        }
+      catch(e) { errorHandler(e,e.name)}
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+    }
     else {
       eventNames.forEach(eventName =>{
         if (receivedData.event === eventName) {
+          
           if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
           try {
             let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }

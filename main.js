@@ -1,6 +1,9 @@
-const {logs,logs_error} = require('./utils/logConfig')
+const { logs,logs_error } = require('./utils/logConfig')
+const { errorHandler} = require('./utils/errorHandlers')
+const { wingData, windowPosition } = require('./utils/loungeClientStore')
 const colors = require('colors')
 // require('./systems')
+
 main();
 function main() {
   try {
@@ -125,9 +128,7 @@ function main() {
     // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
     // //!   every 5 seconds
 
-    const {watcherConsoleDisplay,errorHandler} = require('./utils/errorHandlers')
-    const {wingData, windowPosition } = require('./utils/loungeClientStore') //Integral for pulling client-side stored information such as commander name, window pos, ect.
-    
+
   
     //!
     //!

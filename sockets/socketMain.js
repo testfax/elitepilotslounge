@@ -12,7 +12,8 @@ try {
     let commander = JSON.stringify(requestCmdr().commander)
     const payload = {
         user: commander.commander,
-        userID: commander.FID
+        userID: commander.FID,
+        // logs: updatePreviousMaxLines()
     }
     const secretKey = 'somefatcat'
     const token = jwt.sign(payload, secretKey)

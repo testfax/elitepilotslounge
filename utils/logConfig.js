@@ -1,4 +1,5 @@
 try {
+    const colors = require('colors')
     const fs = require('fs')
     const path = require('path')
     const log = require('electron-log'); 
@@ -7,23 +8,44 @@ try {
     loungeClientFile = path.normalize(loungeClientFile)
     let logspath = `${getPath.getHomeFolder()}/Saved Games/Frontier Developments/Elite Dangerous/`
     logspath = path.normalize(logspath)
-    function latestLog() { 
-        try {
-            const files = fs.readdirSync(logspath);
-            const filteredFiles = files.filter(file=> path.extname(file) === ".log");
-            const sortedFiles = filteredFiles.sort((a,b) => {
-                return fs.statSync(path.join(logspath,b)).mtime.getTime() -
-                fs.statSync(path.join(logspath,a)).mtime.getTime();
-            })
-            return path.join(sortedFiles[0]);
-        }
-        catch(error) {
-            logsUtil.logs("[LOGS]".red,"NO LOGS FOUND....")
-            return "unknown.log" 
+
+    //! Initial lounge-client.json starting json
+    const loungeClientObject = {
+        file: loungeClientFile, 
+        wing: {Inviter: "", Others: [], Rooms:[]}, 
+        commander: {}, 
+        clientPosition: [ 363, 50 ], 
+        clientSize: [ 1000, 888 ]
+    }
+    try {
+        const loungeClientCondition = fs.statSync(loungeClientFile)
+        const loungeClientCondition2 = isJSONFileValid(loungeClientFile)
+        if (!loungeClientCondition.size >=1 || !loungeClientCondition2) {
+            loungeClientObject['commander'] = reWriteCmdr() //Emplaced incase loss of lounge-client.json file integrity.
+            const fileD = [loungeClientObject]
+            fs.writeFileSync(loungeClientFile, JSON.stringify(fileD,null,2), { encoding: 'utf8', flag: 'w' })
+            console.log("[LOGS]".red,"BYTES:".red,loungeClientCondition.size,"| VALID:".red,loungeClientCondition2,"|".red,"Re-Writing lounge-client.json with defaults")
         }
     }
-    function getCommander() {
-        let contents = fs.readFileSync(path.join(logspath,latestLog()),'utf8').split("\n")
+    catch(e) {
+        loungeClientObject['commander'] = reWriteCmdr() //Emplaced incase loss of lounge-client.json file integrity.
+        const fileD = [loungeClientObject]
+        fs.writeFileSync(loungeClientFile, JSON.stringify(fileD,null,2), { encoding: 'utf8', flag: 'w' })
+        console.log("[LOGS]".red,"Missing File. Created lounge-client.json file.")
+    }
+    function isJSONFileValid(filePath) {
+        try {
+            const fileContents = fs.readFileSync(filePath, 'utf-8');
+            const jsonObject = JSON.parse(fileContents);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    }
+    function reWriteCmdr() {
+        try {
+            const lastLog = latestLog()
+            let contents = fs.readFileSync(lastLog,'utf8').split("\n")
             let cmdr = false
             for (let index in contents) {
                 let events = contents[index]
@@ -38,9 +60,44 @@ try {
                         return cmdr
                     }
                 }
-            }
-            return cmdr
+            } 
+        }
+        catch(e) { console.log("[LOGS]".red,"reWriteCmdr: No Journal Logs Yet...",e); }
     }
+    function latestLog() { 
+        try {
+            const files = fs.readdirSync(logspath);
+            const filteredFiles = files.filter(file=> path.extname(file) === ".log");
+            const sortedFiles = filteredFiles.sort((a,b) => {
+                return fs.statSync(path.join(logspath,b)).mtime.getTime() -
+                fs.statSync(path.join(logspath,a)).mtime.getTime();
+            })
+            return path.join(logspath,sortedFiles[0]);
+        }
+        catch(error) {
+            console.log("[LOGS]".red,"NO JOURNAL LOGS FOUND....")
+            return "unknown.log" 
+        }
+    }
+    // function getCommander() {
+    //     let contents = fs.readFileSync(path.join(logspath,latestLog()),'utf8').split("\n")
+    //         let cmdr = false
+    //         for (let index in contents) {
+    //             let events = contents[index]
+    //             if (events.length >=3) {
+    //                 events = events.replace(/\r/g, '');
+    //                 events = JSON.parse(events);
+    //                 if (events.event === 'Commander') {
+    //                     cmdr = {
+    //                         commander: events.Name,
+    //                         FID: events.FID
+    //                     }
+    //                     return cmdr
+    //                 }
+    //             }
+    //         }
+    //         return cmdr
+    // }
     log.initialize({ preload: true });
     // log.transports.file.file = 'session.log'; // Set a fixed filename for the log
     log.transports.file.level = 'verbose';
@@ -50,8 +107,8 @@ try {
     log.transports.remote = (logData) => { 
         let result = fs.readFileSync(loungeClientFile,'utf8')
         result = JSON.parse(result)
-        let theCommander = result[0].commander
-        if (!result[0].commander.hasOwnProperty('commander')) { theCommander = getCommander(); }
+        const theCommander = result[0].commander
+        // if (!result[0].commander.hasOwnProperty('commander')) { theCommander = getCommander(); }
         const formattedLogData = {
             commander: theCommander,
             journalLog:  latestLog(),
@@ -106,4 +163,4 @@ try {
     
     module.exports = logsUtil;
 }
-catch(e) { console.log(e) }
+catch(e) { console.log("Logs Not Ready",e) }

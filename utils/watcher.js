@@ -129,7 +129,7 @@ try {
                         else {
                             dataObj["timestamp"] = now.toISOString() + `-0`
                         }
-                        console.log(`JS-${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
+                        // console.log(`JS-${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
                         //!
                         const result = sendJSONevent = initializeEvent.startEventSearch(dataObj,0,eventMod);
                         // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }

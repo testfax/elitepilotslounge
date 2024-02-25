@@ -28,13 +28,12 @@ const lcs = {
         lcs.initialReadStatus = status
         // console.log("updated initialReadStatus".cyan,lcs.initialReadStatus)
     },
-
     eventIndexNumber: 0,
     updateEventIndexNumber: function(newIndex,fileType) {
         lcs.eventIndexNumber = newIndex
-        console.log(fileType,"updated eventIndexNumber".red,lcs.eventIndexNumber)
+        // console.log(fileType,"updated eventIndexNumber".red,lcs.eventIndexNumber)
     },
-    isJSONFileValid: async function (filePath) {
+    isJSONFileValid: function (filePath) {
         try {
             const fileContents = fs.readFileSync(filePath, 'utf-8');
             const jsonObject = JSON.parse(fileContents);
@@ -75,6 +74,21 @@ const lcs = {
         delete result.events
         return result.duplicates
     },
+    lastLogs: function(dir,ext,amount) {
+        try {
+            const files = fs.readdirSync(dir);
+            const filteredFiles = files.filter(file => path.extname(file) === `.${ext}`);
+            // console.log("Filtered files:", filteredFiles);
+            const sortedFiles = filteredFiles.sort((a, b) => {
+                return fs.statSync(path.join(dir, b)).mtime.getTime() -
+                fs.statSync(path.join(dir, a)).mtime.getTime();
+            });
+            const mostRecentFiles = sortedFiles.slice(...amount).map(file => path.join(dir, file));
+            return mostRecentFiles;
+        } catch (error) {
+            logs_error(error)
+        }
+    },
     latestLogRead: async function(latestLog,findEvents) { 
         try {
             if (findEvents) { 
@@ -97,6 +111,10 @@ const lcs = {
                 let listItemByTimestamp = []
                 let listItemByTimestampNames = []
                 const totalLines = data.length
+                let partLog = latestLog.split("\\")
+                partLog = partLog[partLog.length -1]
+                partLog = { logName: partLog, maxLines: totalLines, firstLoad: firstLoad[0] }
+                // lcs.loungeClientStore(lcs.savedGameLocation().savedGamePath,partLog)
                 if (findEvents.find((e) => e === "All")) {
                     const fileEvents = await lcs.eventJSON()
                     let appendixList = JSON.parse(fileEvents)
@@ -134,11 +152,10 @@ const lcs = {
                     if (watcherConsoleDisplay('globalLogs')) { 
                         logs("[LCS]".yellow,`${path.parse(latestLog).base} Event Search did not find any previous:`,`[${findEvents}]`.yellow)
                     }
-                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames }
+                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, partLog }
                 }
                 else {
-                    
-                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad, reverse }
+                    return { findEventsStartTime, totalLines, found, notFound, listItems, listItemByTimestamp, listItemByTimestampNames, firstLoad, reverse, partLog }
                 }
 
             }
@@ -307,7 +324,7 @@ const lcs = {
             file: loungeClientFilePath, 
             wing: {Inviter: "", Others: [], Rooms:[]}, 
             commander: "", 
-            clientPosition: [ 363, 177 ], 
+            clientPosition: [ 363, 50 ], 
             clientSize: [ 1000, 888 ]
         }
         // See if file exists and if it has bytes in it. Relevant to see if file is corrupted with nothing.
@@ -320,8 +337,10 @@ const lcs = {
                 }
                 loungeClientObject['commander'] = lcs.reWriteCmdr(savedGamePath) //Emplaced incase loss of lounge-client.json file integrity.
                 const fileD = [loungeClientObject]
-                fs.writeFileSync(loungeClientFile, JSON.stringify(fileD), { flag: 'w' })
-                return { savedGamePath, loungeClientFile, loungeClientFilePath }
+                fs.writeFileSync(loungeClientFile, JSON.stringify(fileD,null,2), { encoding: 'utf8', flag: 'w' })
+                let checkSize = fs.statSync(loungeClientFile)
+                checkSize = checkSize.size
+                return { savedGamePath, loungeClientFile, loungeClientFilePath, checkSize }
             }
             else { return { savedGamePath, loungeClientFile, loungeClientFilePath } }
         }
@@ -331,8 +350,10 @@ const lcs = {
             }
             loungeClientObject['commander'] = lcs.reWriteCmdr(savedGamePath) //Emplaced incase loss of lounge-client.json file integrity.
             const fileD = [loungeClientObject]
-            fs.writeFileSync(loungeClientFile, JSON.stringify(fileD), { flag: 'w' })
-            return { savedGamePath, loungeClientFile, loungeClientFilePath }
+            fs.writeFileSync(loungeClientFile, JSON.stringify(fileD,null,2), { encoding: 'utf8', flag: 'w' })
+            let checkSize = fs.statSync(loungeClientFile)
+            checkSize = checkSize.size
+            return { savedGamePath, loungeClientFile, loungeClientFilePath,checkSize }
         }
     },
     loungeClientStore: function(gPath,instructions) {
@@ -346,8 +367,8 @@ const lcs = {
             result = JSON.parse(result)
             //Now that you have sent off the file to the calling function, the calling function will call this function again with instructions.
             if (instructions) {
-                instructions = JSON.stringify(instructions)
-                fs.writeFileSync(gPath, instructions, { flag: 'w' }, err => { if (err) { throw err}; })
+                instructions = JSON.stringify(instructions,null,2)
+                fs.writeFileSync(gPath, instructions, { encoding: 'utf8', flag: 'w' }, err => { if (err) { throw err}; })
             }
             return result
         }
@@ -384,6 +405,24 @@ const lcs = {
             result[0]["clientSize"] = resized
             lcs.loungeClientStore(gPath,result)
         }
+    },
+    updatePreviousMaxLines: async function(amount) {
+        //! Determine how many you want.
+        // const amount = [0,2] //uses slice().
+
+        const lounge_client_filepath = lcs.savedGameLocation().loungeClientFile
+        let lounge_client = fs.readFileSync(lounge_client_filepath,'utf8')
+        lounge_client = JSON.parse(lounge_client)
+        const lastFive = lcs.lastLogs(lcs.savedGameLocation().savedGamePath,"log",amount)
+        const inputArray = await Promise.all(lastFive.map(async logs => {
+            const log = await lcs.latestLogRead(logs, ['All']);
+            //todo Handle iteration here for events.
+            return log.partLog
+        }))
+        lounge_client[0]['journalMaxLines'] = inputArray
+        lounge_client = JSON.stringify(lounge_client,null,2)
+        fs.writeFileSync(lounge_client_filepath,lounge_client, { encoding: 'utf8', flag: 'w' });
+        return inputArray
     }
 }
 
