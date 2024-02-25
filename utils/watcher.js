@@ -168,6 +168,7 @@ try {
                     if (path.parse(savedGamePath).ext == '.log') {
                         const thargoidBrain = new Store({ name: `brain-ThargoidSample` })
                         thargoidBrain.set('data',{})
+                        lcs.eventIndexNumber = 0;
                         if (watcherConsoleDisplay('globalLogs')) { 
                             logs("[TAIL] New Journal Log Created... ".green, path.parse(savedGamePath).base)
                         }

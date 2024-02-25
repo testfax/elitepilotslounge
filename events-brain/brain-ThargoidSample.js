@@ -2,7 +2,7 @@ try {
   const {logF,watcherConsoleDisplay,errorHandler,pageData,getCommander} = require('../utils/errorHandlers')
   const { app, ipcMain, BrowserWindow,webContents  } = require('electron');
   const {logs,logs_error} = require('../utils/logConfig')
-  const {updatePreviousMaxLines} = require('../utils/loungeClientStore')
+  // const {updatePreviousMaxLines} = require('../utils/loungeClientStore')
   const Store = require('electron-store');
   const windowItemsStore = new Store({ name: 'electronWindowIds'})
   let lastTitan = null
@@ -91,7 +91,7 @@ try {
         launchToRedis = [...new Set(launchToRedis)]
         //Check to make sure all the launch Events are in thargoidSampling
         const matching = launchToRedis.every((event) => { 
-          // logs("[BE TS]".bgRed,`${event}`.red,"thargoidSample variable MALFORMED".yellow)
+          logs("[BE TS]".bgRed,`${event}`.red,"thargoidSample variable MALFORMED".yellow)
           return Object.values(thargoidSampling).some((item) => item.event === event)
         })
         //! ERROR CHECKING
@@ -177,6 +177,7 @@ try {
   const thisBrain = 'brain-ThargoidSample'
   const visible = 0 //! Sets watcher visibility locally. watchervisibility will still have to be enabled globally in errorHandlers
   const store = new Store({ name: `${thisBrain}` })
+  if (!store.get('fileHeader')) { store.set('fileHeader',false) }
   if (!store.get('redisFirstUpdateflag')) { store.set('redisFirstUpdateflag',false) }
   if (!store.get('masterTimestamp')) { store.set('masterTimestamp',false) }
   if (!store.get('systemAddress')) { store.set('systemAddress',false) }
@@ -1008,9 +1009,10 @@ try {
           "systemAddress": store.get('thisSampleSystem'), "FID": FID 
         }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
-        compiledArray.combinedData['logFile'] = await updatePreviousMaxLines([0,1])
-        compiledArray.combinedData.logFile[0].firstLoad['timestamp'] = compiledArray.combinedData.logFile[0].firstLoad.timestamp + "+1"
+        // compiledArray.combinedData['logFile'] = await updatePreviousMaxLines([0,1])
+        // compiledArray.combinedData.logFile[0].firstLoad['timestamp'] = compiledArray.combinedData.logFile[0].firstLoad.timestamp + "+1"
         thargoidSampling[receivedData.event] = compiledArray
+        store.set('fileHeader',compiledArray)
         brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           // if (store.get('redisFirstUpdateflag')) {
           //   // blastToUI(compiledArray)
