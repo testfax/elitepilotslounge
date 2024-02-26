@@ -6,6 +6,7 @@ const colors = require('colors')
 
 // updatePreviousMaxLines([1,2])
 main();
+
 function main() {
   try {
     const { dialog, nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')

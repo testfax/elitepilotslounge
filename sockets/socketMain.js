@@ -83,7 +83,8 @@ try {
         "brain-ThargoidSample_Taranis_Alert",
         "brain-ThargoidSample_Taranis_Invasion",
     ]
-    if (!thargoidSampling_store.get('brain_ThargoidSample')) { thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',"unknown")}
+    if (!thargoidSampling_store.get('brain_ThargoidSample')) { thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',"unknown"); } 
+    if (!thargoidSampling_store.get('socketRooms')) { thargoidSampling_store.set('socketRooms',{}); } 
     if (!thargoidSampling_store.get('registeredRooms')) { thargoidSampling_store.set('registeredRooms',registeredRooms) }
     socket.on("connect", () => {
         function socketReconnect(data) { 
@@ -91,7 +92,10 @@ try {
                 return new Promise(async (resolve,reject) => {
                     try { socket.emit('joinRoom',data, async (response) => { 
                         resolve(response);
-                        store.set(`socketRooms.${data}`, response);
+                        if (data.includes("brain-ThargoidSample")) {
+                            console.log(data)
+                            thargoidSampling_store.set(`socketRooms.${data}`, response);
+                        }
                     }); }
                     catch(error) { errorHandler(error,error.name); reject(error) }
                 })
@@ -118,7 +122,7 @@ try {
             leave: 1
         }
         
-        registeredRooms.forEach(i=>{ store.set(`socketRooms.${i}`, false) })
+        registeredRooms.forEach(i=>{ thargoidSampling_store.set(`socketRooms.${i}`, false) })
         wingData(roomCache,0)
         // else the socket will automatically try to reconnect
     });
@@ -130,7 +134,7 @@ try {
             Rooms: [],
             leave: 1
         }
-        registeredRooms.forEach(i=>{ store.set(`socketRooms.${i}`, false) })
+        registeredRooms.forEach(i=>{ thargoidSampling_store.set(`socketRooms.${i}`, false) })
         wingData(roomCache,0)
     })
 

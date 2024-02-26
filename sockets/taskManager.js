@@ -69,7 +69,7 @@ try {
                 try { socket.emit('joinRoom',titanState, async (response) => { 
                     resolve(response);
                     if (data.brain == 'brain-ThargoidSample') { 
-                        windowItemsStore.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
+                        thargoidSampling_store.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
                         thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',`${data.brain}_${data.name}_${data.state}`);
                     }
                  }); }
@@ -83,7 +83,7 @@ try {
                 try { socket.emit('leaveRoom',titanState, async (response) => { 
                     resolve(response);
                     if (data.brain == 'brain-ThargoidSample') { 
-                        windowItemsStore.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
+                        thargoidSampling_store.set(`socketRooms.${data.brain}_${data.name}_${data.state}`, response)
                         thargoidSampling_store.set('brain_ThargoidSample.currentTitanState',"");
                     }
                  }); }

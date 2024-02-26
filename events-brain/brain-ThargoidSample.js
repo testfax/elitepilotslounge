@@ -116,7 +116,7 @@ try {
             if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green,logF(thargoidSampling)); }
             
             let response = await brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey())
-            if (response) { windowItemsStore.set(`socketRooms.${response.socketInfo}`, response.titanSocket) }
+            if (response) { store.set(`socketRooms.${response.socketInfo}`, response.titanSocket) }
         }
         else { store.set('redisFirstUpdateflag',false) 
           if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${event} Allow more events until updater stop`) }
@@ -144,7 +144,6 @@ try {
       if (client) { client.webContents.send("from_brain-ThargoidSample", data); }
     }
   }
-  let redisValidatorMsg = null;
   function redisValidator(redisRequestObject) {
     const directory = {
       "from": {
@@ -191,7 +190,6 @@ try {
       },
     }
     let failures = []
-    redisValidatorMsg = failures
     for (const key of Object.keys(directory)) {
       if (!(key in redisRequestObject)) {
         failures.push(`MISSING: ${key}`);
@@ -224,58 +222,44 @@ try {
     }
     
   }
-  function findActiveSocketKey(eventData) {
-    let foundActive = null
-    const rooms = windowItemsStore.get('socketRooms')
-    // const rooms = thargoidSampling_store.get('brain-ThargoidSample.currentTitanState')
+  function findActiveSocketKey() {
+    const rooms = store.get('socketRooms')
     let entry = Object.entries(rooms).find(([key, value]) => value === true);
-    if (eventData?.forceSocketJoin && !entry && lastTitan.currentTitanState == 'unknown') { notInRoom() }
-    else { foundActive = lastTitan.currentTitanState }
-    function notInRoom() {
+    return entry ? entry[0] : store.get('brain_ThargoidSample.currentTitanState')
+  }
+  function updateCurrentTitanSocket(eventData) {
       const request = {
-          "from": "dcohSystems-sample",
-          "description":"systems",
-          "type": "redisRequest",
-          "method": "GET",
-          "data": {
-            "dcohSystems": [
-              "$.systems[*].name",
-              "$.systems[*].populationOriginal",
-              "$.systems[*].thargoidLevel['name']",
-              "$.systems[*].stateProgress",
-              "$.systems[*].maelstrom['name']",
-              "$.systems[*].systemAddress",
-              "$.systems[*].distanceToMaelstrom",
-              "$.systems[*].features",
-            ]
-          },
-          "keys": [
-            "name",
-            "population",
-            "state",
-            "stateProgress",
-            "titan",
-            "systemAddress",
-            "distanceToMaelstrom",
-            "features",
+        "from": "dcohSystems-sample",
+        "description":"systems",
+        "type": "redisRequest",
+        "method": "GET",
+        "data": {
+          "dcohSystems": [
+            "$.systems[*].thargoidLevel['name']",
+            "$.systems[*].maelstrom['name']",
+            "$.systems[*].systemAddress",
           ]
-      }
-      if (redisValidator(request)) { 
-        eventDataStore(request, (response) => {
-          const system = response.response.redisResult.find(x => x.systemAddress === eventData.combinedData.thisSampleSystem)
-          store.set(`brain_ThargoidSample.currentTitanState`,`${thisBrain}_${system.titan}_${system.state}`) 
-        })
-      }
-      else { logs(`${eventData.event}: thisSampleSystem not available.`)}
+        },
+        "keys": [
+          "state",
+          "titan",
+          "systemAddress",
+        ]
     }
-    return entry ? entry[0] : foundActive;
+    if (redisValidator(request)) { 
+      eventDataStore(request, (response) => {
+        const system = response.response.redisResult.find(x => x.systemAddress === eventData.combinedData.thisSampleSystem)
+        store.set(`brain_ThargoidSample.currentTitanState`,`${thisBrain}_${system.titan}_${system.state}`)
+      })
+    }
   }
   //!BRAIN EVENT######################################################
   //!Startup Variables
   const thisBrain = 'brain-ThargoidSample'
   const visible = 0 //! Sets watcher visibility locally. watchervisibility will still have to be enabled globally in errorHandlers
   const store = new Store({ name: `${thisBrain}` })
-  let lastTitan = store.get('brain_ThargoidSample')
+  // if (!store.get('socketRooms')) { store.set('socketRooms',{}) }
+  // store.set('brain_ThargoidSample.currentTitanState','unknown')
   if (!store.get('fileHeader')) { store.set('fileHeader',false) }
   if (!store.get('redisFirstUpdateflag')) { store.set('redisFirstUpdateflag',false) }
   if (!store.get('masterTimestamp')) { store.set('masterTimestamp',false) }
@@ -353,7 +337,7 @@ try {
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) { 
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -368,7 +352,7 @@ try {
         if (store.get('redisFirstUpdateflag')) { 
           console.log(compiledArray)
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey())
         }
       }
       if (!Object.keys(thargoidSampling).includes('InWing')) { inWingStuff(receivedData.timestamp,0) }
@@ -383,7 +367,7 @@ try {
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,"GalaxyMap",findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,"GalaxyMap",findActiveSocketKey())
           }
         }
         catch(e) { errorHandler(e,e.name)}
@@ -394,7 +378,7 @@ try {
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,"GalaxyMap",findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,"GalaxyMap",findActiveSocketKey())
           }
         }
         catch(e) { errorHandler(e,e.name)}
@@ -406,7 +390,7 @@ try {
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,"SystemMap",findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,"SystemMap",findActiveSocketKey())
           }
         }
         catch(e) { errorHandler(e,e.name)}
@@ -417,7 +401,7 @@ try {
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,"SystemMap",findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,"SystemMap",findActiveSocketKey())
           }
         }
         catch(e) { errorHandler(e,e.name)}
@@ -429,7 +413,7 @@ try {
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,'Supercruise',findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,'Supercruise',findActiveSocketKey())
           }
             supercruiseCount++
             FSDChargeCount = 0;
@@ -455,7 +439,7 @@ try {
               // setTimeout(()=>{ eventNames.push('Fsd Charging') },5000)
               
               blastToUI(compiledArray)
-              brain_ThargoidSample_socket(compiledArray,'StartJump_Charging',findActiveSocketKey(compiledArray))
+              brain_ThargoidSample_socket(compiledArray,'StartJump_Charging',findActiveSocketKey())
             }
             FSDChargeCount++
             // logs("FSDChargeCount",FSDChargeCount)
@@ -478,7 +462,7 @@ try {
             // setTimeout(()=>{ eventNames.push('Fsd Charging') },5000)
             
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,'StartJump_Charging',findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,'StartJump_Charging',findActiveSocketKey())
           }
       }
       // -------------------------- TEST CODE BELOW
@@ -496,7 +480,7 @@ try {
           "FID": FID
         }
         store.set('redisFirstUpdateflag',false)
-        const response = await brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey(compiledArray))
+        const response = await brain_ThargoidSample_socket(compiledArray,compiledArray.event,findActiveSocketKey())
         logs("RESET:".bgCyan,logF(response)),"redisFirstUpdateflag:",store.get('redisFirstUpdateflag')
         const sendIt = {"event":"reset","systemAddress":store.get('systemAddress'),"FID": FID}
         blastToUI(sendIt)
@@ -513,7 +497,7 @@ try {
             compiledArray.combinedData["thisSampleSystem"] = store.get('systemAddress')
             store.set('thisSampleSystem',store.get('systemAddress'))
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       }
@@ -564,7 +548,7 @@ try {
         store.set('cargo',compiledArray)
         if (store.get('redisFirstUpdateflag')) { 
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -629,7 +613,7 @@ try {
         thargoidSampling[receivedData.event] = compiledArray
         if (store.get('redisFirstUpdateflag')) { 
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray)) 
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey()) 
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -646,7 +630,7 @@ try {
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) { 
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -665,7 +649,7 @@ try {
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) { 
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -722,7 +706,8 @@ try {
         if (receivedData.SystemAddress != store.get('thisSampleSystem')) {
           compiledArray.combinedData.SystemAddress = store.get('thisSampleSystem')
         }
-        const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+        updateCurrentTitanSocket(compiledArray)
+        const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         const broadcastability = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
         const now = new Date();
         const masterTimeStamp = store.get('masterTimestamp').split("+")
@@ -731,7 +716,7 @@ try {
         if (broadcastability[0] && timeDifference >= timestampMaxAge) { 
           logs("Previous Sampling System and greater than 2 hours:",broadcastability[0] && timeDifference <= timestampMaxAge); 
           store.set('redisFirstUpdateflag',true); 
-          blastToUI(compiledArray) 
+          blastToUI(compiledArray)
         }
         else {store.set('redisFirstUpdateflag',false);}
         
@@ -839,7 +824,8 @@ try {
         //Conditions are now set if this is a system that is differen't from previous sampling system.
         store.set('systemAddress',receivedData.SystemAddress)
         store.set('activeStarSystem',receivedData.StarSystem) 
-        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+        updateCurrentTitanSocket(compiledArray)
+        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         
   
         //! For Console display:
@@ -948,7 +934,7 @@ try {
         thargoidSampling[receivedData.event] = compiledArray
         if (store.get('redisFirstUpdateflag')) { 
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -964,7 +950,7 @@ try {
           // Selling to a Fleet Carrier
           compiledArray.combinedData["stationType"] = 'Fleet Carrier'
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
         if (!store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount >= 0) {
           // Selling to other than Fleet Carrier (Very likely a rescue megaship)
@@ -972,7 +958,7 @@ try {
           compiledArray.combinedData["event"] = 'MarketSellNotFC'
           compiledArray["event"] = 'MarketSellNotFC'
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -987,7 +973,7 @@ try {
         if (store.get('currentCarrierMarket') && thargoidSampling.stationType == 'Fleet Carrier' && receivedData.MarketID == store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount > 0) { 
           // Selling to a Fleet Carrier
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
         if (!store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount >= 0) {
           // Selling to other than Fleet Carrier (Very likely a rescue megaship)
@@ -995,7 +981,7 @@ try {
           compiledArray.combinedData["event"] = 'MarketSellNotFC'
           compiledArray["event"] = 'MarketSellNotFC'
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -1005,7 +991,7 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
         if (currentSystemState != "") {
-          let compiledArray = { "forceSocketJoin": true, "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": receivedData, "FID": FID }
+          let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": receivedData, "FID": FID }
           if (!thargoidSampling.Cargo) {  thargoidSampling["Cargo"] = store.get('cargo') }
           thargoidSampling[receivedData.event] = compiledArray
           thargoidSampling["InWing"] = store.get('wingStatus')
@@ -1016,17 +1002,19 @@ try {
           // If it doesn't, then run the redisUpdaterSetup()
           // After these checks, then blast it to the UI.
           // console.log(compiledArray)
-          let response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
-          response = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
-          logs("Setup?? ".yellow,response)
-          if (response[0]) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
-          else {
-            const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
-            //If the titlebar for this system doesn't exist, this will create it.
-            //The server will populate it if another commander initiates it.
-            // redisUpdaterSetup(receivedData.event,thargoidSampling)
-            // blastToUI(sendIt)
-          }
+          let response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
+          const presentFID = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
+          
+          // if (response) { store.set(`socketRooms.${response.socketInfo}`, response.titanSocket) }
+          logs("Setup?? ".yellow,presentFID)
+          // if (response[0]) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
+          // else {
+          //   const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
+          //   If the titlebar for this system doesn't exist, this will create it.
+          //   The server will populate it if another commander initiates it.
+          //   redisUpdaterSetup(receivedData.event,thargoidSampling)
+          //   blastToUI(sendIt)
+          // }
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -1044,7 +1032,7 @@ try {
       let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
       if (store.get('redisFirstUpdateflag')) { 
         blastToUI(compiledArray)
-        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
       }
     }
     if (receivedData.event == 'SupercruiseDestinationDrop') {
@@ -1058,7 +1046,7 @@ try {
             if (indexToRemove !== -1) { eventNames.splice(indexToRemove, 1); }
             setTimeout(()=>{ eventNames.push('SupercruiseExit') },10000)
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -1076,7 +1064,7 @@ try {
             if (FSDChargeCount == 0) { eventNames.push('FSDTarget') }
             
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -1091,7 +1079,7 @@ try {
           if (store.get('redisFirstUpdateflag')) {
             supercruiseCount = 0
             blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -1104,17 +1092,18 @@ try {
           "event": receivedData.event, 
           "brain": thisBrain, 
           "combinedData": receivedData, 
-          "systemAddress": store.get('thisSampleSystem'), "FID": FID 
+          "systemAddress": store.get('thisSampleSystem'), 
+          "FID": FID 
         }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         // compiledArray.combinedData['logFile'] = await updatePreviousMaxLines([0,1])
         // compiledArray.combinedData.logFile[0].firstLoad['timestamp'] = compiledArray.combinedData.logFile[0].firstLoad.timestamp + "+1"
         thargoidSampling[receivedData.event] = compiledArray
-        store.set('fileHeader',compiledArray)
-        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+        // store.set('fileHeader',compiledArray)
+        brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           // if (store.get('redisFirstUpdateflag')) {
           //   // blastToUI(compiledArray)
-          //   brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+          //   brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
           // }
         }
       catch(e) { errorHandler(e,e.name)}
@@ -1130,7 +1119,7 @@ try {
             compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
             if (store.get('redisFirstUpdateflag')) {
               blastToUI(compiledArray)
-              brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(compiledArray))
+              brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
             }
           }
           catch(e) { errorHandler(e,e.name)}
