@@ -780,6 +780,10 @@
       },
       {
         "category": "Station Services",
+        "event": "ModuleBuyAndStore"
+      },
+      {
+        "category": "Station Services",
         "event": "ModuleRetrieve"
       },
       {

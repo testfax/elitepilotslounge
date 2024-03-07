@@ -248,8 +248,10 @@ try {
     }
     if (redisValidator(request)) { 
       eventDataStore(request, (response) => {
-        const system = response.response.redisResult.find(x => x.systemAddress === eventData.combinedData.thisSampleSystem)
-        store.set(`brain_ThargoidSample.currentTitanState`,`${thisBrain}_${system.titan}_${system.state}`)
+        if (response) {
+          const system = response.response.redisResult.find(x => x.systemAddress === eventData.combinedData.thisSampleSystem)
+          store.set(`brain_ThargoidSample.currentTitanState`,`${thisBrain}_${system.titan}_${system.state}`)
+        }
       })
     }
   }
@@ -824,13 +826,13 @@ try {
         //Conditions are now set if this is a system that is differen't from previous sampling system.
         store.set('systemAddress',receivedData.SystemAddress)
         store.set('activeStarSystem',receivedData.StarSystem) 
-        updateCurrentTitanSocket(compiledArray)
+        // updateCurrentTitanSocket(compiledArray)
         brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey())
         
   
         //! For Console display:
         //! For Console display:
-        const showJumps = 0
+        const showJumps = 1
         //! For Console display:
         //! For Console display:
         if (showJumps) {

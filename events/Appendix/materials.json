@@ -1756,7 +1756,7 @@
     {
       "Name": "tg_causticgeneratorparts",
       "Name_Localised": "Corrosive Mechanisms",
-      "State": 0,
+      "State": 1,
       "Grade": "3",
       "Group": "thargoid maelstrom",
       "known_uses": [
@@ -1770,7 +1770,19 @@
     {
       "Name": "tg_causticshard",
       "Name_Localised": "Caustic Shard",
-      "State": 0,
+      "State": 1,
+      "Grade": "4",
+      "Group": "thargoid maelstrom",
+      "known_uses": [],
+      "location": "A desnse cluster of crystalised caustic gas (high rarity).",
+      "description": "This material can not be traded at any Material Trader.",
+      "extra": "",
+      "StateQRM": 0
+    },
+    {
+      "Name": "tg_causticcrystal",
+      "Name_Localised": "Crystal Shards",
+      "State": 1,
       "Grade": "2",
       "Group": "thargoid maelstrom",
       "known_uses": [
@@ -1853,7 +1865,7 @@
     {
       "Name": "heatresistantceramics",
       "Name_Localised": "Heat Resistant Ceramics",
-      "State": 1,
+      "State": 0,
       "Grade": "2",
       "Group": "thermic",
       "known_uses": [
@@ -1867,7 +1879,7 @@
     {
       "Name": "militarygradealloys",
       "Name_Localised": "Military Grade Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "5",
       "Group": "thermic",
       "known_uses": [],
@@ -1879,7 +1891,7 @@
     {
       "Name": "precipitatedalloys",
       "Name_Localised": "Precipitated Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "3",
       "Group": "thermic",
       "known_uses": [],
@@ -1891,7 +1903,7 @@
     {
       "Name": "temperedalloys",
       "Name_Localised": "Tempered Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "1",
       "Group": "thermic",
       "known_uses": [],
@@ -1903,7 +1915,7 @@
     {
       "Name": "thermicalloys",
       "Name_Localised": "Thermic Alloys",
-      "State": 1,
+      "State": 0,
       "Grade": "4",
       "Group": "thermic",
       "known_uses": [
