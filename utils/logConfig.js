@@ -111,7 +111,7 @@ try {
         // if (!result[0].commander.hasOwnProperty('commander')) { theCommander = getCommander(); }
         const formattedLogData = {
             commander: theCommander,
-            journalLog:  latestLog(),
+            journalLog:  path.basename(latestLog()),
             timestamp: new Date(),
             level: logData.level,
             message: logData.data,

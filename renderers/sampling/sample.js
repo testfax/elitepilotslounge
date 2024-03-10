@@ -1325,7 +1325,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           TH4.appendChild(progress_container)
           progress_container.setAttribute('class','progress-container')
           // progress_container.setAttribute('style','text-align: right;')
-        
+          
           const progress_bar = document.createElement('span')
           progress_container.appendChild(progress_bar);
           progress_bar.setAttribute("id",`${systemAddress}_${FID}_sampleRating_commanderSystem`)

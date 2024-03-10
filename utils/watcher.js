@@ -326,19 +326,33 @@ try {
                     }
                 }
             });
-            fcMaterialsArray = new Array();
-            const tailLogOptionsFCMaterials = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
-            const JSONtailFCMaterials = new Tail(savedGamePath + 'FCMaterials' + '.json',tailLogOptionsFCMaterials);
-            JSONtailFCMaterials.on("line", function(data) {
-                if (wat.eliteIO.status) { 
-                    fcMaterialsArray = fcMaterialsArray + data;
-                    if (data.includes(" ] }")) {
-                        const newString = JSON.stringify(fcMaterialsArray)
-                        wat.tailJsonFile(JSON.parse(newString),"FCMaterials")
-                        fcMaterialsArray = [''];
-                    }
+            const fcmaterials_path = path.join(savedGamePath,'FCMaterials.json')
+            const fcmaterials_exist = fs.statSync(fcmaterials_path)
+            if (!fcmaterials_exist.size >=1) {
+                const contentsToWrite = 
+                    { "timestamp":"2024-02-03T01:43:23Z", 
+                    "event":"FCMaterials", 
+                    "MarketID":3709451776, 
+                    "CarrierName":"[xsf] killer's sabre", 
+                    "CarrierID":"J0T-68X", "Items":[] 
                 }
-            });
+                fs.writeFileSync(loungeClientFile, JSON.stringify(contentsToWrite), { encoding: 'utf8', flag: 'w' })
+            }
+            else {
+                fcMaterialsArray = new Array();
+                const tailLogOptionsFCMaterials = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
+                const JSONtailFCMaterials = new Tail(savedGamePath + 'FCMaterials' + '.json',tailLogOptionsFCMaterials);
+                JSONtailFCMaterials.on("line", function(data) {
+                    if (wat.eliteIO.status) { 
+                        fcMaterialsArray = fcMaterialsArray + data;
+                        if (data.includes(" ] }")) {
+                            const newString = JSON.stringify(fcMaterialsArray)
+                            wat.tailJsonFile(JSON.parse(newString),"FCMaterials")
+                            fcMaterialsArray = [''];
+                        }
+                    }
+                });
+            }
         })
         module.exports = wat
     }
