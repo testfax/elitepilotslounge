@@ -648,7 +648,6 @@ try {
             // logs("Previous Sampling System and greater than 2 hours:",broadcastability[0] && timeDifference <= timestampMaxAge);
             store.set('redisFirstUpdateflag',true); 
             blastToUI(compiledArray)
-            console.log(compiledArray)
           }
           else {store.set('redisFirstUpdateflag',false);}
           

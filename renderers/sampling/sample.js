@@ -902,8 +902,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   if (readyToRecieve) { 
     try {
       function descriptionContent(data,description) {
-        if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
-          const [timestamp,index] = data.combinedData.thisSampleSystem.split("+")
+        if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) {
+          const timestamp = data.combinedData.timestamp.split("+")[0]
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
         }
@@ -985,7 +985,6 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'LaunchDrone') {
         const description = `Putting some work in...`
         descriptionContent(data,description)
-        console.log(data);
         if (data.combinedData.Type == "Collection") { 
           const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_launchCollectorLimpet_commanderSystem`)
           const currentValue = parseInt(value.textContent, 10);
