@@ -86,8 +86,8 @@ try {
 
                             const askIgnoreFile = wat.ignoreEvent(inspectedEvent.event)
                             //! CHECKED, gathers a category name if it is found, if not, it will return null
-                            if (!askIgnoreFile && inspectedEvent != null) {
-                                // logs("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow) 
+                            if (askIgnoreFile == null && inspectedEvent != null) {
+                                // logs("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow)
                                 if (watcherConsoleDisplay(inspectedEvent.event)) { logs("1: Watcher.... ".bgCyan,`${inspectedEvent.event}`.yellow) }
                                 const result = initializeEvent.startEventSearch(inspectedEvent,0)
                                
@@ -108,7 +108,6 @@ try {
                 if (data) { 
                     try {
                         if (watcherConsoleDisplay('showBuffer')) {  logs("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
-                        
                         let dataObj = JSON.parse(data)
                         const event = dataObj.event
                         if (eventMod != undefined) {   
@@ -117,7 +116,7 @@ try {
                         else {
                             if (watcherConsoleDisplay(event)) { logs("1: Watcher.... ".bgCyan,`${event}`.yellow); }
                         }
-                        // logs(colorize(data, {pretty: true}))
+                        
                   
                         const exceptionList = [
                             'Cargo',
@@ -131,6 +130,7 @@ try {
                         }
                         // console.log(`JS-${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
                         //!
+                    
                         const result = sendJSONevent = initializeEvent.startEventSearch(dataObj,0,eventMod);
                         // 1 returnable result, 0 no returnable result. // logs("result of commander",commander); }
                     }
@@ -138,8 +138,8 @@ try {
                         logs_error("JSON PARSE FAIL".yellow,"Could not parse:".red,"EventMod:".red,eventMod,"Data:".red,data,e)
                     }
                 }
-                if (!data) { 
-                    logs("No Data in JSON, watcher tailJsonFile.".red)
+                else { 
+                    logs("No Data in JSON, watcher tailJsonFile.".red,data)
                 }
             }
         }
@@ -188,11 +188,36 @@ try {
             //todo The STATUS.JSON is a single line entry and is handled on its own.
             //todo the other json files are multi line and are handled by tail as being read from the beginning, because they are not
             //todo saved to the disk, they are only saved in memory.
-            const tailLogOptionsStatus = { separator: /\n/, fromBeginning: true}
-            const JSONtailStatus = new Tail(savedGamePath + 'Status' + '.json',tailLogOptionsStatus);
-            JSONtailStatus.on("line", function(data) {
-                if (wat.eliteIO.status) { wat.tailJsonFile(data) }
-            });
+            // const tailLogOptionsStatus = { separator: /\n/, fromBeginning: true}
+            // const JSONtailStatus = new Tail(savedGamePath + 'Status' + '.json',tailLogOptionsStatus);
+            // JSONtailStatus.on("line", function(data) {
+            //     if (wat.eliteIO.status) { wat.tailJsonFile(data) }
+            // });
+            const jsonFiles = [
+                'Status.json',
+                // 'ModulesInfo.json',
+                // 'Cargo.json',
+                // 'ShipLocker.json',
+                // 'NavRoute.json',
+                // 'Outfitting.json',
+                // 'Shipyard.json',
+                // 'Market.json',
+                // 'Backpack.json',
+                // 'FCMaterials.json',
+                // 'ShipLockerOriginal.json'
+            ]
+            watcherPath.on('change', (specifiedFile) => {
+                const pFile = path.basename(specifiedFile)
+                if (jsonFiles.includes(pFile)) { 
+                    fs.readFile(specifiedFile, 'utf8', (err, data) => {
+                        if (err) {
+                          logs_error(`Error reading file: ${err}`);
+                          return;
+                        }
+                        if (wat.eliteIO.status) { wat.tailJsonFile(data); }
+                    });
+                 }
+            })
             //! { "timestamp":"2023-03-16T00:07:37Z", "event":"ModuleInfo" } (notice the "event" name (MODULE) NO "S")
             //! Only writes to the "*.log" file with this, nothing more.
             //! Re-Wrote the Event to actually take the renamed event. see wat.tailJsonFile(modulesInfoArray,"ModulesInfo")

@@ -4,9 +4,24 @@ try {
     const {watcherConsoleDisplay,errorHandler,logF} = require('../../utils/errorHandlers')
     //! #### Socket Server
     const taskManager = require('../../sockets/taskManager')
+    // const { findActiveSocketKey } = require('../../events-brain/brain_functions')
+    // const {requestCmdr} = require('../../utils/loungeClientStore')
     const Store = require('electron-store')
+    // const thargoidSample = new Store({ name: "brain-ThargoidSample" });
     module.exports = (data) =>{
         try {
+            // if (thargoidSample.get('processStart')) {
+            //     let compiledArray = { 
+            //         "event": 'eliteProcess', 
+            //         "brain": "brain-ThargoidSample", 
+            //         "combinedData": data, 
+            //         "systemAddress": thargoidSample.get('thisSampleSystem'), 
+            //         "FID": requestCmdr().commander.FID
+            //       }
+            //       compiledArray.combinedData["thisSampleSystem"] = thargoidSample.get('thisSampleSystem')
+            //       compiledArray.combinedData["event"] = 'eliteProcess'
+            //       taskManager.brain_ThargoidSample_socket(compiledArray,'eliteProcess',findActiveSocketKey(thargoidSample.get('socketRooms'),thargoidSample.get('brain_ThargoidSample.currentTitanState')))
+            // }
             const distributionList = [
                 'brain-ThargoidSample'
             ]
@@ -28,6 +43,7 @@ try {
             // LaunchDrone(data)
             //Gets sent to socket js file
             //! #### Save entry into Electron-Store.
+            
             const store = new Store({ name: `${data.event}` })
             store.set('data',data)
             //! #### Send entry to the renderer... NOT RECOMMENDED.
@@ -45,5 +61,6 @@ try {
     }
 }
 catch (error) {
+    console.log(error)
     errorHandler(error,error.name)
 }

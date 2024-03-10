@@ -10,6 +10,87 @@ try {
     const fs = require('fs')
 
     const utilities = {
+        findActiveSocketKey: function(rooms,titanState) {
+            const entry = Object.entries(rooms).find(([key, value]) => value === true);
+            return entry ? entry[0] : titanState
+        },
+        redisValidator: function(redisRequestObject) {
+            const directory = {
+                "from": {
+                isEmpty: false,
+                isString: true,
+                isObject: false,
+                isNumber: false,
+                numberInString: false
+                },
+                "description": {
+                isEmpty: false,
+                isString: true,
+                isObject: false,
+                isNumber: false,
+                numberInString: false
+                },
+                "type": {
+                isEmpty: false,
+                isString: true,
+                isObject: false,
+                isNumber: false,
+                numberInString: false
+                },
+                "method": {
+                isEmpty: false,
+                isString: true,
+                isObject: false,
+                isNumber: false,
+                numberInString: false
+                },
+                "data": {
+                isEmpty: false,
+                isString: false,
+                isObject: true,
+                isNumber: false,
+                numberInString: false
+                },
+                "keys": {
+                isEmpty: false,
+                isString: false,
+                isObject: true,
+                isNumber: false,
+                numberInString: false
+                },
+            }
+            let failures = []
+            for (const key of Object.keys(directory)) {
+                if (!(key in redisRequestObject)) {
+                failures.push(`MISSING: ${key}`);
+                }
+                else {
+                let value = redisRequestObject[key];
+                const regex = /\d/;
+                if (typeof value === 'string') { value = value.replace(/\s/g, ''); }
+                // logs(`${key}`.cyan, Object.keys(value).length, typeof value);
+                const summary = {
+                    isEmpty: Object.keys(value).length === 0,
+                    isString: typeof value === 'string',
+                    isObject: typeof value === 'object',
+                    isNumber: typeof value === 'number',
+                    numberInString: regex.test(value),
+                };
+                const directoryEntry = directory[key];
+                for (const [k, v] of Object.entries(summary)) {
+                    if (v !== directoryEntry[k]) {
+                    failures.push(`${key}.${k}`)
+                    }
+                }
+                }
+            }
+            if (failures.length) {
+                return false
+            }
+            else {
+                return true;
+            }
+        },
         fetcher: async function(FET,callback) {
             // console.log("fetcher".red,FET)
             if (watcherConsoleDisplay('globalIPC')) { 

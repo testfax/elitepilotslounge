@@ -93,7 +93,6 @@ try {
                     try { socket.emit('joinRoom',data, async (response) => { 
                         resolve(response);
                         if (data.includes("brain-ThargoidSample")) {
-                            console.log(data)
                             thargoidSampling_store.set(`socketRooms.${data}`, response);
                         }
                     }); }

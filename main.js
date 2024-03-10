@@ -199,6 +199,7 @@ function main() {
                 if (callback.percent == '25%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "25%".cyan); percentShown = 1; }
                 if (callback.percent == '50%' && percentShown == 1) { logs('[EH]'.green,"LatestLogsRead:".yellow, "50%".cyan); percentShown = 0; }
                 if (callback.percent == '75%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "75%".cyan); percentShown = 1; }
+                if (callback.percent == '100%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "100%".cyan); percentShown = 1; }
                 if (typeof callback == 'object') {
                   const data = `Loading Events... ${callback.current} \ ${callback.total} ${callback.percent}`
                   displayMessages[4].journalPercent = data
@@ -232,7 +233,7 @@ function main() {
                     contextIsolation: true,
                 },
                 show: false,
-                alwaysOnTop: false,
+                alwaysOnTop: true,
               })
               // const derp = app.isPackaged
               // win.webContents.executeJavaScript(`window.isPackaged = ${derp}`)

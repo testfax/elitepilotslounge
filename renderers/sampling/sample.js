@@ -352,7 +352,6 @@ ipcRenderer.on('dcohSystems-sample', (data) => {
     updaterSystemTitleList(systems)
   }
 })
-
 function updaterSystemTitleList(systems) {
   // Updates the progress % of the Title Bar
   let updateItem = document.getElementsByClassName(`warprogresspercent`)
@@ -612,7 +611,6 @@ function buildTitanStats(systems,returnable) {
     if (returnable) { return titanStats }
 }
 //Build the active system sampler chart
-
 function buildSystemTitleBar(titanState,commanderSystemData) {
   const thisTitan = {
     brain:"brain-ThargoidSample",
@@ -899,7 +897,6 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   }
 
 }
-
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   if (readyToRecieve) { 
@@ -907,11 +904,10 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) { 
           const [timestamp,index] = data.combinedData.thisSampleSystem.split("+")
-          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
         }
       }
-
       if (data.event == 'reset') {
         try {
           const checkViewable = document.getElementById(`${data.systemAddress}_${data.FID}_row_commanderSystem`)
@@ -939,10 +935,12 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         }
         function developeCommander(){
           try {
+            let timeStamp = data.events.find(i => i.event === 'Commander').combinedData.timestamp
+            timeStamp = timeStamp.split("+")[0]
             let primaryObj = { 
               [FID]: {
                 inWing: data.events.find(i => i.event === 'InWing').combinedData.wingStatus,
-                timestamp: data.events.find(i => i.event === 'Commander').combinedData.timestamp,
+                timestamp: timeStamp,
                 cargo: data.events.find(i => i.event === 'Cargo').combinedData,
                 commanderData: data.events.find(i => i.event === 'Commander').combinedData,
                 docked: "",
@@ -987,6 +985,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'LaunchDrone') {
         const description = `Putting some work in...`
         descriptionContent(data,description)
+        console.log(data);
         if (data.combinedData.Type == "Collection") { 
           const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_launchCollectorLimpet_commanderSystem`)
           const currentValue = parseInt(value.textContent, 10);
@@ -1019,8 +1018,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           descriptionContent(data,description)
         }
       }
-      if (data.event == 'Location') { 
-        const description = `Lost In Space: ${data.systemAddress}`
+      if (data.event == 'Location') {
+        const description = `Lost In Space: ${data.combinedData.StarSystem}`
         descriptionContent(data,description)
       }
       if (data.event == 'FSDJump') {
@@ -1043,7 +1042,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         }
       }
       if (data.event == 'Cargo') {
-        document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(data.combinedData.timestamp)
+        const timestamp = data.combinedData.timestamp.split("+")[0]
+        document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
         document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_samplesInCargo_commanderSystem`).textContent = data.combinedData.SampleCargoCount
         if (data.combinedData.SampleCargoCount == 0) {
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_OLPercent_commanderSystem`).innerHTML = ""
@@ -1254,7 +1254,8 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       TR1.appendChild(TH1)
       TH1.setAttribute('class',`w3-text-orange font-BLOCKY aligned-element fitwidth`)
       TH1.setAttribute('id',`${systemAddress}_${FID}_date_commanderSystem`)
-      TH1.innerText = `${timeConversion(commander.timestamp)}`
+      const commander_timestamp = commander.timestamp.split("+")[0]
+      TH1.innerText = `${timeConversion(commander_timestamp)}`
   
       const TH2 = document.createElement('th')
       TR1.appendChild(TH2)

@@ -239,7 +239,7 @@ try {
                                 const loadTime = (Date.now() - readEventsList.findEventsStartTime) / 1000;
                                 logs("[TM]".green,"LatestLogsRead ".green,`${loadTime} Seconds`.cyan,"LINES:".green,`${readEventsList.totalLines}`.cyan)
                                 updateInitialReadStatus(false)
-                                logs("[TM]".green,"Set -> initialReadStatus:false".bgGreen,getInitialReadStatus())
+                                // logs("[TM]".green,"Set -> initialReadStatus:false".bgGreen,getInitialReadStatus())
                                 callback('journalLoadComplete')
                                 break;
                             }
