@@ -31,7 +31,7 @@
 - - Error logging, should you find an error, it will be found in "main.log" in the logs folder.
 - - C:\Users\yourUserName\AppData\Roaming\elitepilotslounge\logs
 - App Commander Info
-- - "lounge-client.txt" Contains window positioning, commander information, and wing related information.
+- - "lounge-client.json" Contains window positioning, commander information, and wing related information.
 - - C:\Users\yourUserName\Saved Games\Frontier Developments\Elite Dangerous
 
 # Discord
