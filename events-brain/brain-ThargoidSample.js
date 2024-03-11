@@ -91,7 +91,7 @@ try {
         })
         //! ERROR CHECKING
         //! ERROR CHECKING
-        const errorChecking = 1 // [1: On] [0: Off]
+        const errorChecking = 0 // [1: On] [0: Off]
         //! ERROR CHECKING
         //! ERROR CHECKING
         if (errorChecking) {
@@ -656,7 +656,7 @@ try {
           
           updateCurrentTitanSocket(compiledArray)
           const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          const broadcastability = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })[0]
+          const broadcastability = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })[1]
           const timestamp = response.map(i => { if (i.hasOwnProperty('timestamp')) { return i.timestamp } return null })[0]
           const [timeDifference,timestampMaxAge] = masterTimestamp(timestamp)
           if (broadcastability && timeDifference <= timestampMaxAge) { 
@@ -965,9 +965,9 @@ try {
           // If it doesn't, then run the redisUpdaterSetup()
           // After these checks, then blast it to the UI.
           let response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          const presentFID = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })
+          const presentFID = response.filter(item => item.hasOwnProperty('presentFID') ? item.presentFID : null)[0].presentFID
           // logs("Setup?? ".yellow,presentFID)
-          if (response[0].presentFID) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
+          if (presentFID) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
           else {
             const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
             // If the titlebar for this system doesn't exist, this will create it.
@@ -990,6 +990,8 @@ try {
       const indexToRemove = launchToRedis.indexOf('FSDJump');
       if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
       let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
+      compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+      compiledArray.combinedData["systemName"] = store.get('activeStarSystem')
       if (store.get('redisFirstUpdateflag')) { 
         blastToUI(compiledArray)
         brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))

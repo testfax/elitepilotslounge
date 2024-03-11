@@ -1021,7 +1021,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         }
       }
       if (data.event == 'Location') {
-        const description = `Lost In Space: ${data.combinedData.StarSystem}`
+        const description = `Lost In Space:\n${data.combinedData.StarSystem}`
         descriptionContent(data,description)
       }
       if (data.event == 'FSDJump') {
@@ -1133,7 +1133,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       }
       //Remaining Items update the "STATUS" block on the page.
       if (data.event == 'Shutdown') {
-        const description = `Player Offline In System: ${data.systemAddress}`
+        const description = `Player Offline:\r ${data.combinedData.systemName}`
         descriptionContent(data,description)
       }
       if (data.event == 'GalaxyMap') {
