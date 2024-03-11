@@ -1114,11 +1114,21 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         descriptionContent(data,description)
       }
       if (data.event == 'MarketSell' || data.event == 'CargoTransfer') {
+        let type = null
+        switch(data.event) {
+          case 'MarketSell':
+            type = 'Sold';
+            break;
+          case 'CargoTransfer':
+            type = 'Transfered';
+            break;
+        }
         const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_soldToCarrier_commanderSystem`)
         const currentValue = parseInt(value.textContent, 10);
-        const newValue = currentValue + 1;
+        // const newValue = currentValue + data.combinedData.Count;
+        const newValue = currentValue + (data.combinedData.Count < 0 ? data.combinedData.Count : Math.abs(data.combinedData.Count));
         value.textContent = newValue;
-        const description = `Sold ${data.combinedData.Count} ${data.combinedData.Type_Localised} `
+        const description = `${type} ${data.combinedData.Count} ${data.combinedData.Type_Localised} `
         descriptionContent(data,description)
       }
       //Remaining Items update the "STATUS" block on the page.
