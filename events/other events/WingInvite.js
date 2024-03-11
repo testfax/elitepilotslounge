@@ -6,7 +6,6 @@ try {
     const socketEventManager = require('../../sockets/taskManager')
     const colorize = require('json-colorizer');
     //! #### Socket Server
-    const {WingInvite} = require('../../sockets/tasks/otherEvents')
     const Store = require('electron-store')
     module.exports = (data) =>{
         try {
@@ -36,7 +35,7 @@ try {
             //The response from the socket server will be a callback to this function.
             //Manipulate the data then send to the brain.
             // WingInvite(data, (response)=> { logs("stat",response) })
-            WingInvite(data2)
+            // WingInvite(data2)
             //Gets sent to socket js file
             //! #### Save entry into Electron-Store.
             const store = new Store({ name: `${data.event}` })

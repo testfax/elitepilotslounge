@@ -110,6 +110,7 @@ try {
                         if (watcherConsoleDisplay('showBuffer')) {  logs("BEGINNING OF BUFFER ===".blue,`\n ${data}`.cyan,"\n","========= END OF BUFFER".blue); }
                         let dataObj = JSON.parse(data)
                         const event = dataObj.event
+                        if (dataObj.event === 'Market') { dataObj['event'] = 'MarketJSON' }
                         if (eventMod != undefined) {   
                             if (watcherConsoleDisplay(event)) { logs("1: Watcher.... ".bgCyan,`${eventMod}`.yellow); } 
                         }
@@ -198,10 +199,10 @@ try {
                 // 'ModulesInfo.json',
                 // 'Cargo.json',
                 // 'ShipLocker.json',
-                // 'NavRoute.json',
+                'NavRoute.json',
                 // 'Outfitting.json',
                 // 'Shipyard.json',
-                // 'Market.json',
+                'Market.json',
                 // 'Backpack.json',
                 // 'FCMaterials.json',
                 // 'ShipLockerOriginal.json'
@@ -214,7 +215,7 @@ try {
                           logs_error(`Error reading file: ${err}`);
                           return;
                         }
-                        if (wat.eliteIO.status) { wat.tailJsonFile(data); }
+                        if (wat.eliteIO.status && data) { wat.tailJsonFile(data); }
                     });
                  }
             })
@@ -239,7 +240,7 @@ try {
             const tailLogOptionsCargo = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
             const JSONtailCargo = new Tail(savedGamePath + 'Cargo' + '.json',tailLogOptionsCargo);
             JSONtailCargo.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
+                if (wat.eliteIO.status && data) { 
                     cargoArray = cargoArray + data;
                     if (data.includes(" ] }")) {
                         const newString = JSON.stringify(cargoArray)
@@ -252,7 +253,7 @@ try {
             const tailLogOptionsShipLocker = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
             const JSONtailShipLocker = new Tail(savedGamePath + 'ShipLocker' + '.json',tailLogOptionsShipLocker);
             JSONtailShipLocker.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
+                if (wat.eliteIO.status && data) { 
                     shipLockerArray = shipLockerArray + data;
                     if (data.includes(" ] }")) {
                         const newString = JSON.stringify(shipLockerArray)
@@ -265,7 +266,7 @@ try {
             const tailLogOptionsShipyard = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
             const JSONtailShipyard = new Tail(savedGamePath + 'Shipyard' + '.json',tailLogOptionsShipyard);
             JSONtailShipyard.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
+                if (wat.eliteIO.status && data) { 
                     shipyardArray = shipyardArray + data;
                     if (data.includes(" ] }")) {
                         const newString = JSON.stringify(shipyardArray)
@@ -278,7 +279,7 @@ try {
             const tailLogOptionsOutfitting = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
             const JSONtailOutfitting = new Tail(savedGamePath + 'Outfitting' + '.json',tailLogOptionsOutfitting);
             JSONtailOutfitting.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
+                if (wat.eliteIO.status && data) { 
                     outfittingArray = outfittingArray + data;
                     if (data.includes(" ] }")) {
                         const newString = JSON.stringify(outfittingArray)
@@ -287,37 +288,37 @@ try {
                     }
                 }
             });
-            navRouteArray = new Array();
-            const tailLogOptionsNavRoute = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
-            const JSONtailNavRoute = new Tail(savedGamePath + 'NavRoute' + '.json',tailLogOptionsNavRoute);
-            JSONtailNavRoute.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
-                    navRouteArray = navRouteArray + data;
-                    if (data.includes(" ] }")) {
-                        const newString = JSON.stringify(navRouteArray)
-                        wat.tailJsonFile(JSON.parse(newString),"NavRoute")
-                        navRouteArray = [''];
-                    }
-                }
-            });
-            marketArray = new Array();
-            const tailLogOptionsMarket = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
-            const JSONtailMarket = new Tail(savedGamePath + 'Market' + '.json',tailLogOptionsMarket);
-            JSONtailMarket.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
-                    marketArray = marketArray + data;
-                    if (data.includes(" ] }")) {
-                        const newString = JSON.stringify(marketArray)
-                        wat.tailJsonFile(JSON.parse(newString),"Market")
-                        marketArray = [''];
-                    }
-                }
-            });
+            // navRouteArray = new Array();
+            // const tailLogOptionsNavRoute = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
+            // const JSONtailNavRoute = new Tail(savedGamePath + 'NavRoute' + '.json',tailLogOptionsNavRoute);
+            // JSONtailNavRoute.on("line", function(data) { 
+            //     if (wat.eliteIO.status && data) { 
+            //         navRouteArray = navRouteArray + data;
+            //         if (data.includes(" ] }")) {
+            //             const newString = JSON.stringify(navRouteArray)
+            //             wat.tailJsonFile(JSON.parse(newString),"NavRoute")
+            //             navRouteArray = [''];
+            //         }
+            //     }
+            // });
+            // marketArray = new Array();
+            // const tailLogOptionsMarket = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
+            // const JSONtailMarket = new Tail(savedGamePath + 'Market' + '.json',tailLogOptionsMarket);
+            // JSONtailMarket.on("line", function(data) { 
+            //     if (wat.eliteIO.status && data) { 
+            //         marketArray = marketArray + data;
+            //         if (data.includes(" ] }")) {
+            //             const newString = JSON.stringify(marketArray)
+            //             wat.tailJsonFile(JSON.parse(newString),"Market")
+            //             marketArray = [''];
+            //         }
+            //     }
+            // });
             backPackArray = new Array();
             const tailLogOptionsBackpack = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
             const JSONtailBackpack = new Tail(savedGamePath + 'Backpack' + '.json',tailLogOptionsBackpack);
             JSONtailBackpack.on("line", function(data) { 
-                if (wat.eliteIO.status) { 
+                if (wat.eliteIO.status && data) { 
                     backPackArray = backPackArray + data;
                     if (data.includes(" ] }")) {
                         const newString = JSON.stringify(backPackArray)
@@ -343,7 +344,7 @@ try {
                 const tailLogOptionsFCMaterials = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
                 const JSONtailFCMaterials = new Tail(savedGamePath + 'FCMaterials' + '.json',tailLogOptionsFCMaterials);
                 JSONtailFCMaterials.on("line", function(data) {
-                    if (wat.eliteIO.status) { 
+                    if (wat.eliteIO.status && data) { 
                         fcMaterialsArray = fcMaterialsArray + data;
                         if (data.includes(" ] }")) {
                             const newString = JSON.stringify(fcMaterialsArray)

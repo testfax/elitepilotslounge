@@ -137,7 +137,7 @@ try {
       return false
     }
   }
-  function blastToUI(data,review) { 
+  function blastToUI(data,review) {
     review = false
     // if (data.event == 'FSDJump' || data.event == 'Location') { logs("Review:".yellow,logF(data)) }
     if (windowItemsStore.get('currentPage') == thisBrain) {
@@ -193,6 +193,7 @@ try {
   let thargoidSampling = {}
   //!                   List all events that will be looked for by this brain.
   const eventNames = [
+    "MarketJSON",
     "Fsd Charging",
     // "CollectCargo",
     "EjectCargo",
@@ -244,7 +245,6 @@ try {
     'Loadout',
   ]
   let currentSystemState = "";
-  let currentCargo = null
   let FID = getCommander().FID
   let FSDChargeCount = 0
   let supercruiseCount = 0;
@@ -269,8 +269,9 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'Status') {
+      // console.log(receivedData.Flags1)
       function inWingStuff(timestamp,action) {
-        let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
+        let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         thargoidSampling["InWing"] = compiledArray
         store.set('wingStatus',compiledArray) //Initialize the object in the store.
@@ -287,7 +288,7 @@ try {
       //Viewing GalaxyMap
       if (receivedData.GuiFocus == 6 && eventNames.includes('GalaxyMap') && guifocus != 6) { guifocus = 6
         try {
-          let compiledArray = { "event": "GalaxyMap", "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          let compiledArray = { "event": "GalaxyMap", "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp}, "systemAddress": store.get('systemAddress'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
@@ -298,7 +299,7 @@ try {
       }
       if (receivedData.GuiFocus == 0 && eventNames.includes('GalaxyMap') && guifocus == 6) { guifocus = 0
         try {
-          let compiledArray = { "event": "GalaxyMap", "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          let compiledArray = { "event": "GalaxyMap", "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('systemAddress'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
@@ -310,7 +311,7 @@ try {
       //Viewing SystemMap
       if (receivedData.GuiFocus == 7 && eventNames.includes('SystemMap') && guifocus != 7) { guifocus = 7
         try {
-          let compiledArray = { "event": "SystemMap", "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          let compiledArray = { "event": "SystemMap", "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp}, "systemAddress": store.get('systemAddress'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
@@ -321,7 +322,7 @@ try {
       }
       if (receivedData.GuiFocus == 0 && eventNames.includes('SystemMap') && guifocus == 7) { guifocus = 0
         try {
-          let compiledArray = { "event": "SystemMap", "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          let compiledArray = { "event": "SystemMap", "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('systemAddress'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
@@ -333,7 +334,7 @@ try {
       //Supercruise
       if (receivedData.Flags1.includes('Supercruise') && eventNames.includes('Supercruise') && supercruiseCount < 1) {
         try {
-          let compiledArray = { "event": 'Supercruise', "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp,"activeStarSystem":store.get('activeStarSystem')}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          let compiledArray = { "event": 'Supercruise', "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp,"activeStarSystem":store.get('activeStarSystem')}, "systemAddress": store.get('systemAddress'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) {
             blastToUI(compiledArray)
@@ -351,7 +352,7 @@ try {
       //FSD Charging 
       if (receivedData.Flags1.includes('Fsd Charging') && eventNames.includes('Fsd Charging') && FSDChargeCount < 1) {
         try {
-          let compiledArray = { "event": 'StartJump_Charging', "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+          let compiledArray = { "event": 'StartJump_Charging', "brain": thisBrain, "combinedData": {"status":1,"timestamp":receivedData.timestamp}, "systemAddress": store.get('systemAddress'), "FID": FID }
           compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
             if (store.get('redisFirstUpdateflag')) {
               // const indexToRemove = eventNames.indexOf('FSDTarget');
@@ -373,7 +374,7 @@ try {
       if (!receivedData.Flags1.includes('Fsd Charging') && !receivedData.Flags1.includes('Supercruise') && FSDChargeCount >= 1) { 
         FSDChargeCount = 0
         // logs("FSDChargeCount",FSDChargeCount)
-        let compiledArray = { "event": 'StartJump_Charging', "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": 'StartJump_Charging', "brain": thisBrain, "combinedData": {"status":0,"timestamp":receivedData.timestamp}, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
 
           if (store.get('redisFirstUpdateflag')) {
@@ -439,7 +440,7 @@ try {
         let compiledArray = {
           "event": receivedData.event,
           "brain": thisBrain,
-          "systemAddress": store.get('thisSampleSystem'),
+          "systemAddress": store.get('systemAddress'),
           "combinedData": combinedData, 
           "FID": FID
         }
@@ -468,7 +469,6 @@ try {
         // logs(colorize(compiledArray, { pretty: true }))
         // if (redisFirstUpdateflag) { ipcMain.emit(`event-callback-${receivedData.event}`,compiledArray) }
         thargoidSampling[receivedData.event] = compiledArray
-        currentCargo = compiledArray
         store.set('cargo',compiledArray)
         if (store.get('redisFirstUpdateflag')) { 
           blastToUI(compiledArray)
@@ -493,7 +493,7 @@ try {
         }
         //JSON Files log files will always have first priority.
         //
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'), "combinedData": receivedData, "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": receivedData, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         // if (store.get('redisFirstUpdateflag')) { ipcMain.emit(`event-callback-${receivedData.event}`,compiledArray) }
         thargoidSampling["Cargo"] = store.get('cargo')
@@ -531,13 +531,23 @@ try {
             }
           })
         })
-        let compiledArray = {  "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'), "combinedData": cargoLoadout, "FID": FID }
+
+        let compiledArray = {  "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": cargoLoadout, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         compiledArray.combinedData.timestamp = receivedData.timestamp
         thargoidSampling[receivedData.event] = compiledArray
-        if (store.get('redisFirstUpdateflag')) { 
+        if (store.get('redisFirstUpdateflag')) {
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState)) 
+        }
+        if (store.get('redisFirstUpdateflag') && compiledArray.combinedData.causticProtection == 0 && compiledArray.combinedData.researchLimpetControllers == 0) {
+          thargoidSampling = {}
+          store.set('redisFirstUpdateflag',false);
+          currentSystemState = "";
+          const indexToRemove = launchToRedis.indexOf('FSDJump');
+          if (indexToRemove !== -1) {
+            launchToRedis.splice(indexToRemove, 1);
+          }
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -546,7 +556,7 @@ try {
     if (receivedData.event == 'Docked') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         if (receivedData.StationType == 'FleetCarrier') { 
           store.set('currentCarrierMarket',receivedData.MarketID)
           compiledArray.combinedData["stationType"] = receivedData.StationType
@@ -569,7 +579,7 @@ try {
         else {
           thargoidSampling['stationType'] = false
         }
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
           if (store.get('redisFirstUpdateflag')) { 
             blastToUI(compiledArray)
@@ -717,7 +727,7 @@ try {
         ]
         let combinedData = {}
         currentSystemState = ""
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'), "combinedData":combinedData, "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData":combinedData, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         propCheck.forEach(ele => {
           if (receivedData.hasOwnProperty(ele)) {
@@ -741,14 +751,16 @@ try {
         saveBrain["Loadout"] = thargoidSampling.Loadout 
         saveBrain["FSDJump"] = thargoidSampling.FSDJump 
         saveBrain["Location"] = thargoidSampling.Location
-        saveBrain["Cargo"] = currentCargo
+        saveBrain["Cargo"] = store.get('cargo')
         //Clear old accrued data from every event that has occured.
         thargoidSampling = saveBrain
         //Insert current information
         saveBrain.forEach(i=>{ thargoidSampling[Object.keys(i)[0]] = i })
         blastToUI(compiledArray)
-        if (combinedData.CurrentState != '' && store.get('thisSampleSystem') != receivedData.SystemAddress) {
-          store.set('redisFirstUpdateflag',false)
+        
+        // if (combinedData.CurrentState != '' && store.get('thisSampleSystem') != receivedData.SystemAddress) {
+          // store.set('redisFirstUpdateflag',false)
+        if (combinedData.CurrentState != '') {
           launchToRedis.push('FSDJump')
         }
         //Send location to server regardless
@@ -813,7 +825,7 @@ try {
           "ShipType": receivedData.shipType,
           "ShipType_Localised": receivedData.ShipType_Localised,
         }
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('thisSampleSystem'), "combinedData": combinedData, "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": combinedData, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         compiledArray.combinedData.timestamp = receivedData.timestmap
         if (store.get('redisFirstUpdateflag')) { ipcMain.emit(`event-callback-${receivedData.event}`,compiledArray) }
@@ -827,9 +839,14 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'Market') {
+      store.set('currentCarrierMarket',receivedData.MarketID)
+      let combinedData = { receivedData }
+      let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": combinedData.receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
+      thargoidSampling[receivedData.event] = compiledArray
+    }
+    if (receivedData.event == 'MarketJSON') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        // logs(receivedData)
         // const searchFor = [
         //   {
         //     id: 128824468,
@@ -837,9 +854,10 @@ try {
         //     Name_Localised: 'Thargoid Scout Tissue Sample'
         //   }
         // ]
+
         const itemSearchTable = dataHistory("itemSearchTable")
         let combinedData = { marketSample: [] }
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": combinedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": 'Market', "brain": thisBrain, "combinedData": combinedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         receivedData.Items.forEach(item => {
           specificItem = findMatObject(itemSearchTable.marketData, "id",item.id)
@@ -853,6 +871,7 @@ try {
               StationName: receivedData.StationName,
               StarSystem: receivedData.StarSystem,
               DemandBracket: item.DemandBracket,
+              Demand: item.Demand,
               StockBracket: item.StockBracket,
               Stock: item.Stock,
               BuyPrice: item.BuyPrice,
@@ -865,7 +884,7 @@ try {
         thargoidSampling[receivedData.event] = compiledArray
         if (store.get('redisFirstUpdateflag')) { 
           blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
+          brain_ThargoidSample_socket(compiledArray,'Market',findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
       }
       catch(e) { errorHandler(e,e.name)}
@@ -874,7 +893,7 @@ try {
     if (receivedData.event == 'CargoTransfer') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         // console.log(colorize(compiledArray,{pretty: true}))
         if (store.get('currentCarrierMarket') && receivedData.MarketID == store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount > 0) { 
@@ -898,15 +917,18 @@ try {
     if (receivedData.event == 'MarketSell') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         // console.log(colorize(compiledArray,{pretty: true}))
-        if (store.get('currentCarrierMarket') && thargoidSampling.stationType == 'Fleet Carrier' && receivedData.MarketID == store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount > 0) { 
+        // console.log(store.get('currentCarrierMarket'))
+        const stationType = Object.values(thargoidSampling.Market)[2].StationType
+        const sampleCount = Object.values(thargoidSampling).find(i=>i.event === 'Cargo').combinedData.SampleCargoCount
+        if (store.get('currentCarrierMarket') && stationType == 'FleetCarrier' && receivedData.MarketID == store.get('currentCarrierMarket') && sampleCount > 0) { 
           // Selling to a Fleet Carrier
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
-        if (!store.get('currentCarrierMarket') && thargoidSampling.Cargo.SampleCargoCount >= 0) {
+        if (!store.get('currentCarrierMarket') && sampleCount >= 0) {
           // Selling to other than Fleet Carrier (Very likely a rescue megaship)
           compiledArray.combinedData["stationType"] = 'Not Fleet Carrier'
           compiledArray.combinedData["event"] = 'MarketSellNotFC'
@@ -959,7 +981,7 @@ try {
       guifocus = 0;
       const indexToRemove = launchToRedis.indexOf('FSDJump');
       if (indexToRemove !== -1) { launchToRedis.splice(indexToRemove, 1); }
-      let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+      let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
       if (store.get('redisFirstUpdateflag')) { 
         blastToUI(compiledArray)
         brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
@@ -968,7 +990,7 @@ try {
     if (receivedData.event == 'SupercruiseDestinationDrop') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
 
           if (store.get('redisFirstUpdateflag')) {
@@ -985,7 +1007,7 @@ try {
     if (receivedData.event == 'StartJump') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
 
           if (store.get('redisFirstUpdateflag')) {
@@ -1003,7 +1025,7 @@ try {
     if (receivedData.event == 'NavRouteClear') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
-        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
 
           if (store.get('redisFirstUpdateflag')) {
@@ -1022,7 +1044,7 @@ try {
           "event": receivedData.event, 
           "brain": thisBrain, 
           "combinedData": receivedData, 
-          "systemAddress": store.get('thisSampleSystem'), 
+          "systemAddress": store.get('systemAddress'), 
           "FID": FID 
         } 
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
@@ -1038,10 +1060,9 @@ try {
     else {
       eventNames.forEach(eventName =>{
         if (receivedData.event === eventName) {
-          
           if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
           try {
-            let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+            let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
             compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
             if (store.get('redisFirstUpdateflag')) {
               blastToUI(compiledArray)

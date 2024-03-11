@@ -903,8 +903,12 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) {
-          const timestamp = data.combinedData.timestamp.split("+")[0]
-          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
+          let timestamp = null
+          if (data.combinedData.timestamp.includes("-0")) { timestamp = data.combinedData.timestamp.split("Z-0")[0] }
+          if (data.combinedData.timestamp.includes("+")) { timestamp = data.combinedData.timestamp.split("+")[0] }
+          if (description) {
+            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
+          }
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
         }
       }
@@ -979,7 +983,6 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           catch (e) {
             console.log(e)
           }
-          
         }
       }
       if (data.event == 'LaunchDrone') {
@@ -1120,7 +1123,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       }
       //Remaining Items update the "STATUS" block on the page.
       if (data.event == 'Shutdown') {
-        const description = 'Player Offline In System'
+        const description = `Player Offline In System: ${data.systemAddress}`
         descriptionContent(data,description)
       }
       if (data.event == 'GalaxyMap') {
@@ -1153,13 +1156,11 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         descriptionContent(data,description)
       }
       if (data.event == 'FSDTarget') {
-        let description = null;
-        description = `+${data.combinedData.RemainingJumpsInRoute} Plotted: ${data.combinedData.Name}`
+        let description = `+${data.combinedData.RemainingJumpsInRoute} Plotted: ${data.combinedData.Name}`
         descriptionContent(data,description)
       }
       if (data.event == 'NavRouteClear') {
-        let description = null;
-        description = "Nav Route Cleared"
+        const description = "Nav Route Cleared"
         descriptionContent(data,description)
       }
       if (data.event == 'Docked' || data.event == 'Undocked') {
@@ -1205,7 +1206,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         descriptionContent(data,description)
       }
       if (data.event == 'Ressurect') { 
-        const description = `ReAlived ${data.combinedData.Option}:${data.combinedData.Cost}`
+        const description = `Spawned ${data.combinedData.Option}:${data.combinedData.Cost}`
         descriptionContent(data,description)
       }
       if (data.event == 'HullDamage') { 
@@ -1329,7 +1330,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           const progress_bar = document.createElement('span')
           progress_container.appendChild(progress_bar);
           progress_bar.setAttribute("id",`${systemAddress}_${FID}_sampleRating_commanderSystem`)
-          progress_bar.setAttribute("class","w3-vivid-highvis progress-bar warprogresspercent")
+          progress_bar.setAttribute("class","w3-vivid-highvis progress-bar")
           progress_bar.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
           const formattedNumber2 = (sampleRating).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
           if (sampleRating_view) {

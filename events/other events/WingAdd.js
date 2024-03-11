@@ -6,7 +6,6 @@ try {
     const colorize = require('json-colorizer');
     const {wingData} = require('../../utils/loungeClientStore')
     //! #### Socket Server
-    const {WingAdd} = require('../../sockets/tasks/otherEvents')
     const Store = require('electron-store')
     module.exports = (data) =>{
         try {
@@ -41,7 +40,7 @@ try {
             //The response from the socket server will be a callback to this function.
             //Manipulate the data then send to the brain.
             // WingAdd(data, (response)=> { logs("stat",response) })
-            WingAdd(data)
+            // WingAdd(data)
             // wingAdd(data, (response)=> {
             //     const client = BrowserWindow.fromId(1);
             //     client.webContents.send('WingAdd', JSON.stringify(response.emitResult.redisQueryResult))

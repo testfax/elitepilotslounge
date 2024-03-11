@@ -73,6 +73,18 @@
         "Name": "$thargoidscouttissuesample_name;",
         "Name_Cargo": "thargoidscouttissuesample",
         "Name_Localised": "Thargoid Scout Tissue Sample"
+      },
+      {
+        "id": 128793128,
+        "Name": "$thargoidtissuesampletype1_name;",
+        "Name_Cargo": "thargoidcyclopstissuesample",
+        "Name_Localised": "Thargoid Cyclops Tissue Sample"
+      },
+      {
+        "id": 129022395,
+        "Name": "$thargoidtissuesampletype6_name;",
+        "Name_Cargo": "thargoidglaivetissuesample",
+        "Name_Localised": "Thargoid Glaive Tissue Sample"
       }
     ],
     "cargoracks": [

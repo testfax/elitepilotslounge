@@ -30,10 +30,5 @@
         "event": "NavRoute",
         "reason": "Limited data is fired into the Journal, all the data comes out in the JSON File."
       }
-      ,{ 
-        "category": "Station Services",
-        "event": "Market",
-        "reason": "Limited data is fired into the Journal, all the data comes out in the JSON File."
-      }
     ]
 }

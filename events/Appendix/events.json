@@ -52,7 +52,7 @@
       },
       { 
         "category": "json",
-        "event": "Market" 
+        "event": "MarketJSON" 
       },
       {
         "category": "json",
