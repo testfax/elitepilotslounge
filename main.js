@@ -19,6 +19,7 @@ function main() {
     electronWindowIds.set('socketServerStatus','Not Connected to Server');
     electronWindowIds.set('appVersion',app.getVersion());
     electronWindowIds.set('socketRooms',{})
+    electronWindowIds.set('mainStayOnTop',false);
     if (app.isPackaged) { electronWindowIds.set('specifyDev',0); }
     else { electronWindowIds.set('specifyDev',1) }
     if (!electronWindowIds.get('electronWindowIds')) {
@@ -159,7 +160,7 @@ function main() {
           },
           show: false,
           frame: false, // Remove window frame
-          alwaysOnTop: true, // Make the loading screen always on top
+          alwaysOnTop: electronWindowIds.get('mainStayOnTop'), // Make the loading screen always on top
           // Additional options
         });
       
@@ -233,7 +234,7 @@ function main() {
                     contextIsolation: true,
                 },
                 show: false,
-                alwaysOnTop: true,
+                alwaysOnTop: electronWindowIds.get('mainStayOnTop'),
               })
               // const derp = app.isPackaged
               // win.webContents.executeJavaScript(`window.isPackaged = ${derp}`)

@@ -890,7 +890,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   if (specificCommanderSystemData){
     specificCommanderSystemData.forEach((cmdrData,index) => {
       if (index >= 1) { 
-        console.log("In Wing:",Object.values(cmdrData)[0].inWing)
+        // console.log("In Wing:",Object.values(cmdrData)[0].inWing)
         create_activeCommanders(systemAddress,cmdrData,TR1)
       }
     })
