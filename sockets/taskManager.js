@@ -29,7 +29,7 @@ try {
     //!############ SOCKET SERVER DIRECT EMITS ################
 
     socket.on('fromSocketServer', async (data) => { 
-        logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green) 
+        // logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green)
         //Need to send the dcohSystem's data to the frontside so that it can update all the titan systems info. 
         if (data.type == 'dcohSystems') {
             try {
