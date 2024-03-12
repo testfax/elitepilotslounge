@@ -899,7 +899,6 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 }
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
-  // console.log(data);
   if (readyToRecieve) { 
     try {
       function descriptionContent(data,description) {
