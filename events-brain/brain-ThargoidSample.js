@@ -201,7 +201,7 @@ try {
   // store.set('brain_ThargoidSample.currentTitanState','unknown')
   if (!store.get('Fileheader')) { store.set('Fileheader',false) }
   if (!store.get('redisFirstUpdateflag')) { store.set('redisFirstUpdateflag',false) }
-  // if (!store.get('masterTimestamp')) { store.set('masterTimestamp',false) }
+  if (!store.get('marketJSON')) { store.set('marketJSON',false) }
   if (!store.get('systemAddress')) { store.set('systemAddress',false) }
   if (!store.get('thisSampleSystem')) { store.set('thisSampleSystem',false) }
   if (!store.get('activeStarSystem')) { store.set('activeStarSystem',false) }
@@ -470,13 +470,13 @@ try {
             // logs(item.Name,"FOUND".green)
             // logs(colorize(specificItem, { pretty: true }))
             combinedData.sampleCargo.push(item)
-            combinedData.SampleCargoCount = item.Count
+            combinedData.SampleCargoCount = combinedData.SampleCargoCount + item.Count
           }
           else {
             // logs(item.Name,"NOT FOUND".red)
             // logs(colorize(item, { pretty: true }))
             combinedData.notSampleCargo.push(item)
-            combinedData.notSampleCargoCount = item.Count
+            combinedData.notSampleCargoCount = combinedData.notSampleCargoCount + item.Count
           }
         })
         compiledArray.combinedData.timestamp = receivedData.timestamp
@@ -859,10 +859,9 @@ try {
         //     Name_Localised: 'Thargoid Scout Tissue Sample'
         //   }
         // ]
-
         const itemSearchTable = dataHistory("itemSearchTable")
         let combinedData = { marketSample: [] }
-        let compiledArray = { "event": 'Market', "brain": thisBrain, "combinedData": combinedData, "systemAddress": store.get('systemAddress'), "FID": FID }
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": combinedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
         receivedData.Items.forEach(item => {
           specificItem = findMatObject(itemSearchTable.marketData, "id",item.id)
@@ -887,6 +886,7 @@ try {
           }
         })
         thargoidSampling[receivedData.event] = compiledArray
+        store.set('marketJSON',compiledArray)
         if (store.get('redisFirstUpdateflag')) { 
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,'Market',findActiveSocketKey(FASK_rooms,FASK_titanState))
@@ -903,7 +903,7 @@ try {
         compiledArray.combinedData["stationType"] = 'FleetCarrier'
         let samplesTransferedToCarrier = 0
         compiledArray.combinedData.Transfers.forEach(item => {
-          const searchItem = isWordPresent(item.Type,"sample")
+          const searchItem = isWordPresent(item.Type,"thargoidscouttissuesample")
           if (searchItem && item.Direction == "tocarrier") {
             samplesTransferedToCarrier = samplesTransferedToCarrier + item.Count
           }
@@ -933,8 +933,20 @@ try {
         // console.log(store.get('currentCarrierMarket'))
         const stationType = Object.values(thargoidSampling.Market)[2].StationType
         const sampleCount = Object.values(thargoidSampling).find(i=>i.event === 'Cargo').combinedData.SampleCargoCount
+
+        thargoidSampling[receivedData.event] = compiledArray
         if (store.get('redisFirstUpdateflag') && store.get('currentCarrierMarket') && stationType == 'FleetCarrier' && receivedData.MarketID == store.get('currentCarrierMarket') && sampleCount > 0) { 
           // Selling to a Fleet Carrier
+          const cargo = store.get('cargo')
+          const market = store.get('marketJSON')
+          let demand = null
+          cargo.combinedData.sampleCargo.forEach(sample => {
+            const specificItem = market.combinedData.marketSample.find(item => item.Name_Cargo === sample.Name)
+            if (specificItem && compiledArray.combinedData.Type == specificItem.Name_Cargo) {
+              demand = specificItem.Demand - compiledArray.combinedData.Count
+            }
+          })
+          compiledArray.combinedData['Demand'] = demand
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         }

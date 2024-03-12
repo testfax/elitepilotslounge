@@ -1128,7 +1128,13 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         // const newValue = currentValue + data.combinedData.Count;
         const newValue = currentValue + (data.combinedData.Count < 0 ? data.combinedData.Count : Math.abs(data.combinedData.Count));
         value.textContent = newValue;
-        const description = `${type} ${data.combinedData.Count} ${data.combinedData.Type_Localised} `
+        let description = null;
+        if (data.combinedData?.Demand) {
+         description = `${type} ${data.combinedData.Count} ${data.combinedData.Type_Localised} | Demand ${data.combinedData.Demand}`
+        }
+        else {
+          description = `${type} ${data.combinedData.Count} ${data.combinedData.Type_Localised}`
+        }
         descriptionContent(data,description)
       }
       //Remaining Items update the "STATUS" block on the page.

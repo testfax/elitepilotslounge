@@ -2,7 +2,6 @@ const {webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = req
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 const thisWindow = store.get('electronWindowIds')
-const { exec } = require('child_process') //for browser opening
 const {logs,logs_error} = require('./utils/logConfig') //for browser opening
 const zlib = require('zlib')
 const base64 = require('base64-url')
@@ -101,36 +100,7 @@ ipcMain.on('launchEDSY', (event, message) => {
   const gzippedData = zlib.gzipSync(loadoutString)
   const encodedData = base64.fromByteArray(gzippedData)
   const url = `https://edsy.org/#/I=${encodedData}`
-
-  function getDefaultBrowser(callback) {
-      exec('REG QUERY HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice /v ProgId', (error, stdout) => {
-          if (error) {
-              console.error(`Error executing command: ${error}`);
-              return;
-          }
-
-          const regex = /ProgId\s+REG_SZ\s+(.+)/g;
-          const match = regex.exec(stdout);
-
-          if (match) {
-              callback(match[1]);
-          } else {
-              console.error('Default browser not found.');
-              callback(null);
-          }
-      });
-  }
-
-  getDefaultBrowser(defaultBrowser => {
-    
-    // Open URL using the default browser
-    exec(`start ${defaultBrowser} "${url}"`, (error, stdout, stderr) => {
-      logs('Default browser:', defaultBrowser);
-      if (error) {
-            console.error('Error', error)
-        }
-    });
-  });
+  require('electron').shell.openExternal(url)
 });
 ipcMain.on('fetchLatestLog', (event,message) => {
   //ipcRenderer.send('launchEDSY',LoadoutData);

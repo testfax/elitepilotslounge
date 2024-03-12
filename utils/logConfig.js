@@ -53,10 +53,12 @@ try {
                     events = events.replace(/\r/g, '');
                     events = JSON.parse(events);
                     if (events.event === 'Commander') {
+                        
                         cmdr = {
                             commander: events.Name,
                             FID: events.FID
                         }
+                        console.log("[LOGS]".bgGreen,"reWrote Commander:",cmdr.commander)
                         return cmdr
                     }
                 }
@@ -98,6 +100,7 @@ try {
     //         }
     //         return cmdr
     // }
+    const theCommander = reWriteCmdr();
     log.initialize({ preload: true });
     // log.transports.file.file = 'session.log'; // Set a fixed filename for the log
     log.transports.file.level = 'verbose';
@@ -105,10 +108,11 @@ try {
     log.transports.file.maxSize = 10 * 1024 * 1024; // Set maximum log file size
     log.transports.file.maxFiles = 3; // Limit the number of log files
     log.transports.remote = (logData) => { 
-        let result = fs.readFileSync(loungeClientFile,'utf8')
-        result = JSON.parse(result)
-        const theCommander = result[0].commander
-        // if (!result[0].commander.hasOwnProperty('commander')) { theCommander = getCommander(); }
+        // let result = fs.readFileSync(loungeClientFile,'utf8')
+        // result = JSON.parse(result)
+        
+        
+        // if (!result[0].commander.hasOwnProperty('commander')) { theCommander = reWriteCmdr(); return; }
         const formattedLogData = {
             commander: theCommander,
             journalLog:  path.basename(latestLog()),
@@ -147,7 +151,9 @@ try {
             }
             
         }
-        else { logsUtil.logs_error("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)}
+        else { 
+            logsUtil.logs_error("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)
+        }
     }
 
     const logsUtil = {
@@ -158,9 +164,8 @@ try {
         logs_error: async (...input) => {
             let logMessage = input.join(' ');
             log.error(logMessage);
-        },
+        }
     }
-    
     module.exports = logsUtil;
 }
 catch(e) { console.log("Logs Not Ready",e) }

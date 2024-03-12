@@ -71,7 +71,6 @@ const links = {
     },
     toEdsy: async function() {
         try {
-            const { exec } = require('child_process')
             const zlib = require('zlib')
             const base64 = require('base64-url')
             let REL = await latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),['Loadout'])
@@ -82,10 +81,8 @@ const links = {
                 const gzippedData = zlib.gzipSync(loadoutString)
                 const encodedData = base64.encode(gzippedData)
                 const url = `https://edsy.org/#/I=${encodedData}`
-        
-                exec(`start chrome "${url}`, (error, stdout, stderr) => {
-                    if (error) { console.error('Error', error)}
-                })
+                require('electron').shell.openExternal(url)
+                
             }
         }
         catch (e) {

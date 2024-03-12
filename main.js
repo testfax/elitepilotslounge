@@ -1,15 +1,17 @@
-const { logs,logs_error } = require('./utils/logConfig')
+const {logs,logs_error} = require('./utils/logConfig')
 const { errorHandler} = require('./utils/errorHandlers')
-const { updatePreviousMaxLines, wingData, windowPosition } = require('./utils/loungeClientStore')
+const { updatePreviousMaxLines, wingData, windowPosition,requestCmdr } = require('./utils/loungeClientStore')
+const theCommander = requestCmdr().commander
 const colors = require('colors')
 // require('./systems')
 
 // updatePreviousMaxLines([1,2])
-main();
+
+if (logs) { main(); }
 
 function main() {
   try {
-    const { dialog, nativeTheme, webContents, clipboard, screen, app, BrowserWindow, ipcMain, Menu } = require('electron')
+    const { dialog, nativeTheme, webContents, app, BrowserWindow, ipcMain, Menu } = require('electron')
     const Store = require('electron-store');
     const path = require('path')
     const fs = require('fs')
@@ -83,7 +85,7 @@ function main() {
         autoUpdater.on('download-progress', (progressObj) => {
           const thisPercent = progressObj.percent / 100
           const formattedNumber = (thisPercent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
-          win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} Downloading New Update ${formattedNumber}`)
+          win.setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} Downloading New Update ${formattedNumber}`)
         })
         autoUpdater.on('error',(error)=>{
         })
@@ -96,7 +98,7 @@ function main() {
           // }
         })
         autoUpdater.on('update-available',(info)=>{
-          win.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} - ${JSON.stringify(info.version)} Update Available, Close Client to Install.`)
+          win.setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} - ${JSON.stringify(info.version)} Update Available, download pending... please wait...`)
         })
         autoUpdater.on('update-not-available',(info)=>{
           // logs(`-AU update-not-available: ${JSON.stringify(info)}`)
@@ -252,7 +254,7 @@ function main() {
               // logs("splash",electronWindowIds.get('electronWindowIds'))
               
               
-              win.setTitle(`Elite Pilots Lounge - ${electronWindowIds.get('socketServerStatus')} - ${app.getVersion()}`)
+              win.setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${electronWindowIds.get('socketServerStatus')} - ${app.getVersion()}`)
               
               const windowPositionz = windowPosition(win,1)
               win.setPosition(windowPositionz.moveTo[0],windowPositionz.moveTo[1])

@@ -62,9 +62,45 @@
     ],
     "SpecialItems": [
       {
-        "id": "",
+        "id": "0",
         "Type_Localised": "Thargoid Bio-storage Capsule",
         "Type": "thargoidpod"
+      },
+      {
+        "id": 129022398,
+        "Name": "$thargoidtissuesampletype9a_name;",
+        "Name_Cargo": "thargoidtissuesampletype9a",
+        "Name_Localised": "Titan Deep Tissue Sample"
+      },
+      {
+        "id": 129022399,
+        "Name": "$thargoidtissuesampletype9b_name;",
+        "Name_Cargo": "thargoidtissuesampletype9b",
+        "Name_Localised": "Titan Tissue Sample"
+      },
+      {
+        "id": 129022400,
+        "Name": "$thargoidtissuesampletype9c_name;",
+        "Name_Cargo": "thargoidtissuesampletype9c",
+        "Name_Localised": "Titan Partial Tissue Sample"
+      },
+      {
+        "id": 129022402,
+        "Name": "$thargoidtissuesampletype10a_name;",
+        "Name_Cargo": "thargoidtissuesampletype10a",
+        "Name_Localised": "Titan Maw Deep Tissue Sample"
+      },
+      {
+        "id": 129022403,
+        "Name": "$thargoidtissuesampletype10b_name;",
+        "Name_Cargo": "thargoidtissuesampletype10b",
+        "Name_Localised": "Titan Maw Tissue Sample"
+      },
+      {
+        "id": 129022404,
+        "Name": "$thargoidtissuesampletype10c_name;",
+        "Name_Cargo": "thargoidtissuesampletype10c",
+        "Name_Localised": "Titan Maw Partial Tissue Sample"
       }
     ],
     "marketData": [
@@ -75,16 +111,40 @@
         "Name_Localised": "Thargoid Scout Tissue Sample"
       },
       {
+        "id": 129022395,
+        "Name": "$thargoidtissuesampletype6_name;",
+        "Name_Cargo": "thargoidtissuesampletype6",
+        "Name_Localised": "Thargoid Glaive Tissue Sample"
+      },
+      {
         "id": 128793128,
         "Name": "$thargoidtissuesampletype1_name;",
-        "Name_Cargo": "thargoidcyclopstissuesample",
+        "Name_Cargo": "thargoidtissuesampletype1",
         "Name_Localised": "Thargoid Cyclops Tissue Sample"
       },
       {
-        "id": 129022395,
-        "Name": "$thargoidtissuesampletype6_name;",
-        "Name_Cargo": "thargoidglaivetissuesample",
-        "Name_Localised": "Thargoid Glaive Tissue Sample"
+        "id": 128793129,
+        "Name": "$thargoidtissuesampletype2_name;",
+        "Name_Cargo": "thargoidtissuesampletype2",
+        "Name_Localised": "Thargoid Basilisk Tissue Sample"
+      },
+      {
+        "id": 128793130,
+        "Name": "$thargoidtissuesampletype3_name;",
+        "Name_Cargo": "thargoidtissuesampletype3",
+        "Name_Localised": "Thargoid Medusa Tissue Sample"
+      },
+      {
+        "id": 128902652,
+        "Name": "$thargoidtissuesampletype4_name;",
+        "Name_Cargo": "thargoidtissuesampletype4",
+        "Name_Localised": "Thargoid Hydra Tissue Sample"
+      },
+      {
+        "id": 128793130,
+        "Name": "$thargoidtissuesampletype5_name;",
+        "Name_Cargo": "thargoidtissuesampletype5",
+        "Name_Localised": "Thargoid Orthrus Tissue Sample"
       }
     ],
     "cargoracks": [
