@@ -3,7 +3,8 @@ const {app, BrowserWindow} = require('electron')
 const {logs} = require('../utils/logConfig')
 const {watcherConsoleDisplay,errorHandler} = require('../utils/errorHandlers')
 const { Manager } = require('socket.io-client')
-const {requestCmdr,wingData} = require('../utils/loungeClientStore')
+const {requestCmdr,wingData,requestCmdr} = require('../utils/loungeClientStore')
+const theCommander = requestCmdr().commander
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
 const thargoidSampling_store = new Store({ name: 'brain-ThargoidSample'})
@@ -107,12 +108,12 @@ try {
             socketReconnect(thargoidSampling_store.get('brain_ThargoidSample.currentTitanState'))
         }
         //Finally send to browser
-        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Connected to Server`) }
+        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${app.getVersion()} - Connected to Server`) }
         store.set('socketServerStatus','Connected to Server')
     })
     socket.on("disconnect", (reason) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason: ".bgRed,reason) }
-        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Disconnected: ${JSON.stringify(reason)}`) }
+        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${app.getVersion()} - Server Disconnected: ${JSON.stringify(reason)}`) }
         store.set('socketServerStatus','Server Disconnected')
         const roomCache = {
             Inviter: 0,
@@ -140,7 +141,7 @@ try {
     socket.io.on("reconnect_attempt", (e) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Reconnect Attempt # ".red,e) }
         store.set('socketServerStatus','Server Reconnect')
-        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`Elite Pilots Lounge - ${app.getVersion()} - Server Reconnect Attempt: #${JSON.stringify(e)}`) }
+        if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${app.getVersion()} - Server Reconnect Attempt: #${JSON.stringify(e)}`) }
     })
     //todo Code listeners from server.
 }

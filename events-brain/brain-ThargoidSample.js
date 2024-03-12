@@ -125,7 +125,7 @@ try {
         }
       }
     }
-    catch(e) { logs("redisUpdaterSetup Failure".bgMagenta,logF(console.error(e)));  }
+    catch(e) { logs("redisUpdaterSetup Failure".bgMagenta,e);  }
   }
   function checkSetupFlag(event) {
     if (store.get('redisFirstUpdateflag')) { 
