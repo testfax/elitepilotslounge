@@ -808,7 +808,7 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           let specificCommanderSystemData = null;
           if (commanderSystemData) {
             commanderSystemData.forEach(i => {
-              if (i.includes(item.systemAddress)) { specificCommanderSystemData = i }
+              if (i.includes(item.systemAddress)) { specificCommanderSystemData = i;}
             })
           }
           buildCommanderTitleBar(item.systemAddress,specificCommanderSystemData,thisTitan)
@@ -888,9 +888,9 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   TH11.innerText = `Limpets\nLaunched`
   // newToolTip()
   if (specificCommanderSystemData){
-    specificCommanderSystemData.forEach((cmdrData,index) => {
-      if (index >= 1) { 
-        // console.log("In Wing:",Object.values(cmdrData)[0].inWing)
+    specificCommanderSystemData[1].forEach((cmdrData,index) => {
+      if (index >= 0) { 
+        // console.log("In Wing:",Object.values(cmdrData))
         create_activeCommanders(systemAddress,cmdrData,TR1)
       }
     })
@@ -899,6 +899,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 }
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
+  // console.log(data);
   if (readyToRecieve) { 
     try {
       function descriptionContent(data,description) {
