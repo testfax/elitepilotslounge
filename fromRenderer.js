@@ -92,21 +92,46 @@ function redisValidator(redisRequestObject) {
   
 }
 //! This file is for general comms FROM the renderer process. Allowing button interactions and ect with the computer.
-ipcMain.on('launchEDSY', (event,message) => { 
-    if (watcherConsoleDisplay('globalIPC')) { 
-      logs("[IPC]".bgMagenta,"LAUNCH EDSY LOADOUT");
-    }
-    logs("[IPC]".bgMagenta,message);
-    const loadoutString = JSON.stringify(message)
-    const gzippedData = zlib.gzipSync(loadoutString)
-    const encodedData = base64.encode(gzippedData)
-    const url = `https://edsy.org/#/I=${encodedData}`
+ipcMain.on('launchEDSY', (event, message) => {
+  if (watcherConsoleDisplay('globalIPC')) {
+      logs("[IPC]".bgMagenta, "LAUNCH EDSY LOADOUT");
+  }
+  logs("[IPC]".bgMagenta, message);
+  const loadoutString = JSON.stringify(message)
+  const gzippedData = zlib.gzipSync(loadoutString)
+  const encodedData = base64.fromByteArray(gzippedData)
+  const url = `https://edsy.org/#/I=${encodedData}`
 
-    exec(`start chrome "${url}`, (error, stdout, stderr) => {
-        if (error) { console.error('Error', error)}
-    })
-    // clipboard.writeText(JSON.stringify(message))
-})
+  function getDefaultBrowser(callback) {
+      exec('REG QUERY HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice /v ProgId', (error, stdout) => {
+          if (error) {
+              console.error(`Error executing command: ${error}`);
+              return;
+          }
+
+          const regex = /ProgId\s+REG_SZ\s+(.+)/g;
+          const match = regex.exec(stdout);
+
+          if (match) {
+              callback(match[1]);
+          } else {
+              console.error('Default browser not found.');
+              callback(null);
+          }
+      });
+  }
+
+  getDefaultBrowser(defaultBrowser => {
+    
+    // Open URL using the default browser
+    exec(`start ${defaultBrowser} "${url}"`, (error, stdout, stderr) => {
+      logs('Default browser:', defaultBrowser);
+      if (error) {
+            console.error('Error', error)
+        }
+    });
+  });
+});
 ipcMain.on('fetchLatestLog', (event,message) => {
   //ipcRenderer.send('launchEDSY',LoadoutData);
   const readEventsList = latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),["All"])

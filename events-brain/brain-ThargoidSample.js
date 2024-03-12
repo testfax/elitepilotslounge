@@ -965,8 +965,7 @@ try {
           // If it doesn't, then run the redisUpdaterSetup()
           // After these checks, then blast it to the UI.
           let response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          const presentFID = response.filter(item => item.hasOwnProperty('presentFID') ? item.presentFID : null)[0].presentFID
-          // logs("Setup?? ".yellow,presentFID)
+          const presentFID = response.find(item =>  item.hasOwnProperty('presentFID')).presentFID
           if (presentFID) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
           else {
             const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
