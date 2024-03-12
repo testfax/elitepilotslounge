@@ -626,7 +626,6 @@ try {
         compiledArray.combinedData["thisSampleSystem"] = thisSampleSystem
         if (receivedData.Docked && receivedData.StationType == 'FleetCarrier') { 
           store.set('currentCarrierMarket',receivedData.MarketID)
-          compiledArray.combinedData["stationType"] = receivedData.StationType
         }
         propCheck.forEach(ele => {
           if (receivedData.hasOwnProperty(ele)) {

@@ -1021,7 +1021,13 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         }
       }
       if (data.event == 'Location') {
-        const description = `Lost In Space:\n${data.combinedData.StarSystem}`
+        let description = null;
+        if (data.combinedData?.Docked) {
+          description = `Docked: ${data.combinedData?.StationName} ${data.combinedData.StarSystem} ${data.combinedData?.DistFromStarLS}Ls`
+        }
+        else {
+          description = `Lost In Space:\n${data.combinedData.StarSystem}`
+        }
         descriptionContent(data,description)
       }
       if (data.event == 'FSDJump') {
