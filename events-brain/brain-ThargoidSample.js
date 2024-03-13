@@ -655,8 +655,9 @@ try {
           
           updateCurrentTitanSocket(compiledArray)
           const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          const broadcastability = response.map(i => { if (i.hasOwnProperty('presentFID')) { return i.presentFID } return null })[2]
-          const timestamp = response.map(i => { if (i.hasOwnProperty('timestamp')) { return i.timestamp } return null })[0]
+          const broadcastability = response.find(item =>  item.hasOwnProperty('presentFID')).presentFID
+          const timestamp = response.find(item =>  item.hasOwnProperty('timestamp')).timestamp
+          
           const [timeDifference,timestampMaxAge] = masterTimestamp(timestamp)
           if (broadcastability && timeDifference <= timestampMaxAge) { 
             // logs("Previous Sampling System and less than 2 hours:",broadcastability && timeDifference <= timestampMaxAge);

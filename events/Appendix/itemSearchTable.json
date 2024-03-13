@@ -117,6 +117,12 @@
         "Name_Localised": "Thargoid Glaive Tissue Sample"
       },
       {
+        "id": 0,
+        "Name": "$thargoidtissuesampletype7_name;",
+        "Name_Cargo": "thargoidtissuesampletype7",
+        "Name_Localised": "Thargoid Scythe Tissue Sample"
+      },
+      {
         "id": 128793128,
         "Name": "$thargoidtissuesampletype1_name;",
         "Name_Cargo": "thargoidtissuesampletype1",
