@@ -197,7 +197,7 @@ try {
             const jsonFiles = [
                 'Status.json',
                 // 'ModulesInfo.json',
-                // 'Cargo.json',
+                'Cargo.json',
                 // 'ShipLocker.json',
                 'NavRoute.json',
                 // 'Outfitting.json',
@@ -236,19 +236,19 @@ try {
                     }
                 }
             });
-            cargoArray = new Array();
-            const tailLogOptionsCargo = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
-            const JSONtailCargo = new Tail(savedGamePath + 'Cargo' + '.json',tailLogOptionsCargo);
-            JSONtailCargo.on("line", function(data) { 
-                if (wat.eliteIO.status && data) { 
-                    cargoArray = cargoArray + data;
-                    if (data.includes(" ] }")) {
-                        const newString = JSON.stringify(cargoArray)
-                        wat.tailJsonFile(JSON.parse(newString),"Cargo")
-                        cargoArray = [''];
-                    }
-                }
-            });
+            // cargoArray = new Array();
+            // const tailLogOptionsCargo = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
+            // const JSONtailCargo = new Tail(savedGamePath + 'Cargo' + '.json',tailLogOptionsCargo);
+            // JSONtailCargo.on("line", function(data) { 
+            //     if (wat.eliteIO.status && data) { 
+            //         cargoArray = cargoArray + data;
+            //         if (data.includes(" ] }")) {
+            //             const newString = JSON.stringify(cargoArray)
+            //             wat.tailJsonFile(JSON.parse(newString),"Cargo")
+            //             cargoArray = [''];
+            //         }
+            //     }
+            // });
             shipLockerArray = new Array();
             const tailLogOptionsShipLocker = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
             const JSONtailShipLocker = new Tail(savedGamePath + 'ShipLocker' + '.json',tailLogOptionsShipLocker);
@@ -328,18 +328,8 @@ try {
                 }
             });
             const fcmaterials_path = path.join(savedGamePath,'FCMaterials.json')
-            const fcmaterials_exist = fs.statSync(fcmaterials_path)
-            if (!fcmaterials_exist.size >=1) {
-                const contentsToWrite = 
-                    { "timestamp":"2024-02-03T01:43:23Z", 
-                    "event":"FCMaterials", 
-                    "MarketID":3709451776, 
-                    "CarrierName":"[xsf] killer's sabre", 
-                    "CarrierID":"J0T-68X", "Items":[] 
-                }
-                fs.writeFileSync(loungeClientFile, JSON.stringify(contentsToWrite), { encoding: 'utf8', flag: 'w' })
-            }
-            else {
+            try {
+                fs.statSync(fcmaterials_path)
                 fcMaterialsArray = new Array();
                 const tailLogOptionsFCMaterials = { separator: /(\r\n|\n|\r)/gm, fromBeginning: true}
                 const JSONtailFCMaterials = new Tail(savedGamePath + 'FCMaterials' + '.json',tailLogOptionsFCMaterials);
@@ -353,6 +343,16 @@ try {
                         }
                     }
                 });
+            }
+            catch(e) {
+                const contentsToWrite = 
+                    { "timestamp":"2024-02-03T01:43:23Z", 
+                    "event":"FCMaterials", 
+                    "MarketID":3709451776, 
+                    "CarrierName":"[xsf] killer's sabre", 
+                    "CarrierID":"J0T-68X", "Items":[] 
+                }
+                fs.writeFileSync(fcmaterials_path, JSON.stringify(contentsToWrite), { encoding: 'utf8', flag: 'w' })
             }
         })
         module.exports = wat

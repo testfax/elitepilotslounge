@@ -914,8 +914,17 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       }
       if (data.event == 'reset') {
         try {
-          const checkViewable = document.getElementById(`${data.systemAddress}_${data.FID}_row_commanderSystem`)
-          if (checkViewable) { checkViewable.remove() }
+          const commandersRow = document.getElementById(`${data.systemAddress}_commanderTitleBarSystem`)
+          const array = [data.systemAddress,'_row_commanderSystem']
+          const secondSubstringSelector = `[id*="${array[1]}"]`;
+          const siblingElements = document.querySelectorAll(secondSubstringSelector);
+          const siblingElementsArray = Array.from(siblingElements);
+          const filteredElements = siblingElementsArray.filter(element => {
+              const id = element.getAttribute('id');
+              return id && id.includes(array[0]);
+          });
+          filteredElements.forEach(i=> i.remove())
+          commandersRow.classList.add('w3-hide')
         }
         catch (e) {
           console.log(e)
@@ -924,20 +933,24 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'Initialize-Server') {
         const FID = data.FID
         const checkViewable = document.getElementById(`${Object.values(data.events)[0].location.SystemAddress}_commanderTitleBarSystem`)
-        if (checkViewable && !checkViewable.classList.contains('w3-hide')) { developeCommander() }
-        if (checkViewable && checkViewable.classList.contains('w3-hide')) { checkViewable.classList.remove('w3-hide'); developeCommander() }
-        function developeCommander() {
+        if (checkViewable && !checkViewable.classList.contains('w3-hide')) {
+          console.log("commanderbar visible")
           create_activeCommanders(Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
         }
+        if (checkViewable && checkViewable.classList.contains('w3-hide')) { 
+          console.log("commanderbar hidden")
+          checkViewable.classList.remove('w3-hide'); 
+          create_activeCommanders(Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
+       }
       }
       if (data.event == 'Initialize-Client') {
         const FID = data.FID
         const checkViewable = document.getElementById(`${data.systemAddress}_commanderTitleBarSystem`)
-        if (checkViewable && checkViewable.classList.contains('w3-hide')) {
-          checkViewable.classList.remove('w3-hide')
+        if (checkViewable) {
+          if (checkViewable.classList.contains('w3-hide')) { checkViewable.classList.remove('w3-hide') }
           developeCommander()
         }
-        function developeCommander(){
+        function developeCommander(){4
           try {
             let timeStamp = data.events.find(i => i.event === 'Commander').combinedData.timestamp
             timeStamp = timeStamp.split("+")[0]
@@ -976,7 +989,6 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
                 primaryObj[FID].status = `Docked: ${station} In ${StarSystem}`
               }
             }
-            
             // console.log("Initialize-Client:",data.systemAddress,primaryObj,checkViewable,'ipc')
             create_activeCommanders(data.systemAddress,primaryObj,checkViewable,'ipc')
           }
@@ -1265,7 +1277,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       const commander = Object.values(commanderData)[0]
   
       // console.log("Previous TR:",container)
-      // console.log("COMMANDER:",commander)
+      console.log("COMMANDER:",commander)
   
       const TR1 = document.createElement('tr')
       container.insertAdjacentElement('afterend',TR1)

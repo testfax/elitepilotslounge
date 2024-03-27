@@ -91,7 +91,7 @@ try {
         })
         //! ERROR CHECKING
         //! ERROR CHECKING
-        const errorChecking = 0 // [1: On] [0: Off]
+        const errorChecking = 1 // [1: On] [0: Off]
         //! ERROR CHECKING
         //! ERROR CHECKING
         if (errorChecking) {
@@ -112,8 +112,7 @@ try {
           // && thargoidSampling.Loadout.combinedData.researchLimpetControllers >= 2 
           && thargoidSampling.Loadout.combinedData.causticProtection >= 16
           && currentSystemState != ''
-          ) { 
-            
+          ) {
             store.set('redisFirstUpdateflag',matching)
             if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green,logF(thargoidSampling)); }
             
@@ -122,6 +121,10 @@ try {
         }
         else { store.set('redisFirstUpdateflag',false) 
           if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${event} Allow more events until updater stop`) }
+          logs("redisUpdaterSetup")
+          logs("matching:",matching)
+          logs("causticProtection:",thargoidSampling.Loadout.combinedData.causticProtection >= 16)
+          logs("currentSystemState:",currentSystemState != '')
         }
       }
     }
@@ -978,8 +981,10 @@ try {
           // After these checks, then blast it to the UI.
           let response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
           const presentFID = response.find(item =>  item.hasOwnProperty('presentFID')).presentFID
+          console.log("presentFID",presentFID)
           if (presentFID) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
           else {
+            console.log("hit")
             const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
             // If the titlebar for this system doesn't exist, this will create it.
             // The server will populate it if another commander initiates it.
