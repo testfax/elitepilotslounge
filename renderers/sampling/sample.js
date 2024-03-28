@@ -730,8 +730,8 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           
           const TH3 = document.createElement('th')
           TR1.appendChild(TH3)
-          TH3.setAttribute('class','w3-vivid-gray font-BLOCKY ')
-          TH3.setAttribute('style','text-align: right;')
+          TH3.setAttribute('class','w3-vivid-gray font-BLOCKY w3-center')
+          // TH3.setAttribute('style','text-align: right;')
           TH3.setAttribute('colspan','0')
           
           let distance = item.stateProgress.progressPercent
@@ -768,10 +768,10 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           
           const TH4 = document.createElement('th')
           TR1.appendChild(TH4)
-          TH4.setAttribute('class','w3-vivid-gray font-BLOCKY')
+          TH4.setAttribute('class','w3-vivid-gray font-BLOCKY fitwidth')
           TH4.setAttribute('colspan','1')
           const formattedNumber4 = item.population.toLocaleString();
-          TH4.innerText = `${formattedNumber4} Pop`
+          TH4.innerText = `${formattedNumber4}`
   
           const TH6 = document.createElement('th')
           TR1.appendChild(TH6)
@@ -792,12 +792,12 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           const SPAN5 = document.createElement('span')
           TH6.appendChild(SPAN5)
           SPAN5.setAttribute('id',`sampleProgressCurrent_${item.systemAddress}`)
-          SPAN5.innerText = ` 0 / `
+          SPAN5.innerText = `- / `
   
           const SPAN6 = document.createElement('span')
           TH6.appendChild(SPAN6)
           SPAN6.setAttribute('id',`sampleProgressMax_${item.systemAddress}`)
-          SPAN6.innerText = ` 5555 Required`
+          SPAN6.innerText = ` - Required`
   
           const TH7 = document.createElement('th')
           TR1.appendChild(TH7)
@@ -874,7 +874,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   const TH9 = document.createElement('th')
   TR1.appendChild(TH9)
   TH9.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH9.innerText = `Samples\nSold`
+  TH9.innerText = `Sold To\nCarrier|RMS`
 
   const TH10 = document.createElement('th')
   TR1.appendChild(TH10)
@@ -948,7 +948,6 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         const checkViewable = document.getElementById(`${data.systemAddress}_commanderTitleBarSystem`)
         if (checkViewable) {
           if (checkViewable.classList.contains('w3-hide')) { checkViewable.classList.remove('w3-hide') }
-          console.log('INITIALIZE')
           developeCommander()
         }
         function developeCommander(){
@@ -991,7 +990,6 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               }
             }
             // console.log("Initialize-Client:",data.systemAddress,primaryObj,checkViewable,'ipc')
-            console.log('YOLO')
             create_activeCommanders(data.systemAddress,primaryObj,checkViewable,'ipc')
           }
           catch (e) {
@@ -1143,13 +1141,24 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
             type = 'Transfered';
             break;
         }
-        const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_soldToCarrier_commanderSystem`)
+        let station = null
+        switch(data.combinedData.stationType) {
+          case 'MegaShip':
+            station = 'RMS';
+            break;
+          case 'FleetCarrier':
+            station = 'Carrier';
+            break;
+          default:
+            station = 'RMS'
+        }
+        const value = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_soldTo${station}_commanderSystem`)
         const currentValue = parseInt(value.textContent, 10);
-        // const newValue = currentValue + data.combinedData.Count;
         const newValue = currentValue + (data.combinedData.Count < 0 ? data.combinedData.Count : Math.abs(data.combinedData.Count));
         value.textContent = newValue;
         let description = null;
-        if (data.combinedData?.Demand) {
+        if (data.combinedData?.Demand != null) {
+         document.getElementById(`sampleProgressCurrent_${data.combinedData.thisSampleSystem}`).textContent = `${data.combinedData.Demand} / `
          description = `${type} ${data.combinedData.Count} ${data.combinedData.Type_Localised} | Demand ${data.combinedData.Demand}`
         }
         else {
@@ -1433,9 +1442,20 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
         TH9.appendChild(SPAN11)
         SPAN11.setAttribute('id',`${systemAddress}_${FID}_soldToCarrier_commanderSystem`)
         SPAN11.setAttribute('class',`w3-text-orange font-BLOCKY `)
-        const addedSamples = (commander.soldToCarrier + commander.soldToRMS)
-  
-        SPAN11.innerText = `${addedSamples}`
+        SPAN11.innerText = `${commander.soldToCarrier}`
+
+        const SPAN112 = document.createElement('span')
+        TH9.appendChild(SPAN112)
+        SPAN112.setAttribute('id',`${systemAddress}_${FID}_soldToDivider_commanderSystem`)
+        SPAN112.setAttribute('class',`w3-text-white font-BLOCKY `)
+
+        SPAN112.innerText = ` | `
+
+        const SPAN115 = document.createElement('span')
+        TH9.appendChild(SPAN115)
+        SPAN115.setAttribute('id',`${systemAddress}_${FID}_soldToRMS_commanderSystem`)
+        SPAN115.setAttribute('class',`w3-text-orange font-BLOCKY `)
+        SPAN115.innerText = `${commander.soldToRMS}`
   
       const TH10 = document.createElement('th')
       TR1.appendChild(TH10)

@@ -922,7 +922,6 @@ try {
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
-        
       }
       catch(e) { errorHandler(e,e.name)}
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
@@ -936,27 +935,27 @@ try {
         // console.log(store.get('currentCarrierMarket'))
         const stationType = Object.values(thargoidSampling.Market)[2].StationType
         const sampleCount = Object.values(thargoidSampling).find(i=>i.event === 'Cargo').combinedData.SampleCargoCount
-
+        
         thargoidSampling[receivedData.event] = compiledArray
-        if (store.get('redisFirstUpdateflag') && store.get('currentCarrierMarket') && stationType == 'FleetCarrier' && receivedData.MarketID == store.get('currentCarrierMarket') && sampleCount > 0) { 
-          // Selling to a Fleet Carrier
-          const cargo = store.get('cargo')
-          const market = store.get('marketJSON')
-          let demand = null
-          cargo.combinedData.sampleCargo.forEach(sample => {
-            const specificItem = market.combinedData.marketSample.find(item => item.Name_Cargo === sample.Name)
-            if (specificItem && compiledArray.combinedData.Type == specificItem.Name_Cargo) {
-              demand = specificItem.Demand - compiledArray.combinedData.Count
-            }
-          })
-          compiledArray.combinedData['Demand'] = demand
-          blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-        }
-        if (store.get('redisFirstUpdateflag') && !store.get('currentCarrierMarket') && sampleCount >= 0) {
-          // Selling to other than Fleet Carrier (Very likely a rescue megaship)
-          compiledArray.combinedData["event"] = 'MarketSellNotFC'
-          compiledArray["event"] = 'MarketSellNotFC'
+        const cargo = store.get('cargo')
+        const market = store.get('marketJSON')
+        let demand = null
+        cargo.combinedData.sampleCargo.forEach(sample => {
+          const specificItem = market.combinedData.marketSample.find(item => item.Name_Cargo === sample.Name)
+          if (specificItem && compiledArray.combinedData.Type == specificItem.Name_Cargo) {
+            demand = specificItem.Demand - compiledArray.combinedData.Count
+            if (demand < 0) { demand = 0 }
+          }
+        })
+        compiledArray.combinedData['Demand'] = demand
+        compiledArray.combinedData['stationType'] = stationType
+        // if (store.get('redisFirstUpdateflag') && store.get('currentCarrierMarket') && stationType == 'FleetCarrier' && receivedData.MarketID == store.get('currentCarrierMarket') && sampleCount > 0) { 
+        //   // Selling to a Fleet Carrier
+          
+        //   blastToUI(compiledArray)
+        //   brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
+        // }
+        if (store.get('redisFirstUpdateflag') && sampleCount >= 0) {
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
