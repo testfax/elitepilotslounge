@@ -874,7 +874,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   const TH9 = document.createElement('th')
   TR1.appendChild(TH9)
   TH9.setAttribute('class',`w3-text-pink font-BLOCKY`)
-  TH9.innerText = `To\nCarrier/RMS`
+  TH9.innerText = `Samples\nSold`
 
   const TH10 = document.createElement('th')
   TR1.appendChild(TH10)
@@ -948,9 +948,10 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         const checkViewable = document.getElementById(`${data.systemAddress}_commanderTitleBarSystem`)
         if (checkViewable) {
           if (checkViewable.classList.contains('w3-hide')) { checkViewable.classList.remove('w3-hide') }
+          console.log('INITIALIZE')
           developeCommander()
         }
-        function developeCommander(){4
+        function developeCommander(){
           try {
             let timeStamp = data.events.find(i => i.event === 'Commander').combinedData.timestamp
             timeStamp = timeStamp.split("+")[0]
@@ -990,6 +991,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               }
             }
             // console.log("Initialize-Client:",data.systemAddress,primaryObj,checkViewable,'ipc')
+            console.log('YOLO')
             create_activeCommanders(data.systemAddress,primaryObj,checkViewable,'ipc')
           }
           catch (e) {
@@ -1277,7 +1279,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       const commander = Object.values(commanderData)[0]
   
       // console.log("Previous TR:",container)
-      console.log("COMMANDER:",commander)
+      // console.log("COMMANDER:",commander)
   
       const TR1 = document.createElement('tr')
       container.insertAdjacentElement('afterend',TR1)
@@ -1342,7 +1344,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
   
       const TH4 = document.createElement('th')
       TR1.appendChild(TH4)
-      TH4.setAttribute('class','w3-center aligned-element')
+      TH4.setAttribute('class','w3-center aligned-element fitwidth')
           const rll = commander.limpetsLaunched.Research
           const sampCol = commander.samplesCollected 
           let sampleRating = null
@@ -1394,7 +1396,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       
       const TH6 = document.createElement('th')
       TR1.appendChild(TH6)
-      TH6.setAttribute('class',`w3-text-yellow font-BLOCKY aligned-element`)
+      TH6.setAttribute('class',`w3-text-yellow font-BLOCKY aligned-element fitwidth`)
   
           const SPAN8 = document.createElement('span')
           TH6.appendChild(SPAN8)
@@ -1405,7 +1407,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
   
       const TH7 = document.createElement('th')
       TR1.appendChild(TH7)
-      TH7.setAttribute('class','aligned-element')
+      TH7.setAttribute('class','aligned-element fitwidth')
       
           const SPAN9 = document.createElement('span')
           TH7.appendChild(SPAN9)
@@ -1415,7 +1417,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
   
       const TH8 = document.createElement('th')
       TR1.appendChild(TH8)
-      TH8.setAttribute('class','aligned-element')
+      TH8.setAttribute('class','aligned-element fitwidth')
   
           const SPAN10 = document.createElement('span')
           TH8.appendChild(SPAN10)
@@ -1425,7 +1427,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
   
       const TH9 = document.createElement('th')
       TR1.appendChild(TH9)
-      TH9.setAttribute('class','aligned-element')
+      TH9.setAttribute('class','aligned-element fitwidth')
   
         const SPAN11 = document.createElement('span')
         TH9.appendChild(SPAN11)
@@ -1437,7 +1439,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
   
       const TH10 = document.createElement('th')
       TR1.appendChild(TH10)
-      TH10.setAttribute('class','aligned-element')
+      TH10.setAttribute('class','aligned-element fitwidth')
   
         const SPAN12 = document.createElement('span')
         TH10.appendChild(SPAN12)
