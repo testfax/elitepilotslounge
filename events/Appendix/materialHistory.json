@@ -1,4 +1,100 @@
 {
   "data": [
+    {
+      "Name": "heatconductionwiring",
+      "Name_Localised": "Heat Conduction Wiring",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:59:24.000Z",
+      "Total": 222
+    },
+    {
+      "Name": "basicconductors",
+      "Name_Localised": "Basic Conductors",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:59:24.000Z",
+      "Total": 225
+    },
+    {
+      "Name": "vanadium",
+      "Count": 3,
+      "Grade": "2",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:52:23.000Z",
+      "Total": 139
+    },
+    {
+      "Name": "chromium",
+      "Count": 2,
+      "Grade": "2",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:52:23.000Z",
+      "Total": 35
+    },
+    {
+      "Name": "zinc",
+      "Count": 2,
+      "Grade": "2",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:52:23.000Z",
+      "Total": 194
+    },
+    {
+      "Name": "nickel",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:52:23.000Z",
+      "Total": 112
+    },
+    {
+      "Name": "heatconductionwiring",
+      "Name_Localised": "Heat Conduction Wiring",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:51:44.000Z",
+      "Total": 224
+    },
+    {
+      "Name": "basicconductors",
+      "Name_Localised": "Basic Conductors",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:51:44.000Z",
+      "Total": 227
+    },
+    {
+      "Name": "heatconductionwiring",
+      "Name_Localised": "Heat Conduction Wiring",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:51:20.000Z",
+      "Total": 226
+    },
+    {
+      "Name": "basicconductors",
+      "Name_Localised": "Basic Conductors",
+      "Count": 2,
+      "Grade": "1",
+      "Operator": "-",
+      "Operator_Sign": "«",
+      "timeStamp": "2024-03-30T18:51:20.000Z",
+      "Total": 229
+    }
   ]
 }

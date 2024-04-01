@@ -701,15 +701,23 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
         
         const TH07 = document.createElement('th')
           TR0.appendChild(TH07)
-          TH07.setAttribute('class','w3-vivid-orange2 font-BLOCKY pointer titlebar_asc')
+          TH07.setAttribute('class','w3-vivid-orange2 font-BLOCKY pointer titlebar_asc w3-right-align')
           TH07.setAttribute('id','samples_titlebar-sort')
           TH07.setAttribute('data-attribute','samples_titlebar-sort')
-          TH07.setAttribute('colspan','0')
+          TH07.setAttribute('colspan','2')
           TH07.innerText = 'SAMPLES'
 
         filteredSystems.forEach((item,index)=>{
-          
+          let systemStats = null
+          if (commanderSystemData) {
+            commanderSystemData.forEach(i => {
+              if (i.includes(item.systemAddress)) { systemStats = i[1][0] }
+              else { systemStats = { required: 0, demand: 0.00, progress: 0 } }
+            })
+          }
+          else { systemStats = { required: 0, demand: 0.00, progress: 0 } }
           const currentcolorpercentage = progressBar(item.stateProgress.progressPercent)
+          const currentSamplecolorpercentage = progressBar(systemStats.progress)
           const TR1 = document.createElement('tr')
           container.appendChild(TR1)
           TR1.setAttribute('class',`w3-vivid-gray font-BLOCKY`)
@@ -775,29 +783,47 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
   
           const TH6 = document.createElement('th')
           TR1.appendChild(TH6)
-          TH6.setAttribute('class','w3-vivid-gray font-BLOCKY')
+          TH6.setAttribute('class','w3-vivid-gray font-BLOCKY w3-center')
           TH6.setAttribute('colspan','3')
   
-          const SPAN3 = document.createElement('span')
-          TH6.appendChild(SPAN3)
-          SPAN3.setAttribute('id',`sampleProgressPercent_${item.systemAddress}`)
-          SPAN3.setAttribute('class',`w3-vivid-grayish percent_square-background`)
-          SPAN3.innerHTML = `&nbsp; &nbsp; 0% `
+          let distance2 = systemStats.progress
+          if (distance2 === 1) {
+            distance = 100;
+          } else if (distance < 1) {
+            distance *= 100;
+          }
+          const progress_container2 = document.createElement('span')
+          TH6.appendChild(progress_container2)
+          progress_container2.setAttribute('class',' progress-container ')
+          // progress_container2.setAttribute('style','text-align: right;')
+        
+          const progress_bar2 = document.createElement('span')
+          progress_container2.appendChild(progress_bar2);
+          progress_bar2.setAttribute("id",`sampleProgressPercent_${item.systemAddress}`)
+          progress_bar2.setAttribute("class","w3-vivid-highvis progress-bar sampleprogresspercent")
+          progress_bar2.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentSamplecolorpercentage[0]} 1%);height: 100%; `)
+          const formattedNumber3 = (systemStats.progress).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+          progress_bar2.innerText = `${formattedNumber3} `
+          // const SPAN3 = document.createElement('span')
+          // TH6.appendChild(SPAN3)
+          // SPAN3.setAttribute('id',`sampleProgressPercent_${item.systemAddress}`)
+          // SPAN3.setAttribute('class',`w3-vivid-grayish percent_square-background`)
+          // SPAN3.innerHTML = `&nbsp; &nbsp; 0% `
   
           const SPAN4 = document.createElement('span')
           TH6.appendChild(SPAN4)
           SPAN4.setAttribute('class',`w3-vivid-gray`)
-          SPAN4.innerHTML = ` &nbsp; &nbsp; «» &nbsp; &nbsp;`
+          SPAN4.innerHTML = `«» &nbsp;`
   
           const SPAN5 = document.createElement('span')
           TH6.appendChild(SPAN5)
           SPAN5.setAttribute('id',`sampleProgressCurrent_${item.systemAddress}`)
-          SPAN5.innerText = `- / `
+          SPAN5.innerText = `${systemStats.demand} / `
   
           const SPAN6 = document.createElement('span')
           TH6.appendChild(SPAN6)
           SPAN6.setAttribute('id',`sampleProgressMax_${item.systemAddress}`)
-          SPAN6.innerText = ` - Required`
+          SPAN6.innerText = systemStats.required
   
           const TH7 = document.createElement('th')
           TR1.appendChild(TH7)
@@ -889,7 +915,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
   // newToolTip()
   if (specificCommanderSystemData){
     specificCommanderSystemData[1].forEach((cmdrData,index) => {
-      if (index >= 0) { 
+      if (index >= 1) {
         // console.log("In Wing:",Object.values(cmdrData))
         create_activeCommanders(systemAddress,cmdrData,TR1)
       }
@@ -934,11 +960,11 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         const FID = data.FID
         const checkViewable = document.getElementById(`${Object.values(data.events)[0].location.SystemAddress}_commanderTitleBarSystem`)
         if (checkViewable && !checkViewable.classList.contains('w3-hide')) {
-          console.log("commanderbar visible")
+          // console.log("commanderbar visible")
           create_activeCommanders(Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
         }
         if (checkViewable && checkViewable.classList.contains('w3-hide')) { 
-          console.log("commanderbar hidden")
+          // console.log("commanderbar hidden")
           checkViewable.classList.remove('w3-hide'); 
           create_activeCommanders(Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
        }

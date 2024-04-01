@@ -1,14 +1,9 @@
 const {logs,logs_error} = require('./utils/logConfig')
 const { errorHandler} = require('./utils/errorHandlers')
-const { updatePreviousMaxLines, wingData, windowPosition,requestCmdr } = require('./utils/loungeClientStore')
-const theCommander = requestCmdr().commander
-const colors = require('colors')
 // require('./systems')
-
 // updatePreviousMaxLines([1,2])
 
 if (logs) { main(); }
-
 function main() {
   try {
     const { dialog, nativeTheme, webContents, app, BrowserWindow, ipcMain, Menu } = require('electron')
@@ -16,6 +11,9 @@ function main() {
     const path = require('path')
     const fs = require('fs')
     
+    const colors = require('colors')
+    const { updatePreviousMaxLines, wingData, windowPosition,requestCmdr } = require('./utils/loungeClientStore')
+    const theCommander = requestCmdr().commander
     const electronWindowIds = new Store({ name: "electronWindowIds" });
     electronWindowIds.set('currentPage','test');
     electronWindowIds.set('socketServerStatus','Not Connected to Server');
@@ -126,14 +124,6 @@ function main() {
       }
     }
     logs("=ELITE PILOTS LOUNGE= START".green,"isPackaged:".yellow,`${JSON.stringify(app.isPackaged,null,2)}`.cyan, "Version:".yellow,`${JSON.stringify(app.getVersion(),null,2)}`.cyan);
-    // //! Immediately setup to detect if the game is running. Does an initial sweep prior to 5 second delay start, then only checks
-    // //!   every 5 seconds
-
-
-  
-    //!
-    //!
-    
     const { autoUpdater } = require('electron-updater')
     const { mainMenu,rightClickMenu } = require('./menumaker')
     nativeTheme.themeSource = 'dark'

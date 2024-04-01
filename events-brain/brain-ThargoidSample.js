@@ -177,15 +177,17 @@ try {
       })
     }
   }
-  function masterTimestamp(timestamp) {
+  function masterTimestamp(timestamp,test) {
     const now = new Date();
     const timeDifference = new Date(now.toISOString()) - new Date(timestamp)
     const timestampMaxAge = 2 * 60 * 60 * 1000 //2 hrs
-    // console.log(new Date(now.toISOString()))
-    // console.log(new Date(timestamp[0]))
-    // console.log(timeDifference <= timestampMaxAge)
-    // console.log(timeDifference)
-    // console.log(timestampMaxAge)
+    if (test) { 
+      logs("now timestmap:",new Date(now.toISOString()))
+      logs("db  timestamp:",new Date(timestamp))
+      logs("timeDifference: ",timeDifference)
+      logs("timestampMaxAge:",timestampMaxAge)
+      logs("timeDifference <= timestampMaxAge:",timeDifference <= timestampMaxAge)
+    }
     return [timeDifference,timestampMaxAge]
   }
   function isWordPresent(array,item) {
@@ -579,11 +581,11 @@ try {
         store.set('currentCarrierMarket',receivedData.MarketID)
         compiledArray.combinedData["stationType"] = receivedData.StationType
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
-          if (store.get('redisFirstUpdateflag')) { 
-            blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          }
+        if (store.get('redisFirstUpdateflag')) { 
+          blastToUI(compiledArray)
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
+      }
       catch(e) { errorHandler(e,e.name)}
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
@@ -594,11 +596,11 @@ try {
         thargoidSampling['stationType'] = false
         let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
-          if (store.get('redisFirstUpdateflag')) { 
-            blastToUI(compiledArray)
-            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          }
+        if (store.get('redisFirstUpdateflag')) { 
+          blastToUI(compiledArray)
+          brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
+      }
       catch(e) { errorHandler(e,e.name)}
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
@@ -645,9 +647,11 @@ try {
         nearestTitanToCmdr = {[titan]:ly}
         combinedData.nearestTitan = nearestTitanToCmdr
         thargoidSampling[receivedData.event] = compiledArray
+        if (!receivedData.hasOwnProperty("DistFromStarLS")) {
+          compiledArray.combinedData["DistFromStarLS"] = 0
+        }
         //Send location to server regardless
         //! Relog Handling
-        
         if (thisSampleSystem) {
           if (receivedData.SystemAddress == thisSampleSystem) {
             compiledArray.combinedData.SystemAddress = receivedData.SystemAddress
@@ -660,15 +664,14 @@ try {
           const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
           const broadcastability = response.find(item =>  item.hasOwnProperty('presentFID')).presentFID
           const timestamp = response.find(item =>  item.hasOwnProperty('timestamp')).timestamp
-          
-          const [timeDifference,timestampMaxAge] = masterTimestamp(timestamp)
-          if (broadcastability && timeDifference <= timestampMaxAge) { 
+          const [timeDifference,timestampMaxAge] = masterTimestamp(timestamp,1) //second parameter is a console log
+
+          if (broadcastability != null && timeDifference <= timestampMaxAge) { 
             // logs("Previous Sampling System and less than 2 hours:",broadcastability && timeDifference <= timestampMaxAge);
             store.set('redisFirstUpdateflag',true); 
             blastToUI(compiledArray)
           }
           else {store.set('redisFirstUpdateflag',false);}
-          
           //! For Console display:
           //! For Console display:
           const showJumps = 0
@@ -715,7 +718,7 @@ try {
           }
         }
       }
-      catch(e) { errorHandler(e,e.name)}
+      catch(e) { errorHandler(e,e.name) }
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'FSDJump' || receivedData.event == 'CarrierJump') {
@@ -941,10 +944,11 @@ try {
         const market = store.get('marketJSON')
         let demand = null
         cargo.combinedData.sampleCargo.forEach(sample => {
-          const specificItem = market.combinedData.marketSample.find(item => item.Name_Cargo === sample.Name)
+          let specificItem = market.combinedData.marketSample.find(item => item.Name_Cargo === sample.Name)
           if (specificItem && compiledArray.combinedData.Type == specificItem.Name_Cargo) {
             demand = specificItem.Demand - compiledArray.combinedData.Count
             if (demand < 0) { demand = 0 }
+            // specificItem["Demand"] = demand
           }
         })
         compiledArray.combinedData['Demand'] = demand
@@ -966,6 +970,7 @@ try {
     if (receivedData.event == 'LaunchDrone') {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
       try {
+        //todo NEED TO REVIEW THE LOADOUT FROM thargoidSampling array BEFORE ALLOWING THIS TO FIRE
         if (currentSystemState != "") {
           let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'), "combinedData": receivedData, "FID": FID }
           if (!thargoidSampling.Cargo) {  thargoidSampling["Cargo"] = store.get('cargo') }
@@ -974,6 +979,7 @@ try {
           thargoidSampling["InWing"] = store.get('wingStatus')
           store.set('thisSampleSystem',store.get('systemAddress'))
           compiledArray.combinedData["thisSampleSystem"] = store.get('systemAddress')
+
           //Try to update the server first,
           // Server will return 1 for system exists or 0 for it doesn't.
           // If it doesn't, then run the redisUpdaterSetup()
