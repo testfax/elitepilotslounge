@@ -12,7 +12,7 @@ function main() {
     const fs = require('fs')
     
     const colors = require('colors')
-    const { updatePreviousMaxLines, wingData, windowPosition,requestCmdr } = require('./utils/loungeClientStore')
+    const { wingData, windowPosition,requestCmdr } = require('./utils/loungeClientStore')
     const theCommander = requestCmdr().commander
     const electronWindowIds = new Store({ name: "electronWindowIds" });
     electronWindowIds.set('currentPage','test');
@@ -303,8 +303,7 @@ function main() {
     }
     app.on('window-all-closed', () =>{
       logs("=ELITE PILOTS LOUNGE= CLOSED".red,"isPackaged:".yellow,`${JSON.stringify(app.isPackaged,null,2)}`.cyan, "Version:".yellow,`${JSON.stringify(app.getVersion(),null,2)}`.cyan);
-          // watcher.wat.watcher.close()
-      if (process.platform !== 'darwin') app.quit()
+      // watcher.wat.watcher.close()
       const roomCache = {
         Inviter: 0,
         Others: [],
@@ -313,6 +312,7 @@ function main() {
       }
       wingData(roomCache,0)
       // logs(`App Quit`.red)
+      if (process.platform !== 'darwin') app.quit()
       return
     })
     process.on('uncaughtException', (error,origin) => {
@@ -346,6 +346,3 @@ function main() {
       logs_error("MAIN PROCESS ERROR".yellow,e.stack)
   }
 }
-
-
-// {20:30:30GMT 880.495s} Webserver request failed: code 0, details ''

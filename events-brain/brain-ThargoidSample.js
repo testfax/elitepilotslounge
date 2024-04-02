@@ -202,8 +202,6 @@ try {
   const store = new Store({ name: `${thisBrain}` })
   const FASK_rooms = store.get('socketRooms')
   const FASK_titanState = store.get('brain_ThargoidSample.currentTitanState')
-  // if (!store.get('socketRooms')) { store.set('socketRooms',{}) }
-  // store.set('brain_ThargoidSample.currentTitanState','unknown')
   if (!store.get('Fileheader')) { store.set('Fileheader',false) }
   if (!store.get('redisFirstUpdateflag')) { store.set('redisFirstUpdateflag',false) }
   if (!store.get('marketJSON')) { store.set('marketJSON',false) }
@@ -301,9 +299,17 @@ try {
           brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey(FASK_rooms,FASK_titanState))
         }
       }
-      if (!Object.keys(thargoidSampling).includes('InWing')) { inWingStuff(receivedData.timestamp,0) }
-      if (receivedData.Flags1.includes('In Wing') && wingCount < 1) { inWingStuff(receivedData.timestamp,1); wingCount++; }
-      if (!receivedData.Flags1.includes('In Wing') && wingCount > 0) { inWingStuff(receivedData.timestamp,0); wingCount--;  }
+      if (!Object.keys(thargoidSampling).includes('InWing')) { 
+        inWingStuff(receivedData.timestamp,0)
+      }
+      if (receivedData.Flags1.includes('In Wing') && wingCount == 0) {
+        wingCount = 1
+        inWingStuff(receivedData.timestamp,1) 
+      }
+      if (!receivedData.Flags1.includes('In Wing') && wingCount == 1) {
+        wingCount = 0
+        inWingStuff(receivedData.timestamp,0) 
+      }
       
       // logs("====================================")
       //Viewing GalaxyMap
@@ -664,7 +670,7 @@ try {
           const response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
           const broadcastability = response.find(item =>  item.hasOwnProperty('presentFID')).presentFID
           const timestamp = response.find(item =>  item.hasOwnProperty('timestamp')).timestamp
-          const [timeDifference,timestampMaxAge] = masterTimestamp(timestamp,1) //second parameter is a console log
+          const [timeDifference,timestampMaxAge] = masterTimestamp(timestamp,0) //second parameter is a console log
 
           if (broadcastability != null && timeDifference <= timestampMaxAge) { 
             // logs("Previous Sampling System and less than 2 hours:",broadcastability && timeDifference <= timestampMaxAge);
@@ -949,16 +955,13 @@ try {
             demand = specificItem.Demand - compiledArray.combinedData.Count
             if (demand < 0) { demand = 0 }
             // specificItem["Demand"] = demand
+            //todo Need to update specificItem.Demand with the new demand value. Incase somebody only sells a portion of the total.
+            //todo Currently, its coded to update the whole total to 0 demand once Sold. So doing marketSell twice will result in an incorrect Demand value on the UI
           }
         })
         compiledArray.combinedData['Demand'] = demand
         compiledArray.combinedData['stationType'] = stationType
-        // if (store.get('redisFirstUpdateflag') && store.get('currentCarrierMarket') && stationType == 'FleetCarrier' && receivedData.MarketID == store.get('currentCarrierMarket') && sampleCount > 0) { 
-        //   // Selling to a Fleet Carrier
-          
-        //   blastToUI(compiledArray)
-        //   brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-        // }
+
         if (store.get('redisFirstUpdateflag') && sampleCount >= 0) {
           blastToUI(compiledArray)
           brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
