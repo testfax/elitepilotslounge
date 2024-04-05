@@ -35,4 +35,4 @@
 - - C:\Users\yourUserName\Saved Games\Frontier Developments\Elite Dangerous
 
 # Discord
-- https://discord.gg/4gFD8mrHk
+- https://discord.gg/ebhwdt2pab
