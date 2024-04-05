@@ -360,6 +360,8 @@ function updaterSystemTitleList(systems) {
       const systemAddy = ele.id.split("_")
       const foundSystem = systems.find(x => x.systemAddress == systemAddy[0]);
       const progress = foundSystem.stateProgress.progressPercent
+      const currentcolorpercentage = progressBar(progress)
+      document.getElementById(ele.id).setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
       const formattedNumber = (progress).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
       document.getElementById(ele.id).innerText = formattedNumber
     })
@@ -766,7 +768,6 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           TH35.setAttribute('class','w3-vivid-gray font-BLOCKY')
           TH35.setAttribute('colspan','0')
     
-  
           const SPAN2 = document.createElement('span')
           TH35.appendChild(SPAN2)
           SPAN2.setAttribute('id',`StarSystem_${item.systemAddress}`)
