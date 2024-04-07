@@ -1127,7 +1127,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               const sampCol_val = parseInt(sampCol.textContent,10)
               let sampleRating = null
               let sampleRating_view = null
-              if (sampCol_val == 0 || rll_val == 0) { sampleRating = 0; sampleRating_view = 0 }
+              if (sampCol_val == 0 || rll_val <= 1) { sampleRating = 0; sampleRating_view = 0 }
               else { 
                 sampleRating = sampCol_val / rll_val
                 if (sampleRating == NaN) { 
@@ -1241,9 +1241,9 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       }
       if (data.event == 'Music') {
         let description = null;
-        if (data.combinedData.MusicTrack == 'Combat_Hunters') {description = `Freaking Glaives....`; descriptionContent(data,description)}
-        if (data.combinedData.MusicTrack == 'MainMenu') {description = `At Main Menu`; descriptionContent(data,description)}
-        if (data.combinedData.MusicTrack == 'Combat_Unknown') {description = `FSD Anomaly Detected`; descriptionContent(data,description)}
+        // if (data.combinedData.MusicTrack == 'Combat_Hunters') {description = `Freaking Glaives....`; descriptionContent(data,description)}
+        // if (data.combinedData.MusicTrack == 'MainMenu') {description = `At Main Menu`; descriptionContent(data,description)}
+        // if (data.combinedData.MusicTrack == 'Combat_Unknown') {description = `FSD Anomaly Detected`; descriptionContent(data,description)}
         if (data.combinedData.MusicTrack == 'Unknown_Encounter') {description = `I hate Thargoids...`; descriptionContent(data,description)}
         
       }

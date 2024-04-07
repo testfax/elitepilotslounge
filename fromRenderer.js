@@ -8,7 +8,8 @@ const base64 = require('base64-url')
 const path = require('path')
 const fs = require('fs')
 const {watcherConsoleDisplay,errorHandler,pageData,logF} = require('./utils/errorHandlers')
-const {latestLogRead,latestLog,savedGameLocation} = require('./utils/loungeClientStore')
+const {latestLogRead,latestLog,savedGameLocation,requestCmdr} = require('./utils/loungeClientStore')
+const theCommander = requestCmdr().commander
 const taskManager = require('./sockets/taskManager')
 let redisValidatorMsg = null;
 function redisValidator(redisRequestObject) {
@@ -107,6 +108,46 @@ ipcMain.on('fetchLatestLog', (event,message) => {
   const readEventsList = latestLogRead(latestLog(savedGameLocation().savedGamePath,"log"),["All"])
   const client = BrowserWindow.fromId(thisWindow.win);
   client.webContents.send('buildLogsDisplay', readEventsList.firstLoad);
+})
+ipcMain.on('pushAutoUpdate', (event,message) => {
+  const { autoUpdater } = require('electron-updater')
+  autoUpdater.logger = require('electron-log')
+  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.on('download-progress', (progressObj) => {
+    const thisPercent = progressObj.percent / 100
+    const formattedNumber = (thisPercent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+    thisWindow.setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} Downloading New Update ${formattedNumber}`)
+  })
+  autoUpdater.on('error',(error)=>{
+  })
+  autoUpdater.on('checking-for-update', (info)=>{
+    // if (!info) { 
+    //   thisWindow.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} Checking for Updates "NONE"`)
+    // }
+    // else {
+    //   thisWindow.setTitle(`Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} Checking for Updates ${info}`)
+    // }
+  })
+  autoUpdater.on('update-available',(info)=>{
+    thisWindow.setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${JSON.stringify(app.getVersion())} - ${JSON.stringify(info.version)} Update Available, download pending... please wait...`)
+  })
+  autoUpdater.on('update-not-available',(info)=>{
+    // logs(`-AU update-not-available: ${JSON.stringify(info)}`)
+  })
+  autoUpdater.on('update-downloaded',(info)=>{
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Update Available',
+      message: 'A new version of the app is available. App will now automatically install and restart once completed.',
+      buttons: ['Continue']
+    }).then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  })
+  // const client = BrowserWindow.fromId(thisWindow.win);
+  // client.webContents.send('buildLogsDisplay', readEventsList.firstLoad);
 })
 ipcMain.on('RedisData',(event,message)=> { //Implements a validator.
   if (watcherConsoleDisplay('globalIPC')) { logs("[IPC]".bgMagenta,"RETRIEVE: ",message.description); }

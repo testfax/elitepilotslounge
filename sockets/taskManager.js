@@ -25,13 +25,14 @@ try {
     const windowItemsStore = new Store({ name: 'electronWindowIds'})
     const thargoidSampling_store = new Store({ name: 'brain-ThargoidSample'})
     let options = { timeZone: 'America/New_York',year: 'numeric',month: 'numeric',day: 'numeric',hour: 'numeric',minute: 'numeric',second: 'numeric',},myTime = new Intl.DateTimeFormat([], options);
+    const theCommander = requestCmdr().commander
     //!########################################################
     //!############ SOCKET SERVER DIRECT EMITS ################
 
     socket.on('fromSocketServer', async (data) => { 
         // logs(`[SOCKET SERVER]`.blue, `${data.type}`.bgGreen, `${data.message}`.green)
         //Need to send the dcohSystem's data to the frontside so that it can update all the titan systems info. 
-        if (data.type == 'dcohSystems') {
+        if (data.type == 'dcohSystems' && windowItemsStore.get('currentPage') == "brain-ThargoidSample") {
             try {
                 const client = BrowserWindow.fromId(2);
                 client.webContents.send(`dcohSystems-sample`, data);
@@ -45,7 +46,7 @@ try {
                 taskList.datas = "0" 
             }
         }
-        if (data.type == 'brain-ThargoidSample_socket') {
+        if (data.type == 'brain-ThargoidSample_socket' && windowItemsStore.get('currentPage') == "brain-ThargoidSample") {
             try {
                 if (!app.isPackaged) {
                     logs(`[SOCKET SERVER]`.blue, `${data.FID}`.bgGreen, `${data.message}`.green)
@@ -106,7 +107,7 @@ try {
                 try {
                     const timerID = uuid.v4().slice(-5); 
                     if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
-                    dataList = {event,...data,"titanSocket":titanSocket }
+                    dataList = {event,...data,"titanSocket":titanSocket,...theCommander }
                     socket.emit('eventTransmit',dataList, async (response) => { resolve(response) });
                 }
                 catch(error) { errorHandler(error,error.name); reject(error) }
@@ -116,7 +117,7 @@ try {
             try {
                 const timerID = uuid.v4().slice(-5); 
                 if (watcherConsoleDisplay(data.event)) { console.time(timerID) }
-                const theCommander = requestCmdr().commander
+                // const theCommander = requestCmdr().commander
                 data = {...data,...theCommander}
                 let discuss = socket.emit('eventTransmit',data, (response) => {
                     //! No response necessarily needed, unless there's some kind of visual need to show on the client.

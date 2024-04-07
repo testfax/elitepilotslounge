@@ -1,6 +1,7 @@
 const {pageData} = require('./utils/errorHandlers')
 const {Menu, BrowserWindow, ipcMain} = require('electron')
 const {logs,logs_error} = require('./utils/logConfig')
+const { autoUpdater } = require('./utils/autoUpdate')
 const {cwd,latestLogRead,latestLog,savedGameLocation} = require('./utils/loungeClientStore')
 const Store = require('electron-store');
 const store = new Store({ name: 'electronWindowIds'})
@@ -88,6 +89,14 @@ const links = {
         catch (e) {
             logs_error(e)
         }
+    },
+    checkForUpdates: async function() {
+        try {
+            autoUpdater()
+        }
+        catch (e) {
+            logs_error(e)
+        }
     }
 }
 
@@ -137,6 +146,15 @@ const template = [
     {
         label: 'Loadout -> EDSY',
         click: ()=>{links.toEdsy();} 
+    },
+    {
+        label: 'About',
+        submenu: [
+            {
+                label: 'Check for Updates',
+                click: ()=>{links.checkForUpdates()}
+            },
+        ]
     },
     // {
     //     label: 'Logs',

@@ -288,7 +288,7 @@ try {
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
     if (receivedData.event == 'Status') {
-      // console.log(receivedData.Flags1)
+      console.log(receivedData.Flags1)
       function inWingStuff(timestamp,action) {
         let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')

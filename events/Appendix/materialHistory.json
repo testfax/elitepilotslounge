@@ -1,6 +1,16 @@
 {
   "data": [
     {
+      "Name": "tg_weaponparts",
+      "Name_Localised": "Weapon Parts",
+      "Count": 3,
+      "Grade": "4",
+      "Operator": "+",
+      "Operator_Sign": "»",
+      "timeStamp": "2024-04-06T20:11:01.000Z",
+      "Total": "150"
+    },
+    {
       "Name": "heatconductionwiring",
       "Name_Localised": "Heat Conduction Wiring",
       "Count": 2,
@@ -85,16 +95,6 @@
       "Operator_Sign": "«",
       "timeStamp": "2024-03-30T18:51:20.000Z",
       "Total": 226
-    },
-    {
-      "Name": "basicconductors",
-      "Name_Localised": "Basic Conductors",
-      "Count": 2,
-      "Grade": "1",
-      "Operator": "-",
-      "Operator_Sign": "«",
-      "timeStamp": "2024-03-30T18:51:20.000Z",
-      "Total": 229
     }
   ]
 }
