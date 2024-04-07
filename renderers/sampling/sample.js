@@ -1134,12 +1134,11 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               if (sampCol_val == 0 || rll_val == 0) { sampleRating = 0; sampleRating_view = 0 }
               else { 
                 sampleRating = sampCol_val / rll_val
-                sampleRating_view = sampCol_val / rll_val > 100 ? sampleRating_view = 0 : sampleRating_view = 1; 
+                sampleRating_view = sampCol_val / rll_val > 1 ? sampleRating_view = 0 : sampleRating_view = 1; 
                 if (sampleRating == NaN) { 
                   sampleRating = 0
                   sampleRating_view = 0
                 }
-                sampleRating_view = 1
               } 
               currentcolorpercentage = progressBar(sampleRating)
               sampleRatingDom.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
@@ -1393,7 +1392,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           if (sampCol == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
           else { 
             sampleRating = sampCol / rll
-            sampleRating_view = sampleRating > 100 ? sampleRating_view = 0 : sampleRating_view = 1; 
+            sampleRating_view = sampleRating > 1 ? sampleRating_view = 0 : sampleRating_view = 1; 
           }
           currentcolorpercentage = progressBar(sampleRating)
           let distance = sampleRating
