@@ -49,7 +49,7 @@ try {
         if (data.type == 'brain-ThargoidSample_socket' && windowItemsStore.get('currentPage') == "brain-ThargoidSample") {
             try {
                 if (!app.isPackaged) {
-                    logs(`[SOCKET SERVER]`.blue, `${data.FID}`.bgGreen, `${data.message}`.green)
+                    logs(`[SOCKET SERVER]`.blue, `${data.commander}`.bgGreen, `${data.message}`.green)
                 }
                 const client = BrowserWindow.fromId(2);
                 client.webContents.send("from_brain-ThargoidSample", data);

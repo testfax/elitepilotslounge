@@ -98,7 +98,7 @@ const colorit = {
 let tooltipObject = {
   limpetsLaunched: "Research | Collector | Repair"
 };
-let readyToRecieve = null;
+let readyToRecieve = false;
 // Find all elements with the "tooltip-element" class and create a Tooltip instance for each
 function newToolTip() {
   const elementsWithTooltip = document.querySelectorAll(".tooltip-element");
@@ -926,7 +926,9 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 }
 //Receive data from either client or Socket .
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
+  // console.log("pre-readyToReceive:",readyToRecieve)
   if (readyToRecieve) { 
+    // console.log("post-readyToReceive:",readyToRecieve)
     try {
       function descriptionContent(data,description) {
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) {
@@ -934,6 +936,8 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           if (data.combinedData.timestamp.includes("-0")) { timestamp = data.combinedData.timestamp.split("Z-0")[0] }
           if (data.combinedData.timestamp.includes("+")) { timestamp = data.combinedData.timestamp.split("+")[0] }
           if (description) {
+            //todo make an array that constantly updates and sends the items up
+            // console.log(document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`))
             document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
           }
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
@@ -1127,9 +1131,10 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
               const sampCol_val = parseInt(sampCol.textContent,10)
               let sampleRating = null
               let sampleRating_view = null
-              if (sampCol_val == 0 || rll_val <= 1) { sampleRating = 0; sampleRating_view = 0 }
+              if (sampCol_val == 0 || rll_val == 0) { sampleRating = 0; sampleRating_view = 0 }
               else { 
                 sampleRating = sampCol_val / rll_val
+                sampleRating_view = sampCol_val / rll_val > 100 ? sampleRating_view = 0 : sampleRating_view = 1; 
                 if (sampleRating == NaN) { 
                   sampleRating = 0
                   sampleRating_view = 0
@@ -1244,7 +1249,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
         // if (data.combinedData.MusicTrack == 'Combat_Hunters') {description = `Freaking Glaives....`; descriptionContent(data,description)}
         // if (data.combinedData.MusicTrack == 'MainMenu') {description = `At Main Menu`; descriptionContent(data,description)}
         // if (data.combinedData.MusicTrack == 'Combat_Unknown') {description = `FSD Anomaly Detected`; descriptionContent(data,description)}
-        if (data.combinedData.MusicTrack == 'Unknown_Encounter') {description = `I hate Thargoids...`; descriptionContent(data,description)}
+        // if (data.combinedData.MusicTrack == 'Unknown_Encounter') {description = `I hate Thargoids...`; descriptionContent(data,description)}
         
       }
       if (data.event == 'SupercruiseExit' || data.event == 'SupercruiseEntry') { 
@@ -1386,7 +1391,10 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           let sampleRating = null
           let sampleRating_view = null;
           if (sampCol == 0 || rll == 0) { sampleRating = 0; sampleRating_view = 0 }
-          else { sampleRating =  sampCol / rll; sampleRating_view = 1}
+          else { 
+            sampleRating = sampCol / rll
+            sampleRating_view = sampleRating > 100 ? sampleRating_view = 0 : sampleRating_view = 1; 
+          }
           currentcolorpercentage = progressBar(sampleRating)
           let distance = sampleRating
           if (distance === 1) {

@@ -48,9 +48,11 @@ try {
             // const client = BrowserWindow.fromId(1);
             // client.webContents.send(`${eventType}`, data);
             //! #### Send to Brain
-            distributionList.forEach(event => {
-                ipcMain.emit(event,data)
-            })
+            if (distributionList.length > 0) {
+                distributionList.forEach(event => {
+                    ipcMain.emit(event,data)
+                })
+            }
             if (data.returnable) { return true }
         }
         catch (e) { if (data.returnable) { return false }; errorHandler(e,e.name); }

@@ -195,6 +195,14 @@ try {
     item = item.toLowerCase();
     return array.includes(item)
   }
+  function inWingStuff(timestamp,action) {
+    let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
+    compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+    thargoidSampling["InWing"] = compiledArray
+    store.set('wingStatus',compiledArray) //Initialize the object in the store.
+    blastToUI(compiledArray)
+    brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey(FASK_rooms,FASK_titanState))
+  }
   //!BRAIN EVENT######################################################
   //!Startup Variables
   const thisBrain = 'brain-ThargoidSample'
@@ -215,7 +223,7 @@ try {
     "MarketJSON",
     "Fsd Charging",
     // "CollectCargo",
-    "EjectCargo",
+    // "EjectCargo",
     // "MarketSell",
     "MarketBuy",
     "Shutdown",
@@ -268,7 +276,7 @@ try {
   let FSDChargeCount = 0
   let supercruiseCount = 0;
   let guifocus = 0;
-  let wingCount = 0;
+  let wingSetupCount = 0
   //!BRAIN EVENTs######################################################
   app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
   ipcMain.on(thisBrain, async (receivedData) => {
@@ -287,29 +295,38 @@ try {
       catch(e) { errorHandler(e,e.name)}
       if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
     }
-    if (receivedData.event == 'Status') {
-      console.log(receivedData.Flags1)
-      function inWingStuff(timestamp,action) {
-        let compiledArray = { "event": "InWing", "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": {timestamp: timestamp, wingStatus: action }, "FID": FID }
+    if (receivedData.event == 'WingJoin') {
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+      try {
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
         compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
-        thargoidSampling["InWing"] = compiledArray
-        store.set('wingStatus',compiledArray) //Initialize the object in the store.
-        if (store.get('redisFirstUpdateflag')) {
-          blastToUI(compiledArray)
-          brain_ThargoidSample_socket(compiledArray,"InWing",findActiveSocketKey(FASK_rooms,FASK_titanState))
+          if (store.get('redisFirstUpdateflag')) { 
+            inWingStuff(receivedData.timestamp,1)
+          }
         }
+      catch(e) { errorHandler(e,e.name)}
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+    }
+    if (receivedData.event == 'WingLeave') {
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+      try {
+        let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('thisSampleSystem'), "FID": FID }
+        compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
+          if (store.get('redisFirstUpdateflag')) { 
+            inWingStuff(receivedData.timestamp,0)
+          }
+        }
+      catch(e) { errorHandler(e,e.name)}
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+    }
+    if (receivedData.event == 'Status') {
+      // Setup initial wing to the JSON file.
+      if (wingSetupCount == 0) {
+      if (!store.get('wingStatus')) {
+        if (receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,1); wingSetupCount = 1 }
+        else { inWingStuff(receivedData.timestamp,0); wingSetupCount = 1 }
       }
-      if (!Object.keys(thargoidSampling).includes('InWing')) { 
-        inWingStuff(receivedData.timestamp,0)
-      }
-      if (receivedData.Flags1.includes('In Wing') && wingCount == 0) {
-        wingCount = 1
-        inWingStuff(receivedData.timestamp,1) 
-      }
-      if (!receivedData.Flags1.includes('In Wing') && wingCount == 1) {
-        wingCount = 0
-        inWingStuff(receivedData.timestamp,0) 
-      }
+    }
       
       // logs("====================================")
       //Viewing GalaxyMap
@@ -448,6 +465,22 @@ try {
           if (store.get('redisFirstUpdateflag')) {
             compiledArray.combinedData["thisSampleSystem"] = store.get('systemAddress')
             store.set('thisSampleSystem',store.get('systemAddress'))
+            blastToUI(compiledArray)
+            brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
+          }
+        }
+      }
+      catch(e) { errorHandler(e,e.name)}
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Comp`.green); }
+    }
+    if (receivedData.event == 'EjectCargo') {
+      if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${receivedData.event} Wait`.yellow); }
+      try {
+        if (currentSystemState != "") {
+          let compiledArray = { "event": receivedData.event, "brain": thisBrain, "systemAddress": store.get('systemAddress'),"combinedData": receivedData, "FID": FID }
+          thargoidSampling[receivedData.event] = compiledArray
+          if (store.get('redisFirstUpdateflag') && store.get('thisSampleSystem') == store.get('systemAddress')) {
+            compiledArray.combinedData["thisSampleSystem"] = store.get('systemAddress')
             blastToUI(compiledArray)
             brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
           }
@@ -1014,7 +1047,8 @@ try {
       let compiledArray = { "event": receivedData.event, "brain": thisBrain, "combinedData": receivedData, "systemAddress": store.get('systemAddress'), "FID": FID }
       compiledArray.combinedData["thisSampleSystem"] = store.get('thisSampleSystem')
       compiledArray.combinedData["systemName"] = store.get('activeStarSystem')
-      if (store.get('redisFirstUpdateflag')) { 
+      if (store.get('redisFirstUpdateflag')) {
+        inWingStuff(receivedData.timestamp,0)
         blastToUI(compiledArray)
         brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
         store.set('redisFirstUpdateflag',false);
