@@ -918,7 +918,7 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
     specificCommanderSystemData[1].forEach((cmdrData,index) => {
       if (index >= 1) {
         // console.log("In Wing:",Object.values(cmdrData))
-        create_activeCommanders(systemAddress,cmdrData,TR1)
+        create_activeCommanders(systemAddress,cmdrData,TR1,'initial')
       }
     })
   }
@@ -933,19 +933,15 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
     // console.log("post-readyToReceive:",readyToRecieve)
     try {
       function descriptionContent(data,description) {
-        console.log(data)
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) {
           let timestamp = null
           if (data.combinedData.timestamp.includes("-0")) { timestamp = data.combinedData.timestamp.split("Z-0")[0] }
           if (data.combinedData.timestamp.includes("+")) { timestamp = data.combinedData.timestamp.split("+")[0] }
           if (description) {
-            //todo make an array that constantly updates and sends the items up
-            description_array.unshift(description)
-            if (description_array.length > 3) { 
-              description_array.pop()
-            }
-            const description_final = description_array.join('<br>')
-            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).innerHTML = description_final
+            let individual_user = Object.values(description_array.find(i => Object.keys(i) == data.FID))[0]
+            individual_user.unshift(description)
+            if (individual_user.length > 3) { individual_user.pop() }
+            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).innerHTML = individual_user.join('<br>')
           }
           let timeConvert = timeConversion(timestamp)
           timeConvert = timeConvert.split(" ")
@@ -973,6 +969,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       if (data.event == 'Initialize-Server') {
         const FID = data.FID
         const checkViewable = document.getElementById(`${Object.values(data.events)[0].location.SystemAddress}_commanderTitleBarSystem`)
+        // console.log("Initialize-Server:",Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
         if (checkViewable && !checkViewable.classList.contains('w3-hide')) {
           // console.log("commanderbar visible")
           create_activeCommanders(Object.values(data.events)[0].location.SystemAddress,data.events,checkViewable,'server')
@@ -1319,14 +1316,14 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
     catch(e) { }
   }
 })
-function create_activeCommanders(systemAddress,commanderData,previousSibling) {
+function create_activeCommanders(systemAddress,commanderData,previousSibling,dataLocation) {
   try {
     if (commanderData) { 
       let container = previousSibling
       //todo if parent element is hidden, alive it, use function in functions.js
       const FID = Object.keys(commanderData)[0]
       const commander = Object.values(commanderData)[0]
-  
+      
       // console.log("Previous TR:",container)
       // console.log("COMMANDER:",commander)
   
@@ -1382,12 +1379,13 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       
       const TH35 = document.createElement('th')
       TR1.appendChild(TH35)
-      TH35.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth aligned-element`)
+      TH35.setAttribute('class',`w3-text-orange font-BLOCKY aligned-element`)
   
           const SPAN35 = document.createElement('span')
           TH35.appendChild(SPAN35)
           SPAN35.setAttribute('id',`${systemAddress}_${FID}_status_commanderSystem`)
           SPAN35.setAttribute('class',`aligned-vert-ele`)
+          description_array.push( { [commander.commanderData.FID]: [commander.status] } )
           SPAN35.innerText = commander.status
   
       const TH4 = document.createElement('th')
