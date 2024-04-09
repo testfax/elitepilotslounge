@@ -216,7 +216,7 @@ function clickedEvent(evt) {
         }
         if (type == 'progress') {
           toggleSortOrder(type);
-          systems = systems.sort((a,b) => sortItOut(a.stateProgress.progressPercent,b.stateProgress.progressPercent,type,))
+          systems = systems.sort((a,b) => sortItOut(a.stateProgress.progressUncapped,b.stateProgress.progressUncapped,type,))
           buildSystemTitleBar(titanState)
         }
         if (type == 'system') {
@@ -336,7 +336,7 @@ const requests = [
 requests.forEach(i=>{ ipcRenderer.send('RedisData',i); })
 ipcRenderer.on('dcohSystems-sample', (data) => {
   if (data.response.redisQueryResult == "systems") {
-    const sortedSystems = data.response.redisResult.sort((a, b) => b.stateProgress.progressPercent - (a.stateProgress.progressPercent));
+    const sortedSystems = data.response.redisResult.sort((a, b) => b.stateProgress.progressUncapped - (a.stateProgress.progressUncapped));
     systems = sortedSystems //Startup variable
     buildTitanList(sortedTitans,buildTitanStats(systems,1))
   }
@@ -346,7 +346,7 @@ ipcRenderer.on('dcohSystems-sample', (data) => {
     titans['total'] = data.response.redisResult.length //Startup variable
   }
   if (data.response.redisQueryResult == 'dcohSystems-updated') {
-    const sortedSystems = data.response.redisResult.sort((a, b) => b.stateProgress.progressPercent - (a.stateProgress.progressPercent));
+    const sortedSystems = data.response.redisResult.sort((a, b) => b.stateProgress.progressUncapped - (a.stateProgress.progressUncapped));
     systems = sortedSystems
     updaterTitanList(buildTitanStats(systems,1))
     updaterSystemTitleList(systems)
@@ -359,7 +359,7 @@ function updaterSystemTitleList(systems) {
     Array.from(updateItem).forEach(ele => { 
       const systemAddy = ele.id.split("_")
       const foundSystem = systems.find(x => x.systemAddress == systemAddy[0]);
-      const progress = foundSystem.stateProgress.progressPercent
+      const progress = foundSystem.stateProgress.progressUncapped
       const currentcolorpercentage = progressBar(progress)
       document.getElementById(ele.id).setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
       const formattedNumber = (progress).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
@@ -593,7 +593,7 @@ function buildTitanStats(systems,returnable) {
         if (system.state == statesJournal[index]) {
           titanStats[system.titan][state].quantity++; 
           if (system.stateProgress.isCompleted) { titanStats[system.titan][state].completed++;}
-          if (!system.stateProgress.isCompleted) { titanStats[system.titan][state].warProgress += system.stateProgress.progressPercent;}
+          if (!system.stateProgress.isCompleted) { titanStats[system.titan][state].warProgress += system.stateProgress.progressUncapped;}
         }
       })
     })
@@ -718,7 +718,7 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
             })
           }
           else { systemStats = { required: 0, demand: 0.00, progress: 0 } }
-          const currentcolorpercentage = progressBar(item.stateProgress.progressPercent)
+          const currentcolorpercentage = progressBar(item.stateProgress.progressUncapped)
           const currentSamplecolorpercentage = progressBar(systemStats.progress)
           const TR1 = document.createElement('tr')
           container.appendChild(TR1)
@@ -744,7 +744,7 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           // TH3.setAttribute('style','text-align: right;')
           TH3.setAttribute('colspan','0')
           
-          let distance = item.stateProgress.progressPercent
+          let distance = item.stateProgress.progressUncapped
           if (distance === 1) {
             distance = 100;
           } else if (distance < 1) {
@@ -760,7 +760,7 @@ function buildSystemTitleBar(titanState,commanderSystemData) {
           progress_bar.setAttribute("id",`${item.systemAddress}_WarProgressPercent`)
           progress_bar.setAttribute("class","w3-vivid-highvis progress-bar warprogresspercent")
           progress_bar.setAttribute("style",`background: linear-gradient(45deg,#ff0000,${currentcolorpercentage[0]} 1%);height: 100%; `)
-          const formattedNumber2 = (item.stateProgress.progressPercent).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
+          const formattedNumber2 = (item.stateProgress.progressUncapped).toLocaleString(undefined, { style: 'percent', minimumFractionDigits:1});
           progress_bar.innerText = `${formattedNumber2} `
           
           const TH35 = document.createElement('th')
@@ -925,22 +925,31 @@ function buildCommanderTitleBar(systemAddress,specificCommanderSystemData,thisTi
 
 }
 //Receive data from either client or Socket .
+ipcRenderer.on('from_brain-ThargoidSample-dev', (data) => { console.log(data) })
+let description_array = []
 ipcRenderer.on('from_brain-ThargoidSample', (data) => {
   // console.log("pre-readyToReceive:",readyToRecieve)
   if (readyToRecieve) { 
     // console.log("post-readyToReceive:",readyToRecieve)
     try {
       function descriptionContent(data,description) {
+        console.log(data)
         if (document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`)) {
           let timestamp = null
           if (data.combinedData.timestamp.includes("-0")) { timestamp = data.combinedData.timestamp.split("Z-0")[0] }
           if (data.combinedData.timestamp.includes("+")) { timestamp = data.combinedData.timestamp.split("+")[0] }
           if (description) {
             //todo make an array that constantly updates and sends the items up
-            // console.log(document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`))
-            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).textContent = description
+            description_array.unshift(description)
+            if (description_array.length > 3) { 
+              description_array.pop()
+            }
+            const description_final = description_array.join('<br>')
+            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).innerHTML = description_final
           }
-          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).textContent = timeConversion(timestamp)
+          let timeConvert = timeConversion(timestamp)
+          timeConvert = timeConvert.split(" ")
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_date_commanderSystem`).innerHTML = timeConvert[0] + "<br>" + timeConvert[1]
         }
       }
       if (data.event == 'reset') {
@@ -1079,7 +1088,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       }
       if (data.event == 'Loadout') {
         try {
-          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_ship_commanderSystem`).textContent = data.combinedData.ship.toUpperCase()
+          document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_ship_commanderSystem`).textContent = ` ${data.combinedData.ship.toUpperCase()}`
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_causticProtection_commanderSystem`).textContent = data.combinedData.causticProtection
           document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_cargoCapacity_commanderSystem`).textContent = data.combinedData.cargoCapacity
           const img = document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_shipIMG_commanderSystem`)
@@ -1199,7 +1208,7 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
       }
       //Remaining Items update the "STATUS" block on the page.
       if (data.event == 'Shutdown') {
-        const description = `Player Offline:\r ${data.combinedData.systemName}`
+        const description = `Player Offline: ${data.combinedData.systemName}`
         descriptionContent(data,description)
       }
       if (data.event == 'GalaxyMap') {
@@ -1328,15 +1337,15 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
       
       const TH1 = document.createElement('th')
       TR1.appendChild(TH1)
-      TH1.setAttribute('class',`w3-text-orange font-BLOCKY aligned-element fitwidth`)
+      TH1.setAttribute('class',`w3-text-orange font-BLOCKY aligned-element fitwidth aligned-vert-ele2`)
       TH1.setAttribute('id',`${systemAddress}_${FID}_date_commanderSystem`)
       const commander_timestamp = commander.timestamp.split("+")[0]
-      TH1.innerText = `${timeConversion(commander_timestamp)}`
+      let timeConvert = timeConversion(commander_timestamp).split(" ")
+      TH1.innerHTML = timeConvert[0] + "<br>" + timeConvert[1]
   
       const TH2 = document.createElement('th')
       TR1.appendChild(TH2)
       TH2.setAttribute('class',`w3-text-orange font-BLOCKY fitwidth aligned-element`)
-      
           const img2 = document.createElement('img')
           TH2.appendChild(img2)
           img2.setAttribute('id',`${systemAddress}_${FID}_wingIMG_commanderSystem`)
@@ -1346,12 +1355,11 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           else { img2.setAttribute('class',`w3-hide gradePics2`) }
           img2.setAttribute('style',`vertical-align: top;`)
           img2.setAttribute('src',`../../public/images/Wings-galaxy-map.png`)
-          
-  
+
           const SPAN2 = document.createElement('span')
           TH2.appendChild(SPAN2)
           SPAN2.setAttribute('id',`${systemAddress}_${FID}_commander_commanderSystem`)
-          SPAN2.innerText = `${commander.commanderData.Name}`
+          SPAN2.innerHTML = `&nbsp;${commander.commanderData.Name}`
   
       const TH3 = document.createElement('th')
       TR1.appendChild(TH3)
@@ -1370,7 +1378,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           TH3.appendChild(SPAN4)
           SPAN4.setAttribute('id',`${systemAddress}_${FID}_ship_commanderSystem`)
           SPAN4.setAttribute('class',`aligned-element`)
-          SPAN4.innerText = `${commander.loadout.ship.toUpperCase()}`
+          SPAN4.innerText = ` ${commander.loadout.ship.toUpperCase()}`
       
       const TH35 = document.createElement('th')
       TR1.appendChild(TH35)
@@ -1379,7 +1387,7 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling) {
           const SPAN35 = document.createElement('span')
           TH35.appendChild(SPAN35)
           SPAN35.setAttribute('id',`${systemAddress}_${FID}_status_commanderSystem`)
-          SPAN35.setAttribute('class',``)
+          SPAN35.setAttribute('class',`aligned-vert-ele`)
           SPAN35.innerText = commander.status
   
       const TH4 = document.createElement('th')

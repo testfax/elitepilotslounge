@@ -80,6 +80,7 @@ try {
                             const now = new Date(inspectedEvent.timestamp);
                             inspectedEvent["timestamp"] = now.toISOString() + `+${lcs.eventIndexNumber}`
                             // console.log(index, readEventsList.totalLines, formattedNumber)
+                            //!
                             // console.log(`JL-${inspectedEvent["timestamp"]}`.cyan,`${inspectedEvent.event}`)
                             //!
 
@@ -111,6 +112,10 @@ try {
                         let dataObj = JSON.parse(data)
                         const event = dataObj.event
                         if (dataObj.event === 'Market') { dataObj['event'] = 'MarketJSON' }
+                        //!NavRoute.json contains NavRouteClear (event key) upon route clearing.
+                        //!Journal log contains event called "NavRouteClear" as well. Both contain same data.
+                        //! Use journal log so it captured in socket server.
+                        if (dataObj.event === 'NavRouteClear') { return }
                         if (eventMod != undefined) {   
                             if (watcherConsoleDisplay(event)) { logs("1: Watcher.... ".bgCyan,`${eventMod}`.yellow); } 
                         }
@@ -129,6 +134,7 @@ try {
                         else {
                             dataObj["timestamp"] = now.toISOString() + `-0`
                         }
+                        //!
                         // console.log(`JS-${dataObj["timestamp"]}`.cyan,`${dataObj.event}`)
                         //!
                     

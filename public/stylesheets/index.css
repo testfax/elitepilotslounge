@@ -77,6 +77,14 @@ td.fitwidth {
   position: relative;
   top: 7px;
 }
+.aligned-vert-ele {
+  position: relative;
+  top: -8px;
+}
+.aligned-vert-ele2 {
+  position: relative;
+  top: -0px;
+}
 .pointer {cursor: pointer; user-select: none}
 .pointer-help {cursor: help; user-select: none}
 .pointerRadio {cursor: pointer; user-select: none}
