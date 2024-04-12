@@ -194,7 +194,7 @@ function main() {
                 if (callback.percent == '75%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "75%".cyan); percentShown = 1; }
                 if (callback.percent == '100%' && percentShown == 0) { logs('[EH]'.green,"LatestLogsRead:".yellow, "100%".cyan); percentShown = 1; }
                 if (typeof callback == 'object') {
-                  const data = `Loading Events... ${callback.current} \ ${callback.total} ${callback.percent}`
+                  const data = `Loading Events... ${callback.current} of ${callback.total} ${callback.percent} events`
                   displayMessages[4].journalPercent = data
                   loadingScreen.webContents.send("displayMessage", displayMessages[4]);
                 }

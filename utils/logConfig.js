@@ -21,17 +21,32 @@ try {
         const loungeClientCondition = fs.statSync(loungeClientFile)
         const loungeClientCondition2 = isJSONFileValid(loungeClientFile)
         if (!loungeClientCondition.size >=1 || !loungeClientCondition2) {
-            loungeClientObject['commander'] = reWriteCmdr() //Emplaced incase loss of lounge-client.json file integrity.
+            loungeClientObject['commander'] = getCmdr() //Emplaced incase loss of lounge-client.json file integrity.
             const fileD = [loungeClientObject]
             fs.writeFileSync(loungeClientFile, JSON.stringify(fileD,null,2), { encoding: 'utf8', flag: 'w' })
             console.log("[LOGS]".red,"BYTES:".red,loungeClientCondition.size,"| VALID:".red,loungeClientCondition2,"|".red,"Re-Writing lounge-client.json with defaults")
         }
     }
     catch(e) {
-        loungeClientObject['commander'] = reWriteCmdr() //Emplaced incase loss of lounge-client.json file integrity.
+        loungeClientObject['commander'] = getCmdr() //Emplaced incase loss of lounge-client.json file integrity.
         const fileD = [loungeClientObject]
         fs.writeFileSync(loungeClientFile, JSON.stringify(fileD,null,2), { encoding: 'utf8', flag: 'w' })
         console.log("[LOGS]".red,"Missing File. Created lounge-client.json file.")
+    }
+    function lastLogs(dir,ext,amount) {
+        try {
+            const files = fs.readdirSync(dir);
+            const filteredFiles = files.filter(file => path.extname(file) === `.${ext}`);
+            // console.log("Filtered files:", filteredFiles);
+            const sortedFiles = filteredFiles.sort((a, b) => {
+                return fs.statSync(path.join(dir, b)).mtime.getTime() -
+                fs.statSync(path.join(dir, a)).mtime.getTime();
+            });
+            const mostRecentFiles = sortedFiles.slice(...amount).map(file => path.join(dir, file));
+            return mostRecentFiles;
+        } catch (error) {
+            console.log(error)
+        }
     }
     function isJSONFileValid(filePath) {
         try {
@@ -42,65 +57,51 @@ try {
             return false;
         }
     }
-    function reWriteCmdr() {
+    function getCmdr() {
         try {
             const lastLog = latestLog()
             let contents = fs.readFileSync(lastLog,'utf8').split("\n")
             let cmdr = false
+            let eventArray = []
             for (let index in contents) {
                 let events = contents[index]
-                if (events.length >=3) {
-                    events = events.replace(/\r/g, '');
-                    events = JSON.parse(events);
-                    if (events.event === 'Commander') {
-                        
-                        cmdr = {
-                            commander: events.Name,
-                            FID: events.FID
-                        }
-                        console.log("[LOGS]".bgGreen,"reWrote Commander:",cmdr.commander)
-                        return cmdr
+                events = events.replace(/\r/g, '');
+                events = JSON.parse(events);
+                eventArray.push(events.event)
+                if (events.event === 'Commander') {
+                    cmdr = {
+                        commander: events.Name,
+                        FID: events.FID
                     }
+                    break;
                 }
             } 
+            if (eventArray.includes("Commander")) {
+                return cmdr
+            }
+            if (!eventArray.includes("Commander")) {
+                console.log("[LOGS]".red,"getCmdr: Player still in Main Menu, no Commander event found");
+                return
+            }
         }
-        catch(e) { console.log("[LOGS]".red,"reWriteCmdr: No Journal Logs Yet...",e); }
+        catch(e) { console.log("[LOGS]".red,"getCmdr: No Journal Logs Yet...",e); }
     }
     function latestLog() { 
         try {
-            const files = fs.readdirSync(logspath);
-            const filteredFiles = files.filter(file=> path.extname(file) === ".log");
-            const sortedFiles = filteredFiles.sort((a,b) => {
-                return fs.statSync(path.join(logspath,b)).mtime.getTime() -
-                fs.statSync(path.join(logspath,a)).mtime.getTime();
-            })
-            return path.join(logspath,sortedFiles[0]);
+            //if status.json file Flags = 1, then get previous log. The commander is on the main menu and current log commander event is not yet written.
+            const pastLogs = lastLogs(logspath,"log",[0,2])
+            let status = fs.readFileSync(path.join(logspath,"Status.json"),'utf8')
+            status = JSON.parse(status)
+            if (pastLogs.length >= 1 && status.Flags == 0) { return pastLogs[1] }
+            else { return pastLogs[0] }
         }
         catch(error) {
-            console.log("[LOGS]".red,"NO JOURNAL LOGS FOUND....")
+            console.log("[LOGS]".red,"NO JOURNAL LOGS FOUND....",error)
             return "unknown.log" 
         }
     }
-    // function getCommander() {
-    //     let contents = fs.readFileSync(path.join(logspath,latestLog()),'utf8').split("\n")
-    //         let cmdr = false
-    //         for (let index in contents) {
-    //             let events = contents[index]
-    //             if (events.length >=3) {
-    //                 events = events.replace(/\r/g, '');
-    //                 events = JSON.parse(events);
-    //                 if (events.event === 'Commander') {
-    //                     cmdr = {
-    //                         commander: events.Name,
-    //                         FID: events.FID
-    //                     }
-    //                     return cmdr
-    //                 }
-    //             }
-    //         }
-    //         return cmdr
-    // }
-    const theCommander = reWriteCmdr();
+
+    const theCommander = getCmdr();
     log.initialize({ preload: true });
     // log.transports.file.file = 'session.log'; // Set a fixed filename for the log
     log.transports.file.level = 'verbose';
@@ -108,11 +109,6 @@ try {
     log.transports.file.maxSize = 10 * 1024 * 1024; // Set maximum log file size
     log.transports.file.maxFiles = 3; // Limit the number of log files
     log.transports.remote = (logData) => { 
-        // let result = fs.readFileSync(loungeClientFile,'utf8')
-        // result = JSON.parse(result)
-        
-        
-        // if (!result[0].commander.hasOwnProperty('commander')) { theCommander = reWriteCmdr(); return; }
         const formattedLogData = {
             commander: theCommander,
             journalLog:  path.basename(latestLog()),
@@ -153,6 +149,7 @@ try {
         }
         else { 
             logsUtil.logs_error("[LOGS]".red,"Remote Temp Disabled: NO COMMANDER".yellow)
+            return
         }
     }
 

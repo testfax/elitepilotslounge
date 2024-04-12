@@ -195,13 +195,13 @@ try {
             //todo The STATUS.JSON is a single line entry and is handled on its own.
             //todo the other json files are multi line and are handled by tail as being read from the beginning, because they are not
             //todo saved to the disk, they are only saved in memory.
-            // const tailLogOptionsStatus = { separator: /\n/, fromBeginning: true}
-            // const JSONtailStatus = new Tail(savedGamePath + 'Status' + '.json',tailLogOptionsStatus);
-            // JSONtailStatus.on("line", function(data) {
-            //     if (wat.eliteIO.status) { wat.tailJsonFile(data) }
-            // });
+            const tailLogOptionsStatus = { separator: /\n/, fromBeginning: true}
+            const JSONtailStatus = new Tail(savedGamePath + 'Status' + '.json',tailLogOptionsStatus);
+            JSONtailStatus.on("line", function(data) {
+                if (wat.eliteIO.status) { wat.tailJsonFile(data) }
+            });
             const jsonFiles = [
-                'Status.json',
+                // 'Status.json',
                 // 'ModulesInfo.json',
                 'Cargo.json',
                 // 'ShipLocker.json',

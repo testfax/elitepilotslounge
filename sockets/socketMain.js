@@ -114,16 +114,25 @@ try {
     socket.on("disconnect", (reason) => {
         if (watcherConsoleDisplay("globalLogs")) { logs("[SOCKET CLIENT]".blue,"Disconnect Reason: ".bgRed,reason) }
         if (BrowserWindow.fromId(2)) { BrowserWindow.fromId(2).setTitle(`${theCommander.commander} | Elite Pilots Lounge - ${app.getVersion()} - Server Disconnected: ${JSON.stringify(reason)}`) }
-        store.set('socketServerStatus','Server Disconnected')
-        const roomCache = {
-            Inviter: 0,
-            Others: [],
-            Rooms: [],
-            leave: 1
+        if (reason == 'transport error') {
+            console.log(reason)
+            // setTimeout(function() {
+            //     // Your code to be executed after 5 seconds
+            //   }, 5000);
         }
-        
-        registeredRooms.forEach(i=>{ thargoidSampling_store.set(`socketRooms.${i}`, false) })
-        wingData(roomCache,0)
+        // else {reconnect()}
+        function reconnect() {
+            store.set('socketServerStatus','Server Disconnected')
+            const roomCache = {
+                Inviter: 0,
+                Others: [],
+                Rooms: [],
+                leave: 1
+            }
+            
+            registeredRooms.forEach(i=>{ thargoidSampling_store.set(`socketRooms.${i}`, false) })
+            wingData(roomCache,0)
+        }
         // else the socket will automatically try to reconnect
     });
     socket.on("error", (e) => {

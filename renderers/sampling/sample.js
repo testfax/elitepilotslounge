@@ -939,9 +939,10 @@ ipcRenderer.on('from_brain-ThargoidSample', (data) => {
           if (data.combinedData.timestamp.includes("+")) { timestamp = data.combinedData.timestamp.split("+")[0] }
           if (description) {
             let individual_user = Object.values(description_array.find(i => Object.keys(i) == data.FID))[0]
-            individual_user.unshift(description)
-            if (individual_user.length > 3) { individual_user.pop() }
-            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).innerHTML = individual_user.join('<br>')
+            let system_user = individual_user.find(i=> i.systemAddress === data.combinedData.thisSampleSystem)
+            system_user.status.unshift(description)
+            if (system_user.status.length > 3) { system_user.status.pop() }
+            document.getElementById(`${data.combinedData.thisSampleSystem}_${data.FID}_status_commanderSystem`).innerHTML = system_user.status.join('<br>')
           }
           let timeConvert = timeConversion(timestamp)
           timeConvert = timeConvert.split(" ")
@@ -1385,7 +1386,14 @@ function create_activeCommanders(systemAddress,commanderData,previousSibling,dat
           TH35.appendChild(SPAN35)
           SPAN35.setAttribute('id',`${systemAddress}_${FID}_status_commanderSystem`)
           SPAN35.setAttribute('class',`aligned-vert-ele`)
-          description_array.push( { [commander.commanderData.FID]: [commander.status] } )
+          //todo add "SystemAddress" to the array
+          description_array.push( 
+            { 
+              [commander.commanderData.FID]: [
+                  {"systemAddress": systemAddress, "status":[commander.status] }
+              ]
+            } 
+          )
           SPAN35.innerText = commander.status
   
       const TH4 = document.createElement('th')

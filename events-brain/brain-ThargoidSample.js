@@ -66,7 +66,8 @@ try {
     const sortedDistances = Object.fromEntries(distancesArray);
     return sortedDistances
   }
-  async function redisUpdaterSetup(dataEvent,thargoidSampling) {
+  async function redisUpdaterSetup(dataEvent,thargoidSampling,compiledArray,sendIt) {
+    // console.log(dataEvent)
     // Order of events from login:
     // Cargo -> Commander -> Location -> Loadout
     // Cargo resets all variables
@@ -114,10 +115,12 @@ try {
           && currentSystemState != ''
           ) {
             store.set('redisFirstUpdateflag',matching)
-            if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green,logF(thargoidSampling)); }
+            // if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green,logF(thargoidSampling)); }
+            if (errorChecking) { logs("[BE TS]".bgCyan,`${event} Sent to Redis`.green); }
             
-            let response = await brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey(FASK_rooms,FASK_titanState))
+            let response = await brain_ThargoidSample_socket(thargoidSampling,event,findActiveSocketKey(FASK_rooms,FASK_titanState),compiledArray,sendIt)
             if (response) { store.set(`socketRooms.${response.socketInfo}`, response.titanSocket) }
+            return response
         }
         else { store.set('redisFirstUpdateflag',false) 
           if (watcherConsoleDisplay('BrainEvent') && visible) { logs("[BE TS]".bgCyan,`${event} Allow more events until updater stop`) }
@@ -277,6 +280,9 @@ try {
   let supercruiseCount = 0;
   let guifocus = 0;
   let wingSetupCount = 0
+  let launchQueue = []
+  let launchQueueNum = launchQueue.length
+  let inprog = 0
   //!BRAIN EVENTs######################################################
   app.on('window-all-closed', () =>{ store.set('redisFirstUpdateflag',false) })
   ipcMain.on(thisBrain, async (receivedData) => {
@@ -322,11 +328,11 @@ try {
     if (receivedData.event == 'Status') {
       // Setup initial wing to the JSON file.
       if (wingSetupCount == 0) {
-      if (!store.get('wingStatus')) {
-        if (receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,1); wingSetupCount = 1 }
-        else { inWingStuff(receivedData.timestamp,0); wingSetupCount = 1 }
+        if (!store.get('wingStatus')) {
+          if (receivedData.Flags1.includes('In Wing')) { inWingStuff(receivedData.timestamp,1); wingSetupCount = 1 }
+          else { inWingStuff(receivedData.timestamp,0); wingSetupCount = 1 }
+        }
       }
-    }
       
       // logs("====================================")
       //Viewing GalaxyMap
@@ -1016,21 +1022,38 @@ try {
           store.set('thisSampleSystem',store.get('systemAddress'))
           compiledArray.combinedData["thisSampleSystem"] = store.get('systemAddress')
 
-          //Try to update the server first,
-          // Server will return 1 for system exists or 0 for it doesn't.
-          // If it doesn't, then run the redisUpdaterSetup()
-          // After these checks, then blast it to the UI.
-          let response = await brain_ThargoidSample_socket(compiledArray,receivedData.event,findActiveSocketKey(FASK_rooms,FASK_titanState))
-          const presentFID = response.find(item =>  item.hasOwnProperty('presentFID')).presentFID
-          if (presentFID) { store.set('redisFirstUpdateflag',true); blastToUI(compiledArray) }
-          else {
-            const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
-            // If the titlebar for this system doesn't exist, this will create it.
-            // The server will populate it if another commander initiates it.
-            store.set('redisFirstUpdateflag',true)
-            redisUpdaterSetup(receivedData.event,thargoidSampling)
-            blastToUI(sendIt)
+          launchQueue.push(compiledArray)
+          async function processLaunchQueue() {
+            for (const launchItem of launchQueue) {
+              if (!launchItem.processed) {
+                // console.log("Add compiledArray".blue, launchItem.combinedData.timestamp.split("+")[1], launchItem);
+                // console.log("Add compiledArray".blue, launchItem.combinedData.timestamp.split("+")[1], launchItem.combinedData.timestamp);
+                launchItem.processed = true; // Mark as processed to avoid duplicates
+                
+                // console.log("Start Sequence:".yellow, launchItem.combinedData.timestamp.split("+")[1]);
+
+                const sendIt = {"event":"Initialize-Client","systemAddress":store.get('systemAddress'),"FID": FID,"events":Object.values(thargoidSampling)}
+                let response = null;
+                
+                response = await redisUpdaterSetup(receivedData.event,thargoidSampling,launchItem,sendIt)
+                // const presentFID = response.find(item => item.hasOwnProperty('presentFID')).presentFID
+                const presentFID = response.ret[3]
+                // console.log(response.ret[3])
+                if (presentFID) {
+                  // console.log("presentFID:".green, presentFID)
+                  store.set('redisFirstUpdateflag',true)
+                  blastToUI(launchItem); 
+                }
+              }
+            }
           }
+          async function processLaunchItems() {
+            for (const launchItem of launchQueue) {
+              processLaunchQueue(launchItem);
+                await new Promise(resolve => setTimeout(resolve, 5000)); // Add a delay between processing each launch item
+            }
+          }
+          processLaunchItems()
         }
       }
       catch(e) { errorHandler(e,e.name)}

@@ -31,7 +31,6 @@ try {
             ]
             //! #### Logs
             if (watcherConsoleDisplay(data.event)) { logs(`3: ${data.event.toUpperCase() } DATA` .bgMagenta); logs(data) }
-           
     
             //! ### Transpose data
             let modStatus = {
